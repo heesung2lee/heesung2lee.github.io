@@ -3,8 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>결 Resonate — California 13 Days</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+<title>결 Resonate Tour — resonatetour.com</title>
+  <meta name="description" content="결 Resonate Tour — Korea ↔ USA Premium Golf & Culture 13 Days. resonatetour.com">
+  <meta property="og:title" content="결 Resonate Tour">
+  <meta property="og:description" content="Korea ↔ USA · Premium Golf & Culture 13 Days · Your Life's Texture, Our Signature Touch.">
+  <meta property="og:url" content="https://resonatetour.com">
+  <link rel="canonical" href="https://resonatetour.com">
+  <!-- Gallery & hero image preloads -->
+  <link rel="preload" href="golfpic1.png" as="image">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px}
@@ -74,7 +83,7 @@ nav.hero-mode .mob-btn span{background:#fff}
 /* ── HOME ── */
 .hero-slide{position:relative;height:100svh;min-height:580px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center}
 .hero-eye{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:14px}
-.hero-h1{font-size:clamp(38px,7vw,70px);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:12px}
+.hero-h1{font-size:clamp(38px,7vw,70px);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:12px;color:#fff}
 .hero-p{font-size:clamp(14px,2vw,19px);font-weight:300;color:rgba(255,255,255,.85);margin-bottom:32px;line-height:1.6}
 .hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .btn-w{font-size:14px;font-weight:500;background:rgba(255,255,255,.88);color:#171a20;border:none;padding:13px 36px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
@@ -1133,6 +1142,114 @@ html {
 .hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;background-size:cover;background-position:center;z-index:1}
 .hero-grad{position:absolute;top:0;left:0;right:0;bottom:0;z-index:2;background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,transparent 30%,rgba(0,0,0,.5) 70%,rgba(0,0,0,.72) 100%)}
 .hero-cnt{position:relative;z-index:3}
+
+/* ═══ HERO TEXT CONTRAST — always legible over any photo ═══ */
+
+/* Strong gradient overlay on slide 1 (real photo) */
+#h1-bg ~ .hero-grad,
+.hero-grad {
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,.45) 0%,
+    rgba(0,0,0,.15) 30%,
+    rgba(0,0,0,.38) 65%,
+    rgba(0,0,0,.78) 100%
+  ) !important;
+}
+
+/* Hero eyebrow */
+.hero-eye {
+  color: rgba(255,255,255,.92) !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,.6) !important;
+}
+
+/* Hero H1 */
+.hero-h1 {
+  color: #fff !important;
+  text-shadow: 0 2px 18px rgba(0,0,0,.65), 0 1px 4px rgba(0,0,0,.5) !important;
+}
+
+/* Hero sub / tagline */
+.hero-sub {
+  color: rgba(255,255,255,.92) !important;
+  text-shadow: 0 1px 10px rgba(0,0,0,.55) !important;
+}
+
+/* Primary CTA button — solid white */
+.btn-w {
+  background: rgba(255,255,255,.95) !important;
+  color: #171a20 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,.35) !important;
+  border: none !important;
+}
+.btn-w:hover {
+  background: #fff !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,.4) !important;
+}
+
+/* Secondary CTA — high-contrast outline */
+.btn-d {
+  background: rgba(0,0,0,.35) !important;
+  color: #fff !important;
+  border: 2px solid rgba(255,255,255,.88) !important;
+  backdrop-filter: blur(6px) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,.4) !important;
+}
+.btn-d:hover {
+  background: rgba(255,255,255,.18) !important;
+  border-color: #fff !important;
+}
+
+/* Nav bar on hero — strong contrast */
+nav.hero-mode {
+  background: rgba(0,0,0,.42) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(255,255,255,.12) !important;
+}
+
+/* Nav tabs on hero */
+nav.hero-mode .nav-tab {
+  color: rgba(255,255,255,.88) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,.4) !important;
+}
+nav.hero-mode .nav-tab.act {
+  color: #fff !important;
+  font-weight: 700 !important;
+}
+
+/* Lang button on hero */
+nav.hero-mode .btn-lang {
+  background: rgba(255,255,255,.15) !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,.45) !important;
+  font-weight: 600 !important;
+}
+
+/* Book Now on hero */
+nav.hero-mode .btn-book {
+  background: rgba(255,255,255,.95) !important;
+  color: #171a20 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,.3) !important;
+}
+
+/* Hamburger lines on hero */
+nav.hero-mode .mob-btn span {
+  background: #fff !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.4) !important;
+}
+
+/* Logo button on hero — gold border always visible */
+nav.hero-mode .nav-logo-btn {
+  background: linear-gradient(145deg,rgba(15,20,40,.88),rgba(10,35,70,.88)) !important;
+  border-color: rgba(212,175,55,.6) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,.4) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
 </style>
 </head>
 <body>
@@ -1183,8 +1300,8 @@ html {
 
   <div class="ham-footer">
     <div class="ham-footer-txt">
-      <span class="ko">© 2026 결 Resonate · Korea ↔ USA<br>삶의 결을 따라, 당신만의 여정으로.</span>
-      <span class="en">© 2026 결 Resonate · Korea ↔ USA<br>Your Life's Texture, Our Signature Touch.</span>
+      <span class="ko">© 2026 결 Resonate · resonatetour.com<br>삶의 결을 따라, 당신만의 여정으로.</span>
+      <span class="en">© 2026 결 Resonate · resonatetour.com<br>Your Life's Texture, Our Signature Touch.</span>
     </div>
   </div>
 </div>
@@ -1406,15 +1523,15 @@ html {
       <p><span class="ko">인원, 날짜, 예산을 알려주시면 3일 이내 맞춤 제안서를 보내드립니다.</span><span class="en">Share group size, dates & budget — a custom proposal within 3 days.</span></p>
       <div class="c-info-block">
         <a href="https://open.kakao.com/o/sgyeoltour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico">💬</div><div><div class="c-info-lbl">KakaoTalk</div><div class="c-info-val">@gyeol</div></div></a>
-        <a href="https://instagram.com/gyeol.tour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico">📸</div><div><div class="c-info-lbl">Instagram</div><div class="c-info-val">@gyeol.tour</div></div></a>
-        <a href="mailto:info@gyeoltour.com" class="c-info-row"><div class="c-info-ico">✉️</div><div><div class="c-info-lbl">Email</div><div class="c-info-val">info@gyeoltour.com</div></div></a>
+        <a href="https://instagram.com/resonatetour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico">📸</div><div><div class="c-info-lbl">Instagram</div><div class="c-info-val">@gyeol.tour</div></div></a>
+        <a href="mailto:info@resonatetour.com" class="c-info-row"><div class="c-info-ico">✉️</div><div><div class="c-info-lbl">Email</div><div class="c-info-val">info@resonatetour.com</div></div></a>
       </div>
       <div class="soc-grid">
         <a href="https://open.kakao.com/o/sgyeoltour" target="_blank" rel="noopener" class="soc-btn soc-kakao"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.582 2 11.027c0 2.9 1.878 5.45 4.707 6.94l-1.197 4.447a.25.25 0 0 0 .377.276L11.03 19.7A11.6 11.6 0 0 0 12 19.054c5.523 0 10-3.582 10-8.027S17.523 3 12 3z"/></svg>Kakao</a>
-        <a href="https://blog.naver.com/gyeoltour" target="_blank" rel="noopener" class="soc-btn soc-naver"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>Naver</a>
-        <a href="https://twitter.com/gyeoltour" target="_blank" rel="noopener" class="soc-btn soc-x"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a>
-        <a href="https://facebook.com/gyeoltour" target="_blank" rel="noopener" class="soc-btn soc-fb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.254h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>Facebook</a>
-        <a href="https://instagram.com/gyeol.tour" target="_blank" rel="noopener" class="soc-btn soc-ig"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>Instagram</a>
+        <a href="https://blog.naver.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-naver"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>Naver</a>
+        <a href="https://twitter.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-x"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a>
+        <a href="https://facebook.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-fb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.254h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>Facebook</a>
+        <a href="https://instagram.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-ig"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>Instagram</a>
       </div>
     </div>
     <div class="contact-right">
@@ -1452,7 +1569,7 @@ html {
     <button onclick="openModal('terms')"><span class="ko">이용약관</span><span class="en">Terms</span></button>
     <button onclick="openModal('privacy')"><span class="ko">개인정보처리방침</span><span class="en">Privacy</span></button>
   </div>
-  <div class="footer-copy"><span class="ko">© 2026 결 Gyeol Tour. 종합여행업 등록 제 ○○○호</span><span class="en">© 2026 결 Resonate. All rights reserved.</span></div>
+  <div class="footer-copy"><span class="ko">© 2026 결 Gyeol Tour. 종합여행업 등록 제 ○○○호</span><span class="en">© 2026 결 Resonate · resonatetour.com · All rights reserved.</span></div>
 </footer>
 
 <script>
@@ -1652,16 +1769,17 @@ let schedBuilt = false;
   heroLast0 = i0;
   const i1 = nextHeroIdx(heroQ1, i0, heroLast1);
   heroLast1 = i1;
-  // Rotate every 6 seconds
+  // Slide 1 (golfpic1.png) is static — no rotation
+  // Rotate slide 2 (bg4) every 6 seconds through natural scenes
+  const ROTATE_KEYS = ['sb-coast','carlsbad','split-img-1','solvang',
+                        'sunrise','elim','hero-img-2','neighborhood','split-img-2','hero-img-3'];
+  let rotIdx = 0;
+  function nextRotKey() {
+    rotIdx = (rotIdx + 1) % ROTATE_KEYS.length;
+    return ROTATE_KEYS[rotIdx];
+  }
   setInterval(()=>{
-    const n0 = nextHeroIdx(heroQ0, heroLast1, heroLast0);
-    heroLast0 = n0;
-    setHeroImg(bg1, HERO_KEYS[n0]);
-    setTimeout(()=>{
-      const n1 = nextHeroIdx(heroQ1, heroLast0, heroLast1);
-      heroLast1 = n1;
-      setHeroImg(bg4, HERO_KEYS[n1]);
-    }, 3000);
+    setHeroImg(bg4, nextRotKey());
   }, 6000);
   const map = { h2: imgs['sb-coast'], h3: imgs['elim'] };
   for (const [id, src] of Object.entries(map)) {
@@ -1977,12 +2095,12 @@ function toggleLang() {
 ══════════════════════════════ */
 const MODAL_TEXTS = {
   terms: {
-    ko: '<h2>이용약관</h2><h3>제1조 목적</h3><p>본 약관은 결 Gyeol Tour가 제공하는 미국 여행 패키지 서비스의 이용에 관한 권리, 의무 및 책임사항을 규정합니다.</p><h3>제2조 예약 및 취소</h3><p>① 예약은 상담 후 계약금 납부로 확정됩니다.<br>② 취소 시 환불 기준 (관광진흥법 시행규칙 별표 2 준용):<br>· 출발 30일 전 이상: 계약금 전액 환불<br>· 출발 20일 전: 여행요금의 10% 공제<br>· 출발 10일 전: 여행요금의 15% 공제<br>· 출발 8일 전: 여행요금의 20% 공제<br>· 출발 1일 전: 여행요금의 30% 공제<br>· 출발 당일: 여행요금의 50% 공제<br>③ 천재지변, 항공사 결항 등 불가항력적 사유 발생 시 쌍방 협의 후 처리합니다.</p><h3>제3조 포함 및 불포함</h3><p>포함: 왕복 항공권, 숙박, 포함 식사, 전용 차량, 한국어 가이드, 골프 라운드, 전문 트립 릴.<br>불포함: 개인 경비, 여행자 보험, 비포함 식사, 추가 액티비티.</p><h3>제4조 가격 정책</h3><p>모든 가격은 USD 기준이며, 환율은 결제 시점 기준으로 적용됩니다.</p><h3>제5조 문의</h3><p>info@gyeoltour.com · KakaoTalk @gyeol</p>',
-    en: '<h2>Terms of Service</h2><h3>Article 1 Purpose</h3><p>These Terms govern the rights, obligations, and responsibilities related to the travel package services provided by 결 Gyeol Tour.</p><h3>Article 2 Booking & Cancellation</h3><p>① Bookings are confirmed upon deposit payment after consultation.<br>② Cancellation policy (per Korea Tourism Promotion Act enforcement rules):<br>· 30+ days before departure: Full deposit refund<br>· 20 days before: 10% of total fee deducted<br>· 10 days before: 15% of total fee deducted<br>· 8 days before: 20% of total fee deducted<br>· 1 day before: 30% of total fee deducted<br>· Day of departure: 50% of total fee deducted<br>③ In cases of force majeure (natural disasters, flight cancellations, etc.), resolution is handled by mutual agreement.</p><h3>Article 3 Inclusions & Exclusions</h3><p>Included: Round-trip flights, accommodations, included meals, private vehicle, Korean guide, golf rounds, trip reel.<br>Excluded: Personal expenses, travel insurance, non-included meals, additional activities.</p><h3>Article 4 Pricing</h3><p>All prices in USD. Exchange rates apply at time of payment.</p><h3>Article 5 Contact</h3><p>info@gyeoltour.com · KakaoTalk @gyeol</p>'
+    ko: '<h2>이용약관</h2><h3>제1조 목적</h3><p>본 약관은 결 Gyeol Tour가 제공하는 미국 여행 패키지 서비스의 이용에 관한 권리, 의무 및 책임사항을 규정합니다.</p><h3>제2조 예약 및 취소</h3><p>① 예약은 상담 후 계약금 납부로 확정됩니다.<br>② 취소 시 환불 기준 (관광진흥법 시행규칙 별표 2 준용):<br>· 출발 30일 전 이상: 계약금 전액 환불<br>· 출발 20일 전: 여행요금의 10% 공제<br>· 출발 10일 전: 여행요금의 15% 공제<br>· 출발 8일 전: 여행요금의 20% 공제<br>· 출발 1일 전: 여행요금의 30% 공제<br>· 출발 당일: 여행요금의 50% 공제<br>③ 천재지변, 항공사 결항 등 불가항력적 사유 발생 시 쌍방 협의 후 처리합니다.</p><h3>제3조 포함 및 불포함</h3><p>포함: 왕복 항공권, 숙박, 포함 식사, 전용 차량, 한국어 가이드, 골프 라운드, 전문 트립 릴.<br>불포함: 개인 경비, 여행자 보험, 비포함 식사, 추가 액티비티.</p><h3>제4조 가격 정책</h3><p>모든 가격은 USD 기준이며, 환율은 결제 시점 기준으로 적용됩니다.</p><h3>제5조 문의</h3><p>info@resonatetour.com · KakaoTalk @gyeol</p>',
+    en: '<h2>Terms of Service</h2><h3>Article 1 Purpose</h3><p>These Terms govern the rights, obligations, and responsibilities related to the travel package services provided by 결 Gyeol Tour.</p><h3>Article 2 Booking & Cancellation</h3><p>① Bookings are confirmed upon deposit payment after consultation.<br>② Cancellation policy (per Korea Tourism Promotion Act enforcement rules):<br>· 30+ days before departure: Full deposit refund<br>· 20 days before: 10% of total fee deducted<br>· 10 days before: 15% of total fee deducted<br>· 8 days before: 20% of total fee deducted<br>· 1 day before: 30% of total fee deducted<br>· Day of departure: 50% of total fee deducted<br>③ In cases of force majeure (natural disasters, flight cancellations, etc.), resolution is handled by mutual agreement.</p><h3>Article 3 Inclusions & Exclusions</h3><p>Included: Round-trip flights, accommodations, included meals, private vehicle, Korean guide, golf rounds, trip reel.<br>Excluded: Personal expenses, travel insurance, non-included meals, additional activities.</p><h3>Article 4 Pricing</h3><p>All prices in USD. Exchange rates apply at time of payment.</p><h3>Article 5 Contact</h3><p>info@resonatetour.com · KakaoTalk @gyeol</p>'
   },
   privacy: {
-    ko: '<h2>개인정보처리방침</h2><h3>1. 수집 항목</h3><p>성명, 연락처(전화번호·카카오 ID), 이메일, 여행 희망 일정 및 인원, 결제 정보.</p><h3>2. 수집 목적</h3><p>① 여행 상품 상담 및 예약 처리<br>② 맞춤 여정 제안서 발송<br>③ 출발 전 오리엔테이션 진행<br>④ 귀국 후 전문 트립 릴 전달</p><h3>3. 보유 기간</h3><p>서비스 이용 완료 후 3년간 보관 후 파기.</p><h3>4. 제3자 제공</h3><p>서비스 제공에 필요한 현지 파트너(숙소, 골프장, 차량업체)에 한해 최소한으로 제공됩니다.</p><h3>5. 문의</h3><p>info@gyeoltour.com</p>',
-    en: '<h2>Privacy Policy</h2><h3>1. Information We Collect</h3><p>Name, contact information (phone, KakaoTalk ID), email, preferred travel details, payment information.</p><h3>2. Purpose</h3><p>① Travel package consultation and booking<br>② Sending customized journey proposals<br>③ Pre-departure orientation<br>④ Post-return trip reel delivery</p><h3>3. Retention</h3><p>Retained for 3 years after service completion, then destroyed.</p><h3>4. Third-Party Sharing</h3><p>Shared minimally with local service partners only as required for service delivery.</p><h3>5. Contact</h3><p>info@gyeoltour.com</p>'
+    ko: '<h2>개인정보처리방침</h2><h3>1. 수집 항목</h3><p>성명, 연락처(전화번호·카카오 ID), 이메일, 여행 희망 일정 및 인원, 결제 정보.</p><h3>2. 수집 목적</h3><p>① 여행 상품 상담 및 예약 처리<br>② 맞춤 여정 제안서 발송<br>③ 출발 전 오리엔테이션 진행<br>④ 귀국 후 전문 트립 릴 전달</p><h3>3. 보유 기간</h3><p>서비스 이용 완료 후 3년간 보관 후 파기.</p><h3>4. 제3자 제공</h3><p>서비스 제공에 필요한 현지 파트너(숙소, 골프장, 차량업체)에 한해 최소한으로 제공됩니다.</p><h3>5. 문의</h3><p>info@resonatetour.com</p>',
+    en: '<h2>Privacy Policy</h2><h3>1. Information We Collect</h3><p>Name, contact information (phone, KakaoTalk ID), email, preferred travel details, payment information.</p><h3>2. Purpose</h3><p>① Travel package consultation and booking<br>② Sending customized journey proposals<br>③ Pre-departure orientation<br>④ Post-return trip reel delivery</p><h3>3. Retention</h3><p>Retained for 3 years after service completion, then destroyed.</p><h3>4. Third-Party Sharing</h3><p>Shared minimally with local service partners only as required for service delivery.</p><h3>5. Contact</h3><p>info@resonatetour.com</p>'
   }
 };
 
@@ -2666,6 +2784,85 @@ document.addEventListener('keydown', e => {
   }
 
   tick();
+})();
+
+
+/* ═══════════════════════════════════════════
+   GALLERY PRELOAD — runs on landing page load
+   Preloads all images + pre-builds gallery DOM
+   silently in the background
+═══════════════════════════════════════════ */
+(function(){
+  function preloadGallery() {
+    // 1. Preload all images into browser cache
+    const allKeys = [
+      'hero-img-1','hero-img-2','hero-img-3',
+      'split-img-1','split-img-2',
+      'sb-coast','solvang','sunrise','elim','carlsbad','neighborhood',
+      'golfpic1.png'
+    ];
+
+    allKeys.forEach(function(key) {
+      var src = (key.indexOf('.') > -1) ? key : (imgs[key] || '');
+      if (!src) return;
+      var img = new Image();
+      img.src = src;
+      // Store preloaded image object to keep in memory
+      img._preloaded = true;
+    });
+
+    // 2. Pre-build gallery DOM silently (hidden off-screen)
+    // so when user taps Gallery it renders instantly
+    if (typeof buildGallery === 'function') {
+      // Create a temporary hidden container to trigger buildGallery
+      var tmpPage = document.getElementById('pg-gallery');
+      if (tmpPage && !tmpPage.dataset.prebuilt) {
+        // Temporarily make it exist in layout without showing
+        var prevDisplay = tmpPage.style.display;
+        tmpPage.style.visibility = 'hidden';
+        tmpPage.style.position = 'absolute';
+        tmpPage.style.pointerEvents = 'none';
+        tmpPage.classList.add('act');
+        buildGallery();
+        tmpPage.classList.remove('act');
+        tmpPage.style.visibility = '';
+        tmpPage.style.position = '';
+        tmpPage.style.pointerEvents = '';
+        tmpPage.dataset.prebuilt = '1';
+      }
+    }
+
+    // 3. Prefetch hero rotate images for slide 2
+    var ROTATE_PREFETCH = ['sb-coast','carlsbad','split-img-1','solvang',
+                           'sunrise','elim','hero-img-2','neighborhood',
+                           'split-img-2','hero-img-3'];
+    ROTATE_PREFETCH.forEach(function(key) {
+      var src = imgs[key] || '';
+      if (!src) return;
+      var lnk = document.createElement('link');
+      lnk.rel = 'prefetch';
+      lnk.as = 'image';
+      lnk.href = src;
+      document.head.appendChild(lnk);
+    });
+
+    // 4. Also prefetch golfpic1.png as external file
+    var golfLink = document.createElement('link');
+    golfLink.rel = 'prefetch';
+    golfLink.as = 'image';
+    golfLink.href = 'golfpic1.png';
+    document.head.appendChild(golfLink);
+  }
+
+  // Run after page is interactive — don't block initial render
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Small delay so landing page renders first
+      setTimeout(preloadGallery, 800);
+    });
+  } else {
+    setTimeout(preloadGallery, 800);
+  }
 })();
 
 </script>
