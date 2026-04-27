@@ -1414,6 +1414,51 @@ body {
   will-change: transform;
 }
 
+
+/* ═══════════════════════════════════════
+   PARALLAX SCROLLING — background-attachment:fixed
+   Background stays fixed as content scrolls over it
+   Most visible, most compatible technique
+═══════════════════════════════════════ */
+
+/* Hero background: fixed attachment = true parallax */
+.hero-bg {
+  background-attachment: fixed !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Disable on mobile (fixed attachment causes issues on iOS) */
+@media (max-width: 860px) {
+  .hero-bg {
+    background-attachment: scroll !important;
+  }
+}
+
+/* Scroll-reveal animations using IntersectionObserver fallback */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+.scroll-reveal.from-left {
+  transform: translateX(-28px);
+}
+.scroll-reveal.from-left.revealed {
+  transform: translateX(0);
+}
+.scroll-reveal.from-right {
+  transform: translateX(28px);
+}
+.scroll-reveal.from-right.revealed {
+  transform: translateX(0);
+}
+
 </style>
 </head>
 <body>
@@ -3394,72 +3439,59 @@ document.addEventListener('keydown', e => {
     : init();
 })();
 
-/* ═══════════════════════════════════════════
-   JS PARALLAX for hero background images
-   Runs on rAF for 60fps smoothness
-═══════════════════════════════════════════ */
-(function(){
-  var bgs = [];
 
-  function collectBgs() {
-    bgs = [];
-    document.querySelectorAll('.hero-slide .hero-bg').forEach(function(bg) {
-      bg.classList.add('js-parallax');
-      bgs.push({
-        bg: bg,
-        slide: bg.closest('.hero-slide'),
+
+/* ═══════════════════════════════════════
+   SCROLL REVEAL — IntersectionObserver
+   Elements animate in as they enter viewport
+═══════════════════════════════════════ */
+(function(){
+  function initScrollReveal() {
+    // Add scroll-reveal class to target elements
+    var selectors = [
+      { sel: '.stat',        cls: '' },
+      { sel: '.why-c',       cls: '' },
+      { sel: '.plan',        cls: '' },
+      { sel: '.pillar',      cls: 'from-left' },
+      { sel: '.testi-card',  cls: '' },
+      { sel: '#gal-card-0',  cls: 'from-left' },
+      { sel: '#gal-card-1',  cls: 'from-right' },
+      { sel: '.inc-item',    cls: '' },
+      { sel: '.gal-item',    cls: '' },
+    ];
+
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+    selectors.forEach(function(item) {
+      document.querySelectorAll(item.sel).forEach(function(el) {
+        el.classList.add('scroll-reveal');
+        if (item.cls) el.classList.add(item.cls);
+        obs.observe(el);
       });
     });
   }
 
-  var ticking = false;
-
-  function updateParallax() {
-    bgs.forEach(function(item) {
-      var rect = item.slide.getBoundingClientRect();
-      // Only calculate when slide is near viewport
-      if (rect.bottom < -100 || rect.top > window.innerHeight + 100) return;
-
-      // Progress: 0 = slide top at viewport bottom, 1 = slide bottom at viewport top
-      var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-      // Parallax offset: bg moves at 40% of scroll speed
-      var offset = (progress - 0.5) * rect.height * 0.40;
-
-      item.bg.style.transform = 'translateY(' + offset + 'px) scale(1.22)';
-    });
-    ticking = false;
-  }
-
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(updateParallax);
-      ticking = true;
-    }
-  }, { passive: true });
-
-  // Also update on resize
-  window.addEventListener('resize', function() {
-    requestAnimationFrame(updateParallax);
-  }, { passive: true });
-
-  // Init after DOM ready
-  function init() {
-    collectBgs();
-    updateParallax();
-  }
+  // Re-run when new pages are navigated to
+  var _origNav = window.nav;
+  window.nav = function(page, dayIdx) {
+    _origNav(page, dayIdx);
+    setTimeout(initScrollReveal, 120);
+  };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function(){
+      setTimeout(initScrollReveal, 200);
+    });
   } else {
-    setTimeout(init, 100);
+    setTimeout(initScrollReveal, 200);
   }
-
-  // Re-collect when page changes (SPA nav)
-  var origNav = window.nav;
-  window.nav = function(page, dayIdx) {
-    origNav(page, dayIdx);
-    setTimeout(function() { collectBgs(); updateParallax(); }, 80);
-  };
 })();
 </script>
 
