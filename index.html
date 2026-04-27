@@ -128,12 +128,16 @@ nav.hero-mode .mob-btn span{background:#fff}
 .day-tab-bar{
   position:relative;
   display:flex;overflow-x:auto;align-items:center;
+  justify-content:flex-start;
   scrollbar-width:none;-ms-overflow-style:none;
   background:#fff;
   padding:0 8px;
   -webkit-overflow-scrolling:touch;
   scroll-behavior:smooth;
   overscroll-behavior-x:contain;
+}
+@media(min-width:860px){
+  .day-tab-bar{justify-content:center;overflow-x:visible;flex-wrap:wrap}
 }
 .day-tab-bar::-webkit-scrollbar{display:none}
 .day-tab-bar::-webkit-scrollbar{display:none}
@@ -1250,6 +1254,40 @@ nav.hero-mode .nav-logo-btn {
   backdrop-filter: blur(10px) !important;
 }
 
+
+/* ── SVG Logo button ── */
+.nav-logo-svg{transition:transform .18s cubic-bezier(.34,1.56,.64,1),opacity .18s ease}
+.nav-logo-svg:hover{transform:scale(1.07)}
+.nav-logo-svg:active{transform:scale(.93)}
+
+
+/* ── LOGO MAGNIFIER ── */
+#logo-preview{
+  position:fixed;
+  top:60px;
+  left:12px;
+  width:180px;
+  height:180px;
+  border-radius:14px;
+  box-shadow:0 8px 40px rgba(0,0,0,.45), 0 2px 10px rgba(0,0,0,.25);
+  z-index:9999;
+  pointer-events:none;
+  opacity:0;
+  transform:scale(0.82) translateY(-8px);
+  transform-origin:top left;
+  transition:opacity .22s ease, transform .22s cubic-bezier(.34,1.4,.64,1);
+  overflow:hidden;
+}
+#logo-preview.show{
+  opacity:1;
+  transform:scale(1) translateY(0);
+}
+#logo-preview svg{
+  width:180px;
+  height:180px;
+  display:block;
+}
+
 </style>
 </head>
 <body>
@@ -1308,10 +1346,72 @@ nav.hero-mode .nav-logo-btn {
 
 <!-- NAV -->
 <nav id="mainNav">
-  <button class="nav-logo-btn" onclick="nav('home')" aria-label="홈으로 돌아가기">
-  <span class="logo-resonate-top">RESONATE</span>
-  <span class="logo-gyeol-center">결</span>
-  <span class="logo-tour-bottom">TOUR</span>
+  <button class="nav-logo-btn nav-logo-svg" onclick="nav('home')" aria-label="홈으로 돌아가기" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;height:42px;-webkit-tap-highlight-color:transparent">
+  <svg viewBox="0 0 420 420" height="42" width="42"
+       xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:5px">
+    <defs>
+      <linearGradient id="nl-bg" x1="0" y1="0" x2="0.6" y2="1">
+        <stop offset="0%" stop-color="#4a6680"/>
+        <stop offset="35%" stop-color="#3a5570"/>
+        <stop offset="70%" stop-color="#264460"/>
+        <stop offset="100%" stop-color="#1a3450"/>
+      </linearGradient>
+      <linearGradient id="nl-gH" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#9a7520"/>
+        <stop offset="30%" stop-color="#d4aa55"/>
+        <stop offset="55%" stop-color="#e8cc75"/>
+        <stop offset="100%" stop-color="#9a7520"/>
+      </linearGradient>
+      <linearGradient id="nl-gD" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#c8a840"/>
+        <stop offset="100%" stop-color="#a07828"/>
+      </linearGradient>
+      <linearGradient id="nl-w1" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#c8e8ff" stop-opacity="0"/>
+        <stop offset="15%" stop-color="#c8e8ff" stop-opacity="1"/>
+        <stop offset="85%" stop-color="#c8e8ff" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#c8e8ff" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="nl-w2" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#a8d4f0" stop-opacity="0"/>
+        <stop offset="12%" stop-color="#a8d4f0" stop-opacity="1"/>
+        <stop offset="88%" stop-color="#a8d4f0" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#a8d4f0" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="nl-w3" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#88c0e8" stop-opacity="0"/>
+        <stop offset="10%" stop-color="#88c0e8" stop-opacity="1"/>
+        <stop offset="90%" stop-color="#88c0e8" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#88c0e8" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <rect width="420" height="420" rx="12" fill="url(#nl-bg)"/>
+    <rect width="420" height="420" rx="12" fill="none" stroke="url(#nl-gH)" stroke-width="1.6"/>
+    <rect x="10" y="10" width="400" height="400" rx="7" fill="none" stroke="url(#nl-gH)" stroke-width="0.5" opacity="0.38"/>
+    <line x1="55" y1="22" x2="365" y2="22" stroke="url(#nl-gH)" stroke-width="0.9" opacity="0.55"/>
+    <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
+      <polyline points="16,22 16,14 24,14"/><polyline points="404,22 404,14 396,14"/>
+    </g>
+    <text x="210" y="155" text-anchor="middle" dominant-baseline="middle"
+      font-family="Apple SD Gothic Neo,Malgun Gothic,NanumGothic,sans-serif"
+      font-weight="700" font-size="185" fill="url(#nl-gH)">결</text>
+    <path d="M 0,148 C 42,128 78,168 120,148 C 162,128 198,168 240,148 C 282,128 318,168 360,148 C 385,138 400,142 420,140" fill="none" stroke="url(#nl-w1)" stroke-width="2.0" stroke-linecap="round" opacity="0.55"/>
+    <path d="M 0,162 C 38,146 80,178 118,162 C 158,146 198,178 238,162 C 278,146 318,178 358,162 C 386,154 402,157 420,155" fill="none" stroke="url(#nl-w2)" stroke-width="1.4" stroke-linecap="round" opacity="0.38"/>
+    <path d="M 0,174 C 42,164 82,184 122,174 C 162,164 202,184 242,174 C 282,164 322,184 362,174 C 388,169 404,171 420,170" fill="none" stroke="url(#nl-w3)" stroke-width="1.0" stroke-linecap="round" opacity="0.22"/>
+    <line x1="100" y1="236" x2="320" y2="236" stroke="url(#nl-gH)" stroke-width="0.7" opacity="0.42"/>
+    <polygon points="210,246 219,255 210,264 201,255" fill="url(#nl-gD)" opacity="0.92"/>
+    <circle cx="178" cy="255" r="2.6" fill="url(#nl-gD)" opacity="0.60"/>
+    <circle cx="165" cy="255" r="1.6" fill="url(#nl-gD)" opacity="0.36"/>
+    <circle cx="242" cy="255" r="2.6" fill="url(#nl-gD)" opacity="0.60"/>
+    <circle cx="255" cy="255" r="1.6" fill="url(#nl-gD)" opacity="0.36"/>
+    <text x="210" y="313" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="9" fill="url(#nl-gH)">RESONATE</text>
+    <text x="210" y="348" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" letter-spacing="15" fill="#c8a844" opacity="0.88">TOUR</text>
+    <text x="210" y="371" text-anchor="middle" font-family="Georgia,serif" font-size="11" letter-spacing="4" fill="#c8a844" opacity="0.72">KOREA &#x2194; USA</text>
+    <line x1="55" y1="398" x2="365" y2="398" stroke="url(#nl-gH)" stroke-width="0.9" opacity="0.55"/>
+    <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
+      <polyline points="16,398 16,406 24,406"/><polyline points="404,398 404,406 396,406"/>
+    </g>
+  </svg>
 </button>
   <div class="nav-mid">
     <button class="nav-tab act" data-page="home"     onclick="nav('home')"><span class="ko">홈</span><span class="en">Home</span></button>
@@ -3143,6 +3243,92 @@ document.addEventListener('keydown', e => {
   setTimeout(tick, 400);
 })();
 
+
+/* ── LOGO MAGNIFIER ── */
+(function(){
+  function init() {
+    var btn = document.querySelector('.nav-logo-svg');
+    var preview = document.getElementById('logo-preview');
+    if (!btn || !preview) { setTimeout(init, 300); return; }
+    function show(){ preview.classList.add('show'); }
+    function hide(){ preview.classList.remove('show'); }
+    btn.addEventListener('mouseenter', show);
+    btn.addEventListener('mouseleave', hide);
+    btn.addEventListener('touchstart', function(){ show(); }, { passive:true });
+    btn.addEventListener('touchend', function(e){
+      e.preventDefault(); e.stopPropagation();
+      hide();
+      setTimeout(function(){ nav('home'); }, 60);
+    }, { passive:false });
+    btn.addEventListener('touchcancel', function(){ hide(); }, { passive:true });
+  }
+  document.readyState==='loading'
+    ? document.addEventListener('DOMContentLoaded', init)
+    : init();
+})();
 </script>
+
+<div id="logo-preview">
+  <svg viewBox="0 0 420 420" width="180" height="180" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="pl-bg" x1="0" y1="0" x2="0.6" y2="1">
+        <stop offset="0%" stop-color="#4a6680"/><stop offset="35%" stop-color="#3a5570"/>
+        <stop offset="70%" stop-color="#264460"/><stop offset="100%" stop-color="#1a3450"/>
+      </linearGradient>
+      <linearGradient id="pl-gH" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#9a7520"/><stop offset="30%" stop-color="#d4aa55"/>
+        <stop offset="55%" stop-color="#e8cc75"/><stop offset="100%" stop-color="#9a7520"/>
+      </linearGradient>
+      <linearGradient id="pl-gD" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#c8a840"/><stop offset="100%" stop-color="#a07828"/>
+      </linearGradient>
+      <linearGradient id="pl-w1" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#c8e8ff" stop-opacity="0"/>
+        <stop offset="15%" stop-color="#c8e8ff" stop-opacity="1"/>
+        <stop offset="85%" stop-color="#c8e8ff" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#c8e8ff" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="pl-w2" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#a8d4f0" stop-opacity="0"/>
+        <stop offset="12%" stop-color="#a8d4f0" stop-opacity="1"/>
+        <stop offset="88%" stop-color="#a8d4f0" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#a8d4f0" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="pl-w3" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#88c0e8" stop-opacity="0"/>
+        <stop offset="10%" stop-color="#88c0e8" stop-opacity="1"/>
+        <stop offset="90%" stop-color="#88c0e8" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#88c0e8" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <rect width="420" height="420" rx="12" fill="url(#pl-bg)"/>
+    <rect width="420" height="420" rx="12" fill="none" stroke="url(#pl-gH)" stroke-width="1.6"/>
+    <rect x="10" y="10" width="400" height="400" rx="7" fill="none" stroke="url(#pl-gH)" stroke-width="0.5" opacity="0.38"/>
+    <line x1="55" y1="22" x2="365" y2="22" stroke="url(#pl-gH)" stroke-width="0.9" opacity="0.55"/>
+    <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
+      <polyline points="16,22 16,14 24,14"/><polyline points="404,22 404,14 396,14"/>
+    </g>
+    <text x="210" y="155" text-anchor="middle" dominant-baseline="middle"
+      font-family="Apple SD Gothic Neo,Malgun Gothic,NanumGothic,sans-serif"
+      font-weight="700" font-size="185" fill="url(#pl-gH)">결</text>
+    <path d="M 0,148 C 42,128 78,168 120,148 C 162,128 198,168 240,148 C 282,128 318,168 360,148 C 385,138 400,142 420,140" fill="none" stroke="url(#pl-w1)" stroke-width="2.0" stroke-linecap="round" opacity="0.55"/>
+    <path d="M 0,162 C 38,146 80,178 118,162 C 158,146 198,178 238,162 C 278,146 318,178 358,162 C 386,154 402,157 420,155" fill="none" stroke="url(#pl-w2)" stroke-width="1.4" stroke-linecap="round" opacity="0.38"/>
+    <path d="M 0,174 C 42,164 82,184 122,174 C 162,164 202,184 242,174 C 282,164 322,184 362,174 C 388,169 404,171 420,170" fill="none" stroke="url(#pl-w3)" stroke-width="1.0" stroke-linecap="round" opacity="0.22"/>
+    <line x1="100" y1="236" x2="320" y2="236" stroke="url(#pl-gH)" stroke-width="0.7" opacity="0.42"/>
+    <polygon points="210,246 219,255 210,264 201,255" fill="url(#pl-gD)" opacity="0.92"/>
+    <circle cx="178" cy="255" r="2.6" fill="url(#pl-gD)" opacity="0.60"/>
+    <circle cx="165" cy="255" r="1.6" fill="url(#pl-gD)" opacity="0.36"/>
+    <circle cx="242" cy="255" r="2.6" fill="url(#pl-gD)" opacity="0.60"/>
+    <circle cx="255" cy="255" r="1.6" fill="url(#pl-gD)" opacity="0.36"/>
+    <text x="210" y="313" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="9" fill="url(#pl-gH)">RESONATE</text>
+    <text x="210" y="348" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" letter-spacing="15" fill="#c8a844" opacity="0.88">TOUR</text>
+    <text x="210" y="371" text-anchor="middle" font-family="Georgia,serif" font-size="11" letter-spacing="4" fill="#c8a844" opacity="0.72">KOREA &#x2194; USA</text>
+    <line x1="55" y1="398" x2="365" y2="398" stroke="url(#pl-gH)" stroke-width="0.9" opacity="0.55"/>
+    <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
+      <polyline points="16,398 16,406 24,406"/><polyline points="404,398 404,406 396,406"/>
+    </g>
+  </svg>
+</div>
+
 </body>
 </html>
