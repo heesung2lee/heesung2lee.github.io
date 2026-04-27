@@ -139,14 +139,14 @@ nav.hero-mode .mob-btn span{background:#fff}
 .day-tab-bar::-webkit-scrollbar{display:none}
 .dtab{
   flex-shrink:0;
-  padding:7px 14px;
-  margin:6px 3px;
-  font-size:11px;font-weight:500;color:#9e9e9e;
+  padding:6px 12px;
+  margin:5px 3px;
+  font-size:10px;font-weight:500;color:#9e9e9e;
   background:#f4f4f4;
   border:1.5px solid transparent;
-  border-radius:100px;
+  border-radius:10px;
   cursor:pointer;font-family:inherit;white-space:nowrap;
-  text-align:center;line-height:1.4;
+  text-align:center;line-height:1.3;
   transition:color .18s, background .18s, border-color .18s, box-shadow .18s;
   -webkit-tap-highlight-color:transparent;
   touch-action:manipulation;
@@ -1126,13 +1126,13 @@ html {
 }
 
 
-/* ═══ FLYING BIRDS ═══ */
-#bird-canvas{
+/* ═══ NATURE CANVAS ═══ */
+#nature-canvas{
   position:fixed;
   top:0;left:0;
   width:100%;height:100%;
   pointer-events:none;
-  z-index:9998;
+  z-index:2;
 }
 
 
@@ -1877,7 +1877,13 @@ function buildSchedule() {
     const tab = document.createElement('button');
     tab.className = 'dtab' + (i === 0 ? ' act' : '');
     tab.id = 'dt' + i;
-    tab.innerHTML = `<span style="font-size:11px;font-weight:700">${day.n}</span><br><span style="font-size:10px;font-weight:400;color:#bbb">${day.date.split(' ')[0]}</span>`;
+    const L = curLang;
+    const dateParts = day.date.split(' ');  // ["5/5","화","TUE"]
+    const dateNum  = dateParts[0] || '';
+    const dayKo    = dateParts[1] || '';
+    const dayEn    = dateParts[2] || '';
+    const dayLabel = L === 'ko' ? dayKo : dayEn;
+    tab.innerHTML = `<span style="font-size:10px;font-weight:700;letter-spacing:.04em">${day.n}</span><span style="font-size:9px;font-weight:400;color:#aaa;margin:1px 0;display:block">${dateNum}</span><span style="font-size:9px;font-weight:600;color:#888">${dayLabel}</span>`;
     tab.onclick = () => switchDay(i);
     tabBar.appendChild(tab);
 
@@ -2648,143 +2654,6 @@ document.addEventListener('keydown', e => {
 });
 
 
-/* ═══════════════════════════════════════════
-   FLYING BIRDS — scroll-reactive canvas animation
-   Birds fly across screen, speed/flock reacts to scroll
-═══════════════════════════════════════════ */
-(function(){
-  var canvas = document.createElement('canvas');
-  canvas.id = 'bird-canvas';
-  document.body.appendChild(canvas);
-  var ctx = canvas.getContext('2d');
-
-  var W, H;
-  function resize(){
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize, { passive:true });
-
-  /* ── Bird shape: classic M-wing silhouette ── */
-  function drawBird(x, y, size, wingPhase, opacity) {
-    ctx.save();
-    ctx.globalAlpha = opacity;
-    ctx.strokeStyle = '#1a1a2e';
-    ctx.lineWidth = Math.max(1, size * 0.18);
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-
-    // Wing flap: phase drives arc curvature
-    var flap = Math.sin(wingPhase) * size * 0.55;
-
-    ctx.beginPath();
-    // Left wing
-    ctx.moveTo(x, y);
-    ctx.quadraticCurveTo(x - size * 0.55, y - flap, x - size * 1.1, y - size * 0.1);
-    // Right wing
-    ctx.moveTo(x, y);
-    ctx.quadraticCurveTo(x + size * 0.55, y - flap, x + size * 1.1, y - size * 0.1);
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  /* ── Flock data ── */
-  var BIRD_COUNT = 9;
-  var birds = [];
-
-  function spawnBird(stagger) {
-    var side = Math.random() < 0.5 ? 'left' : 'right';
-    var size = 5 + Math.random() * 9;
-    var speed = 0.6 + Math.random() * 1.0;
-    return {
-      x: side === 'left' ? -60 - Math.random() * 120 : W + 60 + Math.random() * 120,
-      y: H * (0.08 + Math.random() * 0.55),
-      dir: side === 'left' ? 1 : -1,
-      speed: speed,
-      baseSpeed: speed,
-      size: size,
-      wingPhase: Math.random() * Math.PI * 2,
-      wingSpeed: 0.06 + Math.random() * 0.05,
-      opacity: 0.18 + Math.random() * 0.35,
-      delay: stagger || 0,
-      waveAmp: 6 + Math.random() * 14,
-      waveFreq: 0.008 + Math.random() * 0.006,
-      waveOffset: Math.random() * Math.PI * 2,
-      tick: 0,
-      active: false,
-    };
-  }
-
-  for (var i = 0; i < BIRD_COUNT; i++) {
-    var b = spawnBird(i * 90);
-    birds.push(b);
-  }
-
-  /* ── Scroll state ── */
-  var scrollV = 0;       // scroll velocity
-  var lastScrollY = 0;
-  var scrollBoost = 0;   // extra speed on scroll
-
-  window.addEventListener('scroll', function(){
-    var dy = window.scrollY - lastScrollY;
-    lastScrollY = window.scrollY;
-    scrollBoost = Math.min(Math.abs(dy) * 0.18, 3.5);
-  }, { passive:true });
-
-  /* ── RAF loop ── */
-  var frame = 0;
-
-  function tick() {
-    requestAnimationFrame(tick);
-    ctx.clearRect(0, 0, W, H);
-
-    scrollBoost *= 0.92; // decay
-    frame++;
-
-    birds.forEach(function(b) {
-      // Staggered spawn delay
-      if (b.delay > 0) { b.delay--; return; }
-      b.active = true;
-      b.tick++;
-
-      // Speed reacts to scroll
-      var spd = b.baseSpeed + scrollBoost * (0.5 + Math.random() * 0.3);
-
-      // Horizontal movement
-      b.x += b.dir * spd;
-
-      // Vertical wave (gentle sine drift)
-      b.y += Math.sin(b.tick * b.waveFreq + b.waveOffset) * b.waveAmp * 0.04;
-
-      // Wing flap — faster when scrolling
-      b.wingPhase += b.wingSpeed + scrollBoost * 0.04;
-
-      // Off-screen → respawn from opposite side
-      if ((b.dir === 1 && b.x > W + 120) || (b.dir === -1 && b.x < -120)) {
-        var nb = spawnBird(0);
-        nb.dir = -b.dir; // come from other side
-        nb.x = nb.dir === 1 ? -30 : W + 30;
-        Object.assign(b, nb);
-        b.active = true;
-        b.delay = 0;
-      }
-
-      if (!b.active) return;
-
-      // Fade in/out near edges
-      var edgeFade = Math.min(
-        Math.min(b.x + 80, W - b.x + 80) / 80,
-        1
-      );
-      var opacity = b.opacity * Math.max(0, Math.min(1, edgeFade));
-
-      drawBird(b.x, b.y, b.size, b.wingPhase, opacity);
-    });
-  }
-
-  tick();
-})();
 
 
 /* ═══════════════════════════════════════════
@@ -2863,6 +2732,415 @@ document.addEventListener('keydown', e => {
   } else {
     setTimeout(preloadGallery, 800);
   }
+})();
+
+
+
+
+/* ═══════════════════════════════════════════════
+   NATURE CANVAS
+   1 sunbeam · 4 birds · 2 wind gusts · 3 leaves
+═══════════════════════════════════════════════ */
+(function(){
+  var cv = document.createElement('canvas');
+  cv.id = 'nature-canvas';
+  document.body.appendChild(cv);
+  var ctx = cv.getContext('2d');
+  var W, H, frame = 0;
+
+  function resize(){ W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize, { passive:true });
+
+  /* ════════════════════
+     1. SUNBEAM (1 beam)
+  ════════════════════ */
+  /* ── Sun position (off top-right corner) ── */
+  var SUN = { x: W * 0.78, y: -H * 0.08 };
+
+  var RAYS = [];
+  var RAY_COUNT = 9;
+  for (var ri = 0; ri < RAY_COUNT; ri++) {
+    RAYS.push({
+      angle:  0.55 + ri * 0.13 + (Math.random()-0.5)*0.08,  // radians downward spread
+      width:  18  + Math.random() * 38,
+      alpha:  0.06 + Math.random() * 0.10,
+      phase:  Math.random() * Math.PI * 2,
+      pulseF: 0.0002 + Math.random() * 0.0003,
+      len:    Math.max(W, H) * (1.6 + Math.random() * 0.8),
+    });
+  }
+
+  function drawBeam() {
+    SUN.x = W * 0.78;
+    SUN.y = -H * 0.08;
+
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+
+    RAYS.forEach(function(r) {
+      r.phase += r.pulseF;
+      var pulse = 0.78 + 0.22 * Math.sin(r.phase);
+      var alpha = r.alpha * pulse;
+
+      // Ray tip at sun, fans outward at angle
+      var ex = SUN.x + Math.cos(r.angle) * r.len;
+      var ey = SUN.y + Math.sin(r.angle) * r.len;
+
+      // Perpendicular vector for ray width
+      var dx = ex - SUN.x, dy = ey - SUN.y;
+      var dist = Math.sqrt(dx*dx+dy*dy);
+      var nx = -dy/dist, ny = dx/dist;
+      var hw = r.width * 0.5;
+
+      // Half-width at end fans out
+      var hwEnd = r.width * 1.9;
+
+      var grad = ctx.createLinearGradient(SUN.x, SUN.y, ex, ey);
+      grad.addColorStop(0,    'rgba(255,238,160,'+alpha+')');
+      grad.addColorStop(0.12, 'rgba(255,232,140,'+(alpha*0.88)+')');
+      grad.addColorStop(0.45, 'rgba(255,220,120,'+(alpha*0.42)+')');
+      grad.addColorStop(0.78, 'rgba(255,210,100,'+(alpha*0.14)+')');
+      grad.addColorStop(1,    'rgba(255,200,80,0)');
+
+      ctx.beginPath();
+      ctx.moveTo(SUN.x + nx*hw*0.1,  SUN.y + ny*hw*0.1);
+      ctx.lineTo(SUN.x - nx*hw*0.1,  SUN.y - ny*hw*0.1);
+      ctx.lineTo(ex    - nx*hwEnd,    ey    - ny*hwEnd);
+      ctx.lineTo(ex    + nx*hwEnd,    ey    + ny*hwEnd);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+    });
+
+    ctx.restore();
+  }
+
+
+
+  /* ════════════════════
+     2. BIRDS (4 birds)
+  ════════════════════ */
+  function makeB(i) {
+    var side = i % 2 === 0 ? 'left' : 'right';
+    return {
+      x: side==='left' ? -80-Math.random()*120 : W+80+Math.random()*120,
+      y: H*(0.08+Math.random()*0.45),
+      dir: side==='left' ? 1 : -1,
+      speed: 0.33+Math.random()*0.54,
+      size: 5+Math.random()*8,
+      wing: Math.random()*Math.PI*2,
+      wingSpd: 0.033+Math.random()*0.03,
+      op: 0.22+Math.random()*0.32,
+      vy: 0,
+      waveA: 5+Math.random()*12,
+      waveF: 0.006+Math.random()*0.005,
+      waveO: Math.random()*Math.PI*2,
+      tick: 0,
+      delay: i*110
+    };
+  }
+  var birds = [0,1,2,3].map(makeB);
+
+  function drawBird(b) {
+    if (b.delay>0){b.delay--;return;}
+    b.tick++;
+    b.x += b.dir*(b.speed);
+    b.vy += (H*(0.1+Math.sin(b.tick*b.waveF+b.waveO)*0.2)-b.y)*0.012;
+    b.vy *= 0.88;
+    b.y  += b.vy;
+    b.y   = Math.max(8,Math.min(H-8,b.y));
+    b.wing += b.wingSpd;
+
+    if ((b.dir===1&&b.x>W+130)||(b.dir===-1&&b.x<-130)){
+      var nb=makeB(Math.floor(Math.random()*4));
+      nb.dir=-b.dir; nb.x=nb.dir===1?-30:W+30; nb.delay=0;
+      Object.assign(b,nb);
+    }
+
+    var fade=Math.min(Math.min(b.x+80,W-b.x+80)/80,1);
+    var op=b.op*Math.max(0,fade);
+    var flap=Math.sin(b.wing)*b.size*0.55;
+
+    ctx.save();
+    ctx.globalAlpha=op;
+    ctx.strokeStyle='#1a1a2e';
+    ctx.lineWidth=Math.max(1,b.size*0.18);
+    ctx.lineCap='round';
+    ctx.beginPath();
+    ctx.moveTo(b.x,b.y);
+    ctx.quadraticCurveTo(b.x-b.size*.55,b.y-flap,b.x-b.size*1.1,b.y-b.size*.1);
+    ctx.moveTo(b.x,b.y);
+    ctx.quadraticCurveTo(b.x+b.size*.55,b.y-flap,b.x+b.size*1.1,b.y-b.size*.1);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /* ════════════════════
+     3. WIND GUSTS (2)
+  ════════════════════ */
+  function makeWind(i) {
+    var fromLeft = Math.random()<0.6; // 60% left→right, 40% right→left
+    return {
+      x: fromLeft ? -220 : W+220,
+      dir: fromLeft ? 1 : -1,
+      y: H*(0.1+Math.random()*0.7),    // anywhere on screen vertically
+      speed: (2.0+Math.random()*2.0) * (fromLeft?1:-1),
+      alpha: 0,
+      width: 200+Math.random()*260,
+      height: 14+Math.random()*20,
+      active: false,
+      timer: i*310+Math.floor(Math.random()*280),
+      phase: Math.random()*Math.PI*2,
+      curve: (Math.random()-0.5)*0.4,   // random curve/arc direction
+      fadeDir: fromLeft ? 1 : -1
+    };
+  }
+  var winds = [0,1].map(makeWind);
+
+  function drawWind(w) {
+    if (w.timer>0){w.timer--;return;}
+
+    if (!w.active){
+      w.active=true;
+      var fromLeft=Math.random()<0.6;
+      w.dir=fromLeft?1:-1;
+      w.x=fromLeft?-220:W+220;
+      w.y=H*(0.08+Math.random()*0.75);
+      w.speed=(2.0+Math.random()*2.0)*w.dir;
+      w.alpha=0;
+      w.width=200+Math.random()*260;
+      w.height=14+Math.random()*20;
+      w.curve=(Math.random()-0.5)*0.5;
+      w.phase=Math.random()*Math.PI*2;
+    }
+
+    w.x+=w.speed;
+    w.y+=w.curve;   // slight vertical drift
+    w.phase+=0.048;
+
+    // Fade in/out based on direction
+    var progress = w.dir===1 ? w.x/W : (W-w.x)/W;
+    if(progress<0.18)       w.alpha=Math.min(0.18, w.alpha+0.008);
+    else if(progress>0.72)  w.alpha=Math.max(0, w.alpha-0.012);
+
+    var gone = w.dir===1 ? w.x>W+270 : w.x<-270;
+    if(gone){ w.active=false; w.timer=400+Math.floor(Math.random()*450); return; }
+
+    var len = w.width * w.dir; // positive or negative based on direction
+
+    for(var li=0;li<3;li++){
+      var yo = (li-1)*w.height*0.55;
+      var wave = Math.sin(w.phase+li*0.9)*5;
+      var lineAlpha = w.alpha*(1-Math.abs(li-1)*0.38);
+
+      var grd=ctx.createLinearGradient(w.x,0,w.x+len,0);
+      grd.addColorStop(0,'rgba(255,255,255,0)');
+      grd.addColorStop(w.dir===1?0.18:0.82,'rgba(255,255,255,'+lineAlpha+')');
+      grd.addColorStop(w.dir===1?0.72:0.28,'rgba(255,255,255,'+(lineAlpha*0.55)+')');
+      grd.addColorStop(1,'rgba(255,255,255,0)');
+
+      ctx.save();
+      ctx.strokeStyle=grd;
+      ctx.lineWidth=2+li*0.9;
+      ctx.lineCap='round';
+      ctx.globalAlpha=1;
+      ctx.beginPath();
+      ctx.moveTo(w.x, w.y+yo+wave);
+      ctx.bezierCurveTo(
+        w.x+len*0.28, w.y+yo+wave*1.5+w.curve*8,
+        w.x+len*0.65, w.y+yo-wave*0.9+w.curve*4,
+        w.x+len,      w.y+yo+wave*0.4
+      );
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  /* ════════════════════
+     4. LEAVES (3 leaves)
+  ════════════════════ */
+  var LEAF_COLORS = ['#c8602a','#d4882a','#8b4f1a','#b85c2a','#a0522d','#cd853f','#e07b39'];
+
+  function makeLeaf(i) {
+    // Random spawn edge: top, left, or right
+    var edge = Math.floor(Math.random()*3); // 0=top, 1=left, 2=right
+    var sx, sy, svx, svy;
+    if (edge===0) {
+      sx=Math.random()*W; sy=-25-Math.random()*40;
+      svx=(Math.random()-0.35)*0.7; svy=0.3+Math.random()*0.55;
+    } else if (edge===1) {
+      sx=-20; sy=Math.random()*H*0.7;
+      svx=0.25+Math.random()*0.45; svy=(Math.random()-0.3)*0.5;
+    } else {
+      sx=W+20; sy=Math.random()*H*0.7;
+      svx=-(0.25+Math.random()*0.45); svy=(Math.random()-0.3)*0.5;
+    }
+    return {
+      x: sx, y: sy,
+      vx: svx, vy: svy,
+      rot: Math.random()*Math.PI*2,
+      rotSpd: (Math.random()-0.5)*0.05,  // some spin clockwise, some counter
+      rotDir: Math.random()<0.5?1:-1,     // random spin direction
+      swing: Math.random()*Math.PI*2,
+      swingF: 0.008+Math.random()*0.018,  // wider range of oscillation speed
+      swingA: 10+Math.random()*45,        // wider range of swing amplitude
+      driftChange: 120+Math.floor(Math.random()*200), // ticks before drift changes
+      driftTick: 0,
+      targetVx: (Math.random()-0.5)*0.9,
+      size: 12+Math.random()*10,
+      color: LEAF_COLORS[Math.floor(Math.random()*LEAF_COLORS.length)],
+      op: 0.5+Math.random()*0.4,
+      delay: i*200+Math.floor(Math.random()*150),
+      tumble: Math.random()<0.3,  // some leaves tumble faster
+      pause: 0,                   // occasional pause/hover
+    };
+  }
+  var leaves = [0,1,2].map(makeLeaf);
+
+  function drawLeaf(lf) {
+    if(lf.delay>0){lf.delay--;return;}
+
+    // Wind influence — affects direction AND spin
+    var windPush=0, windY=0;
+    winds.forEach(function(w){
+      if(w.active && Math.abs(w.y-lf.y)<100){
+        var strength=(1-Math.abs(w.y-lf.y)/100);
+        windPush+=w.speed*0.16*strength;
+        windY+=Math.sin(w.phase)*0.3*strength;
+      }
+    });
+
+    // Random drift change — leaf changes direction occasionally
+    lf.driftTick++;
+    if(lf.driftTick>lf.driftChange){
+      lf.driftTick=0;
+      lf.driftChange=100+Math.floor(Math.random()*220);
+      lf.targetVx=(Math.random()-0.45)*0.85;
+      // Occasional pause/hover
+      if(Math.random()<0.2) lf.pause=40+Math.floor(Math.random()*60);
+    }
+    // Smooth drift toward target
+    lf.vx+=(lf.targetVx-lf.vx)*0.018;
+
+    // Pause — leaf hovers briefly
+    if(lf.pause>0){ lf.pause--; lf.vy*=0.88; }
+
+    lf.swing+=lf.swingF;
+    var swingX=Math.sin(lf.swing)*lf.swingA*0.045;
+    var swingY=Math.cos(lf.swing*0.7)*lf.swingA*0.018;  // slight vertical oscillation too
+
+    lf.x += lf.vx + swingX + windPush;
+    lf.vy += lf.pause>0 ? -0.004 : 0.007;  // gravity (reduced when pausing)
+    lf.vy  = Math.max(-0.5, Math.min(lf.vy, 1.8));
+    lf.y += lf.vy + swingY + windY;
+
+    // Spin — tumbling leaves spin faster, wind adds spin
+    var spin = lf.rotSpd * (lf.tumble?2.2:1) + windPush*0.05;
+    lf.rot += spin * lf.rotDir;
+
+    // Respawn from any edge
+    if(lf.y>H+50 || lf.x>W+50 || lf.x<-50){
+      var nl=makeLeaf(Math.floor(Math.random()*3));
+      nl.delay=Math.floor(Math.random()*80);
+      Object.assign(lf,nl);
+    }
+
+    ctx.save();
+    ctx.globalAlpha=lf.op;
+    ctx.translate(lf.x,lf.y);
+    ctx.rotate(lf.rot);
+
+    var s=lf.size;
+    ctx.fillStyle=lf.color;
+
+    // 5-pointed maple leaf shape
+    // Built from 5 lobes radiating from center + stem
+    function lobe(cx,cy,r,a){
+      var pts=[];
+      for(var p=0;p<6;p++){
+        var ang=a+(p/5)*Math.PI*2;
+        pts.push([cx+Math.cos(ang)*r, cy+Math.sin(ang)*r]);
+      }
+      return pts;
+    }
+
+    ctx.beginPath();
+    // Center body
+    ctx.arc(0,0,s*0.38,0,Math.PI*2);
+    ctx.fill();
+
+    // 5 lobes: top, top-left, top-right, bottom-left, bottom-right
+    var lobeAngles=[-Math.PI/2, -Math.PI/2-1.2, -Math.PI/2+1.2, -Math.PI/2-2.2, -Math.PI/2+2.2];
+    var lobeDist  =[s*0.52, s*0.45, s*0.45, s*0.32, s*0.32];
+    var lobeR     =[s*0.36, s*0.28, s*0.28, s*0.22, s*0.22];
+    for(var li2=0;li2<5;li2++){
+      var lx=Math.cos(lobeAngles[li2])*lobeDist[li2];
+      var ly=Math.sin(lobeAngles[li2])*lobeDist[li2];
+      // Pointed lobe tip
+      ctx.beginPath();
+      ctx.save();
+      ctx.translate(lx,ly);
+      ctx.rotate(lobeAngles[li2]+Math.PI/2);
+      ctx.moveTo(0,-lobeR[li2]*1.35);
+      ctx.bezierCurveTo(lobeR[li2]*0.9,-lobeR[li2]*0.5, lobeR[li2]*0.9,lobeR[li2]*0.5, 0,lobeR[li2]*0.9);
+      ctx.bezierCurveTo(-lobeR[li2]*0.9,lobeR[li2]*0.5, -lobeR[li2]*0.9,-lobeR[li2]*0.5, 0,-lobeR[li2]*1.35);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Stem
+    ctx.strokeStyle='rgba(0,0,0,0.3)';
+    ctx.lineWidth=s*0.1;
+    ctx.lineCap='round';
+    ctx.beginPath();
+    ctx.moveTo(0,s*0.35);
+    ctx.lineTo(0,s*0.85);
+    ctx.stroke();
+
+    // Center veins
+    ctx.strokeStyle='rgba(0,0,0,0.18)';
+    ctx.lineWidth=0.7;
+    ctx.beginPath();
+    ctx.moveTo(0,s*0.35);
+    ctx.lineTo(0,-s*0.65);
+    ctx.moveTo(0,0);
+    ctx.lineTo(Math.cos(lobeAngles[1])*s*0.55, Math.sin(lobeAngles[1])*s*0.55);
+    ctx.moveTo(0,0);
+    ctx.lineTo(Math.cos(lobeAngles[2])*s*0.55, Math.sin(lobeAngles[2])*s*0.55);
+    ctx.moveTo(0,-s*0.1);
+    ctx.lineTo(Math.cos(lobeAngles[3])*s*0.42, Math.sin(lobeAngles[3])*s*0.42);
+    ctx.moveTo(0,-s*0.1);
+    ctx.lineTo(Math.cos(lobeAngles[4])*s*0.42, Math.sin(lobeAngles[4])*s*0.42);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  /* ════ MAIN LOOP ════ */
+  var scrollBoost=0, lastSY=0;
+  window.addEventListener('scroll',function(){
+    var dy=window.scrollY-lastSY; lastSY=window.scrollY;
+    scrollBoost=Math.min(Math.abs(dy)*0.15,2.5);
+  },{passive:true});
+
+  function tick(){
+    requestAnimationFrame(tick);
+    ctx.clearRect(0,0,W,H);
+    frame++;
+    scrollBoost*=0.92;
+
+    drawBeam();
+    birds.forEach(function(b){
+      b.speed=b.speed+(scrollBoost*0.08);
+      b.speed=Math.max(0.24,Math.min(b.speed,2.1));
+      drawBird(b);
+    });
+    winds.forEach(drawWind);
+    leaves.forEach(drawLeaf);
+  }
+
+  setTimeout(tick, 400);
 })();
 
 </script>
