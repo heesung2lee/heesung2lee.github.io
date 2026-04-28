@@ -117,7 +117,7 @@ nav.hero-mode .mob-btn span{background:#fff}
 .why-ico{font-size:26px;margin-bottom:14px}
 .why-t{font-size:15px;font-weight:600;color:#171a20!important;margin-bottom:7px;line-height:1.35}
 .why-d{font-size:13px;color:#5c5e62!important;line-height:1.8;font-weight:300}
-.quote-blk{background:#171a20;text-align:center;padding:80px 40px}
+.quote-blk{background:#171a20;text-align:center;padding:80px 40pxheight:260px;box-sizing:border-box}
 .quote-blk blockquote{font-size:clamp(18px,3vw,28px);font-weight:300;font-style:italic;color:#fff;line-height:1.6;max-width:640px;margin:0 auto 14px}
 .quote-blk cite{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.38)}
 .home-cta-strip{background:#f4f4f4;padding:48px 40px;text-align:center;border-top:1px solid #e8e8e8}
@@ -1725,11 +1725,11 @@ body {
   </div>
 
   <div class="quote-blk">
-    <div id="review-display" style="transition:opacity .5s ease">
-      <blockquote id="review-text" style="min-height:80px"></blockquote>
-      <cite id="review-cite"></cite>
+    <div id="review-display" style="position:absolute;inset:40px 44px;display:flex;flex-direction:column;justify-content:center">
+      <blockquote id="review-text" style="margin:0 0 12px;flex:1;display:flex;align-items:center"></blockquote>
+      <cite id="review-cite" style="display:block"></cite>
     </div>
-    <div style="display:flex;justify-content:center;gap:8px;margin-top:20px" id="review-dots"></div>
+    <div style="display:flex;justify-content:center;gap:8px;position:absolute;bottom:20px;left:0;right:0" id="review-dots"></div>
   </div>
 
   <div class="home-cta-strip">
@@ -1871,7 +1871,7 @@ body {
 <div id="toast"></div>
 
 <!-- ══════ FOOTER ══════ -->
-<footer>
+<footer style="scroll-margin-top:0">
   <div class="footer-logo">결 Resonate<small>KOREA ↔ USA · EST. 2026</small></div>
   <div class="footer-links">
     <button onclick="nav('schedule')"><span class="ko">일정</span><span class="en">Schedule</span></button>
@@ -1881,7 +1881,7 @@ body {
     <button onclick="openModal('terms')"><span class="ko">이용약관</span><span class="en">Terms</span></button>
     <button onclick="openModal('privacy')"><span class="ko">개인정보처리방침</span><span class="en">Privacy</span></button>
   </div>
-  <div class="footer-copy"><span class="ko">© 2026 결 Gyeol Tour. 종합여행업 등록 제 ○○○호</span><span class="en">© 2026 결 Resonate · resonatetour.com · All rights reserved.</span></div>
+  <div class="footer-copy"><span class="ko">© 2026 결 Resonate Tour. 종합여행업 등록 제 ○○○호</span><span class="en">© 2026 결 Resonate · resonatetour.com · All rights reserved.</span></div>
 </footer>
 
 <script>
@@ -2743,12 +2743,22 @@ function closeHam() {
     var dots = document.getElementById('review-dots');
     if (!el || !txt || !cite) return;
 
+    // Lock scroll position before any DOM change
+    var savedScrollY = window.scrollY;
+    el.style.transition = 'none';
     el.style.opacity = '0';
-    setTimeout(function() {
-      txt.innerHTML = lang==='ko' ? r.ko : r.en;
-      cite.innerHTML = lang==='ko' ? r.by_ko : r.by_en;
+    // Update text while invisible — no layout shift since container is fixed height
+    txt.innerHTML = lang==='ko' ? r.ko : r.en;
+    cite.innerHTML = lang==='ko' ? r.by_ko : r.by_en;
+    // Fade back in after paint
+    requestAnimationFrame(function(){
+      // Restore scroll position if it moved
+      if (Math.abs(window.scrollY - savedScrollY) > 2) {
+        window.scrollTo({ top: savedScrollY, behavior: 'instant' });
+      }
+      el.style.transition = 'opacity 0.5s ease';
       el.style.opacity = '1';
-    }, 500);
+    });
 
     // dots
     if (dots) {
