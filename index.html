@@ -1497,34 +1497,7 @@ body {
 
 
 /* ── #45 Dark mode ── */
-@media (prefers-color-scheme: dark) {
-  /* Only non-hero pages */
-  #pg-schedule .sched-sticky-header,
-  #pg-schedule .day-tab-bar,
-  #pg-schedule .day-panels,
-  .dpanel, .tl-item,
-  #pg-pricing .pricing-wrap,
-  .plan, .calc-box,
-  #pg-about .about-wrap,
-  #pg-contact .contact-right,
-  footer {
-    background: #1c1c1e !important;
-    color: #f5f5f7 !important;
-    border-color: #3a3a3c !important;
-  }
-  .tl-name, .dp-h, .split-h,
-  .plan-usd, .calc-ttl, .pillar-t,
-  .page-hdr h1 {
-    color: #f5f5f7 !important;
-  }
-  .tl-spot, .tl-note, .split-p,
-  .plan-pp, .pillar-d, .page-hdr p {
-    color: #a1a1aa !important;
-  }
-  .dtab { background: #2c2c2e !important; color: #a1a1aa !important; }
-  .dtab.act { background: #3a3a3c !important; color: #f5f5f7 !important; }
-  nav { background: rgba(28,28,30,.95) !important; border-color: #3a3a3c !important; }
-}
+
 
 /* ── #46 Skeleton loading ── */
 @keyframes shimmer {
@@ -1642,8 +1615,16 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 .fs-btn:active { transform: scale(.9); }
-html.fs-lg { font-size: 18px !important; }
-html.fs-xl { font-size: 20px !important; }
+html.fs-lg body, html.fs-lg .dpanel, html.fs-lg .tl-name,
+html.fs-lg .plan-usd, html.fs-lg .plan-pp, html.fs-lg p,
+html.fs-lg .split-p, html.fs-lg .pillar-d, html.fs-lg .tl-note {
+  font-size: 1.12em !important;
+}
+html.fs-xl body, html.fs-xl .dpanel, html.fs-xl .tl-name,
+html.fs-xl .plan-usd, html.fs-xl .plan-pp, html.fs-xl p,
+html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
+  font-size: 1.24em !important;
+}
 
 
 /* Prevent nav hover from causing layout shift */
@@ -4395,23 +4376,68 @@ function printSchedule() {
   };
 })();
 
-/* ── #65 Font size controls ── */
+/* ── #65 Font size controls (fixed) ── */
 (function(){
-  var sizes = ['', 'fs-lg', 'fs-xl'];
+  var SIZES = ['', 'fs-lg', 'fs-xl'];
   var cur = parseInt(localStorage.getItem('resonate-fs') || '0');
-  var up = document.getElementById('fs-up');
-  var dn = document.getElementById('fs-dn');
-  function applySize() {
-    sizes.forEach(function(c){ if(c) document.documentElement.classList.remove(c); });
-    if (sizes[cur]) document.documentElement.classList.add(sizes[cur]);
-    localStorage.setItem('resonate-fs', cur);
+
+  function updateBtnLabels() {
+    var L = document.documentElement.getAttribute('data-lang') || 'ko';
+    var up = document.getElementById('fs-up');
+    var dn = document.getElementById('fs-dn');
+    if (!up || !dn) return;
+    if (L === 'ko') {
+      up.innerHTML = '결+';
+      dn.innerHTML = '결-';
+    } else {
+      up.innerHTML = 'A+';
+      dn.innerHTML = 'A-';
+    }
+    // Dim if at limits
+    up.style.opacity = cur >= SIZES.length-1 ? '0.35' : '1';
+    dn.style.opacity = cur <= 0 ? '0.35' : '1';
   }
-  applySize();
-  if (up) up.onclick = function() { cur = Math.min(cur+1, sizes.length-1); applySize(); };
-  if (dn) dn.onclick = function() { cur = Math.max(cur-1, 0); applySize(); };
-  // Only show on mobile
-  var ctrl = document.getElementById('font-size-ctrl');
-  if (ctrl) ctrl.style.display = window.innerWidth <= 860 ? 'flex' : 'none';
+
+  function applySize() {
+    SIZES.forEach(function(c){ if(c) document.documentElement.classList.remove(c); });
+    if (SIZES[cur]) document.documentElement.classList.add(SIZES[cur]);
+    // Direct font-size on body for reliability
+    var scale = [1, 1.12, 1.24][cur];
+    document.body.style.fontSize = (scale * 14) + 'px';
+    localStorage.setItem('resonate-fs', String(cur));
+    updateBtnLabels();
+  }
+
+  function init() {
+    var up = document.getElementById('fs-up');
+    var dn = document.getElementById('fs-dn');
+    var ctrl = document.getElementById('font-size-ctrl');
+    if (!up || !dn) return;
+
+    // Only show on mobile
+    if (ctrl) ctrl.style.display = window.innerWidth <= 860 ? 'flex' : 'none';
+
+    up.onclick = function() {
+      if (cur < SIZES.length-1) { cur++; applySize(); }
+    };
+    dn.onclick = function() {
+      if (cur > 0) { cur--; applySize(); }
+    };
+    applySize();
+
+    // Update labels on lang toggle
+    var origToggle = window.toggleLang;
+    window.toggleLang = function() {
+      if (origToggle) origToggle();
+      setTimeout(updateBtnLabels, 50);
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    setTimeout(init, 100);
+  }
 })();
 
 /* ── Wire #43 map links + #46 skeleton + #62 search into nav ── */
@@ -4504,8 +4530,8 @@ function printSchedule() {
 
 <!-- #65 Font size controls -->
 <div id="font-size-ctrl">
-  <button class="fs-btn" id="fs-up" aria-label="글자 크게" title="글자 크게">A+</button>
-  <button class="fs-btn" id="fs-dn" aria-label="글자 작게" title="글자 작게">A-</button>
+  <button class="fs-btn" id="fs-up" aria-label="글자 크게" title="글자 크게"><span class="ko">결+</span><span class="en">A+</span></button>
+  <button class="fs-btn" id="fs-dn" aria-label="글자 작게" title="글자 작게"><span class="ko">결-</span><span class="en">A-</span></button>
 </div>
 
 </body>
