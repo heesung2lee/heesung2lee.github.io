@@ -32,7 +32,7 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 [data-lang="en"] .ko{display:none!important}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:300;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid #f0f0f0;transition:all .3s;overflow:visible}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:52px;padding:0 16px 0 12px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid #f0f0f0;transition:background .3s;overflow:visible;box-sizing:border-box;}
 nav.hero-mode{background:transparent;border-color:transparent}
 .nav-logo{font-size:14px;font-weight:700;color:#171a20;cursor:pointer;letter-spacing:-.01em;transition:color .2s}
 .nav-logo-btn{
@@ -70,14 +70,14 @@ nav.hero-mode .nav-logo-btn:hover{background:rgba(255,255,255,.2);border-color:r
 nav.hero-mode .nav-logo-btn:active{box-shadow:0 0 0 4px rgba(255,255,255,.2)!important}
 nav.hero-mode .nav-logo{color:#fff}
 .nav-logo small{font-size:10px;font-weight:300;opacity:.55;margin-left:4px;letter-spacing:.06em}
-.nav-mid{display:flex;gap:2px}
+.nav-mid{display:flex;gap:2px;flex:1;justify-content:center;min-width:0;overflow:hidden}
 .nav-tab{font-size:13px;font-weight:400;color:#393c41;background:none;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
 .nav-tab:hover{background:#f4f4f4}
 .nav-tab.act{color:#171a20;font-weight:700;background:#f0f0f0}
 nav.hero-mode .nav-tab{color:rgba(255,255,255,.8)}
 nav.hero-mode .nav-tab:hover{background:rgba(255,255,255,.12);color:#fff}
 nav.hero-mode .nav-tab.act{background:rgba(255,255,255,.18);color:#fff}
-.nav-r{display:flex;align-items:center;gap:8px}
+.nav-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .btn-lang{font-size:12px;font-weight:500;background:none;border:1px solid #e0e0e0;color:#393c41;padding:6px 12px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
 nav.hero-mode .btn-lang{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85)}
 .btn-book{font-size:13px;font-weight:500;background:#171a20;color:#fff;border:none;padding:8px 18px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
@@ -1932,6 +1932,18 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 .pd-item { width:100%; box-sizing:border-box; overflow:hidden; }
 #pc-dropdown { overflow:hidden; }
 
+
+/* nav-r tight layout */
+.nav-r {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+
+
+
 </style>
   <noscript><style>body{font-family:sans-serif;padding:40px;text-align:center}.ko{display:block}</style></noscript>
 </head>
@@ -2014,8 +2026,11 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 </div>
 
 <!-- NAV -->
-<nav id="mainNav">
-  <button class="nav-logo-btn nav-logo-svg" onclick="nav('home')" aria-label="홈으로 돌아가기" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;height:42px;-webkit-tap-highlight-color:transparent">
+<nav id="mainNav" style="display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0">
+
+  <!-- LEFT: Logo -->
+  <div style="flex-shrink:0;display:flex;align-items:center">
+    <button class="nav-logo-btn nav-logo-svg" onclick="nav('home')" aria-label="홈으로 돌아가기" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;height:42px;-webkit-tap-highlight-color:transparent">
   <svg viewBox="0 0 420 420" height="42" width="42"
        xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:5px">
     <defs>
@@ -2082,33 +2097,39 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
     </g>
   </svg>
 </button>
-  <div class="nav-mid">
+  </div>
+
+  <!-- CENTER: Nav tabs — shrinks gracefully -->
+  <div class="nav-mid" style="display:flex;justify-content:center;align-items:center;gap:2px;overflow:hidden;min-width:0">
     <button class="nav-tab act" data-page="home"     onclick="nav('home')"><span class="ko">홈</span><span class="en">Home</span></button>
     <button class="nav-tab"     data-page="about"    onclick="nav('about')"><span class="ko">소개</span><span class="en">About</span></button>
-    <button class="nav-tab"     data-page="courses"  onclick="nav('courses')"><span class="ko">코스</span><span class="en">Courses</span></button>
     <button class="nav-tab"     data-page="schedule" onclick="nav('schedule')"><span class="ko">일정</span><span class="en">Schedule</span></button>
-    <button class="nav-tab" data-page="gallery" style="opacity:.38;cursor:default;pointer-events:none"><span class="ko">갤러리</span><span class="en">Gallery</span></button>
+    <button class="nav-tab"     data-page="pricing"  onclick="nav('pricing')"><span class="ko">가격</span><span class="en">Pricing</span></button>
     <button class="nav-tab"     data-page="contact"  onclick="nav('contact')"><span class="ko">문의</span><span class="en">Contact</span></button>
+    <button class="nav-tab" data-page="gallery" style="opacity:.38;cursor:default;pointer-events:none"><span class="ko">갤러리</span><span class="en">Gallery</span></button>
   </div>
-  <div class="nav-r">
+
+  <!-- RIGHT: Lang + Hamburger — NEVER clips -->
+  <div class="nav-r" style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px">
     <button class="btn-lang" onclick="toggleLang()">🌐 <span id="langLabel">EN</span></button>
-    <button class="btn-book" onclick="nav('contact')"><span class="ko">신청하기</span><span class="en">Book Now</span></button>
     <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
-  <button class="mob-btn" onclick="openHam()" aria-label="메뉴"><span></span><span></span><span></span></button>
-  <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
-    <button class="pd-item" onclick="nav('home')"><span class="pd-ico">🏠</span><span class="ko">홈</span><span class="en">Home</span></button>
-    <button class="pd-item" onclick="nav('about')"><span class="pd-ico">✦</span><span class="ko">소개</span><span class="en">About</span></button>
-    <button class="pd-item" onclick="nav('courses')"><span class="pd-ico">⛳</span><span class="ko">골프 코스</span><span class="en">Courses</span></button>
-    <button class="pd-item" onclick="nav('schedule')"><span class="pd-ico">🗓️</span><span class="ko">13일 일정</span><span class="en">Itinerary</span></button>
-    <button class="pd-item" onclick="nav('pricing')"><span class="pd-ico">💰</span><span class="ko">가격</span><span class="en">Pricing</span></button>
-    <button class="pd-item" onclick="nav('reviews')"><span class="pd-ico">⭐</span><span class="ko">고객 후기</span><span class="en">Reviews</span></button>
-    <button class="pd-item" onclick="nav('faq')"><span class="pd-ico">❓</span><span class="ko">FAQ</span><span class="en">FAQ</span></button>
-    <div class="pd-sep"></div>
-    <button class="pd-item pd-cta" onclick="nav('contact')"><span class="ko">💬 상담 신청</span><span class="en">💬 Consult</span></button>
+      <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
+      <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
+        <button class="pd-item" onclick="nav('home')"><span class="pd-ico">🏠</span><span class="ko">홈</span><span class="en">Home</span></button>
+        <button class="pd-item" onclick="nav('about')"><span class="pd-ico">✦</span><span class="ko">소개</span><span class="en">About</span></button>
+        <button class="pd-item" onclick="nav('courses')"><span class="pd-ico">⛳</span><span class="ko">골프 코스</span><span class="en">Courses</span></button>
+        <button class="pd-item" onclick="nav('schedule')"><span class="pd-ico">🗓️</span><span class="ko">13일 일정</span><span class="en">Itinerary</span></button>
+        <button class="pd-item" onclick="nav('pricing')"><span class="pd-ico">💰</span><span class="ko">가격</span><span class="en">Pricing</span></button>
+        <button class="pd-item" onclick="nav('reviews')"><span class="pd-ico">⭐</span><span class="ko">고객 후기</span><span class="en">Reviews</span></button>
+        <button class="pd-item" onclick="nav('faq')"><span class="pd-ico">❓</span><span class="ko">FAQ</span><span class="en">FAQ</span></button>
+        <div class="pd-sep"></div>
+        <button class="pd-item pd-cta" onclick="nav('contact')"><span class="ko">💬 상담 신청</span><span class="en">💬 Book Now</span></button>
+      </div>
+    </div>
   </div>
-</div>
-  </div>
+
 </nav>
+
 
 <!-- ══════ PAGE: HOME ══════ -->
 <div id="pg-home" class="page act">
@@ -4881,11 +4902,36 @@ function showPcDrop() {
   if (d) d.classList.add('show');
 }
 function hidePcDrop() {
+  if (window.innerWidth <= 860) return;
   _dropTimer = setTimeout(function() {
     var d = document.getElementById('pc-dropdown');
     if (d) d.classList.remove('show');
-  }, 120);
+  }, 150);
 }
+function togglePcDrop() {
+  if (window.innerWidth <= 860) {
+    // Mobile: open ham sheet as before
+    openHam();
+    return;
+  }
+  // PC: toggle dropdown
+  var d = document.getElementById('pc-dropdown');
+  if (d) {
+    if (d.classList.contains('show')) {
+      d.classList.remove('show');
+    } else {
+      d.classList.add('show');
+    }
+  }
+}
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  var wrapper = e.target.closest('[onmouseenter="showPcDrop()"]');
+  if (!wrapper) {
+    var d = document.getElementById('pc-dropdown');
+    if (d) d.classList.remove('show');
+  }
+});
 function switchCourse(i) {
   document.querySelectorAll('.course-tab').forEach(function(t,j){ t.classList.toggle('act',j===i); });
   document.querySelectorAll('.course-panel').forEach(function(p,j){ p.classList.toggle('act',j===i); });
