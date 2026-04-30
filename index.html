@@ -32,7 +32,7 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 [data-lang="en"] .ko{display:none!important}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:300;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid #f0f0f0;transition:all .3s}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid #f0f0f0;transition:all .3s;overflow:hidden}
 nav.hero-mode{background:transparent;border-color:transparent}
 .nav-logo{font-size:14px;font-weight:700;color:#171a20;cursor:pointer;letter-spacing:-.01em;transition:color .2s}
 .nav-logo-btn{
@@ -712,8 +712,8 @@ footer{background:#f4f4f4!important}
 
 /* Nav tabs */
 .nav-tab:hover{
-  transform:translateY(-2px) scale(1.04) !important;
-  box-shadow:0 4px 12px rgba(23,26,32,.12),0 0 0 1.5px rgba(23,26,32,.1) !important;
+  transform:scale(1.04) !important;
+  box-shadow:0 2px 8px rgba(23,26,32,.10) !important;
   background:rgba(23,26,32,.06) !important;
 }
 .nav-tab:active,.nav-tab.pressing{
@@ -721,8 +721,9 @@ footer{background:#f4f4f4!important}
   box-shadow:0 1px 4px rgba(23,26,32,.08),inset 0 1px 3px rgba(23,26,32,.08) !important;
 }
 nav.hero-mode .nav-tab:hover{
+  transform:scale(1.04) !important;
   background:rgba(255,255,255,.15) !important;
-  box-shadow:0 4px 12px rgba(0,0,0,.2),0 0 0 1.5px rgba(255,255,255,.2) !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.18) !important;
 }
 
 /* Day tabs */
@@ -1432,12 +1433,272 @@ body {
   background: rgba(255,255,255,0.28);
 }
 
+
+/* ── #41 Sticky CTA — pricing page mobile ── */
+#pricing-sticky-cta {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid #e8e8e8;
+  z-index: 200;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.10);
+}
+#pricing-sticky-cta button {
+  width: 100%;
+  padding: 15px;
+  background: #171a20;
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all .18s;
+}
+#pricing-sticky-cta button:active { transform: scale(.97); }
+@media (max-width: 860px) {
+  #pricing-sticky-cta { display: block; }
+}
+
+/* ── #42 Hero scroll hint ── */
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: .7;
+  animation: hintBounce 2.2s ease-in-out infinite;
+  cursor: pointer;
+}
+.hero-scroll-hint span {
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: rgba(255,255,255,.8);
+  text-transform: uppercase;
+}
+.hero-scroll-hint svg {
+  width: 22px; height: 22px;
+  stroke: rgba(255,255,255,.8);
+}
+@keyframes hintBounce {
+  0%,100% { transform: translateX(-50%) translateY(0); opacity: .7; }
+  50%      { transform: translateX(-50%) translateY(7px); opacity: 1; }
+}
+
+
+
+/* ── #45 Dark mode ── */
+@media (prefers-color-scheme: dark) {
+  /* Only non-hero pages */
+  #pg-schedule .sched-sticky-header,
+  #pg-schedule .day-tab-bar,
+  #pg-schedule .day-panels,
+  .dpanel, .tl-item,
+  #pg-pricing .pricing-wrap,
+  .plan, .calc-box,
+  #pg-about .about-wrap,
+  #pg-contact .contact-right,
+  footer {
+    background: #1c1c1e !important;
+    color: #f5f5f7 !important;
+    border-color: #3a3a3c !important;
+  }
+  .tl-name, .dp-h, .split-h,
+  .plan-usd, .calc-ttl, .pillar-t,
+  .page-hdr h1 {
+    color: #f5f5f7 !important;
+  }
+  .tl-spot, .tl-note, .split-p,
+  .plan-pp, .pillar-d, .page-hdr p {
+    color: #a1a1aa !important;
+  }
+  .dtab { background: #2c2c2e !important; color: #a1a1aa !important; }
+  .dtab.act { background: #3a3a3c !important; color: #f5f5f7 !important; }
+  nav { background: rgba(28,28,30,.95) !important; border-color: #3a3a3c !important; }
+}
+
+/* ── #46 Skeleton loading ── */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 8px;
+}
+.skeleton-line { height: 14px; margin-bottom: 10px; border-radius: 4px; }
+.skeleton-line.w60 { width: 60%; }
+.skeleton-line.w80 { width: 80%; }
+.skeleton-block { height: 120px; border-radius: 12px; margin-bottom: 12px; }
+
+/* ── #56 Typing cursor ── */
+.typing-cursor {
+  display: inline-block;
+  width: 2px; height: 1em;
+  background: rgba(255,255,255,.8);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: cursorBlink .75s step-end infinite;
+}
+@keyframes cursorBlink {
+  0%,100% { opacity: 1; } 50% { opacity: 0; }
+}
+
+/* ── #53 KakaoTalk floating button ── */
+#kakao-float {
+  position: fixed;
+  bottom: 86px;
+  right: 18px;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: #fee500;
+  border: none;
+  cursor: pointer;
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.22);
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s;
+  -webkit-tap-highlight-color: transparent;
+}
+#kakao-float:hover { transform: scale(1.1); box-shadow: 0 6px 22px rgba(0,0,0,.28); }
+#kakao-float:active { transform: scale(.92); }
+#kakao-float svg { width: 28px; height: 28px; }
+#kakao-float-tip {
+  position: fixed;
+  bottom: 148px;
+  right: 18px;
+  background: rgba(0,0,0,.78);
+  color: #fff;
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all .2s;
+  pointer-events: none;
+  z-index: 250;
+}
+#kakao-float:hover + #kakao-float-tip,
+#kakao-float-tip.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── #57 Count-up ── */
+.stat-val[data-target] { transition: none; }
+
+/* ── #64 Bookmark hearts ── */
+.bookmark-btn {
+  position: absolute;
+  top: 10px; left: 10px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.85);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  z-index: 5;
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1);
+  -webkit-tap-highlight-color: transparent;
+}
+.bookmark-btn:active { transform: scale(.85); }
+.bookmark-btn.saved { color: #e03535; }
+.bookmark-btn:not(.saved) { color: #aaa; }
+
+/* ── #65 Font size ── */
+#font-size-ctrl {
+  position: fixed;
+  bottom: 148px;
+  left: 14px;
+  z-index: 250;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fs-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+  font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.fs-btn:active { transform: scale(.9); }
+html.fs-lg { font-size: 18px !important; }
+html.fs-xl { font-size: 20px !important; }
+
+
+/* Prevent nav hover from causing layout shift */
+nav { contain: layout style; }
+.nav-tab { will-change: transform; }
+.nav-mid { overflow: visible !important; }
+
+
+/* Pricing page bottom padding — clear sticky CTA bar */
+@media (max-width: 860px) {
+  #pg-pricing .pricing-wrap { padding-bottom: 140px !important; }
+  #pg-pricing { padding-bottom: 70px; }
+}
+
+
+#pg-pricing .page-hdr { padding-top: 72px; }
+#pg-pricing .pricing-wrap { scroll-margin-top: 60px; }
+
+
+/* ── Calc rate-row with inline input ── */
+.rate-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.rate-row input[type=number] {
+  margin-left: auto;
+}
+.rate-row input[type=number]::-webkit-inner-spin-button,
+.rate-row input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+.rate-row input[type=number]:focus {
+  border-color: #171a20 !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 3px rgba(23,26,32,.06);
+}
+
 </style>
   <noscript><style>body{font-family:sans-serif;padding:40px;text-align:center}.ko{display:block}</style></noscript>
 </head>
 <body>
 
 <!-- MOB MENU SHEET -->
+
+<!-- #41 Sticky pricing CTA -->
+<div id="pricing-sticky-cta">
+  <button onclick="nav('contact')">
+    <span class="ko">지금 상담 신청하기 →</span>
+    <span class="en">Book a Consultation →</span>
+  </button>
+</div>
+
 <div id="ham-overlay" onclick="closeHam()"></div>
 <div id="ham-sheet">
   <div class="ham-header">
@@ -1682,6 +1943,9 @@ body {
     </div>
     <div class="day-tab-bar" id="dayTabBar"></div>
   </div>
+  <button class="btn-sm" onclick="printSchedule()" style="margin:8px auto;display:block;font-size:11px;padding:8px 18px;border-radius:100px;background:#f4f4f4;color:#5c5e62;border:1px solid #e0e0e0">
+  <span class="ko">📄 일정 PDF 저장</span><span class="en">📄 Save PDF</span>
+</button>
   <div class="day-panels" id="dayPanels"></div>
 </div>
 
@@ -1712,17 +1976,15 @@ body {
         <span style="font-size:12px;color:#9e9e9e;font-weight:600;text-transform:uppercase;letter-spacing:.08em"><span class="ko">현재 환율</span><span class="en">Live Rate</span></span>
         <div class="rate-pill"><div class="rate-dot"></div><span class="rate-val">1 USD = <span id="rateVal">loading…</span> KRW</span><span id="rateTime" style="font-size:11px;color:#bbb;margin-left:4px"></span></div>
         <button class="rate-refresh" onclick="fetchRate()" id="refreshBtn">↻ <span class="ko">새로고침</span><span class="en">Refresh</span></button>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;margin-left:auto">
+          <span style="font-size:9px;color:#bbb;letter-spacing:.06em;font-weight:600;text-transform:uppercase"><span class="ko">직접입력</span><span class="en">Custom</span></span>
+          <input type="number" id="calcRate" value="1380" min="800" max="2500" step="1"
+            oninput="calcUpdate()"
+            style="width:82px;padding:5px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;text-align:center;background:#f8f8f8;outline:none;color:#171a20;font-weight:600"
+            title="환율 직접 입력 / Custom Rate">
+        </div>
       </div>
-      <div class="calc-fields">
-        <div class="cc-f"><label><span class="ko">인원</span><span class="en">Group Size</span></label>
-          <select id="calcPax" onchange="calcUpdate()">
-            <option value="1" data-usd="8500">1 Guest — $8,500</option>
-            <option value="2" data-usd="14500" selected>2 Guests — $14,500</option>
-            <option value="4" data-usd="24000">4 Guests — $24,000</option>
-          </select></div>
-        <div class="cc-f"><label><span class="ko">환율 직접 입력</span><span class="en">Custom Rate</span></label>
-          <input type="number" id="calcRate" value="1380" min="1000" max="2000" step="1" oninput="calcUpdate()"></div>
-      </div>
+      <div class="calc-fields" style="display:none"></div>
       <div class="calc-out" id="calcOut"></div>
       <div class="calc-note"><span class="ko">* Open Exchange Rates API 기준. 실제 결제 환율과 다를 수 있습니다.</span><span class="en">* Via Open Exchange Rates API. Actual rate may differ.</span></div>
     </div>
@@ -2327,20 +2589,26 @@ async function fetchRate() {
 }
 
 function calcUpdate() {
-  const selPax = parseInt(document.getElementById('calcPax') && document.getElementById('calcPax').value || 2);
-  const r = parseFloat(document.getElementById('calcRate') && document.getElementById('calcRate').value || 1380);
-  const rate = (isNaN(r) || r < 500) ? liveRate : r;
-  const out = document.getElementById('calcOut');
+  var r = parseFloat((document.getElementById('calcRate') || {}).value || liveRate);
+  var rate = (isNaN(r) || r < 500) ? liveRate : r;
+  var out = document.getElementById('calcOut');
   if (!out) return;
-  const paxPlans = [{pax:1,usd:8500,pp:8500},{pax:2,usd:14500,pp:7250},{pax:4,usd:24000,pp:6000}];
-  out.innerHTML = paxPlans.map(p => `
-    <div class="cc-card${p.pax === selPax ? ' sel' : ''}">
-      <div class="cc-lbl">${p.pax} GUEST</div>
-      <div class="cc-usd">${fmtUSD(p.usd)}</div>
-      <div class="cc-krw">${fmtKRW(p.usd * rate)}</div>
-      <div class="cc-pp">${fmtUSD(p.pp)}/guest</div>
-    </div>`).join('');
-  updatePlanKRW(rate);
+  var L = curLang;
+  var plans = [
+    {pax:1, usd:6800,  pp:6800,  ko:'1인 · 솔로',  en:'1 Guest · Solo'},
+    {pax:2, usd:12800, pp:6400,  ko:'2인 · 듀오',   en:'2 Guests · Duo'},
+    {pax:4, usd:21200, pp:5300,  ko:'4인 · 그룹',   en:'4 Guests · Group'},
+  ];
+  out.innerHTML = plans.map(function(p) {
+    var totalKRW = Math.round(p.usd * rate).toLocaleString();
+    var ppKRW    = Math.round(p.pp  * rate).toLocaleString();
+    return '<div class="cc-card">'
+      + '<div class="cc-lbl">' + (L==='ko' ? p.ko : p.en) + '</div>'
+      + '<div class="cc-usd">$' + p.usd.toLocaleString() + ' USD</div>'
+      + '<div class="cc-krw">&#8776; &#8361;' + totalKRW + ' KRW</div>'
+      + '<div class="cc-pp"><span class="ko">1인당</span><span class="en">per person</span> &#8361;' + ppKRW + '</div>'
+      + '</div>';
+  }).join('');
 }
 
 function updatePlanKRW(rate) {
@@ -3767,6 +4035,399 @@ document.addEventListener('keydown', e => {
     }
   }, { passive: true });
 })();
+
+/* ════════════════════════════════════════════
+   UI/UX FEATURES #41 – #65
+════════════════════════════════════════════ */
+
+/* ── #41 Sticky CTA: show only on pricing page ── */
+(function(){
+  var cta = document.getElementById('pricing-sticky-cta');
+  if (!cta) return;
+  var _origNav = window.nav;
+  window.nav = function(page, idx) {
+    _origNav(page, idx);
+    if (cta) cta.style.display = (page === 'pricing') ? 'block' : 'none';
+  };
+})();
+
+/* ── #42 Scroll hint: hide once user scrolls ── */
+(function(){
+  window.addEventListener('scroll', function() {
+    var hint = document.querySelector('.hero-scroll-hint');
+    if (hint && window.scrollY > 60) {
+      hint.style.opacity = '0';
+      hint.style.pointerEvents = 'none';
+    }
+  }, { passive: true, once: true });
+})();
+
+/* ── #43 Google Maps links in day panels ── */
+function addMapLinks() {
+  var maps = {
+    'Heartwell Golf': 'https://maps.google.com/?q=Heartwell+Golf+Course+Long+Beach',
+    'Skylinks': 'https://maps.google.com/?q=Skylinks+Golf+Course+Long+Beach',
+    'Dad Miller': 'https://maps.google.com/?q=Dad+Miller+Golf+Course+Anaheim',
+    'La Mirada': 'https://maps.google.com/?q=La+Mirada+Golf+Course',
+    'Sandpiper': 'https://maps.google.com/?q=Sandpiper+Golf+Course+Santa+Barbara',
+    'Alisal': 'https://maps.google.com/?q=Alisal+River+Course+Solvang',
+    'Glen Ivy': 'https://maps.google.com/?q=Glen+Ivy+Golf+Club',
+    'Golf Club of CA': 'https://maps.google.com/?q=Golf+Club+of+California+Fallbrook',
+    'The Crossings': 'https://maps.google.com/?q=The+Crossings+Golf+Course+Carlsbad',
+    'Elim': 'https://maps.google.com/?q=Elim+Hot+Springs+Warner+Springs',
+    'Haskell': 'https://maps.google.com/?q=Haskells+Beach+Santa+Barbara',
+    'Solvang': 'https://maps.google.com/?q=Solvang+California',
+    'Bernardo Winery': 'https://maps.google.com/?q=Bernardo+Winery+San+Diego',
+    'LAX': 'https://maps.google.com/?q=Los+Angeles+International+Airport',
+  };
+  document.querySelectorAll('.tl-spot').forEach(function(el) {
+    var txt = el.textContent.trim();
+    for (var k in maps) {
+      if (txt.indexOf(k) > -1 && !el.querySelector('a')) {
+        var a = document.createElement('a');
+        a.href = maps[k];
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.style.cssText = 'font-size:9px;color:#aaa;margin-left:6px;text-decoration:none;vertical-align:middle';
+        a.textContent = '🗺';
+        el.appendChild(a);
+        break;
+      }
+    }
+  });
+}
+
+/* ── #44 Enhanced price calculator: person selector ── */
+/* ── #46 Skeleton loading for schedule ── */
+function showScheduleSkeleton() {
+  var panels = document.getElementById('dayPanels');
+  if (!panels) return;
+  panels.innerHTML = Array(3).fill(0).map(function() {
+    return '<div style="padding:28px 24px"><div class="skeleton skeleton-line w60"></div><div class="skeleton skeleton-line w80"></div><div class="skeleton skeleton-block"></div></div>';
+  }).join('');
+}
+
+/* ── #47 Swipe to close ham menu ── */
+(function(){
+  var sheet = null;
+  var startX = 0, startY = 0;
+  document.addEventListener('touchstart', function(e) {
+    sheet = document.getElementById('ham-sheet');
+    if (!sheet || !sheet.classList.contains('open')) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchmove', function(e) {
+    if (!sheet || !sheet.classList.contains('open')) return;
+    var dx = e.touches[0].clientX - startX;
+    var dy = Math.abs(e.touches[0].clientY - startY);
+    if (dx > 18 && dy < 60) {
+      var pct = Math.min(dx / sheet.offsetWidth, 1);
+      sheet.style.transform = 'translateX(' + (pct * 110) + '%)';
+      sheet.style.transition = 'none';
+    }
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    if (!sheet || !sheet.classList.contains('open')) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    sheet.style.transition = '';
+    if (dx > sheet.offsetWidth * 0.38) {
+      if (window.closeHam) closeHam();
+    } else {
+      sheet.style.transform = '';
+    }
+  }, { passive: true });
+})();
+
+/* ── #48 Form autocomplete attributes ── */
+(function(){
+  var map = {
+    'f-name':  'name',
+    'f-email': 'email',
+    'f-phone': 'tel',
+    'f-msg':   'off',
+  };
+  for (var id in map) {
+    var el = document.getElementById(id);
+    if (el) el.setAttribute('autocomplete', map[id]);
+  }
+})();
+
+/* ── #51 Bottom nav bar (mobile) ── */
+(function(){
+  var bar = document.createElement('nav');
+  bar.id = 'bottom-nav';
+  bar.style.cssText = [
+    'position:fixed','bottom:0','left:0','right:0',
+    'height:calc(56px + env(safe-area-inset-bottom))',
+    'padding-bottom:env(safe-area-inset-bottom)',
+    'background:rgba(255,255,255,.96)',
+    'backdrop-filter:blur(12px)',
+    '-webkit-backdrop-filter:blur(12px)',
+    'border-top:1px solid #e8e8e8',
+    'display:none',
+    'align-items:center',
+    'justify-content:space-around',
+    'z-index:199',
+    'box-shadow:0 -2px 12px rgba(0,0,0,.08)',
+  ].join(';');
+
+  var items = [
+    {icon:'🏠', ko:'홈',    en:'Home',     page:'home'},
+    {icon:'🗓️',ko:'일정',  en:'Schedule', page:'schedule'},
+    {icon:'💰', ko:'가격',  en:'Price',    page:'pricing'},
+    {icon:'✉️', ko:'문의',  en:'Contact',  page:'contact'},
+  ];
+  items.forEach(function(item) {
+    var btn = document.createElement('button');
+    btn.style.cssText = 'flex:1;height:56px;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:inherit;-webkit-tap-highlight-color:transparent;transition:all .15s';
+    btn.innerHTML = '<span style="font-size:20px">'+item.icon+'</span><span style="font-size:9px;font-weight:600;color:#9e9e9e;letter-spacing:.04em" class="ko">'+item.ko+'</span><span style="font-size:9px;font-weight:600;color:#9e9e9e;letter-spacing:.04em" class="en">'+item.en+'</span>';
+    btn.setAttribute('data-page', item.page);
+    btn.onclick = function() { nav(item.page); };
+    bar.appendChild(btn);
+  });
+
+  document.body.appendChild(bar);
+
+  // Show only on mobile
+  function checkMobile() {
+    bar.style.display = window.innerWidth <= 860 ? 'flex' : 'none';
+  }
+  checkMobile();
+  window.addEventListener('resize', checkMobile, { passive: true });
+
+  // Highlight active tab
+  var _origNav2 = window.nav;
+  window.nav = function(page, idx) {
+    _origNav2(page, idx);
+    bar.querySelectorAll('button').forEach(function(b) {
+      var isAct = b.getAttribute('data-page') === page;
+      b.querySelector('span:first-child').style.transform = isAct ? 'scale(1.15)' : 'scale(1)';
+      b.querySelectorAll('span').forEach(function(s) {
+        s.style.color = isAct ? '#171a20' : '#9e9e9e';
+      });
+    });
+    // Add bottom padding so content not hidden behind bar
+    document.querySelectorAll('.page.act').forEach(function(p) {
+      p.style.paddingBottom = window.innerWidth <= 860 ? '70px' : '0';
+    });
+  };
+
+  // Also add bottom padding to body on mobile
+  if (window.innerWidth <= 860) {
+    document.body.style.paddingBottom = '56px';
+  }
+})();
+
+/* ── #52 Phone tap-to-call ── */
+(function(){
+  document.querySelectorAll('.c-phone, [data-phone]').forEach(function(el) {
+    var num = el.textContent.replace(/[^+0-9]/g,'');
+    if (num) {
+      el.style.cursor = 'pointer';
+      el.onclick = function(){ window.location.href = 'tel:' + num; };
+    }
+  });
+})();
+
+/* ── #55 Haptic feedback on tap ── */
+(function(){
+  if (!navigator.vibrate) return;
+  document.addEventListener('touchstart', function(e) {
+    var el = e.target;
+    var isBtn = el.matches('button, .btn-book, .dtab, .nav-tab, .ham-item, .plan-btn, .soc-btn, .f-submit, a[href]');
+    if (isBtn) {
+      try { navigator.vibrate(8); } catch(err){}
+    }
+  }, { passive: true });
+})();
+
+/* ── #56 Typing effect on hero H1 ── */
+(function(){
+  var done = false;
+  function runTyping() {
+    if (done) return;
+    done = true;
+    var h1 = document.querySelector('.hero-slide .hero-h1 .ko');
+    if (!h1) return;
+    var text = h1.textContent;
+    h1.textContent = '';
+    var cursor = document.createElement('span');
+    cursor.className = 'typing-cursor';
+    h1.appendChild(cursor);
+    var i = 0;
+    function type() {
+      if (i < text.length) {
+        cursor.insertAdjacentText('beforebegin', text[i++]);
+        setTimeout(type, text[i-1] === '\n' ? 250 : 55 + Math.random()*30);
+      } else {
+        setTimeout(function(){ cursor.remove(); }, 900);
+      }
+    }
+    setTimeout(type, 600);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runTyping);
+  } else {
+    runTyping();
+  }
+})();
+
+/* ── #57 Count-up animation on stats ── */
+(function(){
+  function countUp(el, target, duration) {
+    var start = 0, startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var p = Math.min((ts - startTime) / duration, 1);
+      var ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target < 20 ? Math.round(ease * target) : Math.floor(ease * target)).toLocaleString() + (el.dataset.suffix || '');
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target.toLocaleString() + (el.dataset.suffix || '');
+    }
+    requestAnimationFrame(step);
+  }
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      var target = parseInt(el.dataset.target);
+      if (!isNaN(target)) countUp(el, target, 1800);
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  // Run after stats render
+  setTimeout(function() {
+    document.querySelectorAll('.stat-val[data-target]').forEach(function(el) { obs.observe(el); });
+  }, 500);
+})();
+
+/* ── #61 PWA Service Worker ── */
+(function(){
+  if ('serviceWorker' in navigator) {
+    // Inline SW as blob for single-file deployment
+    var swCode = [
+      "const CACHE='resonate-v1';",
+      "const ASSETS=['/'];",
+      "self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));",
+      "self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('/')))));",
+    ].join('\n');
+    var blob = new Blob([swCode], { type: 'application/javascript' });
+    var swUrl = URL.createObjectURL(blob);
+    navigator.serviceWorker.register(swUrl).catch(function(){});
+  }
+})();
+
+/* ── #62 In-page search for schedule ── */
+function initScheduleSearch() {
+  var header = document.querySelector('.sched-sticky-header');
+  if (!header || header.querySelector('#sched-search')) return;
+  var wrap = document.createElement('div');
+  wrap.style.cssText = 'padding:6px 16px 8px;';
+  wrap.innerHTML = '<input id="sched-search" type="search" placeholder="일정 검색 (Search schedule)..." autocomplete="off" style="width:100%;padding:8px 14px;border:1.5px solid #e0e0e0;border-radius:100px;font-size:13px;font-family:inherit;outline:none;background:#f8f8f8;box-sizing:border-box">';
+  header.appendChild(wrap);
+  var input = wrap.querySelector('#sched-search');
+  input.addEventListener('input', function() {
+    var q = input.value.trim().toLowerCase();
+    if (!q) {
+      document.querySelectorAll('.tl-item').forEach(function(el){ el.style.display=''; });
+      document.querySelectorAll('.dpanel').forEach(function(p){ p.style.display=''; });
+      return;
+    }
+    // Show days containing the search term
+    document.querySelectorAll('.dpanel').forEach(function(panel, i) {
+      var matches = panel.textContent.toLowerCase().indexOf(q) > -1;
+      panel.style.display = matches ? '' : 'none';
+      var tab = document.getElementById('dt' + i);
+      if (tab) tab.style.opacity = matches ? '1' : '0.35';
+    });
+  });
+}
+
+/* ── #63 Print/PDF schedule ── */
+function printSchedule() {
+  var style = '<style>body{font-family:sans-serif;padding:20px;max-width:800px;margin:0 auto}h1{font-size:24px;margin-bottom:4px}.day{page-break-inside:avoid;margin-bottom:24px;border-bottom:1px solid #eee;padding-bottom:12px}.day-title{font-size:16px;font-weight:700;margin-bottom:8px;color:#171a20}.tl-row{display:flex;gap:12px;margin-bottom:6px;font-size:13px}.tl-time{color:#aaa;width:60px;flex-shrink:0}@media print{button{display:none}}</style>';
+  var panels = document.querySelectorAll('.dpanel');
+  var html = '<html><head><title>결 Resonate Tour — 13일 일정</title>' + style + '</head><body>';
+  html += '<h1>결 Resonate Tour</h1><p style="color:#aaa;font-size:12px;margin-bottom:24px">California 13 Days · resonatetour.com</p>';
+  panels.forEach(function(p, i) {
+    html += '<div class="day"><div class="day-title">DAY ' + (i+1) + ' — ' + (p.querySelector('.dp-h') ? p.querySelector('.dp-h').textContent : '') + '</div>';
+    p.querySelectorAll('.tl-item').forEach(function(item) {
+      var time = item.querySelector('.tl-time') ? item.querySelector('.tl-time').textContent : '';
+      var name = item.querySelector('.tl-name') ? item.querySelector('.tl-name').textContent : '';
+      var note = item.querySelector('.tl-note') ? item.querySelector('.tl-note').textContent : '';
+      html += '<div class="tl-row"><span class="tl-time">' + time + '</span><span><strong>' + name + '</strong>' + (note ? ' — ' + note : '') + '</span></div>';
+    });
+    html += '</div>';
+  });
+  html += '</body></html>';
+  var win = window.open('', '_blank');
+  if (win) { win.document.write(html); win.document.close(); win.print(); }
+}
+
+/* ── #64 Bookmark hearts ── */
+(function(){
+  var saved = JSON.parse(localStorage.getItem('resonate-bookmarks') || '{}');
+  function addHearts() {
+    document.querySelectorAll('.dpanel').forEach(function(p, i) {
+      if (p.querySelector('.bookmark-btn')) return;
+      var btn = document.createElement('button');
+      btn.className = 'bookmark-btn' + (saved['day'+i] ? ' saved' : '');
+      btn.innerHTML = saved['day'+i] ? '♥' : '♡';
+      btn.title = '즐겨찾기';
+      btn.onclick = function(e) {
+        e.stopPropagation();
+        saved['day'+i] = !saved['day'+i];
+        btn.className = 'bookmark-btn' + (saved['day'+i] ? ' saved' : '');
+        btn.innerHTML = saved['day'+i] ? '♥' : '♡';
+        btn.style.transform = 'scale(1.4)';
+        setTimeout(function(){ btn.style.transform = ''; }, 200);
+        localStorage.setItem('resonate-bookmarks', JSON.stringify(saved));
+      };
+      p.style.position = 'relative';
+      p.insertBefore(btn, p.firstChild);
+    });
+  }
+  var _origNav3 = window.nav;
+  window.nav = function(pg, idx) {
+    _origNav3(pg, idx);
+    if (pg === 'schedule') setTimeout(addHearts, 150);
+  };
+})();
+
+/* ── #65 Font size controls ── */
+(function(){
+  var sizes = ['', 'fs-lg', 'fs-xl'];
+  var cur = parseInt(localStorage.getItem('resonate-fs') || '0');
+  var up = document.getElementById('fs-up');
+  var dn = document.getElementById('fs-dn');
+  function applySize() {
+    sizes.forEach(function(c){ if(c) document.documentElement.classList.remove(c); });
+    if (sizes[cur]) document.documentElement.classList.add(sizes[cur]);
+    localStorage.setItem('resonate-fs', cur);
+  }
+  applySize();
+  if (up) up.onclick = function() { cur = Math.min(cur+1, sizes.length-1); applySize(); };
+  if (dn) dn.onclick = function() { cur = Math.max(cur-1, 0); applySize(); };
+  // Only show on mobile
+  var ctrl = document.getElementById('font-size-ctrl');
+  if (ctrl) ctrl.style.display = window.innerWidth <= 860 ? 'flex' : 'none';
+})();
+
+/* ── Wire #43 map links + #46 skeleton + #62 search into nav ── */
+(function(){
+  var _origNav4 = window.nav;
+  window.nav = function(pg, idx) {
+    if (pg === 'schedule') showScheduleSkeleton && showScheduleSkeleton();
+    _origNav4(pg, idx);
+    if (pg === 'schedule') {
+      setTimeout(function() {
+        addMapLinks && addMapLinks();
+        initScheduleSearch && initScheduleSearch();
+      }, 200);
+    }
+  };
+})();
 </script>
 
 <div id="logo-preview">
@@ -3829,6 +4490,22 @@ document.addEventListener('keydown', e => {
       <polyline points="16,398 16,406 24,406"/><polyline points="404,398 404,406 396,406"/>
     </g>
   </svg>
+</div>
+
+
+<!-- #53 KakaoTalk floating button -->
+<a id="kakao-float" href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener noreferrer" aria-label="KakaoTalk 상담">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3C6.477 3 2 6.582 2 11c0 2.914 1.768 5.478 4.42 7.022L5.5 21l3.308-1.713A11.6 11.6 0 0012 19c5.523 0 10-3.582 10-8S17.523 3 12 3z" fill="#391b1b"/>
+  </svg>
+</a>
+<div id="kakao-float-tip"><span class="ko">카카오톡 상담</span><span class="en">KakaoTalk Chat</span></div>
+
+
+<!-- #65 Font size controls -->
+<div id="font-size-ctrl">
+  <button class="fs-btn" id="fs-up" aria-label="글자 크게" title="글자 크게">A+</button>
+  <button class="fs-btn" id="fs-dn" aria-label="글자 작게" title="글자 작게">A-</button>
 </div>
 
 </body>
