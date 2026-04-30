@@ -4,12 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>결 Resonate Tour — resonatetour.com</title>
+  <meta name="theme-color" content="#16213e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="description" content="결 Resonate Tour — Korea ↔ USA Premium Golf & Culture 13 Days. resonatetour.com">
   <meta property="og:title" content="결 Resonate Tour">
   <meta property="og:description" content="Korea ↔ USA · Premium Golf & Culture 13 Days · Your Life's Texture, Our Signature Touch.">
   <meta property="og:url" content="https://resonatetour.com">
+  <meta property="og:image" content="https://resonatetour.com/golfpic2.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:locale:alternate" content="en_US">
   <link rel="canonical" href="https://resonatetour.com">
   <!-- Gallery & hero image preloads -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="golfpic2.jpg" as="image">
   <link rel="preload" href="golfpic1.png" as="image">
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -44,7 +53,7 @@ nav.hero-mode{background:transparent;border-color:transparent}
   border-color:rgba(212,175,55,.7);
 }
 .logo-resonate-top{font-size:7.5px;font-weight:700;letter-spacing:.22em;color:rgba(212,175,55,.85);line-height:1}
-.logo-gyeol-center{font-size:16px;font-weight:900;letter-spacing:.02em;color:#fff;line-height:1.1;font-family:"Noto Sans KR",sans-serif}
+
 .logo-tour-bottom{font-size:7px;font-weight:700;letter-spacing:.22em;color:rgba(212,175,55,.82);line-height:1}
 nav.hero-mode .nav-logo-btn{
   background:linear-gradient(145deg,rgba(26,26,46,.9),rgba(15,52,96,.9));
@@ -1296,9 +1305,6 @@ nav.hero-mode .nav-logo-btn {
 ═══════════════════════════════════════════ */
 
 /* Make the page scroll context have perspective */
-html {
-  height: 100%;
-}
 
 body {
   height: 100%;
@@ -1333,79 +1339,7 @@ body {
 }
 
 /* Scroll-driven section reveals */
-@supports (animation-timeline: scroll()) {
 
-  /* Stats row */
-  .stat {
-    animation: revealUp linear both;
-    animation-timeline: view();
-    animation-range: entry 5% entry 35%;
-  }
-
-  /* Why cards */
-  .why-c {
-    animation: revealUp linear both;
-    animation-timeline: view();
-    animation-range: entry 5% entry 35%;
-  }
-
-  /* Gallery cards */
-  #gal-card-0 {
-    animation: revealLeft linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 30%;
-  }
-  #gal-card-1 {
-    animation: revealRight linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 30%;
-  }
-
-  /* Plan cards */
-  .plan {
-    animation: revealUp linear both;
-    animation-timeline: view();
-    animation-range: entry 5% entry 32%;
-  }
-
-  /* Pillar cards */
-  .pillar {
-    animation: revealLeft linear both;
-    animation-timeline: view();
-    animation-range: entry 5% entry 30%;
-  }
-
-  /* Testimonial cards */
-  .testi-card {
-    animation: revealUp linear both;
-    animation-timeline: view();
-    animation-range: entry 5% entry 35%;
-  }
-
-  /* Quote text */
-  .quote-blk blockquote {
-    animation: revealScale linear both;
-    animation-timeline: view();
-    animation-range: entry 10% entry 50%;
-  }
-
-  @keyframes revealUp {
-    from { opacity: 0; transform: translateY(32px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes revealLeft {
-    from { opacity: 0; transform: translateX(-28px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes revealRight {
-    from { opacity: 0; transform: translateX(28px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes revealScale {
-    from { opacity: 0; transform: scale(0.96); }
-    to   { opacity: 1; transform: scale(1); }
-  }
-}
 
 /* JS-driven parallax for hero backgrounds (wider browser support) */
 /* hero-bg gets dynamic translateY via JS — overrides the CSS transform */
@@ -1499,6 +1433,7 @@ body {
 }
 
 </style>
+  <noscript><style>body{font-family:sans-serif;padding:40px;text-align:center}.ko{display:block}</style></noscript>
 </head>
 <body>
 
@@ -1673,7 +1608,7 @@ body {
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
         <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="nav('schedule')">
-          <img id="gal-img-0" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .7s ease">
+          <img loading="lazy" id="gal-img-0" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .7s ease">
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 55%)"></div>
           <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px">
             <div id="gal-day-0" style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:3px"></div>
@@ -1682,7 +1617,7 @@ body {
           <div id="gal-tag-0" style="position:absolute;top:18px;right:-28px;background:rgba(212,175,55,.95);color:#1a1a2e;font-size:8.5px;font-weight:800;letter-spacing:.08em;padding:5px 40px;transform:rotate(35deg);white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.25)"></div>
         </div>
         <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="nav('schedule')">
-          <img id="gal-img-1" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .7s ease">
+          <img loading="lazy" id="gal-img-1" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .7s ease">
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 55%)"></div>
           <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px">
             <div id="gal-day-1" style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:3px"></div>
@@ -1713,7 +1648,7 @@ body {
 
   <div style="padding:64px 0 0;background:#fff">
     <div style="text-align:center;padding:0 40px 36px;background:#fff">
-      <h2 style="font-size:clamp(24px,4vw,38px);font-weight:700;letter-spacing:-.02em;margin-bottom:8px;color:#171a20"><span class="ko">왜 결 투어인가요</span><span class="en">Why Gyeol Tour</span></h2>
+      <h2 style="font-size:clamp(24px,4vw,38px);font-weight:700;letter-spacing:-.02em;margin-bottom:8px;color:#171a20"><span class="ko">왜 결 투어인가요</span><span class="en">Why Resonate Tour</span></h2>
       <p style="font-size:15px;color:#9e9e9e;font-weight:300"><span class="ko">한국에서 예약하고, 캘리포니아에서 전율합니다.</span><span class="en">Book from Korea. Feel California.</span></p>
     </div>
     <div class="why-grid" style="background:#fff">
@@ -1834,12 +1769,12 @@ body {
       <h1><span class="ko">당신의 여정을<br>지금 시작하세요</span><span class="en">Let's Make It<br>Resonate</span></h1>
       <p><span class="ko">인원, 날짜, 예산을 알려주시면 3일 이내 맞춤 제안서를 보내드립니다.</span><span class="en">Share group size, dates & budget — a custom proposal within 3 days.</span></p>
       <div class="c-info-block">
-        <a href="https://open.kakao.com/o/sgyeoltour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico">💬</div><div><div class="c-info-lbl">KakaoTalk</div><div class="c-info-val">@gyeol</div></div></a>
+        <a href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico">💬</div><div><div class="c-info-lbl">KakaoTalk</div><div class="c-info-val">@gyeol</div></div></a>
         <a href="https://instagram.com/resonatetour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico">📸</div><div><div class="c-info-lbl">Instagram</div><div class="c-info-val">@gyeol.tour</div></div></a>
         <a href="mailto:info@resonatetour.com" class="c-info-row"><div class="c-info-ico">✉️</div><div><div class="c-info-lbl">Email</div><div class="c-info-val">info@resonatetour.com</div></div></a>
       </div>
       <div class="soc-grid">
-        <a href="https://open.kakao.com/o/sgyeoltour" target="_blank" rel="noopener" class="soc-btn soc-kakao"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.582 2 11.027c0 2.9 1.878 5.45 4.707 6.94l-1.197 4.447a.25.25 0 0 0 .377.276L11.03 19.7A11.6 11.6 0 0 0 12 19.054c5.523 0 10-3.582 10-8.027S17.523 3 12 3z"/></svg>Kakao</a>
+        <a href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener" class="soc-btn soc-kakao"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.582 2 11.027c0 2.9 1.878 5.45 4.707 6.94l-1.197 4.447a.25.25 0 0 0 .377.276L11.03 19.7A11.6 11.6 0 0 0 12 19.054c5.523 0 10-3.582 10-8.027S17.523 3 12 3z"/></svg>Kakao</a>
         <a href="https://blog.naver.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-naver"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>Naver</a>
         <a href="https://twitter.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-x"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a>
         <a href="https://facebook.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-fb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.254h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>Facebook</a>
@@ -2306,7 +2241,7 @@ function buildPanel(day, i) {
 
   return `
     <div style="width:100%;height:200px;border-radius:10px;overflow:hidden;margin-bottom:22px;background:#e8e8e8;flex-shrink:0">
-      <img src="${dayImg(i)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.9) saturate(1.1)">
+      <img loading="lazy" src="${dayImg(i)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.9) saturate(1.1)">
     </div>
     <div class="dp-meta">
       <span class="dp-num">${day.n}</span>
@@ -2328,6 +2263,10 @@ function switchDay(i) {
     const targetScroll = tab.offsetLeft - (bar.offsetWidth / 2) + (tab.offsetWidth / 2);
     bar.scrollTo({ left: Math.max(0, targetScroll), behavior: 'smooth' });
   }
+  // Scroll page to just below sticky header when switching days
+  const sh = document.querySelector('.sched-sticky-header');
+  const offset = sh ? sh.getBoundingClientRect().bottom + window.scrollY + 8 : 0;
+  if (window.scrollY > offset) window.scrollTo({ top: offset, behavior: 'smooth' });
 }
 
 function rebuildSchedule() {
@@ -2367,30 +2306,24 @@ function fmtUSD(n) { return '$' + n.toLocaleString('en-US'); }
 function fmtKRW(n) { return '₩' + Math.round(n).toLocaleString('ko-KR'); }
 
 async function fetchRate() {
-  const btn = document.getElementById('refreshBtn');
-  const val = document.getElementById('rateVal');
-  const tEl = document.getElementById('rateTime');
-  if (btn) btn.style.opacity = '.5';
-  if (val) val.textContent = '…';
-  try {
-    const r = await fetch('https://open.er-api.com/v6/latest/USD', { signal: AbortSignal.timeout(6000) });
-    if (!r.ok) throw new Error();
-    const d = await r.json();
-    if (d.rates && d.rates.KRW) {
-      liveRate = Math.round(d.rates.KRW);
-      const rateInput = document.getElementById('calcRate');
-      if (rateInput) rateInput.value = liveRate;
-      if (val) val.textContent = liveRate.toLocaleString();
-      const now = new Date();
-      if (tEl) tEl.textContent = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-      calcUpdate();
-      updatePlanKRW();
-    }
-  } catch(e) {
-    if (val) val.textContent = liveRate.toLocaleString() + ' ⚠';
-    if (tEl) tEl.textContent = 'offline';
-  }
-  if (btn) btn.style.opacity = '1';
+  const btn = document.getElementById('rate-refresh-btn');
+  if (btn) btn.style.opacity = '0.5';
+  fetch('https://open.er-api.com/v6/latest/USD')
+    .then(r => r.json())
+    .then(d => {
+      if (d.rates && d.rates.KRW) {
+        liveRate = d.rates.KRW;
+        calcUpdate();
+        const el = document.getElementById('rate-display');
+        if (el) el.textContent = '1 USD = ₩' + Math.round(liveRate).toLocaleString();
+      }
+      if (btn) btn.style.opacity = '1';
+    })
+    .catch(() => {
+      const el = document.getElementById('rate-display');
+      if (el) el.textContent = '1 USD = ₩' + Math.round(liveRate).toLocaleString() + ' (캐시)';
+      if (btn) btn.style.opacity = '1';
+    });
 }
 
 function calcUpdate() {
@@ -2422,6 +2355,7 @@ function updatePlanKRW(rate) {
    LANGUAGE
 ══════════════════════════════ */
 function toggleLang() {
+  const _sy = window.scrollY;
   curLang = curLang === 'ko' ? 'en' : 'ko';
   document.documentElement.setAttribute('data-lang', curLang);
   const lbl = curLang === 'ko' ? 'EN' : '한국어';
@@ -2436,7 +2370,7 @@ function toggleLang() {
     schedBuilt = false;
     buildSchedule();
     // Restore scroll position after rebuild
-    requestAnimationFrame(() => window.scrollTo({ top: scrollY, behavior: 'instant' }));
+    requestAnimationFrame(() => { window.scrollTo({ top: scrollY, behavior: 'instant' }); window.scrollTo({ top: _sy, behavior: 'instant' }); });
   }
   if (curPage === 'pricing') {
     document.getElementById('planGrid').dataset.lang = '';
@@ -2501,20 +2435,19 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
    FORM
 ══════════════════════════════ */
 function submitForm() {
-  const L = curLang;
-  const name = (document.getElementById('fn') || {}).value?.trim();
-  const contact = (document.getElementById('fc') || {}).value?.trim();
-  if (!name) { toast(L==='ko'?'성함을 입력해주세요':'Please enter your name','err'); document.getElementById('fn')?.focus(); return; }
-  if (!contact) { toast(L==='ko'?'연락처를 입력해주세요':'Please enter your contact','err'); document.getElementById('fc')?.focus(); return; }
-  const btn = document.getElementById('fBtn');
-  btn.disabled = true;
-  btn.textContent = L === 'ko' ? '전송 중…' : 'Sending…';
-  setTimeout(() => {
-    ['fn','fc','fp','fd','fm'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
-    btn.disabled = false;
-    btn.innerHTML = '<span class="ko">신청하기</span><span class="en">Submit Inquiry</span>';
-    toast(L==='ko'?'✓ 신청이 접수됐습니다. 3일 이내 연락드리겠습니다!':'✓ Inquiry received! We\'ll be in touch within 3 days.');
-  }, 1200);
+  const name  = (document.getElementById('f-name') || {}).value || '';
+  const email = (document.getElementById('f-email') || {}).value || '';
+  const msg   = (document.getElementById('f-msg') || {}).value || '';
+  if (!name.trim() || !email.trim() || !msg.trim()) {
+    showToast(curLang==='ko' ? '모든 항목을 입력해주세요' : 'Please fill in all fields'); return;
+  }
+  if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+    showToast(curLang==='ko' ? '올바른 이메일을 입력해주세요' : 'Valid email required'); return;
+  }
+  const sub = encodeURIComponent('[결 Resonate Tour] ' + name);
+  const bod = encodeURIComponent(msg + ' | ' + email);
+  window.location.href = 'mailto:info@resonatetour.com?subject=' + sub + '&body=' + bod;
+  showToast(curLang === 'ko' ? '메일 앱이 열립니다 ✓' : 'Opening mail app ✓');
 }
 
 /* ══════════════════════════════
