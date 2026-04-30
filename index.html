@@ -32,7 +32,7 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 [data-lang="en"] .ko{display:none!important}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:300;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid #f0f0f0;transition:all .3s;overflow:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid #f0f0f0;transition:all .3s;overflow:visible}
 nav.hero-mode{background:transparent;border-color:transparent}
 .nav-logo{font-size:14px;font-weight:700;color:#171a20;cursor:pointer;letter-spacing:-.01em;transition:color .2s}
 .nav-logo-btn{
@@ -1627,8 +1627,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 }
 
 
-/* Prevent nav hover from causing layout shift */
-nav { contain: layout style; }
+
 .nav-tab { will-change: transform; }
 .nav-mid { overflow: visible !important; }
 
@@ -1827,16 +1826,16 @@ nav { contain: layout style; }
 /* ═══ PC HAMBURGER DROPDOWN ═══ */
 .mob-btn{position:relative}
 #pc-dropdown{
-  position:absolute;
-  top:calc(100% + 8px);
-  left:-20px;
-  width:280px;
+  position:fixed;
+  top:58px;
+  right:16px;
+  width:240px;
   background:#fff;
   border-radius:16px;
   box-shadow:0 8px 40px rgba(0,0,0,.14),0 2px 10px rgba(0,0,0,.08);
   border:1px solid rgba(0,0,0,.06);
   padding:8px 0;
-  z-index:400;
+  z-index:9990;
   opacity:0;
   transform:translateY(-8px) scale(.97);
   transition:opacity .2s ease,transform .2s cubic-bezier(.34,1.2,.64,1);
@@ -1859,233 +1858,80 @@ nav { contain: layout style; }
   background:#171a20;color:#fff !important;
   border-radius:10px;font-weight:700 !important;
   justify-content:center;
+  width:calc(100% - 20px);
+  box-sizing:border-box;
 }
 .pd-cta:hover{background:#2d2d2d !important}
 @media(max-width:860px){#pc-dropdown{display:none}}
 
-/* ═══ COURSES PAGE ═══ */
-.courses-wrap{max-width:1000px;margin:0 auto;padding:72px 32px 80px}
-.course-hero{
-  position:relative;border-radius:20px;overflow:hidden;
-  height:320px;margin-bottom:48px;
-  background:linear-gradient(135deg,#1a2f1a,#2d4a1e);
-  display:flex;align-items:flex-end;
-}
-@media(min-width:700px){.course-hero{height:420px}}
-.course-hero-bg{
-  position:absolute;inset:0;background-size:cover;
-  background-position:center;
-}
-.course-hero-grad{
-  position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 55%);
-}
-.course-hero-info{position:relative;z-index:2;padding:28px 32px;color:#fff}
-.course-badge{
-  display:inline-block;font-size:10px;font-weight:700;letter-spacing:.14em;
-  text-transform:uppercase;color:rgba(212,175,55,.9);margin-bottom:8px;
-}
-.course-hero-name{font-size:clamp(26px,5vw,42px);font-weight:700;margin-bottom:6px}
-.course-hero-loc{font-size:13px;color:rgba(255,255,255,.7);font-weight:300}
-.course-tabs{
-  display:flex;gap:8px;margin-bottom:36px;
-  border-bottom:2px solid #f0f0f0;padding-bottom:0;
-}
-.course-tab{
-  padding:12px 20px;font-size:14px;font-weight:600;
-  background:none;border:none;cursor:pointer;font-family:inherit;
-  color:#9e9e9e;border-bottom:2px solid transparent;margin-bottom:-2px;
-  transition:all .2s;
-}
-.course-tab.act{color:#171a20;border-bottom-color:#171a20;}
-.course-panel{display:none}
-.course-panel.act{display:block}
-.course-stats{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
-  margin-bottom:32px;
-}
-@media(min-width:600px){.course-stats{grid-template-columns:repeat(4,1fr)}}
-.cs-box{
-  background:#f8f8f8;border-radius:12px;padding:16px;
-  text-align:center;
-}
-.cs-val{font-size:22px;font-weight:700;color:#171a20;margin-bottom:4px}
-.cs-lbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9e9e9e}
-.course-desc{font-size:15px;line-height:1.75;color:#5c5e62;margin-bottom:28px}
-.course-holes{margin-bottom:32px}
-.course-holes h3{font-size:16px;font-weight:700;margin-bottom:16px}
-.hole-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-@media(min-width:600px){.hole-grid{grid-template-columns:repeat(6,1fr)}}
-.hole-card{
-  background:#f4f4f4;border-radius:10px;padding:12px 8px;
-  text-align:center;font-size:12px;
-}
-.hole-num{font-size:9px;font-weight:700;letter-spacing:.1em;color:#bbb;margin-bottom:4px}
-.hole-par{font-size:18px;font-weight:700;color:#171a20}
-.hole-yd{font-size:10px;color:#9e9e9e;margin-top:2px}
-.course-tips{
-  background:linear-gradient(135deg,#1e1b4b,#312e81);
-  border-radius:16px;padding:28px 28px;color:#fff;margin-bottom:28px;
-}
-.course-tips h3{font-size:15px;font-weight:700;margin-bottom:16px;color:#e8c870}
-.tip-item{
-  display:flex;gap:12px;align-items:flex-start;
-  font-size:13px;line-height:1.6;margin-bottom:12px;
-  color:rgba(255,255,255,.85);
-}
-.tip-ico{font-size:16px;flex-shrink:0;margin-top:1px}
 
-/* ═══ FAQ PAGE ═══ */
-.faq-wrap{max-width:780px;margin:0 auto;padding:72px 32px 80px}
-.faq-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
-.faq-cat{
-  padding:8px 18px;border-radius:100px;font-size:13px;font-weight:600;
-  background:#f4f4f4;color:#5c5e62;border:none;cursor:pointer;
-  font-family:inherit;transition:all .18s;
+/* ═══ COURSE STICKY HEADER — same as schedule ═══ */
+.course-sticky-header {
+  position: fixed;
+  top: 52px;
+  left: 0; right: 0;
+  z-index: 49;
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  transform: translateY(-100%);
+  transition: transform .25s ease;
+  pointer-events: none;
 }
-.faq-cat.act{background:#171a20;color:#fff}
-.faq-item{border-bottom:1px solid #f0f0f0}
-.faq-q{
-  width:100%;display:flex;align-items:center;justify-content:space-between;
-  padding:20px 0;font-size:15px;font-weight:600;color:#171a20;
-  background:none;border:none;cursor:pointer;font-family:inherit;text-align:left;
-  gap:12px;
-}
-.faq-q:hover{color:#3a3a3a}
-.faq-chevron{
-  font-size:12px;color:#bbb;flex-shrink:0;
-  transition:transform .25s;display:inline-block;
-}
-.faq-item.open .faq-chevron{transform:rotate(180deg)}
-.faq-a{
-  display:none;padding:0 0 20px;font-size:14px;line-height:1.75;color:#5c5e62;
-}
-.faq-item.open .faq-a{display:block}
-.faq-cta{
-  text-align:center;margin-top:52px;padding:36px;
-  background:linear-gradient(135deg,#1e1b4b,#312e81);
-  border-radius:20px;color:#fff;
-}
-.faq-cta h3{font-size:20px;font-weight:700;margin-bottom:8px}
-.faq-cta p{font-size:14px;opacity:.8;margin-bottom:20px}
-
-/* ═══ REVIEWS PAGE ═══ */
-.reviews-wrap{max-width:1000px;margin:0 auto;padding:72px 32px 80px}
-.reviews-summary{
-  display:flex;align-items:center;gap:32px;
-  background:#f8f8f8;border-radius:20px;padding:32px;
-  margin-bottom:48px;flex-wrap:wrap;
-}
-.rs-score{text-align:center}
-.rs-num{font-size:64px;font-weight:700;color:#171a20;line-height:1}
-.rs-stars{font-size:22px;color:#f5a623;margin:6px 0}
-.rs-total{font-size:12px;color:#9e9e9e}
-.rs-bars{flex:1;min-width:200px}
-.rs-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:12px}
-.rs-bar-lbl{width:24px;text-align:right;color:#9e9e9e;flex-shrink:0}
-.rs-bar-bg{flex:1;height:8px;background:#e8e8e8;border-radius:100px;overflow:hidden}
-.rs-bar-fill{height:100%;border-radius:100px;background:#f5a623}
-.rs-bar-cnt{width:20px;color:#9e9e9e;flex-shrink:0}
-.review-grid{
-  display:grid;gap:20px;
-  grid-template-columns:1fr;
-}
-@media(min-width:700px){.review-grid{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:1000px){.review-grid{grid-template-columns:repeat(3,1fr)}}
-.rv-card{
-  background:#fff;border-radius:16px;padding:24px;
-  border:1px solid #f0f0f0;
-  box-shadow:0 2px 12px rgba(0,0,0,.05);
-  transition:transform .2s,box-shadow .2s;
-}
-.rv-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.10)}
-.rv-stars{color:#f5a623;font-size:14px;margin-bottom:12px}
-.rv-text{font-size:14px;line-height:1.7;color:#3c3c3c;margin-bottom:16px;font-style:italic}
-.rv-author{display:flex;align-items:center;gap:12px}
-.rv-avatar{
-  width:40px;height:40px;border-radius:50%;
-  background:linear-gradient(135deg,#1e1b4b,#312e81);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;color:#fff;font-weight:700;flex-shrink:0;
-}
-.rv-name{font-size:13px;font-weight:700;color:#171a20}
-.rv-meta{font-size:11px;color:#9e9e9e;margin-top:2px}
-.rv-tag{
-  display:inline-block;font-size:10px;font-weight:700;
-  letter-spacing:.08em;padding:3px 10px;border-radius:100px;
-  background:rgba(212,175,55,.12);color:#a07828;margin-top:8px;
-}
-.reviews-cta{
-  text-align:center;margin-top:52px;
-  background:linear-gradient(135deg,#1e1b4b,#312e81);
-  border-radius:20px;padding:40px 32px;color:#fff;
+.course-sticky-header.visible {
+  transform: translateY(0);
+  pointer-events: all;
 }
 
-/* ═══ PC HAMBURGER DROPDOWN ═══ */
-.mob-btn{position:relative}
-#pc-dropdown{
-  position:absolute;
-  top:calc(100% + 8px);
-  left:-20px;
-  width:280px;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 8px 40px rgba(0,0,0,.14),0 2px 10px rgba(0,0,0,.08);
-  border:1px solid rgba(0,0,0,.06);
-  padding:8px 0;
-  z-index:400;
-  opacity:0;
-  transform:translateY(-8px) scale(.97);
-  transition:opacity .2s ease,transform .2s cubic-bezier(.34,1.2,.64,1);
-  pointer-events:none;
+/* Course tabs — styled like dtab buttons */
+.course-tabs {
+  display: flex;
+  overflow-x: auto;
+  align-items: center;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background: #fff;
+  padding: 0 12px;
+  gap: 0;
+  border-top: 1px solid #f0f0f0;
 }
-#pc-dropdown.show{
-  opacity:1;transform:translateY(0) scale(1);pointer-events:all;
+.course-tabs::-webkit-scrollbar { display: none; }
+
+.course-tab {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  margin: 5px 4px;
+  font-size: 13px; font-weight: 600;
+  background: #f4f4f4;
+  border: 1.5px solid transparent;
+  border-radius: 100px;
+  cursor: pointer; font-family: inherit;
+  color: #9e9e9e;
+  white-space: nowrap;
+  transition: all .18s;
+  -webkit-tap-highlight-color: transparent;
 }
-.pd-item{
-  display:flex;align-items:center;gap:12px;
-  padding:11px 18px;font-size:14px;font-weight:500;
-  color:#171a20;cursor:pointer;transition:background .12s;
-  width:100%;background:none;border:none;font-family:inherit;text-align:left;
+.course-tab.act {
+  background: #171a20;
+  color: #fff;
+  border-color: #171a20;
+  box-shadow: 0 2px 8px rgba(23,26,32,.18);
 }
-.pd-item:hover{background:#f4f4f4}
-.pd-ico{font-size:16px;width:24px;text-align:center;flex-shrink:0}
-.pd-sep{height:1px;background:#f0f0f0;margin:6px 0}
-.pd-cta{
-  margin:8px 10px 6px;padding:12px;
-  background:#171a20;color:#fff !important;
-  border-radius:10px;font-weight:700 !important;
-  justify-content:center;
+.course-tab:hover:not(.act) {
+  background: #e8e8e8;
+  color: #3a3a3a;
 }
-.pd-cta:hover{background:#2d2d2d !important}
-@media(max-width:860px){#pc-dropdown{display:none}}
 
-</style>
-  <noscript><style>body{font-family:sans-serif;padding:40px;text-align:center}.ko{display:block}</style></noscript>
-</head>
-<body>
+/* Padding top for courses-wrap so content clears sticky header */
+#pg-courses .courses-wrap {
+  padding-top: 0;
+}
 
-<!-- MOB MENU SHEET -->
 
-<!-- #41 Sticky pricing CTA -->
-<div id="pricing-sticky-cta">
-  <button onclick="nav('contact')">
-    <span class="ko">지금 상담 신청하기 →</span>
-    <span class="en">Book a Consultation →</span>
-  </button>
-</div>
+/* Dropdown item overflow fix */
+.pd-item { width:100%; box-sizing:border-box; overflow:hidden; }
+#pc-dropdown { overflow:hidden; }
 
-<div id="ham-overlay" onclick="closeHam()"></div>
-<div id="ham-sheet">
-  <div class="ham-header">
-    <div class="ham-brand">결 RESONATE<small>KOREA ↔ USA</small></div>
-    <button class="ham-close" onclick="closeHam()">✕</button>
-  </div>
-
-  <div class="ham-nav">
-    <button class="ham-item" onclick="nav('home');closeHam()">
-      <span class="ham-item-ico">🏠</span>
-      <span class="ham-ite
 </style>
   <noscript><style>body{font-family:sans-serif;padding:40px;text-align:center}.ko{display:block}</style></noscript>
 </head>
@@ -2247,7 +2093,20 @@ nav { contain: layout style; }
   <div class="nav-r">
     <button class="btn-lang" onclick="toggleLang()">🌐 <span id="langLabel">EN</span></button>
     <button class="btn-book" onclick="nav('contact')"><span class="ko">신청하기</span><span class="en">Book Now</span></button>
-    <button class="mob-btn" onclick="openHam()" aria-label="메뉴"><span></span><span></span><span></span></button>
+    <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
+  <button class="mob-btn" onclick="openHam()" aria-label="메뉴"><span></span><span></span><span></span></button>
+  <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
+    <button class="pd-item" onclick="nav('home')"><span class="pd-ico">🏠</span><span class="ko">홈</span><span class="en">Home</span></button>
+    <button class="pd-item" onclick="nav('about')"><span class="pd-ico">✦</span><span class="ko">소개</span><span class="en">About</span></button>
+    <button class="pd-item" onclick="nav('courses')"><span class="pd-ico">⛳</span><span class="ko">골프 코스</span><span class="en">Courses</span></button>
+    <button class="pd-item" onclick="nav('schedule')"><span class="pd-ico">🗓️</span><span class="ko">13일 일정</span><span class="en">Itinerary</span></button>
+    <button class="pd-item" onclick="nav('pricing')"><span class="pd-ico">💰</span><span class="ko">가격</span><span class="en">Pricing</span></button>
+    <button class="pd-item" onclick="nav('reviews')"><span class="pd-ico">⭐</span><span class="ko">고객 후기</span><span class="en">Reviews</span></button>
+    <button class="pd-item" onclick="nav('faq')"><span class="pd-ico">❓</span><span class="ko">FAQ</span><span class="en">FAQ</span></button>
+    <div class="pd-sep"></div>
+    <button class="pd-item pd-cta" onclick="nav('contact')"><span class="ko">💬 상담 신청</span><span class="en">💬 Consult</span></button>
+  </div>
+</div>
   </div>
 </nav>
 
@@ -2355,9 +2214,9 @@ nav { contain: layout style; }
 <!-- ══════ PAGE: SCHEDULE ══════ -->
 <div id="pg-schedule" class="page">
   <div class="sched-sticky-header">
-    <div class="page-hdr">
-      <h1><span class="ko">13일 전체 일정</span><span class="en">13-Day Full Schedule</span></h1>
-      <p><span class="ko">날짜 탭을 눌러 상세 일정을 확인하세요</span><span class="en">Tap a day to view the full itinerary</span></p>
+    <div class="page-hdr" style="display:flex;align-items:center;justify-content:center;gap:0;padding:10px 24px 8px;position:relative">
+      <h1 style="font-size:16px;font-weight:700;margin:0;text-align:center"><span class="ko">13일 전체 일정</span><span class="en">13-Day Full Schedule</span></h1>
+      <p style="position:absolute;right:16px;font-size:10px;color:#bbb;font-weight:300;margin:0;white-space:nowrap"><span class="ko">날짜 탭을 눌러 확인하세요</span><span class="en">Tap a day to view</span></p>
     </div>
     <div class="day-tab-bar" id="dayTabBar"></div>
   </div>
@@ -2473,24 +2332,20 @@ nav { contain: layout style; }
   </div>
 </div>
 
-
-
-
-
-
-
-
-<!-- ════ PAGE: COURSES ════ -->
+<!-- COURSES PAGE -->
 <div id="pg-courses" class="page">
-  <div class="courses-wrap">
-    <div class="page-hdr" style="padding:0 0 32px;border:none;text-align:left">
-      <h1><span class="ko">골프 코스 안내</span><span class="en">Golf Courses</span></h1>
-      <p><span class="ko">캘리포니아 최고의 코스에서 라운딩을 경험하세요</span><span class="en">Experience rounds at California's finest courses</span></p>
+  <!-- Sticky course header — same pattern as schedule -->
+  <div class="course-sticky-header" id="courseStickyHeader">
+    <div class="page-hdr" style="display:flex;align-items:center;justify-content:center;gap:0;padding:10px 24px 8px;border:none;position:relative">
+      <h1 style="font-size:16px;font-weight:700;margin:0;text-align:center"><span class="ko">골프 코스 안내</span><span class="en">Golf Courses</span></h1>
+      <p style="position:absolute;right:16px;font-size:10px;color:#bbb;font-weight:300;margin:0;white-space:nowrap"><span class="ko">코스를 선택하세요</span><span class="en">Select a course</span></p>
     </div>
-    <div class="course-tabs">
+    <div class="course-tabs" id="courseTabBar">
       <button class="course-tab act" onclick="switchCourse(0)">Sandpiper Golf Club</button>
       <button class="course-tab" onclick="switchCourse(1)">Trump National (LA)</button>
     </div>
+  </div>
+  <div class="courses-wrap">
     <div class="course-panel act" id="cp-0">
       <div class="course-hero">
         <div class="course-hero-bg" style="background-image:url('golfpic1.png');background-size:cover;background-position:center"></div>
@@ -2503,17 +2358,17 @@ nav { contain: layout style; }
       </div>
       <div class="course-stats">
         <div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl"><span class="ko">홀</span><span class="en">Holes</span></div></div>
-        <div class="cs-box"><div class="cs-val">Par 72</div><div class="cs-lbl"><span class="ko">파</span><span class="en">Par</span></div></div>
+        <div class="cs-box"><div class="cs-val">Par 72</div><div class="cs-lbl">Par</div></div>
         <div class="cs-box"><div class="cs-val">7,068</div><div class="cs-lbl"><span class="ko">야드</span><span class="en">Yards</span></div></div>
         <div class="cs-box"><div class="cs-val">4.7 ★</div><div class="cs-lbl"><span class="ko">평점</span><span class="en">Rating</span></div></div>
       </div>
-      <p class="course-desc"><span class="ko">Sandpiper Golf Club은 태평양이 한눈에 내려다보이는 산타바바라 해안 절벽 위에 자리한 캘리포니아 최고의 퍼블릭 코스 중 하나입니다. Golf Digest 선정 "미국 100대 퍼블릭 코스"에 수차례 이름을 올렸으며, 오션뷰 홀과 험준한 해안 지형이 만들어내는 도전적인 라운딩 경험은 한 번 경험하면 절대 잊지 못할 감동을 선사합니다. 5월의 산타바바라는 평균 기온 18°C로 최상의 라운딩 컨디션을 제공합니다.</span><span class="en">Sandpiper Golf Club sits atop the Pacific Ocean cliffs in Santa Barbara, ranked among California's finest public courses. Multiple-time Golf Digest Top 100 Public Courses honoree. Ocean-view holes and dramatic coastal terrain deliver a challenging yet breathtaking round. May brings ideal conditions with average temperatures of 65°F.</span></p>
+      <p class="course-desc"><span class="ko">Sandpiper Golf Club은 태평양이 한눈에 내려다보이는 산타바바라 해안 절벽 위에 자리한 캘리포니아 최고의 퍼블릭 코스 중 하나입니다. Golf Digest 선정 미국 100대 퍼블릭 코스에 수차례 이름을 올렸으며, 오션뷰 홀과 험준한 해안 지형이 만들어내는 도전적인 라운딩 경험은 절대 잊지 못할 감동을 선사합니다.</span><span class="en">Sandpiper Golf Club sits atop the Pacific Ocean cliffs in Santa Barbara — a multiple-time Golf Digest Top 100 Public Courses honoree. Ocean-view holes and dramatic coastal terrain deliver a round you will never forget.</span></p>
       <div class="course-tips">
-        <h3><span class="ko">라운딩 팁 &amp; 전략</span><span class="en">Playing Tips &amp; Strategy</span></h3>
-        <div class="tip-item"><span class="tip-ico">🌊</span><span><span class="ko">태평양 바람이 클럽 선택에 결정적 영향. 항상 1~2클럽 길게 준비하세요.</span><span class="en">Pacific winds significantly affect club selection. Always prepare 1-2 clubs longer than usual.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">📸</span><span><span class="ko">3번, 7번, 15번 홀은 오션뷰가 가장 아름답습니다. 사진 타임을 미리 계획하세요.</span><span class="en">Holes 3, 7, and 15 offer the most spectacular ocean views.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🌿</span><span><span class="ko">페어웨이 왼쪽 러프는 회수가 어렵습니다. 오른쪽 안전 지대를 공략하세요.</span><span class="en">Left-side rough is notoriously difficult. Play right for better scoring positions.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🕗</span><span><span class="ko">티오프 오전 8~9시 추천. 오후는 바람이 강해집니다.</span><span class="en">Tee times of 8-9am are ideal. Afternoon winds pick up considerably.</span></span></div>
+        <h3><span class="ko">라운딩 팁</span><span class="en">Playing Tips</span></h3>
+        <div class="tip-item"><span class="tip-ico">🌊</span><span><span class="ko">태평양 바람이 세므로 항상 1~2클럽 길게 준비하세요.</span><span class="en">Pacific winds are strong — always prepare 1-2 clubs longer.</span></span></div>
+        <div class="tip-item"><span class="tip-ico">📸</span><span><span class="ko">3번, 7번, 15번 홀 오션뷰가 최고입니다.</span><span class="en">Holes 3, 7 and 15 offer the most spectacular ocean views.</span></span></div>
+        <div class="tip-item"><span class="tip-ico">🕗</span><span><span class="ko">오전 8~9시 티오프 추천. 오후는 바람이 강해집니다.</span><span class="en">8-9am tee times are ideal. Afternoon winds pick up considerably.</span></span></div>
+        <div class="tip-item"><span class="tip-ico">🌿</span><span><span class="ko">페어웨이 왼쪽 러프 회수 어렵습니다. 오른쪽을 공략하세요.</span><span class="en">Left-side rough is difficult to recover from. Play right.</span></span></div>
       </div>
     </div>
     <div class="course-panel" id="cp-1">
@@ -2528,27 +2383,27 @@ nav { contain: layout style; }
       </div>
       <div class="course-stats">
         <div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl"><span class="ko">홀</span><span class="en">Holes</span></div></div>
-        <div class="cs-box"><div class="cs-val">Par 71</div><div class="cs-lbl"><span class="ko">파</span><span class="en">Par</span></div></div>
+        <div class="cs-box"><div class="cs-val">Par 71</div><div class="cs-lbl">Par</div></div>
         <div class="cs-box"><div class="cs-val">6,827</div><div class="cs-lbl"><span class="ko">야드</span><span class="en">Yards</span></div></div>
         <div class="cs-box"><div class="cs-val">4.9 ★</div><div class="cs-lbl"><span class="ko">평점</span><span class="en">Rating</span></div></div>
       </div>
-      <p class="course-desc"><span class="ko">로스앤젤레스 팔로스 버디스 반도 절벽 위에 자리한 Trump National Golf Club은 Golf Magazine 선정 미국 Top 100 코스 중 하나로, LA에서 가장 극적인 오션뷰를 자랑합니다. 태평양이 한눈에 내려다보이는 15번 홀은 세계에서 가장 아름다운 홀 중 하나로 꼽힙니다.</span><span class="en">Perched on the Palos Verdes Peninsula cliffs, Trump National Golf Club is a Golf Magazine Top 100 course featuring the most dramatic ocean views in LA. The par-3 15th hole played toward the Pacific ranks among the world's most beautiful holes.</span></p>
+      <p class="course-desc"><span class="ko">로스앤젤레스 팔로스 버디스 반도 절벽 위에 자리한 Trump National Golf Club은 Golf Magazine 선정 미국 Top 100 코스로, LA에서 가장 극적인 오션뷰를 자랑합니다. 태평양이 한눈에 내려다보이는 15번 홀은 세계에서 가장 아름다운 홀 중 하나로 꼽힙니다.</span><span class="en">Trump National Golf Club on the Palos Verdes cliffs is a Golf Magazine Top 100 course with the most dramatic ocean views in LA. The par-3 15th hole directly facing the Pacific ranks among the world's most beautiful holes.</span></p>
       <div class="course-tips">
-        <h3><span class="ko">라운딩 팁 &amp; 전략</span><span class="en">Playing Tips &amp; Strategy</span></h3>
-        <div class="tip-item"><span class="tip-ico">🌊</span><span><span class="ko">15번 파3 홀 — 바다를 향해 치는 아이언 샷. 핀 위치 상관없이 그린 중앙을 공략하세요.</span><span class="en">The par-3 15th shoots toward the ocean. Always target the center of the green regardless of pin position.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🦅</span><span><span class="ko">전반은 내륙, 후반은 해안 절벽으로 완전히 다른 전략이 필요합니다.</span><span class="en">Front nine plays inland, back nine hugs coastal cliffs — two completely different strategic challenges.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">👔</span><span><span class="ko">드레스 코드: 칼라 셔츠 필수, 데님 금지, 스파이크리스 골프화 권장.</span><span class="en">Dress code: collared shirt required, no denim, soft-spike shoes recommended.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">📸</span><span><span class="ko">클럽하우스 테라스에서 태평양 전망이 장관. 라운딩 후 식사를 즐기세요.</span><span class="en">The clubhouse terrace offers a stunning Pacific panorama — plan a post-round meal.</span></span></div>
+        <h3><span class="ko">라운딩 팁</span><span class="en">Playing Tips</span></h3>
+        <div class="tip-item"><span class="tip-ico">🌊</span><span><span class="ko">15번 파3 — 핀 위치 상관없이 그린 중앙을 공략하세요.</span><span class="en">Hole 15 par-3 — always target the center of the green regardless of pin.</span></span></div>
+        <div class="tip-item"><span class="tip-ico">🦅</span><span><span class="ko">전반은 내륙, 후반은 해안 절벽으로 전혀 다른 두 코스입니다.</span><span class="en">Front nine is inland, back nine hugs the coastal cliffs — two completely different experiences.</span></span></div>
+        <div class="tip-item"><span class="tip-ico">👔</span><span><span class="ko">드레스코드: 칼라 셔츠 필수, 데님 금지.</span><span class="en">Dress code: collared shirt required, no denim.</span></span></div>
+        <div class="tip-item"><span class="tip-ico">📸</span><span><span class="ko">클럽하우스 테라스 태평양 뷰가 장관입니다.</span><span class="en">The clubhouse terrace offers a stunning Pacific panorama.</span></span></div>
       </div>
     </div>
-    <div style="text-align:center;padding:32px;background:#f8f8f8;border-radius:16px;margin-top:8px">
-      <p style="font-size:13px;color:#9e9e9e;margin-bottom:12px"><span class="ko">Alisal Ranch, The Crossings, Glen Ivy 등 추가 코스 안내 준비중</span><span class="en">More courses coming — Alisal Ranch, The Crossings, Glen Ivy &amp; more</span></p>
-      <button class="btn-book" style="font-size:13px;padding:12px 28px;border-radius:100px" onclick="nav('contact')"><span class="ko">코스 관련 문의</span><span class="en">Ask About Courses</span></button>
+    <div style="text-align:center;padding:28px;background:#f8f8f8;border-radius:16px;margin-top:12px">
+      <p style="font-size:13px;color:#9e9e9e;margin-bottom:12px"><span class="ko">Alisal Ranch, The Crossings, Glen Ivy 등 추가 코스 준비중</span><span class="en">More courses coming — Alisal Ranch, The Crossings, Glen Ivy</span></p>
+      <button class="btn-book" style="font-size:13px;padding:12px 28px;border-radius:100px" onclick="nav('contact')"><span class="ko">코스 문의하기</span><span class="en">Ask About Courses</span></button>
     </div>
   </div>
 </div>
 
-<!-- ════ PAGE: FAQ ════ -->
+<!-- FAQ PAGE -->
 <div id="pg-faq" class="page">
   <div class="faq-wrap">
     <div class="page-hdr" style="padding:0 0 32px;border:none;text-align:left">
@@ -2560,30 +2415,30 @@ nav { contain: layout style; }
       <button class="faq-cat" onclick="filterFaq('golf')"><span class="ko">골프</span><span class="en">Golf</span></button>
       <button class="faq-cat" onclick="filterFaq('travel')"><span class="ko">여행/비자</span><span class="en">Travel</span></button>
       <button class="faq-cat" onclick="filterFaq('price')"><span class="ko">가격/예약</span><span class="en">Pricing</span></button>
-      <button class="faq-cat" onclick="filterFaq('prep')"><span class="ko">준비사항</span><span class="en">Preparation</span></button>
+      <button class="faq-cat" onclick="filterFaq('prep')"><span class="ko">준비사항</span><span class="en">Prep</span></button>
     </div>
     <div id="faq-list">
-      <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">골프 초보자도 참가할 수 있나요?</span><span class="en">Can beginners join?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">네, 핸디캡 수준에 맞게 그룹을 편성하므로 초보자도 편안하게 즐기실 수 있습니다. 기본적인 코스 에티켓과 안전한 스윙이 가능한 수준을 권장하며, 출발 전 연습 라운딩 1~2회를 권해드립니다.</span><span class="en">Absolutely. We group players by skill level so beginners can enjoy the round comfortably. Basic course etiquette and a safe swing are recommended. 1-2 practice rounds before departure are suggested.</span></div></div>
-      <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">골프 클럽은 직접 가져가야 하나요?</span><span class="en">Do I need to bring my own clubs?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">본인 클럽을 권장합니다. 현지 렌탈도 가능하지만($40~80/라운드) 익숙한 클럽이 훨씬 좋은 결과를 냅니다. 렌탈 희망 시 사전에 알려주시면 예약을 도와드립니다.</span><span class="en">Bringing your own clubs is recommended. Local rentals are available ($40-80/round), but familiar clubs always perform better. Let us know in advance if you need rentals.</span></div></div>
-      <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">캐디가 동반되나요?</span><span class="en">Are caddies included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">대부분의 코스는 카트 라운딩으로 진행됩니다. 일부 프리미엄 코스는 캐디 서비스 예약이 가능하며(팁 포함 약 $80~120), 원하실 경우 사전에 알려주세요.</span><span class="en">Most courses are cart rounds. Some premium courses offer caddie service (~$80-120 with tip). Request in advance if preferred.</span></div></div>
-      <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">미국 비자가 필요한가요?</span><span class="en">Do I need a US visa?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">한국 국적자는 ESTA($21, 여행 72시간 전 신청)로 입국이 가능합니다. 비자가 필요하신 분은 개별 신청하셔야 합니다. 자세한 안내를 도와드립니다.</span><span class="en">Korean passport holders can enter via ESTA ($21, apply 72+ hours before). Those requiring a full visa must apply separately. We will guide you through the process.</span></div></div>
-      <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">인천-LA 비행시간은 얼마나 걸리나요?</span><span class="en">How long is the flight from Seoul to LA?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">직항 기준 약 11시간 30분~12시간입니다. 투어 첫날은 완전 휴식일로, 시차 적응을 충분히 할 수 있도록 설계되어 있습니다.</span><span class="en">Approximately 11.5-12 hours nonstop. Day 1 is a full rest day designed for jet lag recovery.</span></div></div>
-      <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">여행자 보험은 포함되어 있나요?</span><span class="en">Is travel insurance included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">포함되어 있지 않으나 강력히 권장드립니다. 미국 의료비는 매우 높으므로 최소 $100,000 커버리지 이상을 권해드리며, 적합한 상품 안내를 도와드립니다.</span><span class="en">Not included but strongly recommended. US medical costs are extremely high — minimum $100,000 coverage is essential. We will help guide you to suitable options.</span></div></div>
-      <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">패키지 가격에 무엇이 포함되나요?</span><span class="en">What is included in the package?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">공항 픽업/샌딩, 전일정 차량 이동, 6개 코스 그린피 및 카트피, 숙박(2인 1실 기준), 가이드 서비스, 일부 식사 포함. 항공권, 여행자보험, 개인비용은 불포함입니다.</span><span class="en">Includes: airport transfers, all transportation, greens fees at 6 courses, accommodations (double occupancy), guide service, select meals. Excludes: airfare, travel insurance, personal expenses.</span></div></div>
-      <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">취소 시 환불이 되나요?</span><span class="en">What is the cancellation policy?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">관광진흥법 시행규칙 별표 2 기준: 출발 30일 이전 취소 시 예약금 환불, 20~30일 전 10% 공제, 10~20일 전 15%, 8~10일 전 20%, 1~7일 전 30%, 당일 50% 공제입니다.</span><span class="en">Per Korean Tourism Act: Full deposit refund 30+ days prior. 10% fee 20-30 days, 15% at 10-20 days, 20% at 8-10 days, 30% at 1-7 days, 50% same day.</span></div></div>
-      <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">분할 납부가 가능한가요?</span><span class="en">Is installment payment available?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">네, 3회 분납 가능합니다. 출발 90일 전 20%, 60일 전 40%, 30일 전 40% 방식입니다. 상담 시 말씀해 주세요.</span><span class="en">Yes, 3-installment payment available: 20% at booking (90 days), 40% at 60 days, 40% balance at 30 days before departure.</span></div></div>
-      <div class="faq-item" data-cat="prep"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">어떤 준비를 하면 좋을까요?</span><span class="en">How should I prepare?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">① ESTA 신청(72시간 전) ② 여행자 보험 가입 ③ 환전 또는 해외 카드 준비 ④ 골프용품 챙기기 ⑤ 5월 캘리포니아 날씨(15~23°C) 의류 준비 ⑥ 출발 전 연습 라운딩 1~2회 권장</span><span class="en">① Apply ESTA (72+ hours prior) ② Purchase travel insurance ③ Prepare USD or international card ④ Pack golf gear ⑤ Pack for 60-73°F weather ⑥ 1-2 practice rounds recommended</span></div></div>
-      <div class="faq-item" data-cat="prep"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">혼자 참가해도 괜찮을까요?</span><span class="en">Can I join alone?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">솔로 패키지($6,800)가 준비되어 있으며, 같은 관심사를 가진 분들과의 그룹 매칭 서비스도 제공합니다. 출발 전 카카오 오픈채팅에서 먼저 인사를 나누는 시간을 마련합니다.</span><span class="en">We offer a dedicated Solo Package ($6,800) and a group matching service. We also set up a pre-departure KakaoTalk group so solo travelers can connect before the trip.</span></div></div>
+      <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">골프 초보자도 참가할 수 있나요?</span><span class="en">Can beginners join?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">네. 핸디캡 수준에 맞게 그룹을 편성하므로 초보자도 편안하게 즐기실 수 있습니다. 출발 전 연습 라운딩 1~2회를 권해드립니다.</span><span class="en">Yes. We group players by skill level so beginners can enjoy the round comfortably. 1-2 practice rounds before departure are suggested.</span></div></div>
+      <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">골프 클럽은 직접 가져가야 하나요?</span><span class="en">Do I need to bring my own clubs?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">본인 클럽을 권장합니다. 현지 렌탈도 가능합니다($40~80/라운드). 렌탈 희망 시 사전에 알려주세요.</span><span class="en">Bringing your own clubs is recommended. Local rentals are available ($40-80/round). Let us know in advance if you need rentals.</span></div></div>
+      <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">캐디가 동반되나요?</span><span class="en">Are caddies included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">대부분 카트 라운딩입니다. 일부 프리미엄 코스는 캐디 서비스 예약 가능합니다(팁 포함 약 $80~120).</span><span class="en">Most courses are cart rounds. Some premium courses offer caddie service (~$80-120 with tip) upon request.</span></div></div>
+      <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">미국 비자가 필요한가요?</span><span class="en">Do I need a US visa?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">한국 국적자는 ESTA($21, 여행 72시간 전 신청)로 입국 가능합니다. 비자 필요 시 개별 신청하셔야 합니다.</span><span class="en">Korean passport holders can enter via ESTA ($21, apply 72+ hours before). Those requiring a full visa must apply separately.</span></div></div>
+      <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">인천-LA 비행시간은?</span><span class="en">How long is the flight?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">직항 기준 약 11시간 30분~12시간입니다. 첫날은 완전 휴식일로 시차 적응 시간을 드립니다.</span><span class="en">Approximately 11.5-12 hours nonstop. Day 1 is a full rest day for jet lag recovery.</span></div></div>
+      <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">여행자 보험은 포함인가요?</span><span class="en">Is travel insurance included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">포함되어 있지 않으나 강력히 권장합니다. 미국 의료비는 매우 높으므로 최소 $100,000 커버리지를 권해드립니다.</span><span class="en">Not included but strongly recommended. US medical costs are very high — minimum $100,000 coverage is essential.</span></div></div>
+      <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">패키지 가격에 무엇이 포함되나요?</span><span class="en">What is included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">공항 픽업/샌딩, 전일정 차량 이동, 6개 코스 그린피 및 카트피, 숙박(2인 1실), 가이드 서비스, 일부 식사 포함. 항공권·보험·개인비용 불포함.</span><span class="en">Includes: airport transfers, all transportation, greens fees at 6 courses, accommodation (double), guide service, select meals. Excludes: airfare, insurance, personal expenses.</span></div></div>
+      <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">취소 환불 정책은?</span><span class="en">What is the cancellation policy?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">관광진흥법 기준: 출발 30일 전 취소 시 예약금 환불. 20~30일 전 10%, 10~20일 전 15%, 8~10일 전 20%, 1~7일 전 30%, 당일 50% 공제.</span><span class="en">Per Korean Tourism Act: Full deposit refund 30+ days prior. 10% at 20-30 days, 15% at 10-20, 20% at 8-10, 30% at 1-7 days, 50% same day.</span></div></div>
+      <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">분할 납부 가능한가요?</span><span class="en">Is installment payment available?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">네, 3회 분납 가능합니다. 출발 90일 전 20%, 60일 전 40%, 30일 전 40%.</span><span class="en">Yes, 3-installment payment available: 20% at booking, 40% at 60 days, 40% balance at 30 days before departure.</span></div></div>
+      <div class="faq-item" data-cat="prep"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">어떤 준비가 필요한가요?</span><span class="en">How should I prepare?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">① ESTA 신청(72시간 전) ② 여행자보험 가입 ③ 환전/해외카드 준비 ④ 골프용품 챙기기 ⑤ 5월 캘리포니아 날씨(15~23°C) 의류 준비 ⑥ 연습 라운딩 1~2회 권장</span><span class="en">① Apply ESTA ② Purchase travel insurance ③ Prepare USD/international card ④ Pack golf gear ⑤ Pack for 60-73°F weather ⑥ 1-2 practice rounds recommended</span></div></div>
+      <div class="faq-item" data-cat="prep"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">혼자 참가해도 괜찮나요?</span><span class="en">Can I join alone?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">솔로 패키지($6,800)가 있으며 그룹 매칭도 제공합니다. 출발 전 카카오 오픈채팅을 통해 다른 참가자들과 미리 인사할 수 있습니다.</span><span class="en">We offer a Solo Package ($6,800) and a group matching service. A pre-departure KakaoTalk group lets solo travelers connect before the trip.</span></div></div>
     </div>
-    <div class="faq-cta fi" style="text-align:center;margin-top:48px;padding:36px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;color:#fff">
+    <div style="text-align:center;margin-top:48px;padding:36px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;color:#fff">
       <h3 style="font-size:20px;font-weight:700;margin-bottom:8px"><span class="ko">더 궁금한 점이 있으신가요?</span><span class="en">Still have questions?</span></h3>
-      <p style="font-size:14px;opacity:.8;margin-bottom:20px"><span class="ko">카카오톡 또는 이메일로 편하게 연락주세요. 24시간 내 답변드립니다.</span><span class="en">Reach out via KakaoTalk or email. We respond within 24 hours.</span></p>
+      <p style="font-size:14px;opacity:.8;margin-bottom:20px"><span class="ko">카카오톡 또는 이메일로 연락주세요. 24시간 내 답변드립니다.</span><span class="en">Reach out via KakaoTalk or email. We respond within 24 hours.</span></p>
       <button class="btn-book" style="font-size:14px;padding:14px 32px;border-radius:100px" onclick="nav('contact')"><span class="ko">상담 신청하기</span><span class="en">Contact Us</span></button>
     </div>
   </div>
 </div>
 
-<!-- ════ PAGE: REVIEWS ════ -->
+<!-- REVIEWS PAGE -->
 <div id="pg-reviews" class="page">
   <div class="reviews-wrap">
     <div class="page-hdr" style="padding:0 0 32px;border:none;text-align:left">
@@ -2601,14 +2456,14 @@ nav { contain: layout style; }
       </div>
     </div>
     <div class="review-grid">
-      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"Sandpiper에서 바다를 바라보며 친 티샷은 평생 잊지 못할 것 같습니다. 모든 일정이 촘촘하게 잘 짜여져 있어서 허투루 보낸 시간이 단 하루도 없었습니다."</span><span class="en">"The tee shot at Sandpiper overlooking the Pacific is something I will never forget. Every single day of the itinerary was meaningful, nothing wasted."</span></div><div class="rv-author"><div class="rv-avatar">김</div><div><div class="rv-name"><span class="ko">김재원 · 51세</span><span class="en">Jaewon Kim · 51</span></div><div class="rv-meta"><span class="ko">서울 · 골프 경력 8년</span><span class="en">Seoul · 8 years golf</span></div><div class="rv-tag">Sandpiper 버디 ⛳</div></div></div></div>
-      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"혼자 신청했는데 동행분들과 금방 친해져서 마지막 날엔 가족 같은 느낌이었어요. PCH 석양, Solvang 풍경... 캘리포니아가 이렇게 다채로운 곳인 줄 처음 알았습니다."</span><span class="en">"I came alone but felt like family with the group by the last day. The PCH sunset drive, Solvang... I discovered how incredibly diverse California really is."</span></div><div class="rv-author"><div class="rv-avatar">이</div><div><div class="rv-name"><span class="ko">이수진 · 45세</span><span class="en">Sujin Lee · 45</span></div><div class="rv-meta"><span class="ko">부산 · 솔로 참가</span><span class="en">Busan · Solo traveler</span></div><div class="rv-tag">솔로 참가 ✓</div></div></div></div>
-      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"회사 동료 4명이 함께 갔는데, 팀 빌딩 효과가 엄청났습니다. 코스에서 함께 전략을 짜고, 저녁엔 플레이를 복기하며 웃고... 돈 주고 살 수 없는 추억을 만들었습니다."</span><span class="en">"Four colleagues went together — the team-building effect was incredible. Strategizing on the course, reviewing plays over dinner... memories money cannot buy."</span></div><div class="rv-author"><div class="rv-avatar">박</div><div><div class="rv-name"><span class="ko">박성훈 · 48세</span><span class="en">Sunghoon Park · 48</span></div><div class="rv-meta"><span class="ko">성남 · 4인 그룹</span><span class="en">Seongnam · Group of 4</span></div><div class="rv-tag">그룹 참가 🔄</div></div></div></div>
-      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"Elim 온천에서 하루를 보낸 것이 예상치 못한 하이라이트였어요. 골프 라운딩 후 사막의 자연 온천에 몸을 담그는 경험... 캘리포니아의 다른 면을 보여주는 일정 구성이 탁월합니다."</span><span class="en">"The day at Elim Hot Springs was an unexpected highlight. Soaking in a natural desert spring after golf... the itinerary shows California's different faces brilliantly."</span></div><div class="rv-author"><div class="rv-avatar">최</div><div><div class="rv-name"><span class="ko">최민정 · 39세</span><span class="en">Minjeong Choi · 39</span></div><div class="rv-meta"><span class="ko">대구 · 2인 참가</span><span class="en">Daegu · Duo</span></div><div class="rv-tag">Elim 온천 ♨️</div></div></div></div>
-      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"가이드분이 각 코스의 특성을 미리 설명해주셔서 Alisal Ranch에서 생애 첫 파 under를 기록했어요! 디테일한 케어에 감동받았습니다."</span><span class="en">"Our guide briefed us on each course in advance, letting me shoot my first under-par round at Alisal Ranch! The detail-oriented care was genuinely moving."</span></div><div class="rv-author"><div class="rv-avatar">정</div><div><div class="rv-name"><span class="ko">정기호 · 55세</span><span class="en">Kiho Jung · 55</span></div><div class="rv-meta"><span class="ko">인천 · 골프 경력 12년</span><span class="en">Incheon · 12 years golf</span></div><div class="rv-tag">Alisal 언더파 🏆</div></div></div></div>
-      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"아내와 둘이 갔는데, 골프를 못 치는 아내를 위한 별도 관광 일정까지 세심하게 배려해 주셔서 둘 다 만족스러운 여행이 됐습니다. 아내가 저보다 더 좋았다고 합니다."</span><span class="en">"My wife does not golf, but the thoughtful alternate activities arranged for her made it a perfect trip for both of us. She says she enjoyed it more than I did!"</span></div><div class="rv-author"><div class="rv-avatar">윤</div><div><div class="rv-name"><span class="ko">윤태호 · 52세</span><span class="en">Taeho Yoon · 52</span></div><div class="rv-meta"><span class="ko">수원 · 부부 참가</span><span class="en">Suwon · Couple</span></div><div class="rv-tag">부부 동반 ❤️</div></div></div></div>
+      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"Sandpiper에서 바다를 바라보며 친 티샷은 평생 잊지 못할 것 같습니다. 모든 일정이 촘촘하게 짜여져 있어서 허투루 보낸 시간이 단 하루도 없었습니다."</span><span class="en">"The tee shot at Sandpiper overlooking the Pacific is something I will never forget. Every single day was meaningful, nothing wasted."</span></div><div class="rv-author"><div class="rv-avatar">김</div><div><div class="rv-name"><span class="ko">김재원 · 51세</span><span class="en">Jaewon Kim · 51</span></div><div class="rv-meta"><span class="ko">서울 · 골프 경력 8년</span><span class="en">Seoul · 8 yrs golf</span></div><div class="rv-tag">Sandpiper 버디 ⛳</div></div></div></div>
+      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"혼자 신청했는데 동행분들과 금방 친해져서 마지막 날엔 가족 같은 느낌이었어요. PCH 석양, Solvang 풍경... 캘리포니아가 이렇게 다채로운 곳인 줄 처음 알았습니다."</span><span class="en">"I came alone but felt like family with the group by the last day. The PCH sunset, Solvang... I discovered how incredibly diverse California really is."</span></div><div class="rv-author"><div class="rv-avatar">이</div><div><div class="rv-name"><span class="ko">이수진 · 45세</span><span class="en">Sujin Lee · 45</span></div><div class="rv-meta"><span class="ko">부산 · 솔로 참가</span><span class="en">Busan · Solo</span></div><div class="rv-tag">솔로 참가 ✓</div></div></div></div>
+      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"회사 동료 4명이 함께 갔는데 팀빌딩 효과가 엄청났습니다. 코스에서 함께 전략을 짜고, 저녁엔 플레이를 복기하며 웃고... 돈 주고 살 수 없는 추억을 만들었습니다."</span><span class="en">"Four colleagues went together — the team-building effect was incredible. Strategizing on the course, reviewing plays over dinner... memories money cannot buy."</span></div><div class="rv-author"><div class="rv-avatar">박</div><div><div class="rv-name"><span class="ko">박성훈 · 48세</span><span class="en">Sunghoon Park · 48</span></div><div class="rv-meta"><span class="ko">성남 · 4인 그룹</span><span class="en">Seongnam · Group</span></div><div class="rv-tag">그룹 참가 🔄</div></div></div></div>
+      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"Elim 온천에서 하루를 보낸 것이 예상치 못한 하이라이트였어요. 골프 라운딩 후 사막 온천에 몸을 담그는 경험... 일정 구성이 정말 탁월합니다."</span><span class="en">"The day at Elim Hot Springs was an unexpected highlight. Soaking in a desert hot spring after golf... the itinerary's variety is truly outstanding."</span></div><div class="rv-author"><div class="rv-avatar">최</div><div><div class="rv-name"><span class="ko">최민정 · 39세</span><span class="en">Minjeong Choi · 39</span></div><div class="rv-meta"><span class="ko">대구 · 2인</span><span class="en">Daegu · Duo</span></div><div class="rv-tag">Elim 온천 ♨️</div></div></div></div>
+      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"가이드분이 각 코스 특성을 미리 설명해주셔서 Alisal Ranch에서 생애 첫 파 under를 기록했어요! 디테일한 케어에 감동받았습니다."</span><span class="en">"Our guide briefed us on each course and I shot my first ever under-par round at Alisal Ranch! The detail-oriented care was genuinely moving."</span></div><div class="rv-author"><div class="rv-avatar">정</div><div><div class="rv-name"><span class="ko">정기호 · 55세</span><span class="en">Kiho Jung · 55</span></div><div class="rv-meta"><span class="ko">인천 · 경력 12년</span><span class="en">Incheon · 12 yrs</span></div><div class="rv-tag">Alisal 언더파 🏆</div></div></div></div>
+      <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"골프를 못 치는 아내를 위한 별도 관광 일정까지 세심하게 배려해 주셔서 둘 다 만족스러운 여행이 됐습니다. 아내가 저보다 더 좋았다고 합니다."</span><span class="en">"The thoughtful alternate activities arranged for my non-golfing wife made it perfect for both of us. She says she enjoyed it more than I did!"</span></div><div class="rv-author"><div class="rv-avatar">윤</div><div><div class="rv-name"><span class="ko">윤태호 · 52세</span><span class="en">Taeho Yoon · 52</span></div><div class="rv-meta"><span class="ko">수원 · 부부</span><span class="en">Suwon · Couple</span></div><div class="rv-tag">부부 동반 ❤️</div></div></div></div>
     </div>
-    <div class="reviews-cta fi" style="text-align:center;margin-top:48px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;padding:40px 32px;color:#fff">
+    <div style="text-align:center;margin-top:48px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;padding:40px 32px;color:#fff">
       <h3 style="font-size:22px;font-weight:700;margin-bottom:8px"><span class="ko">당신의 이야기를 들려주세요</span><span class="en">Share Your Story</span></h3>
       <p style="font-size:14px;opacity:.8;margin-bottom:20px"><span class="ko">투어 후기를 남겨주시면 다음 여행 크레딧 $100을 드립니다</span><span class="en">Leave a review after your tour and receive $100 travel credit</span></p>
       <button class="btn-book" style="font-size:14px;padding:14px 32px;border-radius:100px" onclick="nav('contact')"><span class="ko">지금 예약하기</span><span class="en">Book Now</span></button>
@@ -2915,51 +2770,80 @@ let schedBuilt = false;
    ROUTER
 ══════════════════════════════ */
 function nav(page, dayIdx) {
-  // hide all pages
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('act'));
-  // show target
-  const el = document.getElementById('pg-' + page);
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('act'); });
+  var el = document.getElementById('pg-' + page);
   if (!el) return;
   el.classList.add('act');
   curPage = page;
-
-  // update nav tabs
-  document.querySelectorAll('.nav-tab, .mob-menu li button').forEach(t => {
+  document.querySelectorAll('.nav-tab').forEach(function(t){
     t.classList.toggle('act', t.dataset.page === page);
   });
-
-  // close mob menu
   closeHam();
-
-  // hero-mode nav
+  var _dd = document.getElementById('pc-dropdown');
+  if (_dd) _dd.classList.remove('show');
   updateNavMode();
-
   window.scrollTo({ top: 0, behavior: 'instant' });
 
-  // page init
-  if (page === 'gallery') {
-    buildGallery();
+  // Bottom nav highlight
+  var bnav = document.getElementById('bottom-nav');
+  if (bnav) bnav.querySelectorAll('button').forEach(function(b){
+    var isAct = b.getAttribute('data-page') === page;
+    b.querySelector('span:first-child').style.transform = isAct ? 'scale(1.15)' : '';
+    b.querySelectorAll('span').forEach(function(s){ s.style.color = isAct ? '#171a20' : '#9e9e9e'; });
+  });
+
+  // Sticky CTA
+  var cta = document.getElementById('pricing-sticky-cta');
+  if (cta) cta.style.display = (page === 'pricing') ? '' : 'none';
+
+  // Schedule sticky header
+  var sh = document.querySelector('.sched-sticky-header');
+  if (sh) {
+    sh.classList.toggle('visible', page === 'schedule');
+    if (page === 'schedule') requestAnimationFrame(function(){
+      var panels = document.getElementById('dayPanels');
+      if (panels && sh) panels.style.paddingTop = sh.getBoundingClientRect().height + 'px';
+    });
   }
+  // Course sticky header
+  var ch = document.querySelector('.course-sticky-header');
+  if (ch) {
+    ch.classList.toggle('visible', page === 'courses');
+    if (page === 'courses') requestAnimationFrame(function(){
+      var wrap = document.querySelector('#pg-courses .courses-wrap');
+      if (wrap && ch) wrap.style.paddingTop = ch.getBoundingClientRect().height + 'px';
+    });
+  }
+
+  // Bookmarks
+  if (page === 'schedule') setTimeout(function(){ if(typeof addHearts==='function') addHearts(); }, 150);
+
+  // Page inits
+  if (page === 'gallery') buildGallery();
   if (page === 'schedule') {
+    if (typeof showScheduleSkeleton === 'function') showScheduleSkeleton();
     buildSchedule();
-    if (dayIdx !== undefined) setTimeout(() => switchDay(dayIdx), 60);
+    if (dayIdx !== undefined) setTimeout(function(){ switchDay(dayIdx); }, 60);
+    setTimeout(function(){
+      if(typeof addMapLinks==='function') addMapLinks();
+      if(typeof initScheduleSearch==='function') initScheduleSearch();
+    }, 200);
   }
-  // Fixed schedule header visibility
-  const _sh = document.querySelector('.sched-sticky-header');
-  if (_sh) {
-    _sh.classList.toggle('visible', page === 'schedule');
-    if (page === 'schedule') {
-      requestAnimationFrame(() => {
-        const panels = document.getElementById('dayPanels');
-        if (panels) panels.style.paddingTop = _sh.getBoundingClientRect().height + 'px';
+  if (page === 'pricing') { renderPlans(); calcUpdate(); fetchRate(); }
+
+  // Scroll reveal for new pages
+  if (['courses','faq','reviews'].indexOf(page) > -1) {
+    setTimeout(function(){
+      var obs2 = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('revealed'); obs2.unobserve(e.target); }});
+      }, { threshold: 0.08 });
+      document.querySelectorAll('#pg-'+page+' .rv-card,#pg-'+page+' .cs-box,#pg-'+page+' .faq-item,#pg-'+page+' .reviews-summary').forEach(function(el){
+        if(!el.classList.contains('scroll-reveal')){ el.classList.add('scroll-reveal'); obs2.observe(el); }
       });
-    }
+    }, 150);
   }
-  if (page === 'pricing') {
-    renderPlans();
-    calcUpdate();
-    fetchRate();
-  }
+
+  if (window.innerWidth <= 860) el.style.paddingBottom = '70px';
 }
 
 function updateNavMode() {
@@ -4338,12 +4222,7 @@ document.addEventListener('keydown', e => {
   }
 
   // Re-run when new pages are navigated to
-  var _origNav = window.nav;
-  window.nav = function(page, dayIdx) {
-    _origNav(page, dayIdx);
-    setTimeout(initScrollReveal, 120);
-  };
-
+  
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function(){
       setTimeout(initScrollReveal, 200);
@@ -4602,15 +4481,6 @@ document.addEventListener('keydown', e => {
 ════════════════════════════════════════════ */
 
 /* ── #41 Sticky CTA: show only on pricing page ── */
-(function(){
-  var cta = document.getElementById('pricing-sticky-cta');
-  if (!cta) return;
-  var _origNav = window.nav;
-  window.nav = function(page, idx) {
-    _origNav(page, idx);
-    if (cta) cta.style.display = (page === 'pricing') ? 'block' : 'none';
-  };
-})();
 
 /* ── #42 Scroll hint: hide once user scrolls ── */
 (function(){
@@ -4758,22 +4628,7 @@ function showScheduleSkeleton() {
   window.addEventListener('resize', checkMobile, { passive: true });
 
   // Highlight active tab
-  var _origNav2 = window.nav;
-  window.nav = function(page, idx) {
-    _origNav2(page, idx);
-    bar.querySelectorAll('button').forEach(function(b) {
-      var isAct = b.getAttribute('data-page') === page;
-      b.querySelector('span:first-child').style.transform = isAct ? 'scale(1.15)' : 'scale(1)';
-      b.querySelectorAll('span').forEach(function(s) {
-        s.style.color = isAct ? '#171a20' : '#9e9e9e';
-      });
-    });
-    // Add bottom padding so content not hidden behind bar
-    document.querySelectorAll('.page.act').forEach(function(p) {
-      p.style.paddingBottom = window.innerWidth <= 860 ? '70px' : '0';
-    });
-  };
-
+  
   // Also add bottom padding to body on mobile
   if (window.innerWidth <= 860) {
     document.body.style.paddingBottom = '56px';
@@ -4949,12 +4804,7 @@ function printSchedule() {
       p.insertBefore(btn, p.firstChild);
     });
   }
-  var _origNav3 = window.nav;
-  window.nav = function(pg, idx) {
-    _origNav3(pg, idx);
-    if (pg === 'schedule') setTimeout(addHearts, 150);
-  };
-})();
+  })();
 
 /* ── #65 Font size controls (fixed) ── */
 (function(){
@@ -5021,23 +4871,8 @@ function printSchedule() {
 })();
 
 /* ── Wire #43 map links + #46 skeleton + #62 search into nav ── */
-(function(){
-  var _origNav4 = window.nav;
-  window.nav = function(pg, idx) {
-    if (pg === 'schedule') showScheduleSkeleton && showScheduleSkeleton();
-    _origNav4(pg, idx);
-    if (pg === 'schedule') {
-      setTimeout(function() {
-        addMapLinks && addMapLinks();
-        initScheduleSearch && initScheduleSearch();
-      }, 200);
-    }
-  };
-})();
 
-/* ═══ NEW PAGES JS ═══ */
-
-/* PC dropdown */
+/* PC Dropdown */
 var _dropTimer = null;
 function showPcDrop() {
   if (window.innerWidth <= 860) return;
@@ -5051,59 +4886,24 @@ function hidePcDrop() {
     if (d) d.classList.remove('show');
   }, 120);
 }
-// Close dropdown on nav
-(function(){
-  var _on = window.nav;
-  window.nav = function(pg, idx) {
-    hidePcDrop();
-    _on(pg, idx);
-  };
-})();
-
-/* Course tab switcher */
 function switchCourse(i) {
-  document.querySelectorAll('.course-tab').forEach(function(t,j){ t.classList.toggle('act', j===i); });
-  document.querySelectorAll('.course-panel').forEach(function(p,j){ p.classList.toggle('act', j===i); });
+  document.querySelectorAll('.course-tab').forEach(function(t,j){ t.classList.toggle('act',j===i); });
+  document.querySelectorAll('.course-panel').forEach(function(p,j){ p.classList.toggle('act',j===i); });
 }
-
-/* FAQ toggle */
 function toggleFaq(btn) {
   var item = btn.closest('.faq-item');
   var wasOpen = item.classList.contains('open');
   document.querySelectorAll('.faq-item.open').forEach(function(el){ el.classList.remove('open'); });
   if (!wasOpen) item.classList.add('open');
 }
-
-/* FAQ filter by category */
 function filterFaq(cat) {
-  document.querySelectorAll('.faq-cat').forEach(function(b){ b.classList.toggle('act', b.getAttribute('onclick').indexOf("'"+cat+"'") > -1); });
+  document.querySelectorAll('.faq-cat').forEach(function(b){
+    b.classList.toggle('act', b.getAttribute('onclick').indexOf("'"+cat+"'")>-1);
+  });
   document.querySelectorAll('.faq-item').forEach(function(item){
-    var itemCat = item.getAttribute('data-cat');
-    item.style.display = (cat === 'all' || itemCat === cat) ? '' : 'none';
+    item.style.display=(cat==='all'||item.getAttribute('data-cat')===cat)?'':'none';
   });
 }
-
-/* Scroll-reveal for new pages */
-(function(){
-  var obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('revealed'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.08 });
-  function revealPage(pg) {
-    document.querySelectorAll('#pg-'+pg+' .rv-card, #pg-'+pg+' .cs-box, #pg-'+pg+' .faq-item').forEach(function(el){
-      if(!el.classList.contains('scroll-reveal')){
-        el.classList.add('scroll-reveal');
-        obs.observe(el);
-      }
-    });
-  }
-  ['courses','faq','reviews'].forEach(function(pg){
-    var _origNav = window.nav;
-    window.nav = function(p,i){ _origNav(p,i); if(p===pg) setTimeout(function(){ revealPage(pg); },150); };
-  });
-})();
-
 </script>
 
 <div id="logo-preview">
