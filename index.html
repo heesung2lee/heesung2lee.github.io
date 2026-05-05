@@ -4770,13 +4770,15 @@ document.addEventListener('keydown', e => {
 
 /* ═══════════════════════════════════════════════
    iOS-STYLE DRAG SELECTION
-   Day tabs + Ham menu — finger drag highlights,
-   lifts off = fires that item
+   Day tabs — tap to select, swipe to scroll
+   (Touch-drag highlight on tab bar, lift to select)
 ═══════════════════════════════════════════════ */
 (function(){
   /* ── DAY TAB BAR drag-select ── */
-  var tabBar = null;
   var activeTab = null;
+  var startY = 0;
+  var startX = 0;
+  var didScroll = false;
 
   function getTabBar() {
     return document.getElementById('dayTabBar');
@@ -4792,7 +4794,6 @@ document.addEventListener('keydown', e => {
 
   function highlightTab(tab) {
     if (activeTab === tab) return;
-    // Clear previous
     if (activeTab) {
       activeTab.style.background = '';
       activeTab.style.transform = '';
@@ -4800,9 +4801,9 @@ document.addEventListener('keydown', e => {
     }
     activeTab = tab;
     if (tab) {
-      tab.style.background = 'rgba(23,26,32,0.12)';
+      tab.style.background = 'rgba(26,52,80,0.15)';
       tab.style.transform = 'scale(0.94)';
-      tab.style.boxShadow = '0 0 0 3px rgba(23,26,32,0.10)';
+      tab.style.boxShadow = '0 0 0 3px rgba(212,175,55,0.25)';
       tab.style.transition = 'all 0.1s ease';
     }
   }
@@ -4819,38 +4820,41 @@ document.addEventListener('keydown', e => {
   document.addEventListener('touchstart', function(e) {
     var bar = getTabBar();
     if (!bar) return;
-    var t = e.touches[0];
-    var tab = getTabAt(t.clientX, t.clientY);
-    if (tab) {
-      highlightTab(tab);
-      e.preventDefault(); // prevent scroll while selecting tabs
-    }
-  }, { passive: false });
+    didScroll = false;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    var tab = getTabAt(startX, startY);
+    if (tab) highlightTab(tab);
+    // Don't preventDefault — allow native scroll
+  }, { passive: true });
 
   document.addEventListener('touchmove', function(e) {
-    var bar = getTabBar();
-    if (!bar || !activeTab) return;
-    var t = e.touches[0];
-    var tab = getTabAt(t.clientX, t.clientY);
+    if (!activeTab) return;
+    var dx = Math.abs(e.touches[0].clientX - startX);
+    var dy = Math.abs(e.touches[0].clientY - startY);
+    if (dx > 8 || dy > 8) didScroll = true;
+    if (didScroll) {
+      clearTabHighlight();
+      return;
+    }
+    var tab = getTabAt(e.touches[0].clientX, e.touches[0].clientY);
     highlightTab(tab);
-    if (activeTab) e.preventDefault(); // lock scroll during tab drag
-  }, { passive: false });
+  }, { passive: true });
 
   document.addEventListener('touchend', function(e) {
     if (!activeTab) return;
-    var t = e.changedTouches[0];
-    var tab = getTabAt(t.clientX, t.clientY);
+    var tab = activeTab;
     clearTabHighlight();
-    if (tab && tab.onclick) {
-      tab.onclick();
-    } else if (tab) {
-      tab.click();
+    if (!didScroll && tab) {
+      if (tab.onclick) tab.onclick();
+      else tab.click();
     }
-    e.preventDefault();
-  }, { passive: false });
+    didScroll = false;
+  }, { passive: true });
 
   document.addEventListener('touchcancel', function() {
     clearTabHighlight();
+    didScroll = false;
   }, { passive: true });
 
 
