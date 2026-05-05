@@ -2303,11 +2303,6 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
   </div>
 
   <div class="ham-nav">
-    <button class="ham-item" onclick="nav('home');closeHam()">
-      <span class="ham-item-ico">🏠</span>
-      <span class="ham-item-label"><span class="ko">홈</span><span class="en">Home</span></span>
-      <span class="ham-item-arrow">›</span>
-    </button>
     <button class="ham-item" onclick="nav('about');closeHam()">
       <span class="ham-item-ico">✦</span>
       <span class="ham-item-label"><span class="ko">결 Resonate 소개</span><span class="en">About Resonate</span></span>
@@ -2316,6 +2311,11 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
     <button class="ham-item" onclick="nav('schedule');closeHam()">
       <span class="ham-item-ico">🗓️</span>
       <span class="ham-item-label"><span class="ko">투어 패키지 — 캘리포니아 13일</span><span class="en">Tour Package — California 13 Days</span></span>
+      <span class="ham-item-arrow">›</span>
+    </button>
+    <button class="ham-item" onclick="nav('courses');closeHam()">
+      <span class="ham-item-ico">⛳</span>
+      <span class="ham-item-label"><span class="ko">골프 코스</span><span class="en">Golf Courses</span></span>
       <span class="ham-item-arrow">›</span>
     </button>
     <button class="ham-item ham-item-disabled">
@@ -2366,7 +2366,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
   <!-- LEFT: Logo -->
   <div style="flex-shrink:0;display:flex;align-items:center">
-    <button class="nav-logo-btn nav-logo-svg" onclick="nav('home')" aria-label="홈으로 돌아가기" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;height:42px;-webkit-tap-highlight-color:transparent">
+    <button class="nav-logo-btn nav-logo-svg" onclick="nav('about')" aria-label="메인으로" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;height:42px;-webkit-tap-highlight-color:transparent">
   <svg viewBox="0 0 420 420" height="42" width="42"
        xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:5px">
     <defs>
@@ -2437,10 +2437,9 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
   <!-- CENTER: Nav tabs — shrinks gracefully -->
   <div class="nav-mid" style="display:flex;justify-content:center;align-items:center;gap:2px;overflow:hidden;min-width:0">
-    <button class="nav-tab act" data-page="home"     onclick="nav('home')"><span class="ko">홈</span><span class="en">Home</span></button>
-    <button class="nav-tab"     data-page="about"    onclick="nav('about')"><span class="ko">소개</span><span class="en">About</span></button>
-    <button class="nav-tab"     data-page="schedule" onclick="nav('schedule')"><span class="ko">일정</span><span class="en">Schedule</span></button>
-    <button class="nav-tab"     data-page="pricing"  onclick="nav('pricing')"><span class="ko">가격</span><span class="en">Pricing</span></button>
+    <button class="nav-tab"     data-page="about"    onclick="nav('about')">소개 About</button>
+    <button class="nav-tab"     data-page="schedule" onclick="nav('schedule')">일정 Schedule</button>
+    <button class="nav-tab"     data-page="pricing"  onclick="nav('pricing')">가격 Pricing</button>
     <button class="nav-tab"     data-page="contact"  onclick="nav('contact')"><span class="ko">문의</span><span class="en">Contact</span></button>
     <button class="nav-tab" data-page="gallery" style="opacity:.38;cursor:default;pointer-events:none"><span class="ko">갤러리</span><span class="en">Gallery</span></button>
   </div>
@@ -2451,7 +2450,6 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
     <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
       <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
       <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
-        <button class="pd-item" onclick="nav('home')"><span class="pd-ico">🏠</span><span class="ko">홈</span><span class="en">Home</span></button>
         <button class="pd-item" onclick="nav('about')"><span class="pd-ico">✦</span><span class="ko">소개</span><span class="en">About</span></button>
         <button class="pd-item" onclick="nav('courses')"><span class="pd-ico">⛳</span><span class="ko">골프 코스</span><span class="en">Courses</span></button>
         <button class="pd-item" onclick="nav('schedule')"><span class="pd-ico">🗓️</span><span class="ko">13일 일정</span><span class="en">Itinerary</span></button>
@@ -3228,7 +3226,7 @@ function refreshCourseDisplay() {
 }
 
 let curLang = 'ko';
-let curPage = 'home';
+let curPage = 'about';
 let liveRate = 1380;
 let schedBuilt = false;
 
@@ -3400,6 +3398,7 @@ function nav(page, dayIdx) {
   if (page === 'gallery') buildGallery();
   if (page === 'schedule') {
     if (typeof showScheduleSkeleton === 'function') showScheduleSkeleton();
+    schedBuilt = false;
     buildSchedule();
     if (dayIdx !== undefined) setTimeout(function(){ switchDay(dayIdx); }, 60);
     setTimeout(function(){
@@ -3762,7 +3761,7 @@ function toast(msg, type) {
    INIT
 ══════════════════════════════ */
 updateNavMode();
-nav('home');
+nav('about');
 // Ensure schedule header hidden on load
 const _sh = document.querySelector('.sched-sticky-header');
 if (_sh) _sh.classList.remove('visible');
@@ -5423,8 +5422,8 @@ function printSchedule() {
     var ctrl = document.getElementById('font-size-ctrl');
     if (!up || !dn) return;
 
-    // Only show on mobile
-    if (ctrl) ctrl.style.display = window.innerWidth <= 860 ? 'flex' : 'none';
+    // Show on all devices
+    if (ctrl) ctrl.style.display = 'flex';
 
     up.onclick = function() {
       if (cur < SIZES.length-1) { cur++; applySize(); }
