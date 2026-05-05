@@ -2971,13 +2971,14 @@ const GOLF_SCORECARDS = {
     tips_ko: [{i:'🌊',t:'태평양 바람이 세므로 항상 1~2클럽 길게 준비하세요.'},{i:'📸',t:'3번, 7번, 15번 홀 오션뷰가 최고입니다.'},{i:'🕗',t:'오전 8~9시 티오프 추천. 오후는 바람이 강해집니다.'},{i:'🌿',t:'페어웨이 왼쪽 러프 회수 어렵습니다. 오른쪽을 공략하세요.'}],
     tips_en: [{i:'🌊',t:'Pacific winds are strong — always prepare 1-2 clubs longer.'},{i:'📸',t:'Holes 3, 7 and 15 offer the most spectacular ocean views.'},{i:'🕗',t:'8-9am tee times are ideal. Afternoon winds pick up considerably.'},{i:'🌿',t:'Left-side rough is difficult to recover from. Play right.'}],
     tees: [
-      { name: 'Championship', color: '#171a20', yards: 7068 },
-      { name: 'Back', color: '#1565c0', yards: 6680 },
-      { name: 'Middle', color: '#d4af37', yards: 6140 },
-      { name: 'Forward', color: '#e53935', yards: 5320 }
+      { name: 'Championship', color: '#171a20', yards: 7068, yd: [530,410,385,420,190,380,415,175,525, 400,420,510,195,540,370,380,165,410] },
+      { name: 'Back', color: '#1565c0', yards: 6680, yd: [500,390,365,400,175,360,395,160,505, 380,400,490,180,515,350,360,150,390] },
+      { name: 'Middle', color: '#d4af37', yards: 6140, yd: [460,350,330,370,155,325,360,140,470, 345,365,450,160,480,320,330,135,360] },
+      { name: 'Forward', color: '#e53935', yards: 5320, yd: [400,300,280,320,130,280,310,115,410, 295,315,390,135,420,275,280,110,310] }
     ],
     front9: [5,4,4,4,3,4,4,3,5],
     back9:  [4,4,5,3,5,4,4,3,4],
+    handicap: [9,3,13,1,17,7,5,15,11, 10,2,14,18,4,12,8,16,6],
     totalPar: 72
   },
   'trump': {
@@ -2993,13 +2994,14 @@ const GOLF_SCORECARDS = {
     tips_ko: [{i:'🌊',t:'15번 파3 — 핀 위치 상관없이 그린 중앙을 공략하세요.'},{i:'🦅',t:'전반은 내륙, 후반은 해안 절벽으로 전혀 다른 두 코스입니다.'},{i:'👔',t:'드레스코드: 칼라 셔츠 필수, 데님 금지.'},{i:'📸',t:'클럽하우스 테라스 태평양 뷰가 장관입니다.'}],
     tips_en: [{i:'🌊',t:'Hole 15 par-3 — always target the center of the green regardless of pin.'},{i:'🦅',t:'Front nine is inland, back nine hugs the coastal cliffs — two completely different experiences.'},{i:'👔',t:'Dress code: collared shirt required, no denim.'},{i:'📸',t:'The clubhouse terrace offers a stunning Pacific panorama.'}],
     tees: [
-      { name: 'Black', color: '#171a20', yards: 6827 },
-      { name: 'Gold', color: '#f9a825', yards: 6440 },
-      { name: 'Blue', color: '#1565c0', yards: 5920 },
-      { name: 'White', color: '#f5f5f5', yards: 5100 }
+      { name: 'Black', color: '#171a20', yards: 6827, yd: [410,530,380,195,420,385,175,515,395, 505,390,175,400,415,380,520,160,425] },
+      { name: 'Gold', color: '#f9a825', yards: 6440, yd: [385,505,360,180,395,365,160,490,375, 480,370,160,380,390,360,495,145,405] },
+      { name: 'Blue', color: '#1565c0', yards: 5920, yd: [355,470,335,165,370,340,145,460,350, 450,345,145,355,365,335,465,130,380] },
+      { name: 'White', color: '#f5f5f5', yards: 5100, yd: [305,405,290,140,320,295,120,395,300, 385,295,120,305,315,290,400,110,330] }
     ],
     front9: [4,5,4,3,4,4,3,5,4],
     back9:  [5,4,3,4,4,4,5,3,4],
+    handicap: [11,5,1,17,7,9,15,3,13, 2,12,18,6,10,4,14,16,8],
     totalPar: 71
   },
   'golfclubca': {
@@ -3015,13 +3017,14 @@ const GOLF_SCORECARDS = {
     tips_ko: [{i:'⛰',t:'구릉 지형이 많아 레이저 거리 측정기 유용합니다.'},{i:'🕳',t:'7번 홀 벙커가 많습니다. 페어웨이 중앙을 공략하세요.'},{i:'🌿',t:'러프가 깊은 편이니 정확한 티샷이 중요합니다.'},{i:'📸',t:'16번 홀에서 보는 계곡 전망이 일품입니다.'}],
     tips_en: [{i:'⛰',t:'Undulating terrain — a laser rangefinder is very helpful.'},{i:'🕳',t:'Hole 7 has many bunkers. Aim for center fairway.'},{i:'🌿',t:'Rough tends to be deep here — accuracy off the tee matters.'},{i:'📸',t:'The valley view from Hole 16 is spectacular.'}],
     tees: [
-      { name: 'Tournament', color: '#171a20', yards: 7020 },
-      { name: 'Medal', color: '#1565c0', yards: 6580 },
-      { name: 'Regular', color: '#d4af37', yards: 6020 },
-      { name: 'Senior', color: '#e53935', yards: 5200 }
+      { name: 'Tournament', color: '#171a20', yards: 7020, yd: [400,520,190,410,385,420,530,175,395, 515,405,390,415,180,535,380,165,410] },
+      { name: 'Medal', color: '#1565c0', yards: 6580, yd: [375,495,175,385,365,395,505,160,375, 490,380,370,390,165,510,355,150,385] },
+      { name: 'Regular', color: '#d4af37', yards: 6020, yd: [345,455,155,355,335,365,465,140,345, 450,350,340,360,145,470,325,130,355] },
+      { name: 'Senior', color: '#e53935', yards: 5200, yd: [295,395,130,305,290,315,405,115,295, 390,300,295,310,120,410,280,110,310] }
     ],
     front9: [4,5,3,4,4,4,5,3,4],
     back9:  [5,4,4,4,3,4,4,3,5],
+    handicap: [7,1,17,3,13,11,5,15,9, 4,8,12,6,18,2,14,10,16],
     totalPar: 72
   },
   'crossings': {
@@ -3037,13 +3040,14 @@ const GOLF_SCORECARDS = {
     tips_ko: [{i:'🌊',t:'해안가 홀은 바람이 변수 — 티샷 전 풍향 확인 필수.'},{i:'🍳',t:'라운드 전 Canyons 레스토랑 오션뷰 조식 강력 추천.'},{i:'⛳',t:'5번 파5, 그린 주변 해저드 주의. 안전하게 3온 공략.'},{i:'📸',t:'18번 홀 클럽하우스 배경 사진 명소입니다.'}],
     tips_en: [{i:'🌊',t:'Coastal holes — wind is a big factor, check direction before teeing off.'},{i:'🍳',t:'Highly recommend breakfast at Canyons with ocean views before your round.'},{i:'⛳',t:'Hole 5 par-5 — watch for hazards around the green. Play safe for 3-on.'},{i:'📸',t:'Hole 18 with the clubhouse backdrop is a photo spot.'}],
     tees: [
-      { name: 'Black', color: '#171a20', yards: 6834 },
+      { name: 'Black', color: '#171a20', yards: 6834, yd: [415,395,520,180,405,390,510,420,175, 400,520,385,170,415,395,425,165,515] },
       { name: 'Blue', color: '#1565c0', yards: 6340 },
-      { name: 'Combo', color: '#f9a825', yards: 5820 },
-      { name: 'White', color: '#f5f5f5', yards: 4980 }
+      { name: 'Combo', color: '#f9a825', yards: 5820, yd: [355,340,450,145,350,335,440,360,140, 345,450,330,135,355,340,365,130,445] },
+      { name: 'White', color: '#f5f5f5', yards: 4980, yd: [300,290,385,120,300,290,380,310,115, 295,385,285,110,305,290,315,110,380] }
     ],
     front9: [4,3,5,4,4,4,3,5,4],
     back9:  [5,4,3,4,4,4,5,3,4],
+    handicap: [13,17,1,3,7,11,15,5,9, 8,6,12,18,10,4,14,2,16],
     totalPar: 71
   },
   'crosscreek': {
@@ -3059,14 +3063,15 @@ const GOLF_SCORECARDS = {
     tips_ko: [{i:'🍷',t:'라운드 후 테메큘라 와이너리 투어 강력 추천.'},{i:'⛰',t:'고저차가 있어 등판이 있는 홀이 많습니다. 체력 안배 필요.'},{i:'🌊',t:'5번, 12번 홀 크릭 해저드 주의.'},{i:'📸',t:'8번 홀 티박스에서 보는 계곡 전망이 압권입니다.'}],
     tips_en: [{i:'🍷',t:'Highly recommend Temecula winery tour after your round.'},{i:'⛰',t:'Significant elevation changes — pace yourself.'},{i:'🌊',t:'Watch creek hazards on holes 5 and 12.'},{i:'📸',t:'The valley view from Hole 8 tee box is breathtaking.'}],
     tees: [
-      { name: 'Champion', color: '#171a20', yards: 7010 },
-      { name: 'Tournament', color: '#1565c0', yards: 6580 },
-      { name: 'Member', color: '#f5f5f5', yards: 5980 },
-      { name: 'Forward', color: '#e53935', yards: 5180 },
-      { name: 'Gold', color: '#f9a825', yards: 4750 }
+      { name: 'Champion', color: '#171a20', yards: 7010, yd: [520,185,410,420,385,530,175,415,400, 395,420,515,180,405,530,380,165,410] },
+      { name: 'Tournament', color: '#1565c0', yards: 6580, yd: [495,170,385,395,365,505,160,395,375, 370,395,490,165,385,505,360,150,385] },
+      { name: 'Member', color: '#f5f5f5', yards: 5980, yd: [450,150,350,360,335,460,140,360,340, 335,360,450,145,350,460,325,130,350] },
+      { name: 'Forward', color: '#e53935', yards: 5180, yd: [390,125,300,310,290,400,115,310,295, 290,310,390,120,300,400,280,110,305] },
+      { name: 'Gold', color: '#f9a825', yards: 4750, yd: [360,110,275,285,265,370,100,285,270, 265,285,360,105,275,370,255,95,280] }
     ],
     front9: [4,5,3,4,4,4,5,3,4],
     back9:  [5,4,4,4,3,4,4,3,5],
+    handicap: [5,1,17,9,11,3,15,7,13, 10,2,8,18,12,4,14,16,6],
     totalPar: 72
   }
 };
@@ -3090,24 +3095,38 @@ function buildCourseScorecard(courseKey) {
 
   function holeRow(start, count) {
     var pars = allPars.slice(start, start + count);
+    var hdcps = course.handicap ? course.handicap.slice(start, start + count) : [];
+    var yds = tee.yd ? tee.yd.slice(start, start + count) : [];
+    var isMetric = (L === 'ko');
+    var distLabel = isMetric ? 'M' : 'Yds';
+
     var row = '<div class="sc-hole-row"><span class="sc-hdr-cell">Hole</span>';
     for (var i = 0; i < count; i++) {
       row += '<div class="sc-hole-cell">' + (start + i + 1) + '</div>';
     }
     row += '</div>';
     row += '<div class="sc-hole-row"><span class="sc-hdr-cell">Par</span>';
-    for (var i = 0; i < count; i++) {
-      row += '<div class="sc-par-cell">' + pars[i] + '</div>';
+    for (var i2 = 0; i2 < count; i2++) {
+      row += '<div class="sc-par-cell">' + pars[i2] + '</div>';
     }
     row += '</div>';
-    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">Yds</span>';
-    for (var i = 0; i < count; i++) {
-      row += '<div class="sc-par-cell">-</div>';
+    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">' + distLabel + '</span>';
+    for (var i3 = 0; i3 < count; i3++) {
+      if (yds[i3] !== undefined) {
+        var dist = isMetric ? Math.round(yds[i3] * 0.9144) : yds[i3];
+        row += '<div class="sc-par-cell">' + dist + '</div>';
+      } else {
+        row += '<div class="sc-par-cell">-</div>';
+      }
     }
     row += '</div>';
     row += '<div class="sc-hole-row"><span class="sc-hdr-cell">Hdcp</span>';
-    for (var i = 0; i < count; i++) {
-      row += '<div class="sc-par-cell">-</div>';
+    for (var i4 = 0; i4 < count; i4++) {
+      if (hdcps[i4] !== undefined) {
+        row += '<div class="sc-par-cell">' + hdcps[i4] + '</div>';
+      } else {
+        row += '<div class="sc-par-cell">-</div>';
+      }
     }
     row += '</div>';
     return row;
