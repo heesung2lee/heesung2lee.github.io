@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{colors:{navy:{50:'#eef2f6',100:'#d4dfeb',200:'#b3c5d7',300:'#85a5bf',400:'#5b84a3',500:'#41698a',600:'#355672',700:'#2e4760',800:'#264460',900:'#1a3450'},gold:{50:'#fdf8ed',100:'#f9edcc',200:'#f2d88f',300:'#ebc057',400:'#e5b030',500:'#d4951c',600:'#b87414',700:'#925413',800:'#794318',900:'#653617'}}}}}</script>
 <title>결 Resonate Tour — resonatetour.com</title>
   <meta name="theme-color" content="#16213e">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,7 +72,6 @@ nav.hero-mode .nav-logo{color:#fff}
 .nav-logo small{font-size:10px;font-weight:300;opacity:.55;margin-left:4px;letter-spacing:.06em}
 .nav-mid{display:flex;gap:2px;flex:1;justify-content:center;min-width:0;overflow:hidden}
 .nav-tab{font-size:13px;font-weight:400;color:#393c41;background:none;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
-@media(max-width:860px){.nav-tab,.nav-r .btn-book{display:none !important}.course-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.course-tabs::-webkit-scrollbar{display:none}.course-tab{flex-shrink:0;white-space:nowrap;font-size:11px;padding:6px 10px}}
 .nav-tab:hover{background:#f4f4f4}
 .nav-tab.act{color:#171a20;font-weight:700;background:#f0f0f0}
 nav.hero-mode .nav-tab{color:rgba(255,255,255,.8)}
@@ -83,8 +80,8 @@ nav.hero-mode .nav-tab.act{background:rgba(255,255,255,.18);color:#fff}
 .nav-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .btn-lang{font-size:12px;font-weight:500;background:none;border:1px solid #e0e0e0;color:#393c41;padding:6px 12px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
 nav.hero-mode .btn-lang{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85)}
-.btn-book{font-size:13px;font-weight:500;background:#1a3450;color:#d4af37;border:1.5px solid rgba(212,175,55,.4);padding:8px 18px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
-.btn-book:hover{background:#264460;border-color:rgba(212,175,55,.7);transform:translateY(-1px)}
+.btn-book{font-size:13px;font-weight:500;background:#171a20;color:#fff;border:none;padding:8px 18px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-book:hover{background:#393c41}
 .mob-btn{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
 .mob-btn span{width:20px;height:1.5px;background:#171a20;display:block;border-radius:2px;transition:background .3s}
 nav.hero-mode .mob-btn span{background:#fff}
@@ -1944,7 +1941,343 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
   flex-shrink: 0;
 }
 
+/* ══════════════════════════════
+   GOLF SCORECARD
+══════════════════════════════ */
+.golf-scorecard {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  font-size: 12px;
+  color: #171a20;
+}
+.golf-scorecard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.golf-scorecard-course {
+  font-weight: 700;
+  font-size: 13px;
+}
+.golf-scorecard-date {
+  font-size: 11px;
+  color: #888;
+}
+.golf-scorecard-tees {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.golf-scorecard-tee {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: #555;
+}
+.golf-scorecard-tee-marker {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+.golf-scorecard-grid {
+  display: grid;
+  grid-template-columns: 60px repeat(9, 1fr);
+  gap: 0;
+  text-align: center;
+  font-size: 11px;
+}
+.golf-scorecard-grid17 {
+  grid-template-columns: 60px repeat(9, 1fr);
+}
+.golf-scorecard-grid18 {
+  grid-template-columns: 60px repeat(9, 1fr);
+}
+.golf-scorecard-row {
+  display: contents;
+}
+.golf-scorecard-cell {
+  padding: 4px 2px;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.golf-scorecard-cell:first-child {
+  background: #f8f8f8;
+  font-weight: 600;
+  color: #555;
+}
+.golf-scorecard-hole-num {
+  font-weight: 600;
+  color: #888;
+  font-size: 10px;
+}
+.golf-scorecard-par {
+  font-weight: 600;
+  color: #888;
+  font-size: 10px;
+}
+/* Score symbols */
+.golf-scorecard-sym {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.golf-scorecard-sym-birdie {
+  color: #e53935;
+}
+.golf-scorecard-sym-eagle {
+  color: #e53935;
+}
+.golf-scorecard-sym-par {
+  color: #171a20;
+}
+.golf-scorecard-sym-dp {
+  color: #171a20;
+}
+/* Red circle for birdie/eagle */
+.sym-red-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e53935;
+  border: 1px solid #c62828;
+}
+/* Black square for par/double+ */
+.sym-black-square {
+  width: 8px;
+  height: 8px;
+  background: #171a20;
+  border: 1px solid #333;
+}
+.golf-scorecard-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  font-size: 11px;
+}
+.golf-scorecard-total-label {
+  font-weight: 600;
+  color: #555;
+}
+.golf-scorecard-total-score {
+  font-weight: 700;
+  color: #171a20;
+}
+.golf-scorecard-to-par {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.golf-scorecard-to-par.under {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.golf-scorecard-to-par.even {
+  background: #f5f5f5;
+  color: #555;
+}
+.golf-scorecard-to-par.over {
+  background: #ffebee;
+  color: #c62828;
+}
+.golf-scorecard-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  font-size: 10px;
+  color: #666;
+  flex-wrap: wrap;
+}
+.golf-scorecard-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
+/* Interactive scorecard for courses page */
+.sc-grid {
+  margin-bottom: 8px;
+}
+.sc-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #888;
+  padding: 8px 0 4px;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.sc-hole-row {
+  display: grid;
+  grid-template-columns: 52px repeat(9, 1fr);
+  gap: 0;
+  text-align: center;
+}
+.sc-hdr-cell {
+  font-size: 9px;
+  font-weight: 700;
+  color: #888;
+  padding: 4px 2px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.04em;
+}
+.sc-hole-cell {
+  font-size: 10px;
+  font-weight: 600;
+  color: #171a20;
+  padding: 3px 2px;
+  border: 1px solid #f0f0f0;
+}
+.sc-par-cell {
+  font-size: 10px;
+  font-weight: 600;
+  color: #555;
+  padding: 3px 2px;
+  border: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+.sc-score-cell {
+  padding: 1px;
+  border: 1px solid #f0f0f0;
+}
+.sc-score-input {
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: #171a20;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  padding: 3px 1px;
+  background: #fff;
+  box-sizing: border-box;
+  -moz-appearance: textfield;
+  font-family: inherit;
+}
+.sc-score-input::-webkit-outer-spin-button,
+.sc-score-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.sc-score-input:focus {
+  border-color: #171a20;
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(23,26,32,0.15);
+}
+.sc-sym-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: 1px solid #f0f0f0;
+  min-height: 14px;
+}
+.sc-red-circle {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e53935;
+  border: 1px solid #c62828;
+}
+.sc-black-square {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #171a20;
+  border: 1px solid #333;
+}
+.sc-legend {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 10px;
+  color: #666;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.sc-legend span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.sc-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #555;
+}
+.sc-total-par {
+  font-weight: 700;
+  font-size: 13px;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+.sc-total-par.under { background: #e8f5e9; color: #2e7d32; }
+.sc-total-par.even  { background: #f5f5f5; color: #555; }
+.sc-total-par.over  { background: #ffebee; color: #c62828; }
+
+/* Tee selector */
+.tee-selector {
+  margin: 16px 0;
+}
+.tee-btns {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tee-btn {
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  color: #555;
+  text-align: center;
+  transition: all .18s;
+  min-width: 60px;
+}
+.tee-btn:hover {
+  background: #f5f5f5;
+  transform: translateY(-1px);
+}
+.tee-btn.act {
+  background: #f0f0f0;
+  font-weight: 700;
+  color: #171a20;
+  box-shadow: 0 0 0 1px #171a20;
+}
+.tee-btn small {
+  font-size: 9px;
+  color: #999;
+  font-weight: 400;
+}
 
 
 </style>
@@ -1970,11 +2303,6 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
   </div>
 
   <div class="ham-nav">
-    <button class="ham-item" onclick="nav('home');closeHam()">
-      <span class="ham-item-ico">🏠</span>
-      <span class="ham-item-label"><span class="ko">홈</span><span class="en">Home</span></span>
-      <span class="ham-item-arrow">›</span>
-    </button>
     <button class="ham-item" onclick="nav('about');closeHam()">
       <span class="ham-item-ico">✦</span>
       <span class="ham-item-label"><span class="ko">결 Resonate 소개</span><span class="en">About Resonate</span></span>
@@ -1983,6 +2311,11 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
     <button class="ham-item" onclick="nav('schedule');closeHam()">
       <span class="ham-item-ico">🗓️</span>
       <span class="ham-item-label"><span class="ko">투어 패키지 — 캘리포니아 13일</span><span class="en">Tour Package — California 13 Days</span></span>
+      <span class="ham-item-arrow">›</span>
+    </button>
+    <button class="ham-item" onclick="nav('courses');closeHam()">
+      <span class="ham-item-ico">⛳</span>
+      <span class="ham-item-label"><span class="ko">골프 코스</span><span class="en">Golf Courses</span></span>
       <span class="ham-item-arrow">›</span>
     </button>
     <button class="ham-item ham-item-disabled">
@@ -2033,7 +2366,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
   <!-- LEFT: Logo -->
   <div style="flex-shrink:0;display:flex;align-items:center">
-    <button class="nav-logo-btn nav-logo-svg" onclick="nav('home')" aria-label="홈으로 돌아가기" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;height:42px;-webkit-tap-highlight-color:transparent">
+    <button class="nav-logo-btn nav-logo-svg" onclick="nav('about')" aria-label="메인으로" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;height:42px;-webkit-tap-highlight-color:transparent">
   <svg viewBox="0 0 420 420" height="42" width="42"
        xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:5px">
     <defs>
@@ -2104,9 +2437,9 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
   <!-- CENTER: Nav tabs — shrinks gracefully -->
   <div class="nav-mid" style="display:flex;justify-content:center;align-items:center;gap:2px;overflow:hidden;min-width:0">
-    <button class="nav-tab act" data-page="home"     onclick="nav('home')"><span class="ko">홈</span><span class="en">Home</span></button>
     <button class="nav-tab"     data-page="about"    onclick="nav('about')"><span class="ko">소개</span><span class="en">About</span></button>
     <button class="nav-tab"     data-page="schedule" onclick="nav('schedule')"><span class="ko">일정</span><span class="en">Schedule</span></button>
+    <button class="nav-tab"     data-page="courses"  onclick="nav('courses')"><span class="ko">코스</span><span class="en">Courses</span></button>
     <button class="nav-tab"     data-page="pricing"  onclick="nav('pricing')"><span class="ko">가격</span><span class="en">Pricing</span></button>
     <button class="nav-tab"     data-page="contact"  onclick="nav('contact')"><span class="ko">문의</span><span class="en">Contact</span></button>
     <button class="nav-tab" data-page="gallery" style="opacity:.38;cursor:default;pointer-events:none"><span class="ko">갤러리</span><span class="en">Gallery</span></button>
@@ -2118,7 +2451,6 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
     <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
       <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
       <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
-        <button class="pd-item" onclick="nav('home')"><span class="pd-ico">🏠</span><span class="ko">홈</span><span class="en">Home</span></button>
         <button class="pd-item" onclick="nav('about')"><span class="pd-ico">✦</span><span class="ko">소개</span><span class="en">About</span></button>
         <button class="pd-item" onclick="nav('courses')"><span class="pd-ico">⛳</span><span class="ko">골프 코스</span><span class="en">Courses</span></button>
         <button class="pd-item" onclick="nav('schedule')"><span class="pd-ico">🗓️</span><span class="ko">13일 일정</span><span class="en">Itinerary</span></button>
@@ -2358,151 +2690,21 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
 <!-- COURSES PAGE -->
 <div id="pg-courses" class="page">
-  <!-- Sticky course header — same pattern as schedule -->
+  <!-- Sticky course header -->
   <div class="course-sticky-header" id="courseStickyHeader">
     <div class="page-hdr" style="display:flex;align-items:center;justify-content:center;gap:0;padding:10px 24px 8px;border:none;position:relative">
       <h1 style="font-size:16px;font-weight:700;margin:0;text-align:center"><span class="ko">골프 코스 안내</span><span class="en">Golf Courses</span></h1>
-      <p style="position:absolute;right:16px;font-size:10px;color:#bbb;font-weight:300;margin:0;white-space:nowrap"><span class="ko">코스를 선택하세요</span><span class="en">Select a course</span></p>
+      <p style="position:absolute;right:16px;font-size:10px;color:#bbb;font-weight:300;margin:0;white-space:nowrap"><span class="ko">코스를 선택하고 점수를 입력하세요</span><span class="en">Select a course & enter scores</span></p>
     </div>
     <div class="course-tabs" id="courseTabBar">
-      <button class="course-tab act" onclick="switchCourse(0)">Sandpiper</button>
-      <button class="course-tab" onclick="switchCourse(1)">Trump National</button>
-      <button class="course-tab" onclick="switchCourse(2)">Golf Club of CA</button>
-      <button class="course-tab" onclick="switchCourse(3)">The Crossings</button>
-      <button class="course-tab" onclick="switchCourse(4)">Cross Creek</button>
+      <button class="course-tab act" onclick="switchCourse(0)">Sandpiper Golf Club</button>
+      <button class="course-tab" onclick="switchCourse(1)">Trump National (LA)</button>
+      <button class="course-tab" onclick="switchCourse(2)">Golf Club of California</button>
+      <button class="course-tab" onclick="switchCourse(3)">The Crossings at Carlsbad</button>
+      <button class="course-tab" onclick="switchCourse(4)">Cross Creek Golf Club</button>
     </div>
   </div>
-  <div class="courses-wrap">
-    <div class="course-panel act" id="cp-0">
-      <div class="course-hero">
-        <div class="course-hero-bg" style="background-image:url('golfpic1.png');background-size:cover;background-position:center"></div>
-        <div class="course-hero-grad"></div>
-        <div class="course-hero-info">
-          <div class="course-badge">Featured Course · Day 6</div>
-          <div class="course-hero-name">Sandpiper Golf Club</div>
-          <div class="course-hero-loc">Santa Barbara, California</div>
-        </div>
-      </div>
-      <div class="course-stats">
-        <div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl"><span class="ko">홀</span><span class="en">Holes</span></div></div>
-        <div class="cs-box"><div class="cs-val">Par 72</div><div class="cs-lbl">Par</div></div>
-        <div class="cs-box"><div class="cs-val">7,068</div><div class="cs-lbl"><span class="ko">야드</span><span class="en">Yards</span></div></div>
-        <div class="cs-box"><div class="cs-val">4.7 ★</div><div class="cs-lbl"><span class="ko">평점</span><span class="en">Rating</span></div></div>
-      </div>
-      <p class="course-desc"><span class="ko">Sandpiper Golf Club은 태평양이 한눈에 내려다보이는 산타바바라 해안 절벽 위에 자리한 캘리포니아 최고의 퍼블릭 코스 중 하나입니다. Golf Digest 선정 미국 100대 퍼블릭 코스에 수차례 이름을 올렸으며, 오션뷰 홀과 험준한 해안 지형이 만들어내는 도전적인 라운딩 경험은 절대 잊지 못할 감동을 선사합니다.</span><span class="en">Sandpiper Golf Club sits atop the Pacific Ocean cliffs in Santa Barbara — a multiple-time Golf Digest Top 100 Public Courses honoree. Ocean-view holes and dramatic coastal terrain deliver a round you will never forget.</span></p>
-      <div class="course-tips">
-        <h3><span class="ko">라운딩 팁</span><span class="en">Playing Tips</span></h3>
-        <div class="tip-item"><span class="tip-ico">🌊</span><span><span class="ko">태평양 바람이 세므로 항상 1~2클럽 길게 준비하세요.</span><span class="en">Pacific winds are strong — always prepare 1-2 clubs longer.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">📸</span><span><span class="ko">3번, 7번, 15번 홀 오션뷰가 최고입니다.</span><span class="en">Holes 3, 7 and 15 offer the most spectacular ocean views.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🕗</span><span><span class="ko">오전 8~9시 티오프 추천. 오후는 바람이 강해집니다.</span><span class="en">8-9am tee times are ideal. Afternoon winds pick up considerably.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🌿</span><span><span class="ko">페어웨이 왼쪽 러프 회수 어렵습니다. 오른쪽을 공략하세요.</span><span class="en">Left-side rough is difficult to recover from. Play right.</span></span></div>
-      </div>
-    </div>
-    <div class="course-panel" id="cp-1">
-      <div class="course-hero">
-        <div class="course-hero-bg" style="background-image:url('golfpic2.jpg');background-size:cover;background-position:center"></div>
-        <div class="course-hero-grad"></div>
-        <div class="course-hero-info">
-          <div class="course-badge">Premium Course · Optional Add-on</div>
-          <div class="course-hero-name">Trump National Golf Club</div>
-          <div class="course-hero-loc">Rancho Palos Verdes, Los Angeles</div>
-        </div>
-      </div>
-      <div class="course-stats">
-        <div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl"><span class="ko">홀</span><span class="en">Holes</span></div></div>
-        <div class="cs-box"><div class="cs-val">Par 71</div><div class="cs-lbl">Par</div></div>
-        <div class="cs-box"><div class="cs-val">6,827</div><div class="cs-lbl"><span class="ko">야드</span><span class="en">Yards</span></div></div>
-        <div class="cs-box"><div class="cs-val">4.9 ★</div><div class="cs-lbl"><span class="ko">평점</span><span class="en">Rating</span></div></div>
-      </div>
-      <p class="course-desc"><span class="ko">로스앤젤레스 팔로스 버디스 반도 절벽 위에 자리한 Trump National Golf Club은 Golf Magazine 선정 미국 Top 100 코스로, LA에서 가장 극적인 오션뷰를 자랑합니다. 태평양이 한눈에 내려다보이는 15번 홀은 세계에서 가장 아름다운 홀 중 하나로 꼽힙니다.</span><span class="en">Trump National Golf Club on the Palos Verdes cliffs is a Golf Magazine Top 100 course with the most dramatic ocean views in LA. The par-3 15th hole directly facing the Pacific ranks among the world's most beautiful holes.</span></p>
-      <div class="course-tips">
-        <h3><span class="ko">라운딩 팁</span><span class="en">Playing Tips</span></h3>
-        <div class="tip-item"><span class="tip-ico">🌊</span><span><span class="ko">15번 파3 — 핀 위치 상관없이 그린 중앙을 공략하세요.</span><span class="en">Hole 15 par-3 — always target the center of the green regardless of pin.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🦅</span><span><span class="ko">전반은 내륙, 후반은 해안 절벽으로 전혀 다른 두 코스입니다.</span><span class="en">Front nine is inland, back nine hugs the coastal cliffs — two completely different experiences.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">👔</span><span><span class="ko">드레스코드: 칼라 셔츠 필수, 데님 금지.</span><span class="en">Dress code: collared shirt required, no denim.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">📸</span><span><span class="ko">클럽하우스 테라스 태평양 뷰가 장관입니다.</span><span class="en">The clubhouse terrace offers a stunning Pacific panorama.</span></span></div>
-      </div>
-    </div>
-    <!-- Golf Club of CA -->
-    <div class="course-panel" id="cp-2">
-      <div class="course-hero">
-        <div class="course-hero-bg" style="background:linear-gradient(135deg,#1a3450,#264460);background-size:cover;background-position:center"></div>
-        <div class="course-hero-grad"></div>
-        <div class="course-hero-info">
-          <div class="course-badge">Championship Course · Day 8–9</div>
-          <div class="course-hero-name">The Golf Club of California</div>
-          <div class="course-hero-loc">Fallbrook, California</div>
-        </div>
-      </div>
-      <div class="course-stats">
-        <div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl"><span class="ko">홀</span><span class="en">Holes</span></div></div>
-        <div class="cs-box"><div class="cs-val">Par 72</div><div class="cs-lbl">Par</div></div>
-        <div class="cs-box"><div class="cs-val">7,032</div><div class="cs-lbl"><span class="ko">야드</span><span class="en">Yards</span></div></div>
-        <div class="cs-box"><div class="cs-val">4.6 ★</div><div class="cs-lbl"><span class="ko">평점</span><span class="en">Rating</span></div></div>
-      </div>
-      <p class="course-desc"><span class="ko">Fallbrook에 위치한 Golf Club of California는 자연 지형을 그대로 살린 챔피언십 코스로, 넓은 페어웨이와 전략적인 벙커 배치가 특징입니다. 산악 지형을 활용한 코스 디자인으로 모든 레벨의 골퍼에게 도전과 즐거움을 제공합니다.</span><span class="en">The Golf Club of California in Fallbrook is a championship course blending natural terrain with strategic bunkering. Wide fairways and mountain-backed holes offer a challenge for every skill level.</span></p>
-      <div class="course-tips">
-        <h3><span class="ko">라운딩 팁</span><span class="en">Playing Tips</span></h3>
-        <div class="tip-item"><span class="tip-ico">⛰️</span><span><span class="ko">산악 지형으로 인해 클럽 선택 시 고도 차이를 고려하세요.</span><span class="en">Elevation changes throughout — account for altitude in club selection.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🏌️</span><span><span class="ko">페어웨이가 넓어 드라이버를 자신 있게 휘두르세요.</span><span class="en">Generous fairways — swing the driver with confidence.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🎯</span><span><span class="ko">그린 주변 벙커가 깊으니 어프로치 정확도가 중요합니다.</span><span class="en">Deep greenside bunkers demand accurate approach shots.</span></span></div>
-      </div>
-    </div>
-    <!-- The Crossings -->
-    <div class="course-panel" id="cp-3">
-      <div class="course-hero">
-        <div class="course-hero-bg" style="background:linear-gradient(135deg,#0f3460,#1a3450);background-size:cover;background-position:center"></div>
-        <div class="course-hero-grad"></div>
-        <div class="course-hero-info">
-          <div class="course-badge">Ocean View Course · Day 10</div>
-          <div class="course-hero-name">The Crossings at Carlsbad</div>
-          <div class="course-hero-loc">Carlsbad, California</div>
-        </div>
-      </div>
-      <div class="course-stats">
-        <div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl"><span class="ko">홀</span><span class="en">Holes</span></div></div>
-        <div class="cs-box"><div class="cs-val">Par 72</div><div class="cs-lbl">Par</div></div>
-        <div class="cs-box"><div class="cs-val">6,835</div><div class="cs-lbl"><span class="ko">야드</span><span class="en">Yards</span></div></div>
-        <div class="cs-box"><div class="cs-val">4.5 ★</div><div class="cs-lbl"><span class="ko">평점</span><span class="en">Rating</span></div></div>
-      </div>
-      <p class="course-desc"><span class="ko">Greg Nash가 설계한 The Crossings at Carlsbad는 태평양이 내려다보이는 언덕 위 코스로, 천연 습지와 해안 경관이 어우러진 독특한 라운딩 경험을 제공합니다. 클럽하우스 레스토랑 Canyons는 현지인들이 즐겨 찾는 오션뷰 맛집입니다.</span><span class="en">Designed by Greg Nash, The Crossings at Carlsbad sits atop coastal hills with sweeping Pacific views. Natural wetlands blend with seaside terrain for a truly memorable round. The Canyons clubhouse restaurant is a local favorite for ocean-view dining.</span></p>
-      <div class="course-tips">
-        <h3><span class="ko">라운딩 팁</span><span class="en">Playing Tips</span></h3>
-        <div class="tip-item"><span class="tip-ico">🌊</span><span><span class="ko">해안 바람의 영향을 많이 받습니다. 바람 방향을 항상 확인하세요.</span><span class="en">Coastal winds play a big role — always check wind direction.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">📸</span><span><span class="ko">백나인 태평양 뷰가 특히 아름답습니다.</span><span class="en">The back nine ocean views are especially stunning.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🍽️</span><span><span class="ko">라운딩 후 Canyons 레스토랑 오션뷰 테라스에서 식사를 추천합니다.</span><span class="en">Post-round dining at Canyons ocean-view terrace highly recommended.</span></span></div>
-      </div>
-    </div>
-    <!-- Cross Creek -->
-    <div class="course-panel" id="cp-4">
-      <div class="course-hero">
-        <div class="course-hero-bg" style="background:linear-gradient(135deg,#264460,#1a3450);background-size:cover;background-position:center"></div>
-        <div class="course-hero-grad"></div>
-        <div class="course-hero-info">
-          <div class="course-badge">Hidden Gem · Day 3–5</div>
-          <div class="course-hero-name">Cross Creek Golf Club</div>
-          <div class="course-hero-loc">Temecula, California</div>
-        </div>
-      </div>
-      <div class="course-stats">
-        <div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl"><span class="ko">홀</span><span class="en">Holes</span></div></div>
-        <div class="cs-box"><div class="cs-val">Par 72</div><div class="cs-lbl">Par</div></div>
-        <div class="cs-box"><div class="cs-val">6,842</div><div class="cs-lbl"><span class="ko">야드</span><span class="en">Yards</span></div></div>
-        <div class="cs-box"><div class="cs-val">4.4 ★</div><div class="cs-lbl"><span class="ko">평점</span><span class="en">Rating</span></div></div>
-      </div>
-      <p class="course-desc"><span class="ko">Temecula 와인 컨트리 인근에 위치한 Cross Creek Golf Club은 아름다운 계곡 풍경 속에서 여유로운 라운딩을 즐길 수 있는 숨은 보석 같은 코스입니다. 비교적 완만한 지형으로 초보자부터 시니어 골퍼까지 누구나 편안하게 즐길 수 있습니다.</span><span class="en">Nestled near Temecula wine country, Cross Creek Golf Club is a hidden gem offering relaxed rounds amid beautiful valley scenery. Gentle terrain makes it accessible for beginners and senior golfers alike.</span></p>
-      <div class="course-tips">
-        <h3><span class="ko">라운딩 팁</span><span class="en">Playing Tips</span></h3>
-        <div class="tip-item"><span class="tip-ico">🍇</span><span><span class="ko">라운딩 후 Temecula 와이너리 투어를 추천합니다.</span><span class="en">Post-round Temecula winery tour highly recommended.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🕊️</span><span><span class="ko">평탄한 지형으로 걷기 편한 코스입니다.</span><span class="en">Flat terrain makes this a very walkable course.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🌅</span><span><span class="ko">석양 시간대 라운딩이 특히 아름답습니다.</span><span class="en">Sunset tee times offer particularly beautiful views.</span></span></div>
-      </div>
-    </div>
-    <div style="text-align:center;padding:28px;background:#f8f8f8;border-radius:16px;margin-top:12px;display:none">
-      <p style="font-size:13px;color:#9e9e9e;margin-bottom:12px"><span class="ko">Alisal Ranch, The Crossings, Glen Ivy 등 추가 코스 준비중</span><span class="en">More courses coming — Alisal Ranch, The Crossings, Glen Ivy</span></p>
-      <button class="btn-book" style="font-size:13px;padding:12px 28px;border-radius:100px" onclick="nav('contact')"><span class="ko">코스 문의하기</span><span class="en">Ask About Courses</span></button>
-    </div>
-  </div>
+  <div class="courses-wrap" id="coursesWrap"></div>
 </div>
 
 <!-- FAQ PAGE -->
@@ -2750,9 +2952,230 @@ const DAYS = [
    ]}
 ];;
 
-/* ── STATE ── */
+/* ── GOLF SCORECARD DATA ── */
+const GOLF_SCORECARDS = {
+  'sandpiper': {
+    name: 'Sandpiper Golf Club',
+    location: 'Santa Barbara, California',
+    holes: 18,
+    par: 72,
+    badge: 'Featured Course · Day 6',
+    rating: '4.7 ★',
+    image: 'golfpic1.png',
+    desc_ko: 'Sandpiper Golf Club은 태평양이 한눈에 내려다보이는 산타바바라 해안 절벽 위에 자리한 캘리포니아 최고의 퍼블릭 코스 중 하나입니다. Golf Digest 선정 미국 100대 퍼블릭 코스에 수차례 이름을 올렸으며, 오션뷰 홀과 험준한 해안 지형이 만들어내는 도전적인 라운딩 경험은 절대 잊지 못할 감동을 선사합니다.',
+    desc_en: 'Sandpiper Golf Club sits atop the Pacific Ocean cliffs in Santa Barbara — a multiple-time Golf Digest Top 100 Public Courses honoree. Ocean-view holes and dramatic coastal terrain deliver a round you will never forget.',
+    tips_ko: [{i:'🌊',t:'태평양 바람이 세므로 항상 1~2클럽 길게 준비하세요.'},{i:'📸',t:'3번, 7번, 15번 홀 오션뷰가 최고입니다.'},{i:'🕗',t:'오전 8~9시 티오프 추천. 오후는 바람이 강해집니다.'},{i:'🌿',t:'페어웨이 왼쪽 러프 회수 어렵습니다. 오른쪽을 공략하세요.'}],
+    tips_en: [{i:'🌊',t:'Pacific winds are strong — always prepare 1-2 clubs longer.'},{i:'📸',t:'Holes 3, 7 and 15 offer the most spectacular ocean views.'},{i:'🕗',t:'8-9am tee times are ideal. Afternoon winds pick up considerably.'},{i:'🌿',t:'Left-side rough is difficult to recover from. Play right.'}],
+    tees: [
+      { name: 'Championship', color: '#171a20', yards: 7068 },
+      { name: 'Back', color: '#1565c0', yards: 6680 },
+      { name: 'Middle', color: '#d4af37', yards: 6140 },
+      { name: 'Forward', color: '#e53935', yards: 5320 }
+    ],
+    front9: [5,4,4,4,3,4,4,3,5],
+    back9:  [4,4,5,3,5,4,4,3,4],
+    totalPar: 72
+  },
+  'trump': {
+    name: 'Trump National Golf Club',
+    location: 'Rancho Palos Verdes, Los Angeles',
+    holes: 18,
+    par: 71,
+    badge: 'Premium Course · Optional Add-on',
+    rating: '4.9 ★',
+    image: 'golfpic2.jpg',
+    desc_ko: '로스앤젤레스 팔로스 버디스 반도 절벽 위에 자리한 Trump National Golf Club은 Golf Magazine 선정 미국 Top 100 코스로, LA에서 가장 극적인 오션뷰를 자랑합니다. 태평양이 한눈에 내려다보이는 15번 홀은 세계에서 가장 아름다운 홀 중 하나로 꼽힙니다.',
+    desc_en: 'Trump National Golf Club on the Palos Verdes cliffs is a Golf Magazine Top 100 course with the most dramatic ocean views in LA. The par-3 15th hole directly facing the Pacific ranks among the world\'s most beautiful holes.',
+    tips_ko: [{i:'🌊',t:'15번 파3 — 핀 위치 상관없이 그린 중앙을 공략하세요.'},{i:'🦅',t:'전반은 내륙, 후반은 해안 절벽으로 전혀 다른 두 코스입니다.'},{i:'👔',t:'드레스코드: 칼라 셔츠 필수, 데님 금지.'},{i:'📸',t:'클럽하우스 테라스 태평양 뷰가 장관입니다.'}],
+    tips_en: [{i:'🌊',t:'Hole 15 par-3 — always target the center of the green regardless of pin.'},{i:'🦅',t:'Front nine is inland, back nine hugs the coastal cliffs — two completely different experiences.'},{i:'👔',t:'Dress code: collared shirt required, no denim.'},{i:'📸',t:'The clubhouse terrace offers a stunning Pacific panorama.'}],
+    tees: [
+      { name: 'Black', color: '#171a20', yards: 6827 },
+      { name: 'Gold', color: '#f9a825', yards: 6440 },
+      { name: 'Blue', color: '#1565c0', yards: 5920 },
+      { name: 'White', color: '#f5f5f5', yards: 5100 }
+    ],
+    front9: [4,5,4,3,4,4,3,5,4],
+    back9:  [5,4,3,4,4,4,5,3,4],
+    totalPar: 71
+  },
+  'golfclubca': {
+    name: 'Golf Club of California',
+    location: 'Fallbrook, CA',
+    holes: 18,
+    par: 72,
+    badge: 'Day 8–9 Course',
+    rating: '4.5 ★',
+    image: 'golfpic1.png',
+    desc_ko: 'The Golf Club of California는 팔브룩의 구릉 지대에 위치한 챔피언십 코스로, 자연 지형을 최대한 살린 디자인이 돋보입니다. 언덕과 계곡이 조화를 이루는 18홀은 모든 레벨의 골퍼에게 도전과 즐거움을 선사합니다.',
+    desc_en: 'The Golf Club of California is a championship course set in the rolling hills of Fallbrook, designed to maximize the natural terrain. With 18 holes weaving through hills and valleys, it offers challenge and enjoyment for all skill levels.',
+    tips_ko: [{i:'⛰',t:'구릉 지형이 많아 레이저 거리 측정기 유용합니다.'},{i:'🕳',t:'7번 홀 벙커가 많습니다. 페어웨이 중앙을 공략하세요.'},{i:'🌿',t:'러프가 깊은 편이니 정확한 티샷이 중요합니다.'},{i:'📸',t:'16번 홀에서 보는 계곡 전망이 일품입니다.'}],
+    tips_en: [{i:'⛰',t:'Undulating terrain — a laser rangefinder is very helpful.'},{i:'🕳',t:'Hole 7 has many bunkers. Aim for center fairway.'},{i:'🌿',t:'Rough tends to be deep here — accuracy off the tee matters.'},{i:'📸',t:'The valley view from Hole 16 is spectacular.'}],
+    tees: [
+      { name: 'Tournament', color: '#171a20', yards: 7020 },
+      { name: 'Medal', color: '#1565c0', yards: 6580 },
+      { name: 'Regular', color: '#d4af37', yards: 6020 },
+      { name: 'Senior', color: '#e53935', yards: 5200 }
+    ],
+    front9: [4,5,3,4,4,4,5,3,4],
+    back9:  [5,4,4,4,3,4,4,3,5],
+    totalPar: 72
+  },
+  'crossings': {
+    name: 'The Crossings at Carlsbad',
+    location: 'Carlsbad, CA',
+    holes: 18,
+    par: 71,
+    badge: 'Day 10 Course',
+    rating: '4.6 ★',
+    image: 'golfpic2.jpg',
+    desc_ko: 'The Crossings at Carlsbad은 Greg Nash 설계의 18홀 챔피언십 코스로, 태평양이 내려다보이는 칼스배드 언덕에 자리잡고 있습니다. 오션뷰 홀들이 특히 인상적이며, 클럽하우스 레스토랑 Canyons의 오션뷰 테라스가 지역 최고의 명소입니다.',
+    desc_en: 'The Crossings at Carlsbad is a Greg Nash-designed 18-hole championship course perched on the hills of Carlsbad overlooking the Pacific. Ocean-view holes are the highlight, and the Canyons clubhouse restaurant with its ocean-view terrace is a local favorite.',
+    tips_ko: [{i:'🌊',t:'해안가 홀은 바람이 변수 — 티샷 전 풍향 확인 필수.'},{i:'🍳',t:'라운드 전 Canyons 레스토랑 오션뷰 조식 강력 추천.'},{i:'⛳',t:'5번 파5, 그린 주변 해저드 주의. 안전하게 3온 공략.'},{i:'📸',t:'18번 홀 클럽하우스 배경 사진 명소입니다.'}],
+    tips_en: [{i:'🌊',t:'Coastal holes — wind is a big factor, check direction before teeing off.'},{i:'🍳',t:'Highly recommend breakfast at Canyons with ocean views before your round.'},{i:'⛳',t:'Hole 5 par-5 — watch for hazards around the green. Play safe for 3-on.'},{i:'📸',t:'Hole 18 with the clubhouse backdrop is a photo spot.'}],
+    tees: [
+      { name: 'Black', color: '#171a20', yards: 6834 },
+      { name: 'Blue', color: '#1565c0', yards: 6340 },
+      { name: 'Combo', color: '#f9a825', yards: 5820 },
+      { name: 'White', color: '#f5f5f5', yards: 4980 }
+    ],
+    front9: [4,3,5,4,4,4,3,5,4],
+    back9:  [5,4,3,4,4,4,5,3,4],
+    totalPar: 71
+  },
+  'crosscreek': {
+    name: 'Cross Creek Golf Club',
+    location: 'Temecula, CA',
+    holes: 18,
+    par: 72,
+    badge: 'Day 8 Alt Course',
+    rating: '4.4 ★',
+    image: 'golfpic1.png',
+    desc_ko: 'Cross Creek Golf Club은 테메큘라 와인 컨트리의 구릉 지대에 위치한 챔피언십 코스입니다. 자연 계곡과 참나무 숲이 어우러진 아름다운 레이아웃이 특징이며, 각 홀마다 변화무쌍한 전략을 요구합니다.',
+    desc_en: 'Cross Creek Golf Club is a championship course nestled in the rolling hills of Temecula wine country. The stunning layout winds through natural valleys and oak groves, demanding strategic play on every hole.',
+    tips_ko: [{i:'🍷',t:'라운드 후 테메큘라 와이너리 투어 강력 추천.'},{i:'⛰',t:'고저차가 있어 등판이 있는 홀이 많습니다. 체력 안배 필요.'},{i:'🌊',t:'5번, 12번 홀 크릭 해저드 주의.'},{i:'📸',t:'8번 홀 티박스에서 보는 계곡 전망이 압권입니다.'}],
+    tips_en: [{i:'🍷',t:'Highly recommend Temecula winery tour after your round.'},{i:'⛰',t:'Significant elevation changes — pace yourself.'},{i:'🌊',t:'Watch creek hazards on holes 5 and 12.'},{i:'📸',t:'The valley view from Hole 8 tee box is breathtaking.'}],
+    tees: [
+      { name: 'Champion', color: '#171a20', yards: 7010 },
+      { name: 'Tournament', color: '#1565c0', yards: 6580 },
+      { name: 'Member', color: '#f5f5f5', yards: 5980 },
+      { name: 'Forward', color: '#e53935', yards: 5180 },
+      { name: 'Gold', color: '#f9a825', yards: 4750 }
+    ],
+    front9: [4,5,3,4,4,4,5,3,4],
+    back9:  [5,4,4,4,3,4,4,3,5],
+    totalPar: 72
+  }
+};
+
+const COURSE_KEYS = ['sandpiper','trump','golfclubca','crossings','crosscreek'];
+let courseScores = {}; // { 'sandpiper': [int,...] }
+let courseTees = {};   // { 'sandpiper': teeIndex }
+COURSE_KEYS.forEach(function(k) {
+  if (!courseScores[k]) courseScores[k] = [];
+  if (!courseTees[k]) courseTees[k] = 2; // default White tee
+});
+
+// Interactive scorecard for courses page
+function buildCourseScorecard(courseKey) {
+  var course = GOLF_SCORECARDS[courseKey];
+  if (!course) return '';
+  var L = curLang;
+  var allPars = course.front9.concat(course.back9);
+  var selectedTee = courseTees[courseKey];
+  var tee = course.tees[selectedTee];
+
+  function holeRow(start, count) {
+    var pars = allPars.slice(start, start + count);
+    var row = '<div class="sc-hole-row"><span class="sc-hdr-cell">Hole</span>';
+    for (var i = 0; i < count; i++) {
+      row += '<div class="sc-hole-cell">' + (start + i + 1) + '</div>';
+    }
+    row += '</div>';
+    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">Par</span>';
+    for (var i = 0; i < count; i++) {
+      row += '<div class="sc-par-cell">' + pars[i] + '</div>';
+    }
+    row += '</div>';
+    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">Yds</span>';
+    for (var i = 0; i < count; i++) {
+      row += '<div class="sc-par-cell">-</div>';
+    }
+    row += '</div>';
+    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">Hdcp</span>';
+    for (var i = 0; i < count; i++) {
+      row += '<div class="sc-par-cell">-</div>';
+    }
+    row += '</div>';
+    return row;
+  }
+
+  var teeBtns = course.tees.map(function(t, i) {
+    return '<button class="tee-btn' + (i === selectedTee ? ' act' : '') + '" onclick="setTee(\'' + courseKey + '\',' + i + ')" style="border-left:4px solid ' + t.color + '">' + t.name + '<br><small>' + t.yards + 'yd</small></button>';
+  }).join('');
+
+  var frontPar = course.front9.reduce(function(a,b){return a+b;},0);
+  var backPar = course.back9.reduce(function(a,b){return a+b;},0);
+
+  return '<div class="course-panel-card">' +
+    '<div class="course-hero">' +
+      '<div class="course-hero-bg" style="background-image:url(\'' + course.image + '\');background-size:cover;background-position:center"></div>' +
+      '<div class="course-hero-grad"></div>' +
+      '<div class="course-hero-info"><div class="course-badge">' + course.badge + '</div><div class="course-hero-name">' + course.name + '</div><div class="course-hero-loc">' + course.location + '</div></div>' +
+    '</div>' +
+    '<div class="course-stats">' +
+      '<div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl">' + (L==='ko'?'홀':'Holes') + '</div></div>' +
+      '<div class="cs-box"><div class="cs-val">Par ' + course.totalPar + '</div><div class="cs-lbl">Par</div></div>' +
+      '<div class="cs-box"><div class="cs-val">' + tee.yards + '</div><div class="cs-lbl">' + (L==='ko'?'야드':'Yards') + '</div></div>' +
+      '<div class="cs-box"><div class="cs-val">' + course.rating + '</div><div class="cs-lbl">' + (L==='ko'?'평점':'Rating') + '</div></div>' +
+    '</div>' +
+    '<p class="course-desc">' + (L==='ko'?course.desc_ko:course.desc_en) + '</p>' +
+    '<div class="tee-selector"><h3 style="margin:0 0 8px;font-size:13px">' + (L==='ko'?'티박스 선택':'Tee Box Selection') + ' — <b>' + tee.name + '</b> (' + tee.yards + 'yd)</h3><div class="tee-btns">' + teeBtns + '</div></div>' +
+    '<div class="golf-scorecard">' +
+      '<div class="sc-legend">' +
+        '<span><span class="sc-red-circle"></span> ' + (L==='ko'?'버디':'Birdie') + '</span>' +
+        '<span><span class="sc-red-circle"></span><span class="sc-red-circle"></span> ' + (L==='ko'?'이글':'Eagle') + '</span>' +
+        '<span><span class="sc-black-square"></span> ' + (L==='ko'?'파':'Par') + '</span>' +
+        '<span><span class="sc-black-square"></span><span class="sc-black-square"></span> ' + (L==='ko'?'더블+':'Double+') + '</span>' +
+      '</div>' +
+      '<div class="sc-grid">' +
+        '<div class="sc-section-label">' + (L==='ko'?'전반 (OUT)':'Front 9 (OUT)') + ' — Par ' + frontPar + '</div>' +
+        holeRow(0, 9) +
+      '</div>' +
+      '<div class="sc-grid">' +
+        '<div class="sc-section-label">' + (L==='ko'?'후반 (IN)':'Back 9 (IN)') + ' — Par ' + backPar + '</div>' +
+        holeRow(9, 9) +
+      '</div>' +
+      '<div class="sc-total">' +
+        '<span>' + (L==='ko'?'코스 합계':'Course Total') + ': <b>Par ' + course.totalPar + '</b></span>' +
+        '<span style="font-size:10px;color:#999">' + (L==='ko'?'라운드 시 직접 기입하세요':'Fill in scores during your round') + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="course-tips">' +
+      '<h3>' + (L==='ko'?'라운딩 팁':'Playing Tips') + '</h3>' +
+      (L==='ko'?course.tips_ko:course.tips_en).map(function(t){return '<div class="tip-item"><span class="tip-ico">'+t.i+'</span><span>'+t.t+'</span></div>';}).join('') +
+    '</div>' +
+  '</div>';
+}
+
+function setTee(courseKey, teeIdx) {
+  courseTees[courseKey] = teeIdx;
+  refreshCourseDisplay();
+}
+
+function refreshCourseDisplay() {
+  var wrap = document.getElementById('coursesWrap');
+  if (!wrap) return;
+  var activeIdx = 0;
+  var tabs = document.querySelectorAll('.course-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    if (tabs[i].classList.contains('act')) { activeIdx = i; break; }
+  }
+  var courseKey = COURSE_KEYS[activeIdx];
+  wrap.innerHTML = buildCourseScorecard(courseKey);
+}
+
 let curLang = 'ko';
-let curPage = 'home';
+let curPage = 'about';
 let liveRate = 1380;
 let schedBuilt = false;
 
@@ -2924,6 +3347,7 @@ function nav(page, dayIdx) {
   if (page === 'gallery') buildGallery();
   if (page === 'schedule') {
     if (typeof showScheduleSkeleton === 'function') showScheduleSkeleton();
+    schedBuilt = false;
     buildSchedule();
     if (dayIdx !== undefined) setTimeout(function(){ switchDay(dayIdx); }, 60);
     setTimeout(function(){
@@ -2932,6 +3356,7 @@ function nav(page, dayIdx) {
     }, 200);
   }
   if (page === 'pricing') { renderPlans(); calcUpdate(); fetchRate(); }
+  if (page === 'courses') { setTimeout(function(){ initCourses(); }, 50); }
 
   // Scroll reveal for new pages
   if (['courses','faq','reviews'].indexOf(page) > -1) {
@@ -3285,7 +3710,7 @@ function toast(msg, type) {
    INIT
 ══════════════════════════════ */
 updateNavMode();
-nav('home');
+nav('about');
 // Ensure schedule header hidden on load
 const _sh = document.querySelector('.sched-sticky-header');
 if (_sh) _sh.classList.remove('visible');
@@ -5015,7 +5440,13 @@ document.addEventListener('click', function(e) {
 });
 function switchCourse(i) {
   document.querySelectorAll('.course-tab').forEach(function(t,j){ t.classList.toggle('act',j===i); });
-  document.querySelectorAll('.course-panel').forEach(function(p,j){ p.classList.toggle('act',j===i); });
+  refreshCourseDisplay();
+}
+
+/* Initial course render on page load */
+function initCourses() {
+  if (!document.getElementById('coursesWrap')) return;
+  refreshCourseDisplay();
 }
 function toggleFaq(btn) {
   var item = btn.closest('.faq-item');
