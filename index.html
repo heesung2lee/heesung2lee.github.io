@@ -2110,6 +2110,175 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
   gap: 4px;
 }
 
+/* Interactive scorecard for courses page */
+.sc-grid {
+  margin-bottom: 8px;
+}
+.sc-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #888;
+  padding: 8px 0 4px;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.sc-hole-row {
+  display: grid;
+  grid-template-columns: 52px repeat(9, 1fr);
+  gap: 0;
+  text-align: center;
+}
+.sc-hdr-cell {
+  font-size: 9px;
+  font-weight: 700;
+  color: #888;
+  padding: 4px 2px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.04em;
+}
+.sc-hole-cell {
+  font-size: 10px;
+  font-weight: 600;
+  color: #171a20;
+  padding: 3px 2px;
+  border: 1px solid #f0f0f0;
+}
+.sc-par-cell {
+  font-size: 10px;
+  font-weight: 600;
+  color: #555;
+  padding: 3px 2px;
+  border: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+.sc-score-cell {
+  padding: 1px;
+  border: 1px solid #f0f0f0;
+}
+.sc-score-input {
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: #171a20;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  padding: 3px 1px;
+  background: #fff;
+  box-sizing: border-box;
+  -moz-appearance: textfield;
+  font-family: inherit;
+}
+.sc-score-input::-webkit-outer-spin-button,
+.sc-score-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.sc-score-input:focus {
+  border-color: #171a20;
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(23,26,32,0.15);
+}
+.sc-sym-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: 1px solid #f0f0f0;
+  min-height: 14px;
+}
+.sc-red-circle {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e53935;
+  border: 1px solid #c62828;
+}
+.sc-black-square {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #171a20;
+  border: 1px solid #333;
+}
+.sc-legend {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 10px;
+  color: #666;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.sc-legend span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.sc-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #555;
+}
+.sc-total-par {
+  font-weight: 700;
+  font-size: 13px;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+.sc-total-par.under { background: #e8f5e9; color: #2e7d32; }
+.sc-total-par.even  { background: #f5f5f5; color: #555; }
+.sc-total-par.over  { background: #ffebee; color: #c62828; }
+
+/* Tee selector */
+.tee-selector {
+  margin: 16px 0;
+}
+.tee-btns {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tee-btn {
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  color: #555;
+  text-align: center;
+  transition: all .18s;
+  min-width: 60px;
+}
+.tee-btn:hover {
+  background: #f5f5f5;
+  transform: translateY(-1px);
+}
+.tee-btn.act {
+  background: #f0f0f0;
+  font-weight: 700;
+  color: #171a20;
+  box-shadow: 0 0 0 1px #171a20;
+}
+.tee-btn small {
+  font-size: 9px;
+  color: #999;
+  font-weight: 400;
+}
+
 
 </style>
   <noscript><style>body{font-family:sans-serif;padding:40px;text-align:center}.ko{display:block}</style></noscript>
@@ -2522,73 +2691,20 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
 <!-- COURSES PAGE -->
 <div id="pg-courses" class="page">
-  <!-- Sticky course header — same pattern as schedule -->
+  <!-- Sticky course header -->
   <div class="course-sticky-header" id="courseStickyHeader">
     <div class="page-hdr" style="display:flex;align-items:center;justify-content:center;gap:0;padding:10px 24px 8px;border:none;position:relative">
       <h1 style="font-size:16px;font-weight:700;margin:0;text-align:center"><span class="ko">골프 코스 안내</span><span class="en">Golf Courses</span></h1>
-      <p style="position:absolute;right:16px;font-size:10px;color:#bbb;font-weight:300;margin:0;white-space:nowrap"><span class="ko">코스를 선택하세요</span><span class="en">Select a course</span></p>
+      <p style="position:absolute;right:16px;font-size:10px;color:#bbb;font-weight:300;margin:0;white-space:nowrap"><span class="ko">코스를 선택하고 점수를 입력하세요</span><span class="en">Select a course & enter scores</span></p>
     </div>
     <div class="course-tabs" id="courseTabBar">
       <button class="course-tab act" onclick="switchCourse(0)">Sandpiper Golf Club</button>
       <button class="course-tab" onclick="switchCourse(1)">Trump National (LA)</button>
+      <button class="course-tab" onclick="switchCourse(2)">Golf Club of California</button>
+      <button class="course-tab" onclick="switchCourse(3)">The Crossings at Carlsbad</button>
     </div>
   </div>
-  <div class="courses-wrap">
-    <div class="course-panel act" id="cp-0">
-      <div class="course-hero">
-        <div class="course-hero-bg" style="background-image:url('golfpic1.png');background-size:cover;background-position:center"></div>
-        <div class="course-hero-grad"></div>
-        <div class="course-hero-info">
-          <div class="course-badge">Featured Course · Day 6</div>
-          <div class="course-hero-name">Sandpiper Golf Club</div>
-          <div class="course-hero-loc">Santa Barbara, California</div>
-        </div>
-      </div>
-      <div class="course-stats">
-        <div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl"><span class="ko">홀</span><span class="en">Holes</span></div></div>
-        <div class="cs-box"><div class="cs-val">Par 72</div><div class="cs-lbl">Par</div></div>
-        <div class="cs-box"><div class="cs-val">7,068</div><div class="cs-lbl"><span class="ko">야드</span><span class="en">Yards</span></div></div>
-        <div class="cs-box"><div class="cs-val">4.7 ★</div><div class="cs-lbl"><span class="ko">평점</span><span class="en">Rating</span></div></div>
-      </div>
-      <p class="course-desc"><span class="ko">Sandpiper Golf Club은 태평양이 한눈에 내려다보이는 산타바바라 해안 절벽 위에 자리한 캘리포니아 최고의 퍼블릭 코스 중 하나입니다. Golf Digest 선정 미국 100대 퍼블릭 코스에 수차례 이름을 올렸으며, 오션뷰 홀과 험준한 해안 지형이 만들어내는 도전적인 라운딩 경험은 절대 잊지 못할 감동을 선사합니다.</span><span class="en">Sandpiper Golf Club sits atop the Pacific Ocean cliffs in Santa Barbara — a multiple-time Golf Digest Top 100 Public Courses honoree. Ocean-view holes and dramatic coastal terrain deliver a round you will never forget.</span></p>
-      <div class="course-tips">
-        <h3><span class="ko">라운딩 팁</span><span class="en">Playing Tips</span></h3>
-        <div class="tip-item"><span class="tip-ico">🌊</span><span><span class="ko">태평양 바람이 세므로 항상 1~2클럽 길게 준비하세요.</span><span class="en">Pacific winds are strong — always prepare 1-2 clubs longer.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">📸</span><span><span class="ko">3번, 7번, 15번 홀 오션뷰가 최고입니다.</span><span class="en">Holes 3, 7 and 15 offer the most spectacular ocean views.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🕗</span><span><span class="ko">오전 8~9시 티오프 추천. 오후는 바람이 강해집니다.</span><span class="en">8-9am tee times are ideal. Afternoon winds pick up considerably.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🌿</span><span><span class="ko">페어웨이 왼쪽 러프 회수 어렵습니다. 오른쪽을 공략하세요.</span><span class="en">Left-side rough is difficult to recover from. Play right.</span></span></div>
-      </div>
-    </div>
-    <div class="course-panel" id="cp-1">
-      <div class="course-hero">
-        <div class="course-hero-bg" style="background-image:url('golfpic2.jpg');background-size:cover;background-position:center"></div>
-        <div class="course-hero-grad"></div>
-        <div class="course-hero-info">
-          <div class="course-badge">Premium Course · Optional Add-on</div>
-          <div class="course-hero-name">Trump National Golf Club</div>
-          <div class="course-hero-loc">Rancho Palos Verdes, Los Angeles</div>
-        </div>
-      </div>
-      <div class="course-stats">
-        <div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl"><span class="ko">홀</span><span class="en">Holes</span></div></div>
-        <div class="cs-box"><div class="cs-val">Par 71</div><div class="cs-lbl">Par</div></div>
-        <div class="cs-box"><div class="cs-val">6,827</div><div class="cs-lbl"><span class="ko">야드</span><span class="en">Yards</span></div></div>
-        <div class="cs-box"><div class="cs-val">4.9 ★</div><div class="cs-lbl"><span class="ko">평점</span><span class="en">Rating</span></div></div>
-      </div>
-      <p class="course-desc"><span class="ko">로스앤젤레스 팔로스 버디스 반도 절벽 위에 자리한 Trump National Golf Club은 Golf Magazine 선정 미국 Top 100 코스로, LA에서 가장 극적인 오션뷰를 자랑합니다. 태평양이 한눈에 내려다보이는 15번 홀은 세계에서 가장 아름다운 홀 중 하나로 꼽힙니다.</span><span class="en">Trump National Golf Club on the Palos Verdes cliffs is a Golf Magazine Top 100 course with the most dramatic ocean views in LA. The par-3 15th hole directly facing the Pacific ranks among the world's most beautiful holes.</span></p>
-      <div class="course-tips">
-        <h3><span class="ko">라운딩 팁</span><span class="en">Playing Tips</span></h3>
-        <div class="tip-item"><span class="tip-ico">🌊</span><span><span class="ko">15번 파3 — 핀 위치 상관없이 그린 중앙을 공략하세요.</span><span class="en">Hole 15 par-3 — always target the center of the green regardless of pin.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">🦅</span><span><span class="ko">전반은 내륙, 후반은 해안 절벽으로 전혀 다른 두 코스입니다.</span><span class="en">Front nine is inland, back nine hugs the coastal cliffs — two completely different experiences.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">👔</span><span><span class="ko">드레스코드: 칼라 셔츠 필수, 데님 금지.</span><span class="en">Dress code: collared shirt required, no denim.</span></span></div>
-        <div class="tip-item"><span class="tip-ico">📸</span><span><span class="ko">클럽하우스 테라스 태평양 뷰가 장관입니다.</span><span class="en">The clubhouse terrace offers a stunning Pacific panorama.</span></span></div>
-      </div>
-    </div>
-    <div style="text-align:center;padding:28px;background:#f8f8f8;border-radius:16px;margin-top:12px">
-      <p style="font-size:13px;color:#9e9e9e;margin-bottom:12px"><span class="ko">Alisal Ranch, The Crossings, Glen Ivy 등 추가 코스 준비중</span><span class="en">More courses coming — Alisal Ranch, The Crossings, Glen Ivy</span></p>
-      <button class="btn-book" style="font-size:13px;padding:12px 28px;border-radius:100px" onclick="nav('contact')"><span class="ko">코스 문의하기</span><span class="en">Ask About Courses</span></button>
-    </div>
-  </div>
+  <div class="courses-wrap" id="coursesWrap"></div>
 </div>
 
 <!-- FAQ PAGE -->
@@ -2840,9 +2956,16 @@ const DAYS = [
 const GOLF_SCORECARDS = {
   'sandpiper': {
     name: 'Sandpiper Golf Club',
-    location: 'Santa Barbara, CA',
+    location: 'Santa Barbara, California',
     holes: 18,
     par: 72,
+    badge: 'Featured Course · Day 6',
+    rating: '4.7 ★',
+    image: 'golfpic1.png',
+    desc_ko: 'Sandpiper Golf Club은 태평양이 한눈에 내려다보이는 산타바바라 해안 절벽 위에 자리한 캘리포니아 최고의 퍼블릭 코스 중 하나입니다. Golf Digest 선정 미국 100대 퍼블릭 코스에 수차례 이름을 올렸으며, 오션뷰 홀과 험준한 해안 지형이 만들어내는 도전적인 라운딩 경험은 절대 잊지 못할 감동을 선사합니다.',
+    desc_en: 'Sandpiper Golf Club sits atop the Pacific Ocean cliffs in Santa Barbara — a multiple-time Golf Digest Top 100 Public Courses honoree. Ocean-view holes and dramatic coastal terrain deliver a round you will never forget.',
+    tips_ko: [{i:'🌊',t:'태평양 바람이 세므로 항상 1~2클럽 길게 준비하세요.'},{i:'📸',t:'3번, 7번, 15번 홀 오션뷰가 최고입니다.'},{i:'🕗',t:'오전 8~9시 티오프 추천. 오후는 바람이 강해집니다.'},{i:'🌿',t:'페어웨이 왼쪽 러프 회수 어렵습니다. 오른쪽을 공략하세요.'}],
+    tips_en: [{i:'🌊',t:'Pacific winds are strong — always prepare 1-2 clubs longer.'},{i:'📸',t:'Holes 3, 7 and 15 offer the most spectacular ocean views.'},{i:'🕗',t:'8-9am tee times are ideal. Afternoon winds pick up considerably.'},{i:'🌿',t:'Left-side rough is difficult to recover from. Play right.'}],
     tees: [
       { name: 'Black', color: '#171a20', yards: 7068 },
       { name: 'Blue', color: '#1565c0', yards: 6680 },
@@ -2853,34 +2976,26 @@ const GOLF_SCORECARDS = {
     back9:  [4,4,5,3,5,4,4,3,4],
     totalPar: 72
   },
-  'alisal': {
-    name: 'Alisal Ranch River Course',
-    location: 'Solvang, CA',
-    holes: 18,
-    par: 72,
-    tees: [
-      { name: 'Gold', color: '#f9a825', yards: 6815 },
-      { name: 'Blue', color: '#1565c0', yards: 6430 },
-      { name: 'White', color: '#f5f5f5', yards: 5960 },
-      { name: 'Red', color: '#e53935', yards: 5180 }
-    ],
-    front9: [4,5,4,4,3,4,4,3,5],
-    back9:  [4,4,5,3,4,5,4,3,4],
-    totalPar: 72
-  },
-  'glenivy': {
-    name: 'Glen Ivy Golf Club',
-    location: 'Corona, CA',
+  'trump': {
+    name: 'Trump National Golf Club',
+    location: 'Rancho Palos Verdes, Los Angeles',
     holes: 18,
     par: 71,
+    badge: 'Premium Course · Optional Add-on',
+    rating: '4.9 ★',
+    image: 'golfpic2.jpg',
+    desc_ko: '로스앤젤레스 팔로스 버디스 반도 절벽 위에 자리한 Trump National Golf Club은 Golf Magazine 선정 미국 Top 100 코스로, LA에서 가장 극적인 오션뷰를 자랑합니다. 태평양이 한눈에 내려다보이는 15번 홀은 세계에서 가장 아름다운 홀 중 하나로 꼽힙니다.',
+    desc_en: 'Trump National Golf Club on the Palos Verdes cliffs is a Golf Magazine Top 100 course with the most dramatic ocean views in LA. The par-3 15th hole directly facing the Pacific ranks among the world\'s most beautiful holes.',
+    tips_ko: [{i:'🌊',t:'15번 파3 — 핀 위치 상관없이 그린 중앙을 공략하세요.'},{i:'🦅',t:'전반은 내륙, 후반은 해안 절벽으로 전혀 다른 두 코스입니다.'},{i:'👔',t:'드레스코드: 칼라 셔츠 필수, 데님 금지.'},{i:'📸',t:'클럽하우스 테라스 태평양 뷰가 장관입니다.'}],
+    tips_en: [{i:'🌊',t:'Hole 15 par-3 — always target the center of the green regardless of pin.'},{i:'🦅',t:'Front nine is inland, back nine hugs the coastal cliffs — two completely different experiences.'},{i:'👔',t:'Dress code: collared shirt required, no denim.'},{i:'📸',t:'The clubhouse terrace offers a stunning Pacific panorama.'}],
     tees: [
-      { name: 'Black', color: '#171a20', yards: 6502 },
-      { name: 'Blue', color: '#1565c0', yards: 6080 },
-      { name: 'White', color: '#f5f5f5', yards: 5565 },
-      { name: 'Red', color: '#e53935', yards: 4875 }
+      { name: 'Black', color: '#171a20', yards: 6827 },
+      { name: 'Blue', color: '#1565c0', yards: 6440 },
+      { name: 'White', color: '#f5f5f5', yards: 5920 },
+      { name: 'Red', color: '#e53935', yards: 5100 }
     ],
-    front9: [4,4,4,3,5,4,3,4,5],
-    back9:  [4,5,3,4,4,4,5,3,4],
+    front9: [4,5,4,3,4,4,3,5,4],
+    back9:  [5,4,3,4,4,4,5,3,4],
     totalPar: 71
   },
   'golfclubca': {
@@ -2888,6 +3003,13 @@ const GOLF_SCORECARDS = {
     location: 'Fallbrook, CA',
     holes: 18,
     par: 72,
+    badge: 'Day 8–9 Course',
+    rating: '4.5 ★',
+    image: 'golfpic1.png',
+    desc_ko: 'The Golf Club of California는 팔브룩의 구릉 지대에 위치한 챔피언십 코스로, 자연 지형을 최대한 살린 디자인이 돋보입니다. 언덕과 계곡이 조화를 이루는 18홀은 모든 레벨의 골퍼에게 도전과 즐거움을 선사합니다.',
+    desc_en: 'The Golf Club of California is a championship course set in the rolling hills of Fallbrook, designed to maximize the natural terrain. With 18 holes weaving through hills and valleys, it offers challenge and enjoyment for all skill levels.',
+    tips_ko: [{i:'⛰',t:'구릉 지형이 많아 레이저 거리 측정기 유용합니다.'},{i:'🕳',t:'7번 홀 벙커가 많습니다. 페어웨이 중앙을 공략하세요.'},{i:'🌿',t:'러프가 깊은 편이니 정확한 티샷이 중요합니다.'},{i:'📸',t:'16번 홀에서 보는 계곡 전망이 일품입니다.'}],
+    tips_en: [{i:'⛰',t:'Undulating terrain — a laser rangefinder is very helpful.'},{i:'🕳',t:'Hole 7 has many bunkers. Aim for center fairway.'},{i:'🌿',t:'Rough tends to be deep here — accuracy off the tee matters.'},{i:'📸',t:'The valley view from Hole 16 is spectacular.'}],
     tees: [
       { name: 'Black', color: '#171a20', yards: 7020 },
       { name: 'Blue', color: '#1565c0', yards: 6580 },
@@ -2903,6 +3025,13 @@ const GOLF_SCORECARDS = {
     location: 'Carlsbad, CA',
     holes: 18,
     par: 71,
+    badge: 'Day 10 Course',
+    rating: '4.6 ★',
+    image: 'golfpic2.jpg',
+    desc_ko: 'The Crossings at Carlsbad은 Greg Nash 설계의 18홀 챔피언십 코스로, 태평양이 내려다보이는 칼스배드 언덕에 자리잡고 있습니다. 오션뷰 홀들이 특히 인상적이며, 클럽하우스 레스토랑 Canyons의 오션뷰 테라스가 지역 최고의 명소입니다.',
+    desc_en: 'The Crossings at Carlsbad is a Greg Nash-designed 18-hole championship course perched on the hills of Carlsbad overlooking the Pacific. Ocean-view holes are the highlight, and the Canyons clubhouse restaurant with its ocean-view terrace is a local favorite.',
+    tips_ko: [{i:'🌊',t:'해안가 홀은 바람이 변수 — 티샷 전 풍향 확인 필수.'},{i:'🍳',t:'라운드 전 Canyons 레스토랑 오션뷰 조식 강력 추천.'},{i:'⛳',t:'5번 파5, 그린 주변 해저드 주의. 안전하게 3온 공략.'},{i:'📸',t:'18번 홀 클럽하우스 배경 사진 명소입니다.'}],
+    tips_en: [{i:'🌊',t:'Coastal holes — wind is a big factor, check direction before teeing off.'},{i:'🍳',t:'Highly recommend breakfast at Canyons with ocean views before your round.'},{i:'⛳',t:'Hole 5 par-5 — watch for hazards around the green. Play safe for 3-on.'},{i:'📸',t:'Hole 18 with the clubhouse backdrop is a photo spot.'}],
     tees: [
       { name: 'Black', color: '#171a20', yards: 6834 },
       { name: 'Blue', color: '#1565c0', yards: 6340 },
@@ -2915,203 +3044,189 @@ const GOLF_SCORECARDS = {
   }
 };
 
-/* Generate scorecard HTML for a specific course */
-function buildScorecard(courseKey, playerScore, selectedTee) {
-  const course = GOLF_SCORECARDS[courseKey];
+const COURSE_KEYS = ['sandpiper','trump','golfclubca','crossings'];
+let courseScores = {}; // { 'sandpiper': [int,...] }
+let courseTees = {};   // { 'sandpiper': teeIndex }
+COURSE_KEYS.forEach(function(k) {
+  if (!courseScores[k]) courseScores[k] = [];
+  if (!courseTees[k]) courseTees[k] = 2; // default White tee
+});
+
+// Interactive scorecard for courses page
+function buildCourseScorecard(courseKey) {
+  var course = GOLF_SCORECARDS[courseKey];
   if (!course) return '';
-  
-  const L = curLang;
-  const tee = course.tees[selectedTee] || course.tees[2]; // default to White tee
-  const allPars = [...course.front9, ...course.back9];
-  const frontPar = course.front9.reduce((a,b) => a+b, 0);
-  const backPar = course.back9.reduce((a,b) => a+b, 0);
-  
-  // Calculate total
-  let totalStrokes = 0;
-  let totalPar = course.totalPar;
-  let frontStrokes = 0;
-  let backStrokes = 0;
-  
-  const scoreSymbols = playerScore.map((score, i) => {
-    const par = allPars[i];
-    const diff = score - par;
-    let symbols = [];
-    
-    if (diff <= -2) {
-      // Eagle or better - 2 red circles
-      symbols.push({ type: 'eagle', count: 2, diff });
-    } else if (diff === -1) {
-      // Birdie - 1 red circle
-      symbols.push({ type: 'birdie', count: 1, diff });
-    } else if (diff === 0) {
-      // Par - 1 black square
-      symbols.push({ type: 'par', count: 1, diff });
-    } else {
-      // Double+ par - 2 black squares
-      symbols.push({ type: 'dp', count: 2, diff });
+  var L = curLang;
+  var allPars = course.front9.concat(course.back9);
+  var selectedTee = courseTees[courseKey];
+  var tee = course.tees[selectedTee];
+
+  // Layout holes 1-9 and 10-18
+  function holeRow(label, start, count) {
+    var row = '<div class="sc-hole-row"><span class="sc-hdr-cell">' + label + '</span>';
+    var pars = allPars.slice(start, start + count);
+    for (var i = 0; i < count; i++) {
+      var holeNum = start + i + 1;
+      var par = pars[i];
+      row += '<div class="sc-hole-cell">' + holeNum + '</div>';
     }
-    
-    totalStrokes += score;
-    if (i < 9) frontStrokes += score;
-    else backStrokes += score;
-    
-    return { par, score, symbols, diff };
-  });
-  
-  const toPar = totalStrokes - totalPar;
-  const toParClass = toPar < 0 ? 'under' : (toPar === 0 ? 'even' : 'over');
-  const toParText = toPar === 0 ? 'E' : (toPar > 0 ? '+' + toPar : toPar.toString());
-  
-  const frontToPar = frontStrokes - frontPar;
-  const backToPar = backStrokes - backPar;
-  
-  const teeMarkers = course.tees.map((t, i) => 
-    `<div class="golf-scorecard-tee">
-      <div class="golf-scorecard-tee-marker" style="background:${t.color}"></div>
-      <span>${t.name} ${t.yards}yd</span>
-    </div>`
-  ).join('');
-  
-  // Build hole grid
-  const front9Cells = scoreSymbols.slice(0, 9).map((s, i) => 
-    `<div class="golf-scorecard-cell">
-      <div class="golf-scorecard-hole-num">${i+1}</div>
-      <div class="golf-scorecard-par">${s.par}</div>
-      <div class="golf-scorecard-sym golf-scorecard-sym-${s.symbols[0].type}">
-        ${s.symbols.map(sym => {
-          if (sym.type === 'birdie' || sym.type === 'eagle') {
-            return Array(sym.count).fill('<div class="sym-red-circle"></div>').join('');
-          } else {
-            return Array(sym.count).fill('<div class="sym-black-square"></div>').join('');
-          }
-        }).join('')}
-      </div>
-    </div>`
-  ).join('');
-  
-  const back9Cells = scoreSymbols.slice(9, 18).map((s, i) => 
-    `<div class="golf-scorecard-cell">
-      <div class="golf-scorecard-hole-num">${i+10}</div>
-      <div class="golf-scorecard-par">${s.par}</div>
-      <div class="golf-scorecard-sym golf-scorecard-sym-${s.symbols[0].type}">
-        ${s.symbols.map(sym => {
-          if (sym.type === 'birdie' || sym.type === 'eagle') {
-            return Array(sym.count).fill('<div class="sym-red-circle"></div>').join('');
-          } else {
-            return Array(sym.count).fill('<div class="sym-black-square"></div>').join('');
-          }
-        }).join('')}
-      </div>
-    </div>`
-  ).join('');
-  
-  const frontTotalClass = frontToPar < 0 ? 'under' : (frontToPar === 0 ? 'even' : (frontToPar > 0 ? 'over' : ''));
-  const backTotalClass = backToPar < 0 ? 'under' : (backToPar === 0 ? 'even' : (backToPar > 0 ? 'over' : ''));
-  
-  return `
-    <div class="golf-scorecard">
-      <div class="golf-scorecard-header">
-        <div class="golf-scorecard-course">${course.name}</div>
-        <div class="golf-scorecard-date">${course.holes}H · Par ${course.totalPar}</div>
-      </div>
-      <div class="golf-scorecard-tees">
-        ${teeMarkers}
-      </div>
-      
-      <!-- Front 9 -->
-      <div class="golf-scorecard-grid">
-        <div class="golf-scorecard-cell"></div>
-        ${Array(9).fill('<div class="golf-scorecard-cell"><div class="golf-scorecard-hole-num">-</div></div>').join('')}
-        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">HOLE</div>
-        ${course.front9.map((p, i) => `<div class="golf-scorecard-cell">${i+1}</div>`).join('')}
-        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">PAR</div>
-        ${course.front9.map(p => `<div class="golf-scorecard-cell">${p}</div>`).join('')}
-        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">SCORE</div>
-        ${scoreSymbols.slice(0, 9).map(s => `
-          <div class="golf-scorecard-cell">
-            <div class="golf-scorecard-sym golf-scorecard-sym-${s.symbols[0].type}">
-              ${s.symbols.map(sym => {
-                if (sym.type === 'birdie' || sym.type === 'eagle') {
-                  return Array(sym.count).fill('<div class="sym-red-circle"></div>').join('');
-                } else {
-                  return Array(sym.count).fill('<div class="sym-black-square"></div>').join('');
-                }
-              }).join('')}
-            </div>
-          </div>
-        `).join('')}
-      </div>
-      
-      <!-- Front 9 Total -->
-      <div style="display:grid;grid-template-columns:60px repeat(9,1fr);gap:0;text-align:center;margin-top:4px">
-        <div class="golf-scorecard-cell" style="background:#eee;font-weight:600">OUT</div>
-        ${Array(9).fill('<div class="golf-scorecard-cell"></div>').join('')}
-        <div class="golf-scorecard-cell" style="background:#eee;font-weight:700">${frontStrokes}</div>
-        <div class="golf-scorecard-cell">(${frontToPar === 0 ? 'E' : (frontToPar > 0 ? '+'+frontToPar : frontToPar)})</div>
-        ${Array(7).fill('<div class="golf-scorecard-cell"></div>').join('')}
-      </div>
-      
-      <!-- Back 9 -->
-      <div class="golf-scorecard-grid" style="margin-top:8px">
-        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">HOLE</div>
-        ${course.back9.map((p, i) => `<div class="golf-scorecard-cell">${i+10}</div>`).join('')}
-        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">PAR</div>
-        ${course.back9.map(p => `<div class="golf-scorecard-cell">${p}</div>`).join('')}
-        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">SCORE</div>
-        ${scoreSymbols.slice(9, 18).map(s => `
-          <div class="golf-scorecard-cell">
-            <div class="golf-scorecard-sym golf-scorecard-sym-${s.symbols[0].type}">
-              ${s.symbols.map(sym => {
-                if (sym.type === 'birdie' || sym.type === 'eagle') {
-                  return Array(sym.count).fill('<div class="sym-red-circle"></div>').join('');
-                } else {
-                  return Array(sym.count).fill('<div class="sym-black-square"></div>').join('');
-                }
-              }).join('')}
-            </div>
-          </div>
-        `).join('')}
-      </div>
-      
-      <!-- Back 9 Total -->
-      <div style="display:grid;grid-template-columns:60px repeat(9,1fr);gap:0;text-align:center;margin-top:4px">
-        <div class="golf-scorecard-cell" style="background:#eee;font-weight:600">IN</div>
-        ${Array(9).fill('<div class="golf-scorecard-cell"></div>').join('')}
-        <div class="golf-scorecard-cell" style="background:#eee;font-weight:700">${backStrokes}</div>
-        <div class="golf-scorecard-cell">(${backToPar === 0 ? 'E' : (backToPar > 0 ? '+'+backToPar : backToPar)})</div>
-        ${Array(7).fill('<div class="golf-scorecard-cell"></div>').join('')}
-      </div>
-      
-      <!-- Grand Total -->
-      <div class="golf-scorecard-total">
-        <div class="golf-scorecard-total-label">TOTAL</div>
-        <div class="golf-scorecard-total-score">${totalStrokes} (${toParText})</div>
-        <div class="golf-scorecard-to-par ${toParClass}">${toPar < 0 ? toPar : (toPar === 0 ? 'E' : '+'+toPar)}</div>
-      </div>
-      
-      <!-- Legend -->
-      <div class="golf-scorecard-legend">
-        <div class="golf-scorecard-legend-item">
-          <div class="sym-red-circle"></div>
-          <span>Birdie (${L==='ko' ? '버디' : 'Birdie'})</span>
-        </div>
-        <div class="golf-scorecard-legend-item">
-          <div class="sym-red-circle" style="margin-right:-2px"></div><div class="sym-red-circle"></div>
-          <span>Eagle (${L==='ko' ? '이글' : 'Eagle'})</span>
-        </div>
-        <div class="golf-scorecard-legend-item">
-          <div class="sym-black-square"></div>
-          <span>Par (${L==='ko' ? '파' : 'Par'})</span>
-        </div>
-        <div class="golf-scorecard-legend-item">
-          <div class="sym-black-square" style="margin-right:-2px"></div><div class="sym-black-square"></div>
-          <span>Double+ (${L==='ko' ? '더블+' : 'Double+'})</span>
-        </div>
-      </div>
-    </div>`;
+    row += '</div>';
+    // Par row
+    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">' + (L==='ko'?'PAR':'PAR') + '</span>';
+    for (var i = 0; i < count; i++) {
+      var par = pars[i];
+      row += '<div class="sc-par-cell">' + par + '</div>';
+    }
+    row += '</div>';
+    // Score input row
+    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">' + (L==='ko'?'스코어':'SCORE') + '</span>';
+    for (var i = 0; i < count; i++) {
+      var idx = start + i;
+      var holeNum = start + i + 1;
+      var par = pars[i];
+      var score = courseScores[courseKey][idx] !== undefined ? courseScores[courseKey][idx] : '';
+      var sym = '';
+      if (score !== '') {
+        var diff = score - par;
+        if (diff <= -2) sym = '<div class="sc-sym sc-eagle">' + renderSymbols('eagle',2) + '</div>';
+        else if (diff === -1) sym = '<div class="sc-sym sc-birdie">' + renderSymbols('birdie',1) + '</div>';
+        else if (diff === 0) sym = '<div class="sc-sym sc-par">' + renderSymbols('par',1) + '</div>';
+        else sym = '<div class="sc-sym sc-dp">' + renderSymbols('dp',2) + '</div>';
+      }
+      row += '<div class="sc-score-cell"><input type="number" class="sc-score-input" min="1" max="20" value="' + score + '" onchange="updateScore(\'' + courseKey + '\',' + idx + ',this.value)" placeholder="-" /></div>';
+    }
+    row += '</div>';
+    // Symbol row
+    row += '<div class="sc-hole-row"><span class="sc-hdr-cell"></span>';
+    for (var i = 0; i < count; i++) {
+      var idx = start + i;
+      var par = pars[i];
+      var score = courseScores[courseKey][idx] !== undefined ? courseScores[courseKey][idx] : '';
+      var symHtml = '';
+      if (score !== '') {
+        var diff = score - par;
+        if (diff <= -2) symHtml = renderSymbols('eagle',2);
+        else if (diff === -1) symHtml = renderSymbols('birdie',1);
+        else if (diff === 0) symHtml = renderSymbols('par',1);
+        else symHtml = renderSymbols('dp',2);
+      }
+      row += '<div class="sc-sym-cell">' + symHtml + '</div>';
+    }
+    row += '</div>';
+    return row;
+  }
+
+  function renderSymbols(type, count) {
+    var syms = '';
+    for (var i = 0; i < count; i++) {
+      if (type === 'birdie' || type === 'eagle') syms += '<span class="sc-red-circle"></span>';
+      else syms += '<span class="sc-black-square"></span>';
+    }
+    return syms;
+  }
+
+  // Calculate totals
+  var frontStrokes = 0, backStrokes = 0, totalStrokes = 0, frontCount = 0, backCount = 0;
+  for (var i = 0; i < 9; i++) { if (courseScores[courseKey][i]) { frontStrokes += courseScores[courseKey][i]; frontCount++; } }
+  for (var i = 9; i < 18; i++) { if (courseScores[courseKey][i]) { backStrokes += courseScores[courseKey][i]; backCount++; } }
+  totalStrokes = frontStrokes + backStrokes;
+  var frontPar = course.front9.reduce(function(a,b){return a+b;},0);
+  var backPar = course.back9.reduce(function(a,b){return a+b;},0);
+  var totalPar = course.totalPar;
+  var ftp = frontStrokes - frontPar, btp = backStrokes - backPar, ttp = totalStrokes - totalPar;
+
+  function tpClass(v) { return v < 0 ? 'under' : (v === 0 ? 'even' : 'over'); }
+  function tpText(v) { return v === 0 ? 'E' : (v > 0 ? '+' + v : v); }
+
+  // Tee selector
+  var teeBtns = course.tees.map(function(t, i) {
+    return '<button class="tee-btn' + (i === selectedTee ? ' act' : '') + '" onclick="setTee(\'' + courseKey + '\',' + i + ')" style="border-left:4px solid ' + t.color + '">' + t.name + '<br><small>' + t.yards + 'yd</small></button>';
+  }).join('');
+
+  return '<div class="course-panel-card">' +
+    '<div class="course-hero">' +
+      '<div class="course-hero-bg" style="background-image:url(\'' + course.image + '\');background-size:cover;background-position:center"></div>' +
+      '<div class="course-hero-grad"></div>' +
+      '<div class="course-hero-info"><div class="course-badge">' + course.badge + '</div><div class="course-hero-name">' + course.name + '</div><div class="course-hero-loc">' + course.location + '</div></div>' +
+    '</div>' +
+    '<div class="course-stats">' +
+      '<div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl">' + (L==='ko'?'홀':'Holes') + '</div></div>' +
+      '<div class="cs-box"><div class="cs-val">Par ' + course.totalPar + '</div><div class="cs-lbl">Par</div></div>' +
+      '<div class="cs-box"><div class="cs-val">' + tee.yards + '</div><div class="cs-lbl">' + (L==='ko'?'야드':'Yards') + '</div></div>' +
+      '<div class="cs-box"><div class="cs-val">' + course.rating + '</div><div class="cs-lbl">' + (L==='ko'?'평점':'Rating') + '</div></div>' +
+    '</div>' +
+    '<p class="course-desc">' + (L==='ko'?course.desc_ko:course.desc_en) + '</p>' +
+    // Tee selector
+    '<div class="tee-selector"><h3 style="margin:0 0 8px;font-size:13px">' + (L==='ko'?'티박스':'Tee Box') + ' — ' + tee.name + ' (' + tee.yards + 'yd)</h3><div class="tee-btns">' + teeBtns + '</div></div>' +
+    // Scorecard
+    '<div class="golf-scorecard">' +
+      // Legend
+      '<div class="sc-legend">' +
+        '<span><span class="sc-red-circle"></span> ' + (L==='ko'?'버디':'Birdie') + '</span>' +
+        '<span><span class="sc-red-circle"></span><span class="sc-red-circle"></span> ' + (L==='ko'?'이글':'Eagle') + '</span>' +
+        '<span><span class="sc-black-square"></span> ' + (L==='ko'?'파':'Par') + '</span>' +
+        '<span><span class="sc-black-square"></span><span class="sc-black-square"></span> ' + (L==='ko'?'더블+':'Double+') + '</span>' +
+      '</div>' +
+      // Front 9
+      '<div class="sc-grid">' +
+        '<div class="sc-section-label">' + (L==='ko'?'전반 (OUT)':'Front 9 (OUT)') + '</div>' +
+        holeRow('HOLE', 0, 9) +
+        // Front total
+        '<div class="sc-hole-row"><span class="sc-hdr-cell">OUT</span>' +
+        Array(7).fill('<div class="sc-hole-cell"></div>').join('') +
+        '<div class="sc-hole-cell" style="font-weight:700">' + (frontCount>0 ? frontStrokes : '-') + '</div>' +
+        '<div class="sc-hole-cell">' + (frontCount>0 ? '(' + tpText(ftp) + ')' : '') + '</div></div>' +
+      '</div>' +
+      // Back 9
+      '<div class="sc-grid">' +
+        '<div class="sc-section-label">' + (L==='ko'?'후반 (IN)':'Back 9 (IN)') + '</div>' +
+        holeRow('HOLE', 9, 9) +
+        '<div class="sc-hole-row"><span class="sc-hdr-cell">IN</span>' +
+        Array(7).fill('<div class="sc-hole-cell"></div>').join('') +
+        '<div class="sc-hole-cell" style="font-weight:700">' + (backCount>0 ? backStrokes : '-') + '</div>' +
+        '<div class="sc-hole-cell">' + (backCount>0 ? '(' + tpText(btp) + ')' : '') + '</div></div>' +
+      '</div>' +
+      // Total
+      '<div class="sc-total">' +
+        '<span>' + (L==='ko'?'합계':'TOTAL') + ': <b>' + (totalStrokes>0 ? totalStrokes : '-') + '</b></span>' +
+        '<span class="sc-total-par ' + tpClass(ttp) + '">' + (totalStrokes>0 ? tpText(ttp) : '') + '</span>' +
+      '</div>' +
+    '</div>' +
+    // Tips
+    '<div class="course-tips">' +
+      '<h3>' + (L==='ko'?'라운딩 팁':'Playing Tips') + '</h3>' +
+      (L==='ko'?course.tips_ko:course.tips_en).map(function(t){return '<div class="tip-item"><span class="tip-ico">'+t.i+'</span><span>'+t.t+'</span></div>';}).join('') +
+    '</div>' +
+  '</div>';
 }
 
-/* ── STATE ── */
+function updateScore(courseKey, holeIdx, val) {
+  var v = parseInt(val);
+  if (isNaN(v) || v < 1) {
+    courseScores[courseKey][holeIdx] = undefined;
+  } else {
+    courseScores[courseKey][holeIdx] = v;
+  }
+  refreshCourseDisplay();
+}
+
+function setTee(courseKey, teeIdx) {
+  courseTees[courseKey] = teeIdx;
+  refreshCourseDisplay();
+}
+
+function refreshCourseDisplay() {
+  var wrap = document.getElementById('coursesWrap');
+  if (!wrap) return;
+  var activeIdx = 0;
+  var tabs = document.querySelectorAll('.course-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    if (tabs[i].classList.contains('act')) { activeIdx = i; break; }
+  }
+  var courseKey = COURSE_KEYS[activeIdx];
+  wrap.innerHTML = buildCourseScorecard(courseKey);
+}
+
 let curLang = 'ko';
 let curPage = 'home';
 let liveRate = 1380;
@@ -3293,6 +3408,7 @@ function nav(page, dayIdx) {
     }, 200);
   }
   if (page === 'pricing') { renderPlans(); calcUpdate(); fetchRate(); }
+  if (page === 'courses') { setTimeout(function(){ initCourses(); }, 50); }
 
   // Scroll reveal for new pages
   if (['courses','faq','reviews'].indexOf(page) > -1) {
@@ -3409,22 +3525,6 @@ function buildPanel(day, i) {
     ? `<button class="day-nav-btn" onclick="switchDay(${i+1})">${L==='ko'?'다음 날':'Next'} →</button>`
     : `<button class="day-nav-btn" disabled>→</button>`;
 
-  // Golf scorecard for specific days
-  // DAY 6 = index 5 (Sandpiper), DAY 7 = index 6 (Alisal), DAY 8 = index 7 (Glen Ivy/Golf Club CA), DAY 9 = index 8 (Golf Club CA), DAY 10 = index 9 (The Crossings)
-  let scorecard = '';
-  const dayGolfMap = {
-    5: { course: 'sandpiper', score: [5,4,5,4,3,5,4,3,5,4,4,5,3,5,5,4,4,3] }, // Sandpiper Round 1
-    6: { course: 'alisal', score: [4,5,4,4,3,4,4,3,5,4,4,5,3,4,5,4,3,4] }, // Alisal
-    7: { course: 'glenivy', score: [4,4,4,3,5,4,3,4,5,4,5,3,4,4,4,5,3,4] }, // Glen Ivy
-    8: { course: 'golfclubca', score: [4,5,3,4,4,4,5,3,4,5,4,4,4,3,4,4,3,5] }, // Golf Club of CA
-    9: { course: 'crossings', score: [4,3,5,4,4,4,3,5,4,5,4,3,4,4,4,5,3,4] } // The Crossings
-  };
-  
-  if (dayGolfMap[i]) {
-    const { course, score } = dayGolfMap[i];
-    scorecard = buildScorecard(course, score, 2); // Default to White tee (index 2)
-  }
-
   return `
     <div style="width:100%;height:200px;border-radius:10px;overflow:hidden;margin-bottom:22px;background:#e8e8e8;flex-shrink:0">
       <img loading="lazy" src="${dayImg(i)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.9) saturate(1.1)">
@@ -3437,7 +3537,6 @@ function buildPanel(day, i) {
     <div class="dp-h">${L === 'ko' ? day.ko : day.en}</div>
     <div class="dp-route">${day.route || (L==='ko' ? '일정 상세 참조' : 'See itinerary details')}</div>
     <div class="tl-list">${rows}</div>
-    ${scorecard}
     <div class="day-nav-row">${prev}${next}</div>`;
 }
 
@@ -5393,7 +5492,13 @@ document.addEventListener('click', function(e) {
 });
 function switchCourse(i) {
   document.querySelectorAll('.course-tab').forEach(function(t,j){ t.classList.toggle('act',j===i); });
-  document.querySelectorAll('.course-panel').forEach(function(p,j){ p.classList.toggle('act',j===i); });
+  refreshCourseDisplay();
+}
+
+/* Initial course render on page load */
+function initCourses() {
+  if (!document.getElementById('coursesWrap')) return;
+  refreshCourseDisplay();
 }
 function toggleFaq(btn) {
   var item = btn.closest('.faq-item');
