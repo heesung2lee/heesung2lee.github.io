@@ -1941,7 +1941,174 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
   flex-shrink: 0;
 }
 
-
+/* ══════════════════════════════
+   GOLF SCORECARD
+══════════════════════════════ */
+.golf-scorecard {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  font-size: 12px;
+  color: #171a20;
+}
+.golf-scorecard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.golf-scorecard-course {
+  font-weight: 700;
+  font-size: 13px;
+}
+.golf-scorecard-date {
+  font-size: 11px;
+  color: #888;
+}
+.golf-scorecard-tees {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.golf-scorecard-tee {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: #555;
+}
+.golf-scorecard-tee-marker {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+.golf-scorecard-grid {
+  display: grid;
+  grid-template-columns: 60px repeat(9, 1fr);
+  gap: 0;
+  text-align: center;
+  font-size: 11px;
+}
+.golf-scorecard-grid17 {
+  grid-template-columns: 60px repeat(9, 1fr);
+}
+.golf-scorecard-grid18 {
+  grid-template-columns: 60px repeat(9, 1fr);
+}
+.golf-scorecard-row {
+  display: contents;
+}
+.golf-scorecard-cell {
+  padding: 4px 2px;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.golf-scorecard-cell:first-child {
+  background: #f8f8f8;
+  font-weight: 600;
+  color: #555;
+}
+.golf-scorecard-hole-num {
+  font-weight: 600;
+  color: #888;
+  font-size: 10px;
+}
+.golf-scorecard-par {
+  font-weight: 600;
+  color: #888;
+  font-size: 10px;
+}
+/* Score symbols */
+.golf-scorecard-sym {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.golf-scorecard-sym-birdie {
+  color: #e53935;
+}
+.golf-scorecard-sym-eagle {
+  color: #e53935;
+}
+.golf-scorecard-sym-par {
+  color: #171a20;
+}
+.golf-scorecard-sym-dp {
+  color: #171a20;
+}
+/* Red circle for birdie/eagle */
+.sym-red-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e53935;
+  border: 1px solid #c62828;
+}
+/* Black square for par/double+ */
+.sym-black-square {
+  width: 8px;
+  height: 8px;
+  background: #171a20;
+  border: 1px solid #333;
+}
+.golf-scorecard-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  font-size: 11px;
+}
+.golf-scorecard-total-label {
+  font-weight: 600;
+  color: #555;
+}
+.golf-scorecard-total-score {
+  font-weight: 700;
+  color: #171a20;
+}
+.golf-scorecard-to-par {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.golf-scorecard-to-par.under {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.golf-scorecard-to-par.even {
+  background: #f5f5f5;
+  color: #555;
+}
+.golf-scorecard-to-par.over {
+  background: #ffebee;
+  color: #c62828;
+}
+.golf-scorecard-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  font-size: 10px;
+  color: #666;
+  flex-wrap: wrap;
+}
+.golf-scorecard-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
 
 </style>
@@ -2669,6 +2836,281 @@ const DAYS = [
    ]}
 ];;
 
+/* ── GOLF SCORECARD DATA ── */
+const GOLF_SCORECARDS = {
+  'sandpiper': {
+    name: 'Sandpiper Golf Club',
+    location: 'Santa Barbara, CA',
+    holes: 18,
+    par: 72,
+    tees: [
+      { name: 'Black', color: '#171a20', yards: 7068 },
+      { name: 'Blue', color: '#1565c0', yards: 6680 },
+      { name: 'White', color: '#f5f5f5', yards: 6140 },
+      { name: 'Red', color: '#e53935', yards: 5320 }
+    ],
+    front9: [5,4,4,4,3,4,4,3,5],
+    back9:  [4,4,5,3,5,4,4,3,4],
+    totalPar: 72
+  },
+  'alisal': {
+    name: 'Alisal Ranch River Course',
+    location: 'Solvang, CA',
+    holes: 18,
+    par: 72,
+    tees: [
+      { name: 'Gold', color: '#f9a825', yards: 6815 },
+      { name: 'Blue', color: '#1565c0', yards: 6430 },
+      { name: 'White', color: '#f5f5f5', yards: 5960 },
+      { name: 'Red', color: '#e53935', yards: 5180 }
+    ],
+    front9: [4,5,4,4,3,4,4,3,5],
+    back9:  [4,4,5,3,4,5,4,3,4],
+    totalPar: 72
+  },
+  'glenivy': {
+    name: 'Glen Ivy Golf Club',
+    location: 'Corona, CA',
+    holes: 18,
+    par: 71,
+    tees: [
+      { name: 'Black', color: '#171a20', yards: 6502 },
+      { name: 'Blue', color: '#1565c0', yards: 6080 },
+      { name: 'White', color: '#f5f5f5', yards: 5565 },
+      { name: 'Red', color: '#e53935', yards: 4875 }
+    ],
+    front9: [4,4,4,3,5,4,3,4,5],
+    back9:  [4,5,3,4,4,4,5,3,4],
+    totalPar: 71
+  },
+  'golfclubca': {
+    name: 'Golf Club of California',
+    location: 'Fallbrook, CA',
+    holes: 18,
+    par: 72,
+    tees: [
+      { name: 'Black', color: '#171a20', yards: 7020 },
+      { name: 'Blue', color: '#1565c0', yards: 6580 },
+      { name: 'White', color: '#f5f5f5', yards: 6020 },
+      { name: 'Red', color: '#e53935', yards: 5200 }
+    ],
+    front9: [4,5,3,4,4,4,5,3,4],
+    back9:  [5,4,4,4,3,4,4,3,5],
+    totalPar: 72
+  },
+  'crossings': {
+    name: 'The Crossings at Carlsbad',
+    location: 'Carlsbad, CA',
+    holes: 18,
+    par: 71,
+    tees: [
+      { name: 'Black', color: '#171a20', yards: 6834 },
+      { name: 'Blue', color: '#1565c0', yards: 6340 },
+      { name: 'White', color: '#f5f5f5', yards: 5820 },
+      { name: 'Red', color: '#e53935', yards: 4980 }
+    ],
+    front9: [4,3,5,4,4,4,3,5,4],
+    back9:  [5,4,3,4,4,4,5,3,4],
+    totalPar: 71
+  }
+};
+
+/* Generate scorecard HTML for a specific course */
+function buildScorecard(courseKey, playerScore, selectedTee) {
+  const course = GOLF_SCORECARDS[courseKey];
+  if (!course) return '';
+  
+  const L = curLang;
+  const tee = course.tees[selectedTee] || course.tees[2]; // default to White tee
+  const allPars = [...course.front9, ...course.back9];
+  const frontPar = course.front9.reduce((a,b) => a+b, 0);
+  const backPar = course.back9.reduce((a,b) => a+b, 0);
+  
+  // Calculate total
+  let totalStrokes = 0;
+  let totalPar = course.totalPar;
+  let frontStrokes = 0;
+  let backStrokes = 0;
+  
+  const scoreSymbols = playerScore.map((score, i) => {
+    const par = allPars[i];
+    const diff = score - par;
+    let symbols = [];
+    
+    if (diff <= -2) {
+      // Eagle or better - 2 red circles
+      symbols.push({ type: 'eagle', count: 2, diff });
+    } else if (diff === -1) {
+      // Birdie - 1 red circle
+      symbols.push({ type: 'birdie', count: 1, diff });
+    } else if (diff === 0) {
+      // Par - 1 black square
+      symbols.push({ type: 'par', count: 1, diff });
+    } else {
+      // Double+ par - 2 black squares
+      symbols.push({ type: 'dp', count: 2, diff });
+    }
+    
+    totalStrokes += score;
+    if (i < 9) frontStrokes += score;
+    else backStrokes += score;
+    
+    return { par, score, symbols, diff };
+  });
+  
+  const toPar = totalStrokes - totalPar;
+  const toParClass = toPar < 0 ? 'under' : (toPar === 0 ? 'even' : 'over');
+  const toParText = toPar === 0 ? 'E' : (toPar > 0 ? '+' + toPar : toPar.toString());
+  
+  const frontToPar = frontStrokes - frontPar;
+  const backToPar = backStrokes - backPar;
+  
+  const teeMarkers = course.tees.map((t, i) => 
+    `<div class="golf-scorecard-tee">
+      <div class="golf-scorecard-tee-marker" style="background:${t.color}"></div>
+      <span>${t.name} ${t.yards}yd</span>
+    </div>`
+  ).join('');
+  
+  // Build hole grid
+  const front9Cells = scoreSymbols.slice(0, 9).map((s, i) => 
+    `<div class="golf-scorecard-cell">
+      <div class="golf-scorecard-hole-num">${i+1}</div>
+      <div class="golf-scorecard-par">${s.par}</div>
+      <div class="golf-scorecard-sym golf-scorecard-sym-${s.symbols[0].type}">
+        ${s.symbols.map(sym => {
+          if (sym.type === 'birdie' || sym.type === 'eagle') {
+            return Array(sym.count).fill('<div class="sym-red-circle"></div>').join('');
+          } else {
+            return Array(sym.count).fill('<div class="sym-black-square"></div>').join('');
+          }
+        }).join('')}
+      </div>
+    </div>`
+  ).join('');
+  
+  const back9Cells = scoreSymbols.slice(9, 18).map((s, i) => 
+    `<div class="golf-scorecard-cell">
+      <div class="golf-scorecard-hole-num">${i+10}</div>
+      <div class="golf-scorecard-par">${s.par}</div>
+      <div class="golf-scorecard-sym golf-scorecard-sym-${s.symbols[0].type}">
+        ${s.symbols.map(sym => {
+          if (sym.type === 'birdie' || sym.type === 'eagle') {
+            return Array(sym.count).fill('<div class="sym-red-circle"></div>').join('');
+          } else {
+            return Array(sym.count).fill('<div class="sym-black-square"></div>').join('');
+          }
+        }).join('')}
+      </div>
+    </div>`
+  ).join('');
+  
+  const frontTotalClass = frontToPar < 0 ? 'under' : (frontToPar === 0 ? 'even' : (frontToPar > 0 ? 'over' : ''));
+  const backTotalClass = backToPar < 0 ? 'under' : (backToPar === 0 ? 'even' : (backToPar > 0 ? 'over' : ''));
+  
+  return `
+    <div class="golf-scorecard">
+      <div class="golf-scorecard-header">
+        <div class="golf-scorecard-course">${course.name}</div>
+        <div class="golf-scorecard-date">${course.holes}H · Par ${course.totalPar}</div>
+      </div>
+      <div class="golf-scorecard-tees">
+        ${teeMarkers}
+      </div>
+      
+      <!-- Front 9 -->
+      <div class="golf-scorecard-grid">
+        <div class="golf-scorecard-cell"></div>
+        ${Array(9).fill('<div class="golf-scorecard-cell"><div class="golf-scorecard-hole-num">-</div></div>').join('')}
+        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">HOLE</div>
+        ${course.front9.map((p, i) => `<div class="golf-scorecard-cell">${i+1}</div>`).join('')}
+        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">PAR</div>
+        ${course.front9.map(p => `<div class="golf-scorecard-cell">${p}</div>`).join('')}
+        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">SCORE</div>
+        ${scoreSymbols.slice(0, 9).map(s => `
+          <div class="golf-scorecard-cell">
+            <div class="golf-scorecard-sym golf-scorecard-sym-${s.symbols[0].type}">
+              ${s.symbols.map(sym => {
+                if (sym.type === 'birdie' || sym.type === 'eagle') {
+                  return Array(sym.count).fill('<div class="sym-red-circle"></div>').join('');
+                } else {
+                  return Array(sym.count).fill('<div class="sym-black-square"></div>').join('');
+                }
+              }).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      
+      <!-- Front 9 Total -->
+      <div style="display:grid;grid-template-columns:60px repeat(9,1fr);gap:0;text-align:center;margin-top:4px">
+        <div class="golf-scorecard-cell" style="background:#eee;font-weight:600">OUT</div>
+        ${Array(9).fill('<div class="golf-scorecard-cell"></div>').join('')}
+        <div class="golf-scorecard-cell" style="background:#eee;font-weight:700">${frontStrokes}</div>
+        <div class="golf-scorecard-cell">(${frontToPar === 0 ? 'E' : (frontToPar > 0 ? '+'+frontToPar : frontToPar)})</div>
+        ${Array(7).fill('<div class="golf-scorecard-cell"></div>').join('')}
+      </div>
+      
+      <!-- Back 9 -->
+      <div class="golf-scorecard-grid" style="margin-top:8px">
+        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">HOLE</div>
+        ${course.back9.map((p, i) => `<div class="golf-scorecard-cell">${i+10}</div>`).join('')}
+        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">PAR</div>
+        ${course.back9.map(p => `<div class="golf-scorecard-cell">${p}</div>`).join('')}
+        <div class="golf-scorecard-cell" style="background:#f8f8f8;font-weight:600">SCORE</div>
+        ${scoreSymbols.slice(9, 18).map(s => `
+          <div class="golf-scorecard-cell">
+            <div class="golf-scorecard-sym golf-scorecard-sym-${s.symbols[0].type}">
+              ${s.symbols.map(sym => {
+                if (sym.type === 'birdie' || sym.type === 'eagle') {
+                  return Array(sym.count).fill('<div class="sym-red-circle"></div>').join('');
+                } else {
+                  return Array(sym.count).fill('<div class="sym-black-square"></div>').join('');
+                }
+              }).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      
+      <!-- Back 9 Total -->
+      <div style="display:grid;grid-template-columns:60px repeat(9,1fr);gap:0;text-align:center;margin-top:4px">
+        <div class="golf-scorecard-cell" style="background:#eee;font-weight:600">IN</div>
+        ${Array(9).fill('<div class="golf-scorecard-cell"></div>').join('')}
+        <div class="golf-scorecard-cell" style="background:#eee;font-weight:700">${backStrokes}</div>
+        <div class="golf-scorecard-cell">(${backToPar === 0 ? 'E' : (backToPar > 0 ? '+'+backToPar : backToPar)})</div>
+        ${Array(7).fill('<div class="golf-scorecard-cell"></div>').join('')}
+      </div>
+      
+      <!-- Grand Total -->
+      <div class="golf-scorecard-total">
+        <div class="golf-scorecard-total-label">TOTAL</div>
+        <div class="golf-scorecard-total-score">${totalStrokes} (${toParText})</div>
+        <div class="golf-scorecard-to-par ${toParClass}">${toPar < 0 ? toPar : (toPar === 0 ? 'E' : '+'+toPar)}</div>
+      </div>
+      
+      <!-- Legend -->
+      <div class="golf-scorecard-legend">
+        <div class="golf-scorecard-legend-item">
+          <div class="sym-red-circle"></div>
+          <span>Birdie (${L==='ko' ? '버디' : 'Birdie'})</span>
+        </div>
+        <div class="golf-scorecard-legend-item">
+          <div class="sym-red-circle" style="margin-right:-2px"></div><div class="sym-red-circle"></div>
+          <span>Eagle (${L==='ko' ? '이글' : 'Eagle'})</span>
+        </div>
+        <div class="golf-scorecard-legend-item">
+          <div class="sym-black-square"></div>
+          <span>Par (${L==='ko' ? '파' : 'Par'})</span>
+        </div>
+        <div class="golf-scorecard-legend-item">
+          <div class="sym-black-square" style="margin-right:-2px"></div><div class="sym-black-square"></div>
+          <span>Double+ (${L==='ko' ? '더블+' : 'Double+'})</span>
+        </div>
+      </div>
+    </div>`;
+}
+
 /* ── STATE ── */
 let curLang = 'ko';
 let curPage = 'home';
@@ -2967,6 +3409,22 @@ function buildPanel(day, i) {
     ? `<button class="day-nav-btn" onclick="switchDay(${i+1})">${L==='ko'?'다음 날':'Next'} →</button>`
     : `<button class="day-nav-btn" disabled>→</button>`;
 
+  // Golf scorecard for specific days
+  // DAY 6 = index 5 (Sandpiper), DAY 7 = index 6 (Alisal), DAY 8 = index 7 (Glen Ivy/Golf Club CA), DAY 9 = index 8 (Golf Club CA), DAY 10 = index 9 (The Crossings)
+  let scorecard = '';
+  const dayGolfMap = {
+    5: { course: 'sandpiper', score: [5,4,5,4,3,5,4,3,5,4,4,5,3,5,5,4,4,3] }, // Sandpiper Round 1
+    6: { course: 'alisal', score: [4,5,4,4,3,4,4,3,5,4,4,5,3,4,5,4,3,4] }, // Alisal
+    7: { course: 'glenivy', score: [4,4,4,3,5,4,3,4,5,4,5,3,4,4,4,5,3,4] }, // Glen Ivy
+    8: { course: 'golfclubca', score: [4,5,3,4,4,4,5,3,4,5,4,4,4,3,4,4,3,5] }, // Golf Club of CA
+    9: { course: 'crossings', score: [4,3,5,4,4,4,3,5,4,5,4,3,4,4,4,5,3,4] } // The Crossings
+  };
+  
+  if (dayGolfMap[i]) {
+    const { course, score } = dayGolfMap[i];
+    scorecard = buildScorecard(course, score, 2); // Default to White tee (index 2)
+  }
+
   return `
     <div style="width:100%;height:200px;border-radius:10px;overflow:hidden;margin-bottom:22px;background:#e8e8e8;flex-shrink:0">
       <img loading="lazy" src="${dayImg(i)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.9) saturate(1.1)">
@@ -2979,6 +3437,7 @@ function buildPanel(day, i) {
     <div class="dp-h">${L === 'ko' ? day.ko : day.en}</div>
     <div class="dp-route">${day.route || (L==='ko' ? '일정 상세 참조' : 'See itinerary details')}</div>
     <div class="tl-list">${rows}</div>
+    ${scorecard}
     <div class="day-nav-row">${prev}${next}</div>`;
 }
 
