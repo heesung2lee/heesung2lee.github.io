@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{navy:{50:"#eef2f6",100:"#d4dfeb",200:"#b3c5d7",300:"#85a5bf",400:"#5b84a3",500:"#41698a",600:"#355672",700:"#2e4760",800:"#264460",900:"#1a3450"},gold:{50:"#fdf8ed",100:"#f9edcc",200:"#f2d88f",300:"#ebc057",400:"#e5b030",500:"#d4951c",600:"#b87414",700:"#925413",800:"#794318",900:"#653617"}}}}}</script>
 <title>결 Resonate Tour — resonatetour.com</title>
   <meta name="theme-color" content="#16213e">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -71,7 +73,7 @@ nav.hero-mode .nav-logo-btn:active{box-shadow:0 0 0 4px rgba(255,255,255,.2)!imp
 nav.hero-mode .nav-logo{color:#fff}
 .nav-logo small{font-size:10px;font-weight:300;opacity:.55;margin-left:4px;letter-spacing:.06em}
 .nav-mid{display:flex;gap:2px;flex:1;justify-content:center;min-width:0;overflow:hidden}
-.nav-tab{font-size:13px;font-weight:400;color:#393c41;background:none;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.nav-tab{font-size:13px;font-weight:400;color:#393c41;background:none;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}@media(max-width:860px){.nav-tab,.nav-r .btn-book{display:none !important}.course-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.course-tabs::-webkit-scrollbar{display:none}.course-tab{flex-shrink:0;white-space:nowrap;font-size:11px;padding:6px 10px}}
 .nav-tab:hover{background:#f4f4f4}
 .nav-tab.act{color:#171a20;font-weight:700;background:#f0f0f0}
 nav.hero-mode .nav-tab{color:rgba(255,255,255,.8)}
@@ -80,8 +82,8 @@ nav.hero-mode .nav-tab.act{background:rgba(255,255,255,.18);color:#fff}
 .nav-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .btn-lang{font-size:12px;font-weight:500;background:none;border:1px solid #e0e0e0;color:#393c41;padding:6px 12px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
 nav.hero-mode .btn-lang{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85)}
-.btn-book{font-size:13px;font-weight:500;background:#171a20;color:#fff;border:none;padding:8px 18px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
-.btn-book:hover{background:#393c41}
+.btn-book{font-size:13px;font-weight:500;background:#1a3450;color:#d4af37;border:1.5px solid rgba(212,175,55,.4);padding:8px 18px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-book:hover{background:#264460;border-color:rgba(212,175,55,.7);transform:translateY(-1px)}
 .mob-btn{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
 .mob-btn span{width:20px;height:1.5px;background:#171a20;display:block;border-radius:2px;transition:background .3s}
 nav.hero-mode .mob-btn span{background:#fff}
@@ -5149,7 +5151,7 @@ function showScheduleSkeleton() {
 
   // Show only on mobile
   function checkMobile() {
-    bar.style.display = window.innerWidth <= 860 ? 'flex' : 'none';
+if (ctrl) ctrl.style.display = "flex"; // show on all devices
   }
   checkMobile();
   window.addEventListener('resize', checkMobile, { passive: true });
