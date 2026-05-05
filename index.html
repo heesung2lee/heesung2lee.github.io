@@ -2700,6 +2700,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
       <button class="course-tab" onclick="switchCourse(1)">Trump National (LA)</button>
       <button class="course-tab" onclick="switchCourse(2)">Golf Club of California</button>
       <button class="course-tab" onclick="switchCourse(3)">The Crossings at Carlsbad</button>
+      <button class="course-tab" onclick="switchCourse(4)">Cross Creek Golf Club</button>
     </div>
   </div>
   <div class="courses-wrap" id="coursesWrap"></div>
@@ -3039,10 +3040,33 @@ const GOLF_SCORECARDS = {
     front9: [4,3,5,4,4,4,3,5,4],
     back9:  [5,4,3,4,4,4,5,3,4],
     totalPar: 71
+  },
+  'crosscreek': {
+    name: 'Cross Creek Golf Club',
+    location: 'Temecula, CA',
+    holes: 18,
+    par: 72,
+    badge: 'Day 8 Alt Course',
+    rating: '4.4 ★',
+    image: 'golfpic1.png',
+    desc_ko: 'Cross Creek Golf Club은 테메큘라 와인 컨트리의 구릉 지대에 위치한 챔피언십 코스입니다. 자연 계곡과 참나무 숲이 어우러진 아름다운 레이아웃이 특징이며, 각 홀마다 변화무쌍한 전략을 요구합니다.',
+    desc_en: 'Cross Creek Golf Club is a championship course nestled in the rolling hills of Temecula wine country. The stunning layout winds through natural valleys and oak groves, demanding strategic play on every hole.',
+    tips_ko: [{i:'🍷',t:'라운드 후 테메큘라 와이너리 투어 강력 추천.'},{i:'⛰',t:'고저차가 있어 등판이 있는 홀이 많습니다. 체력 안배 필요.'},{i:'🌊',t:'5번, 12번 홀 크릭 해저드 주의.'},{i:'📸',t:'8번 홀 티박스에서 보는 계곡 전망이 압권입니다.'}],
+    tips_en: [{i:'🍷',t:'Highly recommend Temecula winery tour after your round.'},{i:'⛰',t:'Significant elevation changes — pace yourself.'},{i:'🌊',t:'Watch creek hazards on holes 5 and 12.'},{i:'📸',t:'The valley view from Hole 8 tee box is breathtaking.'}],
+    tees: [
+      { name: 'Champion', color: '#171a20', yards: 7010 },
+      { name: 'Tournament', color: '#1565c0', yards: 6580 },
+      { name: 'Member', color: '#f5f5f5', yards: 5980 },
+      { name: 'Forward', color: '#e53935', yards: 5180 },
+      { name: 'Gold', color: '#f9a825', yards: 4750 }
+    ],
+    front9: [4,5,3,4,4,4,5,3,4],
+    back9:  [5,4,4,4,3,4,4,3,5],
+    totalPar: 72
   }
 };
 
-const COURSE_KEYS = ['sandpiper','trump','golfclubca','crossings'];
+const COURSE_KEYS = ['sandpiper','trump','golfclubca','crossings','crosscreek'];
 let courseScores = {}; // { 'sandpiper': [int,...] }
 let courseTees = {};   // { 'sandpiper': teeIndex }
 COURSE_KEYS.forEach(function(k) {
@@ -3059,87 +3083,37 @@ function buildCourseScorecard(courseKey) {
   var selectedTee = courseTees[courseKey];
   var tee = course.tees[selectedTee];
 
-  // Layout holes 1-9 and 10-18
-  function holeRow(label, start, count) {
-    var row = '<div class="sc-hole-row"><span class="sc-hdr-cell">' + label + '</span>';
+  function holeRow(start, count) {
     var pars = allPars.slice(start, start + count);
+    var row = '<div class="sc-hole-row"><span class="sc-hdr-cell">Hole</span>';
     for (var i = 0; i < count; i++) {
-      var holeNum = start + i + 1;
-      var par = pars[i];
-      row += '<div class="sc-hole-cell">' + holeNum + '</div>';
+      row += '<div class="sc-hole-cell">' + (start + i + 1) + '</div>';
     }
     row += '</div>';
-    // Par row
-    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">' + (L==='ko'?'PAR':'PAR') + '</span>';
+    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">Par</span>';
     for (var i = 0; i < count; i++) {
-      var par = pars[i];
-      row += '<div class="sc-par-cell">' + par + '</div>';
+      row += '<div class="sc-par-cell">' + pars[i] + '</div>';
     }
     row += '</div>';
-    // Score input row
-    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">' + (L==='ko'?'스코어':'SCORE') + '</span>';
+    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">Yds</span>';
     for (var i = 0; i < count; i++) {
-      var idx = start + i;
-      var holeNum = start + i + 1;
-      var par = pars[i];
-      var score = courseScores[courseKey][idx] !== undefined ? courseScores[courseKey][idx] : '';
-      var sym = '';
-      if (score !== '') {
-        var diff = score - par;
-        if (diff <= -2) sym = '<div class="sc-sym sc-eagle">' + renderSymbols('eagle',2) + '</div>';
-        else if (diff === -1) sym = '<div class="sc-sym sc-birdie">' + renderSymbols('birdie',1) + '</div>';
-        else if (diff === 0) sym = '<div class="sc-sym sc-par">' + renderSymbols('par',1) + '</div>';
-        else sym = '<div class="sc-sym sc-dp">' + renderSymbols('dp',2) + '</div>';
-      }
-      row += '<div class="sc-score-cell"><input type="number" class="sc-score-input" min="1" max="20" value="' + score + '" onchange="updateScore(\'' + courseKey + '\',' + idx + ',this.value)" placeholder="-" /></div>';
+      row += '<div class="sc-par-cell">-</div>';
     }
     row += '</div>';
-    // Symbol row
-    row += '<div class="sc-hole-row"><span class="sc-hdr-cell"></span>';
+    row += '<div class="sc-hole-row"><span class="sc-hdr-cell">Hdcp</span>';
     for (var i = 0; i < count; i++) {
-      var idx = start + i;
-      var par = pars[i];
-      var score = courseScores[courseKey][idx] !== undefined ? courseScores[courseKey][idx] : '';
-      var symHtml = '';
-      if (score !== '') {
-        var diff = score - par;
-        if (diff <= -2) symHtml = renderSymbols('eagle',2);
-        else if (diff === -1) symHtml = renderSymbols('birdie',1);
-        else if (diff === 0) symHtml = renderSymbols('par',1);
-        else symHtml = renderSymbols('dp',2);
-      }
-      row += '<div class="sc-sym-cell">' + symHtml + '</div>';
+      row += '<div class="sc-par-cell">-</div>';
     }
     row += '</div>';
     return row;
   }
 
-  function renderSymbols(type, count) {
-    var syms = '';
-    for (var i = 0; i < count; i++) {
-      if (type === 'birdie' || type === 'eagle') syms += '<span class="sc-red-circle"></span>';
-      else syms += '<span class="sc-black-square"></span>';
-    }
-    return syms;
-  }
-
-  // Calculate totals
-  var frontStrokes = 0, backStrokes = 0, totalStrokes = 0, frontCount = 0, backCount = 0;
-  for (var i = 0; i < 9; i++) { if (courseScores[courseKey][i]) { frontStrokes += courseScores[courseKey][i]; frontCount++; } }
-  for (var i = 9; i < 18; i++) { if (courseScores[courseKey][i]) { backStrokes += courseScores[courseKey][i]; backCount++; } }
-  totalStrokes = frontStrokes + backStrokes;
-  var frontPar = course.front9.reduce(function(a,b){return a+b;},0);
-  var backPar = course.back9.reduce(function(a,b){return a+b;},0);
-  var totalPar = course.totalPar;
-  var ftp = frontStrokes - frontPar, btp = backStrokes - backPar, ttp = totalStrokes - totalPar;
-
-  function tpClass(v) { return v < 0 ? 'under' : (v === 0 ? 'even' : 'over'); }
-  function tpText(v) { return v === 0 ? 'E' : (v > 0 ? '+' + v : v); }
-
-  // Tee selector
   var teeBtns = course.tees.map(function(t, i) {
     return '<button class="tee-btn' + (i === selectedTee ? ' act' : '') + '" onclick="setTee(\'' + courseKey + '\',' + i + ')" style="border-left:4px solid ' + t.color + '">' + t.name + '<br><small>' + t.yards + 'yd</small></button>';
   }).join('');
+
+  var frontPar = course.front9.reduce(function(a,b){return a+b;},0);
+  var backPar = course.back9.reduce(function(a,b){return a+b;},0);
 
   return '<div class="course-panel-card">' +
     '<div class="course-hero">' +
@@ -3154,43 +3128,27 @@ function buildCourseScorecard(courseKey) {
       '<div class="cs-box"><div class="cs-val">' + course.rating + '</div><div class="cs-lbl">' + (L==='ko'?'평점':'Rating') + '</div></div>' +
     '</div>' +
     '<p class="course-desc">' + (L==='ko'?course.desc_ko:course.desc_en) + '</p>' +
-    // Tee selector
-    '<div class="tee-selector"><h3 style="margin:0 0 8px;font-size:13px">' + (L==='ko'?'티박스':'Tee Box') + ' — ' + tee.name + ' (' + tee.yards + 'yd)</h3><div class="tee-btns">' + teeBtns + '</div></div>' +
-    // Scorecard
+    '<div class="tee-selector"><h3 style="margin:0 0 8px;font-size:13px">' + (L==='ko'?'티박스 선택':'Tee Box Selection') + ' — <b>' + tee.name + '</b> (' + tee.yards + 'yd)</h3><div class="tee-btns">' + teeBtns + '</div></div>' +
     '<div class="golf-scorecard">' +
-      // Legend
       '<div class="sc-legend">' +
         '<span><span class="sc-red-circle"></span> ' + (L==='ko'?'버디':'Birdie') + '</span>' +
         '<span><span class="sc-red-circle"></span><span class="sc-red-circle"></span> ' + (L==='ko'?'이글':'Eagle') + '</span>' +
         '<span><span class="sc-black-square"></span> ' + (L==='ko'?'파':'Par') + '</span>' +
         '<span><span class="sc-black-square"></span><span class="sc-black-square"></span> ' + (L==='ko'?'더블+':'Double+') + '</span>' +
       '</div>' +
-      // Front 9
       '<div class="sc-grid">' +
-        '<div class="sc-section-label">' + (L==='ko'?'전반 (OUT)':'Front 9 (OUT)') + '</div>' +
-        holeRow('HOLE', 0, 9) +
-        // Front total
-        '<div class="sc-hole-row"><span class="sc-hdr-cell">OUT</span>' +
-        Array(7).fill('<div class="sc-hole-cell"></div>').join('') +
-        '<div class="sc-hole-cell" style="font-weight:700">' + (frontCount>0 ? frontStrokes : '-') + '</div>' +
-        '<div class="sc-hole-cell">' + (frontCount>0 ? '(' + tpText(ftp) + ')' : '') + '</div></div>' +
+        '<div class="sc-section-label">' + (L==='ko'?'전반 (OUT)':'Front 9 (OUT)') + ' — Par ' + frontPar + '</div>' +
+        holeRow(0, 9) +
       '</div>' +
-      // Back 9
       '<div class="sc-grid">' +
-        '<div class="sc-section-label">' + (L==='ko'?'후반 (IN)':'Back 9 (IN)') + '</div>' +
-        holeRow('HOLE', 9, 9) +
-        '<div class="sc-hole-row"><span class="sc-hdr-cell">IN</span>' +
-        Array(7).fill('<div class="sc-hole-cell"></div>').join('') +
-        '<div class="sc-hole-cell" style="font-weight:700">' + (backCount>0 ? backStrokes : '-') + '</div>' +
-        '<div class="sc-hole-cell">' + (backCount>0 ? '(' + tpText(btp) + ')' : '') + '</div></div>' +
+        '<div class="sc-section-label">' + (L==='ko'?'후반 (IN)':'Back 9 (IN)') + ' — Par ' + backPar + '</div>' +
+        holeRow(9, 9) +
       '</div>' +
-      // Total
       '<div class="sc-total">' +
-        '<span>' + (L==='ko'?'합계':'TOTAL') + ': <b>' + (totalStrokes>0 ? totalStrokes : '-') + '</b></span>' +
-        '<span class="sc-total-par ' + tpClass(ttp) + '">' + (totalStrokes>0 ? tpText(ttp) : '') + '</span>' +
+        '<span>' + (L==='ko'?'코스 합계':'Course Total') + ': <b>Par ' + course.totalPar + '</b></span>' +
+        '<span style="font-size:10px;color:#999">' + (L==='ko'?'라운드 시 직접 기입하세요':'Fill in scores during your round') + '</span>' +
       '</div>' +
     '</div>' +
-    // Tips
     '<div class="course-tips">' +
       '<h3>' + (L==='ko'?'라운딩 팁':'Playing Tips') + '</h3>' +
       (L==='ko'?course.tips_ko:course.tips_en).map(function(t){return '<div class="tip-item"><span class="tip-ico">'+t.i+'</span><span>'+t.t+'</span></div>';}).join('') +
