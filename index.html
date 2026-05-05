@@ -2966,10 +2966,10 @@ const GOLF_SCORECARDS = {
     tips_ko: [{i:'🌊',t:'태평양 바람이 세므로 항상 1~2클럽 길게 준비하세요.'},{i:'📸',t:'3번, 7번, 15번 홀 오션뷰가 최고입니다.'},{i:'🕗',t:'오전 8~9시 티오프 추천. 오후는 바람이 강해집니다.'},{i:'🌿',t:'페어웨이 왼쪽 러프 회수 어렵습니다. 오른쪽을 공략하세요.'}],
     tips_en: [{i:'🌊',t:'Pacific winds are strong — always prepare 1-2 clubs longer.'},{i:'📸',t:'Holes 3, 7 and 15 offer the most spectacular ocean views.'},{i:'🕗',t:'8-9am tee times are ideal. Afternoon winds pick up considerably.'},{i:'🌿',t:'Left-side rough is difficult to recover from. Play right.'}],
     tees: [
-      { name: 'Black', color: '#171a20', yards: 7068 },
-      { name: 'Blue', color: '#1565c0', yards: 6680 },
-      { name: 'White', color: '#f5f5f5', yards: 6140 },
-      { name: 'Red', color: '#e53935', yards: 5320 }
+      { name: 'Championship', color: '#171a20', yards: 7068 },
+      { name: 'Back', color: '#1565c0', yards: 6680 },
+      { name: 'Middle', color: '#d4af37', yards: 6140 },
+      { name: 'Forward', color: '#e53935', yards: 5320 }
     ],
     front9: [5,4,4,4,3,4,4,3,5],
     back9:  [4,4,5,3,5,4,4,3,4],
@@ -2989,9 +2989,9 @@ const GOLF_SCORECARDS = {
     tips_en: [{i:'🌊',t:'Hole 15 par-3 — always target the center of the green regardless of pin.'},{i:'🦅',t:'Front nine is inland, back nine hugs the coastal cliffs — two completely different experiences.'},{i:'👔',t:'Dress code: collared shirt required, no denim.'},{i:'📸',t:'The clubhouse terrace offers a stunning Pacific panorama.'}],
     tees: [
       { name: 'Black', color: '#171a20', yards: 6827 },
-      { name: 'Blue', color: '#1565c0', yards: 6440 },
-      { name: 'White', color: '#f5f5f5', yards: 5920 },
-      { name: 'Red', color: '#e53935', yards: 5100 }
+      { name: 'Gold', color: '#f9a825', yards: 6440 },
+      { name: 'Blue', color: '#1565c0', yards: 5920 },
+      { name: 'White', color: '#f5f5f5', yards: 5100 }
     ],
     front9: [4,5,4,3,4,4,3,5,4],
     back9:  [5,4,3,4,4,4,5,3,4],
@@ -3010,10 +3010,10 @@ const GOLF_SCORECARDS = {
     tips_ko: [{i:'⛰',t:'구릉 지형이 많아 레이저 거리 측정기 유용합니다.'},{i:'🕳',t:'7번 홀 벙커가 많습니다. 페어웨이 중앙을 공략하세요.'},{i:'🌿',t:'러프가 깊은 편이니 정확한 티샷이 중요합니다.'},{i:'📸',t:'16번 홀에서 보는 계곡 전망이 일품입니다.'}],
     tips_en: [{i:'⛰',t:'Undulating terrain — a laser rangefinder is very helpful.'},{i:'🕳',t:'Hole 7 has many bunkers. Aim for center fairway.'},{i:'🌿',t:'Rough tends to be deep here — accuracy off the tee matters.'},{i:'📸',t:'The valley view from Hole 16 is spectacular.'}],
     tees: [
-      { name: 'Black', color: '#171a20', yards: 7020 },
-      { name: 'Blue', color: '#1565c0', yards: 6580 },
-      { name: 'White', color: '#f5f5f5', yards: 6020 },
-      { name: 'Red', color: '#e53935', yards: 5200 }
+      { name: 'Tournament', color: '#171a20', yards: 7020 },
+      { name: 'Medal', color: '#1565c0', yards: 6580 },
+      { name: 'Regular', color: '#d4af37', yards: 6020 },
+      { name: 'Senior', color: '#e53935', yards: 5200 }
     ],
     front9: [4,5,3,4,4,4,5,3,4],
     back9:  [5,4,4,4,3,4,4,3,5],
@@ -3034,8 +3034,8 @@ const GOLF_SCORECARDS = {
     tees: [
       { name: 'Black', color: '#171a20', yards: 6834 },
       { name: 'Blue', color: '#1565c0', yards: 6340 },
-      { name: 'White', color: '#f5f5f5', yards: 5820 },
-      { name: 'Red', color: '#e53935', yards: 4980 }
+      { name: 'Combo', color: '#f9a825', yards: 5820 },
+      { name: 'White', color: '#f5f5f5', yards: 4980 }
     ],
     front9: [4,3,5,4,4,4,3,5,4],
     back9:  [5,4,3,4,4,4,5,3,4],
@@ -3154,16 +3154,6 @@ function buildCourseScorecard(courseKey) {
       (L==='ko'?course.tips_ko:course.tips_en).map(function(t){return '<div class="tip-item"><span class="tip-ico">'+t.i+'</span><span>'+t.t+'</span></div>';}).join('') +
     '</div>' +
   '</div>';
-}
-
-function updateScore(courseKey, holeIdx, val) {
-  var v = parseInt(val);
-  if (isNaN(v) || v < 1) {
-    courseScores[courseKey][holeIdx] = undefined;
-  } else {
-    courseScores[courseKey][holeIdx] = v;
-  }
-  refreshCourseDisplay();
 }
 
 function setTee(courseKey, teeIdx) {
