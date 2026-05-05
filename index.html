@@ -1692,7 +1692,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 .course-hero-name{font-size:clamp(26px,5vw,42px);font-weight:700;margin-bottom:6px}
 .course-hero-loc{font-size:13px;color:rgba(255,255,255,.7);font-weight:300}
 .course-tabs{
-  display:flex;gap:8px;margin-bottom:36px;
+  display:flex;gap:8px;margin-bottom:36px;justify-content:center;flex-wrap:wrap;
   border-bottom:2px solid #f0f0f0;padding-bottom:0;
 }
 .course-tab{
@@ -2696,7 +2696,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
   <div class="course-sticky-header" id="courseStickyHeader">
     <div class="page-hdr" style="display:flex;align-items:center;justify-content:center;gap:0;padding:10px 24px 8px;border:none;position:relative">
       <h1 style="font-size:16px;font-weight:700;margin:0;text-align:center"><span class="ko">골프 코스 안내</span><span class="en">Golf Courses</span></h1>
-      <p style="position:absolute;right:16px;font-size:10px;color:#bbb;font-weight:300;margin:0;white-space:nowrap"><span class="ko">코스를 선택하고 점수를 입력하세요</span><span class="en">Select a course & enter scores</span></p>
+      <p style="position:absolute;right:16px;font-size:10px;color:#bbb;font-weight:300;margin:0;white-space:nowrap"><span class="ko">코스를 선택하세요</span><span class="en">Select a course</span></p>
     </div>
     <div class="course-tabs" id="courseTabBar">
       <button class="course-tab act" onclick="switchCourse(0)">Sandpiper Golf Club</button>
@@ -3133,12 +3133,7 @@ function buildCourseScorecard(courseKey) {
     '<p class="course-desc">' + (L==='ko'?course.desc_ko:course.desc_en) + '</p>' +
     '<div class="tee-selector"><h3 style="margin:0 0 8px;font-size:13px">' + (L==='ko'?'티박스 선택':'Tee Box Selection') + ' — <b>' + tee.name + '</b> (' + tee.yards + 'yd)</h3><div class="tee-btns">' + teeBtns + '</div></div>' +
     '<div class="golf-scorecard">' +
-      '<div class="sc-legend">' +
-        '<span><span class="sc-red-circle"></span> ' + (L==='ko'?'버디':'Birdie') + '</span>' +
-        '<span><span class="sc-red-circle"></span><span class="sc-red-circle"></span> ' + (L==='ko'?'이글':'Eagle') + '</span>' +
-        '<span><span class="sc-black-square"></span> ' + (L==='ko'?'파':'Par') + '</span>' +
-        '<span><span class="sc-black-square"></span><span class="sc-black-square"></span> ' + (L==='ko'?'더블+':'Double+') + '</span>' +
-      '</div>' +
+    '' +
       '<div class="sc-grid">' +
         '<div class="sc-section-label">' + (L==='ko'?'전반 (OUT)':'Front 9 (OUT)') + ' — Par ' + frontPar + '</div>' +
         holeRow(0, 9) +
@@ -3149,7 +3144,7 @@ function buildCourseScorecard(courseKey) {
       '</div>' +
       '<div class="sc-total">' +
         '<span>' + (L==='ko'?'코스 합계':'Course Total') + ': <b>Par ' + course.totalPar + '</b></span>' +
-        '<span style="font-size:10px;color:#999">' + (L==='ko'?'라운드 시 직접 기입하세요':'Fill in scores during your round') + '</span>' +
+        '' +
       '</div>' +
     '</div>' +
     '<div class="course-tips">' +
