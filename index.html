@@ -621,8 +621,9 @@ footer{background:#f4f4f4!important}
   transition:transform .32s cubic-bezier(.4,0,.2,1);
   box-shadow:-8px 0 40px rgba(0,0,0,.18);
   display:flex;flex-direction:column;
-  overflow-y:auto;
+  overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
+  box-sizing:border-box;
   padding-bottom:env(safe-area-inset-bottom, 20px);
   padding-bottom:max(env(safe-area-inset-bottom, 0px), 24px);
 }
@@ -682,6 +683,10 @@ footer{background:#f4f4f4!important}
   transition:all .18s cubic-bezier(.34,1.56,.64,1);
   -webkit-tap-highlight-color:transparent;
   flex-shrink:0;
+  white-space:normal;word-break:keep-all;
+  overflow-wrap:break-word;
+  max-width:calc(100% - 32px);
+  box-sizing:border-box;
 }
 .ham-cta:active{transform:scale(.96);background:#393c41}
 .ham-footer{padding:12px 22px 20px;margin-top:auto;flex-shrink:0}
@@ -698,6 +703,53 @@ footer{background:#f4f4f4!important}
   padding:2px 7px;border-radius:100px;
   margin-left:8px;vertical-align:middle;
 }
+
+/* ═══ PREMIUM SVG ICON MARKERS — Navy & Gold ═══ */
+[class*="ico-"]::before{
+  content:'';display:inline-block;
+  background:currentColor;
+  mask-size:contain;mask-position:center;mask-repeat:no-repeat;
+  -webkit-mask-size:contain;-webkit-mask-position:center;-webkit-mask-repeat:no-repeat;
+  vertical-align:-0.15em;
+}
+.ico-golf::before{width:18px;height:18px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 21V3h2l14 5-14 5v8' fill='none' stroke='%23000' stroke-width='2'/%3E%3Ccircle cx='12' cy='8' r='1.5'/%3E%3C/svg%3E")}
+.ico-golf2::before{width:18px;height:18px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 21V3l14 5-14 5' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-star::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l2.4 7.4h7.6l-6 4.6 2.3 7-6.3-4.6-6.3 4.6 2.3-7-6-4.6h7.6z'/%3E%3C/svg%3E")}
+.ico-mail::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='4' width='20' height='16' rx='1' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M2 6l10 7 10-7' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-phone::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-calendar::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M3 10h18M8 2v4M16 2v4' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-plane::before{width:18px;height:18px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z' fill='none' stroke='%23000' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ico-hotel::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 21V7h4v14H3zm14 0V7h4v14h-4zM7 7V3h10v4M7 11h2v3H7zm4 0h2v3h-2zm4 0h2v3h-2z' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-car::before{width:18px;height:18px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 11l1.5-4h11L19 11M2 15h20v2a1 1 0 01-1 1h-1a1 1 0 01-1-1v-1H5v1a1 1 0 01-1 1H3a1 1 0 01-1-1v-2zm4-1.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm10 0a1.5 1.5 0 110 3 1.5 1.5 0 010-3z' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-film::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='2' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M2 8h20M2 16h20M8 2v20M16 2v20' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-target::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='%23000' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='6' fill='none' stroke='%23000' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='2' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M12 2v4M12 18v4M2 12h4M18 12h4' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-wave::before{width:18px;height:18px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2 12c2-3 4-4 6-2s4 4 6 2 4-4 6-2M2 16c2-2 4-3 6-1s4 3 6 1 4-3 6-1' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")}
+.ico-food::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 2v7c0 2 2 3 3 3s3-1 3-3V2M6 12v10M14 2v20M14 7h4a3 3 0 010 6h-4' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ico-camera::before{width:18px;height:18px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z' fill='none' stroke='%23000' stroke-width='2'/%3E%3Ccircle cx='12' cy='13' r='4' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-clock::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M12 6v6l4 2' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")}
+.ico-mountain::before{width:18px;height:18px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2 20L8 8l4 6 4-8 6 14H2z' fill='none' stroke='%23000' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ico-wine::before{width:15px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 2h8l2 8a6 6 0 01-12 0L8 2z' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M12 16v6M8 22h8' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-leaf::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 21c-5 0-9-5-9-10 0-7 6.5-9 10-9 2 0 12 3 12 9 0 5-4 10-13 10z' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M11 21V11' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-eagle::before{width:18px;height:18px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C9 6 6 7 6 11c0 3 2 5 3 5l-4 7h14l-4-7c1 0 3-2 3-5 0-4-3-5-6-9z' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-gallery::before{width:18px;height:18px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='2' fill='none' stroke='%23000' stroke-width='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M22 14l-5-5-8 8-3-3-4 4' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ico-help::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M9 9a3 3 0 014-2.8 3 3 0 01.4 5.6c-.5.2-.9.5-1.1 1-.2.4-.3.8-.3 1.2M12 17h.01' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")}
+.ico-doc::before{width:16px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M14 2v6h6M16 13H8M16 17H8M10 9H8' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-pin::before{width:16px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z' fill='none' stroke='%23000' stroke-width='2'/%3E%3Ccircle cx='12' cy='10' r='3' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-bunker::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cellipse cx='12' cy='12' rx='10' ry='10' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M12 6v12M6 12h12' fill='none' stroke='%23000' stroke-width='1.5' stroke-dasharray='2 2' opacity='.5'/%3E%3C/svg%3E")}
+.ico-usa::before{width:18px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='4' width='20' height='16' rx='1' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M2 9.3h20M2 14.7h20M12 4v16M8.5 4l-3 16M15.5 4l3 16' fill='none' stroke='%23000' stroke-width='1' opacity='.3'/%3E%3C/svg%3E")}
+.ico-diamond::before{width:14px;height:14px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l8 8-8 12-8-12z'/%3E%3C/svg%3E")}
+.ico-coffee::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")}
+.ico-globe::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-money::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cellipse cx='12' cy='12' rx='10' ry='6' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M12 6v12M8 8v8M16 8v8' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")}
+.ico-chat::before{width:17px;height:17px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.ico-home::before{width:18px;height:18px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M9 22V12h6v10' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+/* Overrides for specific contexts */
+.why-ico[class*="ico-"]::before{width:26px;height:26px;color:#d4af37}
+.inc-ico[class*="ico-"]::before{width:20px;height:20px;color:#d4af37}
+.tip-ico[class*="ico-"]::before{width:20px;height:20px;color:#d4af37}
+.ham-item-ico[class*="ico-"]::before{width:20px;height:20px;color:#d4af37}
+.pd-ico[class*="ico-"]::before{width:18px;height:18px;color:#d4af37}
+.c-info-ico[class*="ico-"]::before{width:22px;height:22px;color:#d4af37}
 
 
 /* ═══ GLOBAL BUTTON LIFT EFFECT ═══
@@ -2308,22 +2360,22 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
   <div class="ham-nav">
     <button class="ham-item" onclick="nav('about');closeHam()">
-      <span class="ham-item-ico">✦</span>
+      <span class="ham-item-ico ico-diamond"></span>
       <span class="ham-item-label"><span class="ko">결 Resonate 소개</span><span class="en">About Resonate</span></span>
       <span class="ham-item-arrow">›</span>
     </button>
     <button class="ham-item" onclick="nav('schedule');closeHam()">
-      <span class="ham-item-ico">🗓️</span>
+      <span class="ham-item-ico ico-calendar"></span>
       <span class="ham-item-label"><span class="ko">투어 패키지 — 캘리포니아 13일</span><span class="en">Tour Package — California 13 Days</span></span>
       <span class="ham-item-arrow">›</span>
     </button>
     <button class="ham-item" onclick="nav('courses');closeHam()">
-      <span class="ham-item-ico">⛳</span>
+      <span class="ham-item-ico ico-golf"></span>
       <span class="ham-item-label"><span class="ko">골프 코스</span><span class="en">Golf Courses</span></span>
       <span class="ham-item-arrow">›</span>
     </button>
     <button class="ham-item ham-item-disabled">
-      <span class="ham-item-ico">🖼️</span>
+      <span class="ham-item-ico ico-gallery"></span>
       <span class="ham-item-label">
         <span class="ko">갤러리</span><span class="en">Gallery</span>
         <span class="ham-coming"><span class="ko">준비중</span><span class="en">Coming Soon</span></span>
@@ -2331,30 +2383,30 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
       <span class="ham-item-arrow" style="opacity:.3">›</span>
     </button>
     <button class="ham-item" onclick="nav('courses');closeHam()">
-      <span class="ham-item-ico">⛳</span>
+      <span class="ham-item-ico ico-golf"></span>
       <span class="ham-item-label"><span class="ko">골프 코스 안내</span><span class="en">Golf Courses</span></span>
       <span class="ham-item-arrow">›</span>
     </button>
     <button class="ham-item" onclick="nav('faq');closeHam()">
-      <span class="ham-item-ico">❓</span>
+      <span class="ham-item-ico ico-help"></span>
       <span class="ham-item-label"><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span></span>
       <span class="ham-item-arrow">›</span>
     </button>
     <button class="ham-item" onclick="nav('reviews');closeHam()">
-      <span class="ham-item-ico">⭐</span>
+      <span class="ham-item-ico ico-star"></span>
       <span class="ham-item-label"><span class="ko">고객 후기</span><span class="en">Reviews</span></span>
       <span class="ham-item-arrow">›</span>
     </button>
     <button class="ham-item" onclick="nav('contact');closeHam()">
-      <span class="ham-item-ico">✉️</span>
+      <span class="ham-item-ico ico-mail"></span>
       <span class="ham-item-label"><span class="ko">문의 & 상담</span><span class="en">Contact & Consultation</span></span>
       <span class="ham-item-arrow">›</span>
     </button>
   </div>
 
   <button class="ham-cta" onclick="nav('contact');closeHam()">
-    <span class="ko">📞 지금 상담 신청하기</span>
-    <span class="en">📞 Book a Consultation</span>
+    <span class="ko"><span class="ico-phone" style="display:inline-flex;align-items:center;gap:4px"></span> 지금 상담 신청하기</span>
+    <span class="en"><span class="ico-phone" style="display:inline-flex;align-items:center;gap:4px"></span> Book a Consultation</span>
   </button>
 
   <div class="ham-footer">
@@ -2451,18 +2503,18 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
   <!-- RIGHT: Lang + Hamburger — NEVER clips -->
   <div class="nav-r" style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px">
-    <button class="btn-lang" onclick="toggleLang()">🌐 <span id="langLabel">EN</span></button>
+    <button class="btn-lang" onclick="toggleLang()"><span class="ico-globe" style="display:inline-flex;margin-right:4px"></span><span id="langLabel">EN</span></button>
     <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
       <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
       <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
         <button class="pd-item" onclick="nav('about')"><span class="pd-ico">✦</span><span class="ko">소개</span><span class="en">About</span></button>
-        <button class="pd-item" onclick="nav('courses')"><span class="pd-ico">⛳</span><span class="ko">골프 코스</span><span class="en">Courses</span></button>
-        <button class="pd-item" onclick="nav('schedule')"><span class="pd-ico">🗓️</span><span class="ko">13일 일정</span><span class="en">Itinerary</span></button>
-        <button class="pd-item" onclick="nav('pricing')"><span class="pd-ico">💰</span><span class="ko">가격</span><span class="en">Pricing</span></button>
-        <button class="pd-item" onclick="nav('reviews')"><span class="pd-ico">⭐</span><span class="ko">고객 후기</span><span class="en">Reviews</span></button>
+        <button class="pd-item" onclick="nav('courses')"><span class="pd-ico ico-golf"></span><span class="ko">골프 코스</span><span class="en">Courses</span></button>
+        <button class="pd-item" onclick="nav('schedule')"><span class="pd-ico ico-calendar"></span><span class="ko">13일 일정</span><span class="en">Itinerary</span></button>
+        <button class="pd-item" onclick="nav('pricing')"><span class="pd-ico ico-money"></span><span class="ko">가격</span><span class="en">Pricing</span></button>
+        <button class="pd-item" onclick="nav('reviews')"><span class="pd-ico ico-star"></span><span class="ko">고객 후기</span><span class="en">Reviews</span></button>
         <button class="pd-item" onclick="nav('faq')"><span class="pd-ico">❓</span><span class="ko">FAQ</span><span class="en">FAQ</span></button>
         <div class="pd-sep"></div>
-        <button class="pd-item pd-cta" onclick="nav('contact')"><span class="ko">💬 상담 신청</span><span class="en">💬 Book Now</span></button>
+        <button class="pd-item pd-cta" onclick="nav('contact')"><span class="ko"><span class="ico-chat" style="display:inline-flex;margin-right:3px"></span>상담 신청</span><span class="en"><span class="ico-chat" style="display:inline-flex;margin-right:3px"></span>Book Now</span></button>
       </div>
     </div>
   </div>
@@ -2550,10 +2602,10 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
       <p style="font-size:15px;color:#9e9e9e;font-weight:300"><span class="ko">한국에서 예약하고, 캘리포니아에서 전율합니다.</span><span class="en">Book from Korea. Feel California.</span></p>
     </div>
     <div class="why-grid" style="background:#fff">
-      <div class="why-c"><div class="why-ico">🇺🇸</div><div class="why-t"><span class="ko">현지 네트워크</span><span class="en">Local Network</span></div><div class="why-d"><span class="ko">LA & 샌디에이고 현지 파트너. 관광객이 갈 수 없는 코스까지.</span><span class="en">LA & San Diego local partners. Access no ordinary tourist gets.</span></div></div>
-      <div class="why-c"><div class="why-ico">🎯</div><div class="why-t"><span class="ko">완전 맞춤 설계</span><span class="en">Fully Custom</span></div><div class="why-d"><span class="ko">처음부터 끝까지 당신만을 위해 설계합니다.</span><span class="en">Designed from scratch, exclusively for you.</span></div></div>
-      <div class="why-c"><div class="why-ico">📞</div><div class="why-t"><span class="ko">사전 오리엔테이션</span><span class="en">Pre-Departure Brief</span></div><div class="why-d"><span class="ko">출발 전 1:1 통화. Day 1의 불안을 없앱니다.</span><span class="en">1:1 call before you depart. Zero Day 1 anxiety.</span></div></div>
-      <div class="why-c"><div class="why-ico">🎬</div><div class="why-t"><span class="ko">전문 영상 릴 무료</span><span class="en">Pro Trip Reel Free</span></div><div class="why-d"><span class="ko">60–90초 전문 편집 트립 릴. 무료 제공.</span><span class="en">60–90 sec professionally edited trip reel. Complimentary.</span></div></div>
+      <div class="why-c"><div class="why-ico ico-usa"></div><div class="why-t"><span class="ko">현지 네트워크</span><span class="en">Local Network</span></div><div class="why-d"><span class="ko">LA & 샌디에이고 현지 파트너. 관광객이 갈 수 없는 코스까지.</span><span class="en">LA & San Diego local partners. Access no ordinary tourist gets.</span></div></div>
+      <div class="why-c"><div class="why-ico ico-target"></div><div class="why-t"><span class="ko">완전 맞춤 설계</span><span class="en">Fully Custom</span></div><div class="why-d"><span class="ko">처음부터 끝까지 당신만을 위해 설계합니다.</span><span class="en">Designed from scratch, exclusively for you.</span></div></div>
+      <div class="why-c"><div class="why-ico ico-phone"></div><div class="why-t"><span class="ko">사전 오리엔테이션</span><span class="en">Pre-Departure Brief</span></div><div class="why-d"><span class="ko">출발 전 1:1 통화. Day 1의 불안을 없앱니다.</span><span class="en">1:1 call before you depart. Zero Day 1 anxiety.</span></div></div>
+      <div class="why-c"><div class="why-ico ico-film"></div><div class="why-t"><span class="ko">전문 영상 릴 무료</span><span class="en">Pro Trip Reel Free</span></div><div class="why-d"><span class="ko">60–90초 전문 편집 트립 릴. 무료 제공.</span><span class="en">60–90 sec professionally edited trip reel. Complimentary.</span></div></div>
     </div>
   </div>
 
@@ -2581,7 +2633,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
     <div class="day-tab-bar" id="dayTabBar"></div>
   </div>
   <button class="btn-sm" onclick="printSchedule()" style="margin:8px auto;display:block;font-size:11px;padding:8px 18px;border-radius:100px;background:#f4f4f4;color:#5c5e62;border:1px solid #e0e0e0">
-  <span class="ko">📄 일정 PDF 저장</span><span class="en">📄 Save PDF</span>
+  <span class="ko"><span class="ico-doc" style="display:inline-block;vertical-align:-0.15em;margin-right:4px"></span>일정 PDF 저장</span><span class="en"><span class="ico-doc" style="display:inline-block;vertical-align:-0.15em;margin-right:4px"></span>Save PDF</span>
 </button>
   <div class="day-panels" id="dayPanels"></div>
 </div>
@@ -2597,14 +2649,14 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
     <div class="inc-sec">
       <h3><span class="ko">포함 사항</span><span class="en">What's Included</span></h3>
       <div class="inc-grid">
-        <div class="inc-item"><div class="inc-ico">✈️</div><div><div class="inc-t"><span class="ko">왕복 항공권 전원</span><span class="en">Round-trip Flights</span></div><div class="inc-d"><span class="ko">ICN–미국 왕복. 발권 대행. 좌석 등급 협의.</span><span class="en">ICN to USA round-trip. Fully managed. Class upgrades available.</span></div></div></div>
-        <div class="inc-item"><div class="inc-ico">🏨</div><div><div class="inc-t"><span class="ko">숙박 전체</span><span class="en">All Accommodations</span></div><div class="inc-d"><span class="ko">집 + Pea Soup Andersen's + Harrah's Resort + Elim Hot Springs.</span><span class="en">Home + Pea Soup Andersen's + Harrah's Resort + Elim Hot Springs.</span></div></div></div>
-        <div class="inc-item"><div class="inc-ico">⛳</div><div><div class="inc-t"><span class="ko">골프 전 라운드</span><span class="en">All Golf Rounds</span></div><div class="inc-d"><span class="ko">Sandpiper · Alisal Ranch · Glen Ivy · Golf Club of CA · The Crossings 외.</span><span class="en">Sandpiper · Alisal Ranch · Glen Ivy · Golf Club of CA · The Crossings and more.</span></div></div></div>
-        <div class="inc-item"><div class="inc-ico">🚗</div><div><div class="inc-t"><span class="ko">전용 차량 & 기사</span><span class="en">Private Vehicle & Driver</span></div><div class="inc-d"><span class="ko">전일 전용 차량. 원하는 곳 자유 정차.</span><span class="en">Dedicated vehicle all day. Stop anywhere.</span></div></div></div>
-        <div class="inc-item"><div class="inc-ico">🌊</div><div><div class="inc-t"><span class="ko">Elim Hot Springs 스파</span><span class="en">Elim Hot Springs Spa</span></div><div class="inc-d"><span class="ko">Day 9 온천 스파 & 숙박.</span><span class="en">Day 9 hot springs spa & overnight stay.</span></div></div></div>
-        <div class="inc-item"><div class="inc-ico">🎬</div><div><div class="inc-t"><span class="ko">전문 트립 릴 무료</span><span class="en">Pro Trip Reel — Free</span></div><div class="inc-d"><span class="ko">60–90초 전문 편집. 귀국 후 디지털 전송.</span><span class="en">60–90 sec edited. Delivered digitally after return.</span></div></div></div>
-        <div class="inc-item"><div class="inc-ico">📞</div><div><div class="inc-t"><span class="ko">한국어 가이드 & 오리엔테이션</span><span class="en">Korean Guide & Briefing</span></div><div class="inc-d"><span class="ko">한국어 구사 현지 가이드. 출발 전 1:1 오리엔테이션.</span><span class="en">Korean-speaking local guide. 1:1 pre-departure orientation.</span></div></div></div>
-        <div class="inc-item"><div class="inc-ico">🍽️</div><div><div class="inc-t"><span class="ko">현지 인기 맛집 식사</span><span class="en">Local Favorite Dining</span></div><div class="inc-d"><span class="ko">현지인이 즐겨 찾는 숨은 맛집 위주로 선정. 한식·멕시칸·캘리포니아 퀴진.</span><span class="en">Handpicked local favorites — Korean, Mexican, California cuisine off the tourist trail.</span></div></div></div>
+        <div class="inc-item"><div class="inc-ico ico-plane"></div><div><div class="inc-t"><span class="ko">왕복 항공권 전원</span><span class="en">Round-trip Flights</span></div><div class="inc-d"><span class="ko">ICN–미국 왕복. 발권 대행. 좌석 등급 협의.</span><span class="en">ICN to USA round-trip. Fully managed. Class upgrades available.</span></div></div></div>
+        <div class="inc-item"><div class="inc-ico ico-hotel"></div><div><div class="inc-t"><span class="ko">숙박 전체</span><span class="en">All Accommodations</span></div><div class="inc-d"><span class="ko">집 + Pea Soup Andersen's + Harrah's Resort + Elim Hot Springs.</span><span class="en">Home + Pea Soup Andersen's + Harrah's Resort + Elim Hot Springs.</span></div></div></div>
+        <div class="inc-item"><div class="inc-ico ico-golf"></div><div><div class="inc-t"><span class="ko">골프 전 라운드</span><span class="en">All Golf Rounds</span></div><div class="inc-d"><span class="ko">Sandpiper · Alisal Ranch · Glen Ivy · Golf Club of CA · The Crossings 외.</span><span class="en">Sandpiper · Alisal Ranch · Glen Ivy · Golf Club of CA · The Crossings and more.</span></div></div></div>
+        <div class="inc-item"><div class="inc-ico ico-car"></div><div><div class="inc-t"><span class="ko">전용 차량 & 기사</span><span class="en">Private Vehicle & Driver</span></div><div class="inc-d"><span class="ko">전일 전용 차량. 원하는 곳 자유 정차.</span><span class="en">Dedicated vehicle all day. Stop anywhere.</span></div></div></div>
+        <div class="inc-item"><div class="inc-ico ico-wave"></div><div><div class="inc-t"><span class="ko">Elim Hot Springs 스파</span><span class="en">Elim Hot Springs Spa</span></div><div class="inc-d"><span class="ko">Day 9 온천 스파 & 숙박.</span><span class="en">Day 9 hot springs spa & overnight stay.</span></div></div></div>
+        <div class="inc-item"><div class="inc-ico ico-film"></div><div><div class="inc-t"><span class="ko">전문 트립 릴 무료</span><span class="en">Pro Trip Reel — Free</span></div><div class="inc-d"><span class="ko">60–90초 전문 편집. 귀국 후 디지털 전송.</span><span class="en">60–90 sec edited. Delivered digitally after return.</span></div></div></div>
+        <div class="inc-item"><div class="inc-ico ico-phone"></div><div><div class="inc-t"><span class="ko">한국어 가이드 & 오리엔테이션</span><span class="en">Korean Guide & Briefing</span></div><div class="inc-d"><span class="ko">한국어 구사 현지 가이드. 출발 전 1:1 오리엔테이션.</span><span class="en">Korean-speaking local guide. 1:1 pre-departure orientation.</span></div></div></div>
+        <div class="inc-item"><div class="inc-ico ico-food"></div><div><div class="inc-t"><span class="ko">현지 인기 맛집 식사</span><span class="en">Local Favorite Dining</span></div><div class="inc-d"><span class="ko">현지인이 즐겨 찾는 숨은 맛집 위주로 선정. 한식·멕시칸·캘리포니아 퀴진.</span><span class="en">Handpicked local favorites — Korean, Mexican, California cuisine off the tourist trail.</span></div></div></div>
       </div>
     </div>
     <div class="calc-box">
@@ -2668,8 +2720,8 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
       <h1><span class="ko">당신의 여정을<br>지금 시작하세요</span><span class="en">Let's Make It<br>Resonate</span></h1>
       <p><span class="ko">인원, 날짜, 예산을 알려주시면 3일 이내 맞춤 제안서를 보내드립니다.</span><span class="en">Share group size, dates & budget — a custom proposal within 3 days.</span></p>
       <div class="c-info-block">
-        <a href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico">💬</div><div><div class="c-info-lbl">KakaoTalk</div><div class="c-info-val">@gyeol</div></div></a>
-        <a href="https://instagram.com/resonatetour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico">📸</div><div><div class="c-info-lbl">Instagram</div><div class="c-info-val">@gyeol.tour</div></div></a>
+        <a href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico ico-chat"></div><div><div class="c-info-lbl">KakaoTalk</div><div class="c-info-val">@gyeol</div></div></a>
+        <a href="https://instagram.com/resonatetour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico ico-camera"></div><div><div class="c-info-lbl">Instagram</div><div class="c-info-val">@gyeol.tour</div></div></a>
         <a href="mailto:info@resonatetour.com" class="c-info-row"><div class="c-info-ico">✉️</div><div><div class="c-info-lbl">Email</div><div class="c-info-val">info@resonatetour.com</div></div></a>
       </div>
       <div class="soc-grid">
@@ -2968,8 +3020,8 @@ const GOLF_SCORECARDS = {
     image: 'golfpic1.png',
     desc_ko: 'Sandpiper Golf Club은 태평양이 한눈에 내려다보이는 산타바바라 해안 절벽 위에 자리한 캘리포니아 최고의 퍼블릭 코스 중 하나입니다. Golf Digest 선정 미국 100대 퍼블릭 코스에 수차례 이름을 올렸으며, 오션뷰 홀과 험준한 해안 지형이 만들어내는 도전적인 라운딩 경험은 절대 잊지 못할 감동을 선사합니다.',
     desc_en: 'Sandpiper Golf Club sits atop the Pacific Ocean cliffs in Santa Barbara — a multiple-time Golf Digest Top 100 Public Courses honoree. Ocean-view holes and dramatic coastal terrain deliver a round you will never forget.',
-    tips_ko: [{i:'🌊',t:'태평양 바람이 세므로 항상 1~2클럽 길게 준비하세요.'},{i:'📸',t:'3번, 7번, 15번 홀 오션뷰가 최고입니다.'},{i:'🕗',t:'오전 8~9시 티오프 추천. 오후는 바람이 강해집니다.'},{i:'🌿',t:'페어웨이 왼쪽 러프 회수 어렵습니다. 오른쪽을 공략하세요.'}],
-    tips_en: [{i:'🌊',t:'Pacific winds are strong — always prepare 1-2 clubs longer.'},{i:'📸',t:'Holes 3, 7 and 15 offer the most spectacular ocean views.'},{i:'🕗',t:'8-9am tee times are ideal. Afternoon winds pick up considerably.'},{i:'🌿',t:'Left-side rough is difficult to recover from. Play right.'}],
+    tips_ko: [{i:'wave',t:'태평양 바람이 세므로 항상 1~2클럽 길게 준비하세요.'},{i:'camera',t:'3번, 7번, 15번 홀 오션뷰가 최고입니다.'},{i:'clock',t:'오전 8~9시 티오프 추천. 오후는 바람이 강해집니다.'},{i:'leaf',t:'페어웨이 왼쪽 러프 회수 어렵습니다. 오른쪽을 공략하세요.'}],
+    tips_en: [{i:'wave',t:'Pacific winds are strong — always prepare 1-2 clubs longer.'},{i:'camera',t:'Holes 3, 7 and 15 offer the most spectacular ocean views.'},{i:'clock',t:'8-9am tee times are ideal. Afternoon winds pick up considerably.'},{i:'leaf',t:'Left-side rough is difficult to recover from. Play right.'}],
     tees: [
       { name: 'Championship', color: '#171a20', yards: 7068, yd: [530,410,385,420,190,380,415,175,525, 400,420,510,195,540,370,380,165,410] },
       { name: 'Back', color: '#1565c0', yards: 6680, yd: [500,390,365,400,175,360,395,160,505, 380,400,490,180,515,350,360,150,390] },
@@ -2991,8 +3043,8 @@ const GOLF_SCORECARDS = {
     image: 'golfpic2.jpg',
     desc_ko: '로스앤젤레스 팔로스 버디스 반도 절벽 위에 자리한 Trump National Golf Club은 Golf Magazine 선정 미국 Top 100 코스로, LA에서 가장 극적인 오션뷰를 자랑합니다. 태평양이 한눈에 내려다보이는 15번 홀은 세계에서 가장 아름다운 홀 중 하나로 꼽힙니다.',
     desc_en: 'Trump National Golf Club on the Palos Verdes cliffs is a Golf Magazine Top 100 course with the most dramatic ocean views in LA. The par-3 15th hole directly facing the Pacific ranks among the world\'s most beautiful holes.',
-    tips_ko: [{i:'🌊',t:'15번 파3 — 핀 위치 상관없이 그린 중앙을 공략하세요.'},{i:'🦅',t:'전반은 내륙, 후반은 해안 절벽으로 전혀 다른 두 코스입니다.'},{i:'👔',t:'드레스코드: 칼라 셔츠 필수, 데님 금지.'},{i:'📸',t:'클럽하우스 테라스 태평양 뷰가 장관입니다.'}],
-    tips_en: [{i:'🌊',t:'Hole 15 par-3 — always target the center of the green regardless of pin.'},{i:'🦅',t:'Front nine is inland, back nine hugs the coastal cliffs — two completely different experiences.'},{i:'👔',t:'Dress code: collared shirt required, no denim.'},{i:'📸',t:'The clubhouse terrace offers a stunning Pacific panorama.'}],
+    tips_ko: [{i:'wave',t:'15번 파3 — 핀 위치 상관없이 그린 중앙을 공략하세요.'},{i:'eagle',t:'전반은 내륙, 후반은 해안 절벽으로 전혀 다른 두 코스입니다.'},{i:'leaf',t:'드레스코드: 칼라 셔츠 필수, 데님 금지.'},{i:'camera',t:'클럽하우스 테라스 태평양 뷰가 장관입니다.'}],
+    tips_en: [{i:'wave',t:'Hole 15 par-3 — always target the center of the green regardless of pin.'},{i:'eagle',t:'Front nine is inland, back nine hugs the coastal cliffs — two completely different experiences.'},{i:'leaf',t:'Dress code: collared shirt required, no denim.'},{i:'camera',t:'The clubhouse terrace offers a stunning Pacific panorama.'}],
     tees: [
       { name: 'Black', color: '#171a20', yards: 6827, yd: [410,530,380,195,420,385,175,515,395, 505,390,175,400,415,380,520,160,425] },
       { name: 'Gold', color: '#f9a825', yards: 6440, yd: [385,505,360,180,395,365,160,490,375, 480,370,160,380,390,360,495,145,405] },
@@ -3014,8 +3066,8 @@ const GOLF_SCORECARDS = {
     image: 'golfpic1.png',
     desc_ko: 'The Golf Club of California는 팔브룩의 구릉 지대에 위치한 챔피언십 코스로, 자연 지형을 최대한 살린 디자인이 돋보입니다. 언덕과 계곡이 조화를 이루는 18홀은 모든 레벨의 골퍼에게 도전과 즐거움을 선사합니다.',
     desc_en: 'The Golf Club of California is a championship course set in the rolling hills of Fallbrook, designed to maximize the natural terrain. With 18 holes weaving through hills and valleys, it offers challenge and enjoyment for all skill levels.',
-    tips_ko: [{i:'⛰',t:'구릉 지형이 많아 레이저 거리 측정기 유용합니다.'},{i:'🕳',t:'7번 홀 벙커가 많습니다. 페어웨이 중앙을 공략하세요.'},{i:'🌿',t:'러프가 깊은 편이니 정확한 티샷이 중요합니다.'},{i:'📸',t:'16번 홀에서 보는 계곡 전망이 일품입니다.'}],
-    tips_en: [{i:'⛰',t:'Undulating terrain — a laser rangefinder is very helpful.'},{i:'🕳',t:'Hole 7 has many bunkers. Aim for center fairway.'},{i:'🌿',t:'Rough tends to be deep here — accuracy off the tee matters.'},{i:'📸',t:'The valley view from Hole 16 is spectacular.'}],
+    tips_ko: [{i:'mountain',t:'구릉 지형이 많아 레이저 거리 측정기 유용합니다.'},{i:'bunker',t:'7번 홀 벙커가 많습니다. 페어웨이 중앙을 공략하세요.'},{i:'leaf',t:'러프가 깊은 편이니 정확한 티샷이 중요합니다.'},{i:'camera',t:'16번 홀에서 보는 계곡 전망이 일품입니다.'}],
+    tips_en: [{i:'mountain',t:'Undulating terrain — a laser rangefinder is very helpful.'},{i:'bunker',t:'Hole 7 has many bunkers. Aim for center fairway.'},{i:'leaf',t:'Rough tends to be deep here — accuracy off the tee matters.'},{i:'camera',t:'The valley view from Hole 16 is spectacular.'}],
     tees: [
       { name: 'Tournament', color: '#171a20', yards: 7020, yd: [400,520,190,410,385,420,530,175,395, 515,405,390,415,180,535,380,165,410] },
       { name: 'Medal', color: '#1565c0', yards: 6580, yd: [375,495,175,385,365,395,505,160,375, 490,380,370,390,165,510,355,150,385] },
@@ -3037,8 +3089,8 @@ const GOLF_SCORECARDS = {
     image: 'golfpic2.jpg',
     desc_ko: 'The Crossings at Carlsbad은 Greg Nash 설계의 18홀 챔피언십 코스로, 태평양이 내려다보이는 칼스배드 언덕에 자리잡고 있습니다. 오션뷰 홀들이 특히 인상적이며, 클럽하우스 레스토랑 Canyons의 오션뷰 테라스가 지역 최고의 명소입니다.',
     desc_en: 'The Crossings at Carlsbad is a Greg Nash-designed 18-hole championship course perched on the hills of Carlsbad overlooking the Pacific. Ocean-view holes are the highlight, and the Canyons clubhouse restaurant with its ocean-view terrace is a local favorite.',
-    tips_ko: [{i:'🌊',t:'해안가 홀은 바람이 변수 — 티샷 전 풍향 확인 필수.'},{i:'🍳',t:'라운드 전 Canyons 레스토랑 오션뷰 조식 강력 추천.'},{i:'⛳',t:'5번 파5, 그린 주변 해저드 주의. 안전하게 3온 공략.'},{i:'📸',t:'18번 홀 클럽하우스 배경 사진 명소입니다.'}],
-    tips_en: [{i:'🌊',t:'Coastal holes — wind is a big factor, check direction before teeing off.'},{i:'🍳',t:'Highly recommend breakfast at Canyons with ocean views before your round.'},{i:'⛳',t:'Hole 5 par-5 — watch for hazards around the green. Play safe for 3-on.'},{i:'📸',t:'Hole 18 with the clubhouse backdrop is a photo spot.'}],
+    tips_ko: [{i:'wave',t:'해안가 홀은 바람이 변수 — 티샷 전 풍향 확인 필수.'},{i:'coffee',t:'라운드 전 Canyons 레스토랑 오션뷰 조식 강력 추천.'},{i:'golf',t:'5번 파5, 그린 주변 해저드 주의. 안전하게 3온 공략.'},{i:'camera',t:'18번 홀 클럽하우스 배경 사진 명소입니다.'}],
+    tips_en: [{i:'wave',t:'Coastal holes — wind is a big factor, check direction before teeing off.'},{i:'coffee',t:'Highly recommend breakfast at Canyons with ocean views before your round.'},{i:'golf',t:'Hole 5 par-5 — watch for hazards around the green. Play safe for 3-on.'},{i:'camera',t:'Hole 18 with the clubhouse backdrop is a photo spot.'}],
     tees: [
       { name: 'Black', color: '#171a20', yards: 6834, yd: [415,395,520,180,405,390,510,420,175, 400,520,385,170,415,395,425,165,515] },
       { name: 'Blue', color: '#1565c0', yards: 6340 },
@@ -3060,8 +3112,8 @@ const GOLF_SCORECARDS = {
     image: 'golfpic1.png',
     desc_ko: 'Cross Creek Golf Club은 테메큘라 와인 컨트리의 구릉 지대에 위치한 챔피언십 코스입니다. 자연 계곡과 참나무 숲이 어우러진 아름다운 레이아웃이 특징이며, 각 홀마다 변화무쌍한 전략을 요구합니다.',
     desc_en: 'Cross Creek Golf Club is a championship course nestled in the rolling hills of Temecula wine country. The stunning layout winds through natural valleys and oak groves, demanding strategic play on every hole.',
-    tips_ko: [{i:'🍷',t:'라운드 후 테메큘라 와이너리 투어 강력 추천.'},{i:'⛰',t:'고저차가 있어 등판이 있는 홀이 많습니다. 체력 안배 필요.'},{i:'🌊',t:'5번, 12번 홀 크릭 해저드 주의.'},{i:'📸',t:'8번 홀 티박스에서 보는 계곡 전망이 압권입니다.'}],
-    tips_en: [{i:'🍷',t:'Highly recommend Temecula winery tour after your round.'},{i:'⛰',t:'Significant elevation changes — pace yourself.'},{i:'🌊',t:'Watch creek hazards on holes 5 and 12.'},{i:'📸',t:'The valley view from Hole 8 tee box is breathtaking.'}],
+    tips_ko: [{i:'wine',t:'라운드 후 테메큘라 와이너리 투어 강력 추천.'},{i:'mountain',t:'고저차가 있어 등판이 있는 홀이 많습니다. 체력 안배 필요.'},{i:'wave',t:'5번, 12번 홀 크릭 해저드 주의.'},{i:'camera',t:'8번 홀 티박스에서 보는 계곡 전망이 압권입니다.'}],
+    tips_en: [{i:'wine',t:'Highly recommend Temecula winery tour after your round.'},{i:'mountain',t:'Significant elevation changes — pace yourself.'},{i:'wave',t:'Watch creek hazards on holes 5 and 12.'},{i:'camera',t:'The valley view from Hole 8 tee box is breathtaking.'}],
     tees: [
       { name: 'Champion', color: '#171a20', yards: 7010, yd: [520,185,410,420,385,530,175,415,400, 395,420,515,180,405,530,380,165,410] },
       { name: 'Tournament', color: '#1565c0', yards: 6580, yd: [495,170,385,395,365,505,160,395,375, 370,395,490,165,385,505,360,150,385] },
@@ -3133,11 +3185,15 @@ function buildCourseScorecard(courseKey) {
   }
 
   var teeBtns = course.tees.map(function(t, i) {
-    return '<button class="tee-btn' + (i === selectedTee ? ' act' : '') + '" onclick="setTee(\'' + courseKey + '\',' + i + ')" style="border-left:4px solid ' + t.color + '">' + t.name + '<br><small>' + t.yards + 'yd</small></button>';
+    var teeDist = isMetric ? Math.round(t.yards * 0.9144) + 'm' : t.yards + 'yd';
+    return '<button class="tee-btn' + (i === selectedTee ? ' act' : '') + '" onclick="setTee(\'' + courseKey + '\',' + i + ')" style="border-left:4px solid ' + t.color + '">' + t.name + '<br><small>' + teeDist + '</small></button>';
   }).join('');
 
   var frontPar = course.front9.reduce(function(a,b){return a+b;},0);
   var backPar = course.back9.reduce(function(a,b){return a+b;},0);
+
+  var teeTotalDist = isMetric ? Math.round(tee.yards * 0.9144) : tee.yards;
+  var teeDistUnit = isMetric ? 'm' : 'yd';
 
   return '<div class="course-panel-card">' +
     '<div class="course-hero">' +
@@ -3148,11 +3204,11 @@ function buildCourseScorecard(courseKey) {
     '<div class="course-stats">' +
       '<div class="cs-box"><div class="cs-val">18</div><div class="cs-lbl">' + (L==='ko'?'홀':'Holes') + '</div></div>' +
       '<div class="cs-box"><div class="cs-val">Par ' + course.totalPar + '</div><div class="cs-lbl">Par</div></div>' +
-      '<div class="cs-box"><div class="cs-val">' + tee.yards + '</div><div class="cs-lbl">' + (L==='ko'?'야드':'Yards') + '</div></div>' +
+      '<div class="cs-box"><div class="cs-val">' + teeTotalDist + '</div><div class="cs-lbl">' + (L==='ko'?'미터':'Yards') + '</div></div>' +
       '<div class="cs-box"><div class="cs-val">' + course.rating + '</div><div class="cs-lbl">' + (L==='ko'?'평점':'Rating') + '</div></div>' +
     '</div>' +
     '<p class="course-desc">' + (L==='ko'?course.desc_ko:course.desc_en) + '</p>' +
-    '<div class="tee-selector"><h3 style="margin:0 0 8px;font-size:13px">' + (L==='ko'?'티박스 선택':'Tee Box Selection') + ' — <b>' + tee.name + '</b> (' + tee.yards + 'yd)</h3><div class="tee-btns">' + teeBtns + '</div></div>' +
+    '<div class="tee-selector"><h3 style="margin:0 0 8px;font-size:13px">' + (L==='ko'?'티박스 선택':'Tee Box Selection') + ' — <b>' + tee.name + '</b> (' + teeTotalDist + teeDistUnit + ')</h3><div class="tee-btns">' + teeBtns + '</div></div>' +
     '<div class="golf-scorecard">' +
     '' +
       '<div class="sc-grid">' +
@@ -3466,7 +3522,7 @@ function buildPanel(day, i) {
   const rows = day.rows.map(r => {
     let badge = '';
     if (r.badge === 'free') badge = `<span class="tl-badge b-free">$0 Free</span>`;
-    else if (r.badge === 'stay') badge = `<span class="tl-badge b-stay">🏨 ${L === 'ko' ? '숙소' : 'Stay'}</span>`;
+    else if (r.badge === 'stay') badge = `<span class="tl-badge b-stay"><span class="ico-hotel" style="display:inline-flex;margin-right:2px"></span>${L === 'ko' ? '숙소' : 'Stay'}</span>`;
     else if (r.badge === 'jc') badge = `<span class="tl-badge b-jc">${L==='ko'?'현지 맛집':'Local Fave'}</span>`;
     else if (r.badge === 'tbd') badge = `<span class="tl-badge b-tbd">${L === 'ko' ? '미정' : 'TBD'}</span>`;
     else if (r.badge && r.badge[0] === '$') {
@@ -3477,7 +3533,7 @@ function buildPanel(day, i) {
       <div class="tl-time">${r.time}</div>
       <div>
         <div class="tl-name">${L === 'ko' ? r.ko : r.en}</div>
-        ${r.spot ? `<div class="tl-spot">📍 ${r.spot}</div>` : ''}
+        ${r.spot ? `<div class="tl-spot"><span class="ico-pin" style="display:inline-flex;margin-right:3px"></span>${r.spot}</div>` : ''}
         <div class="tl-note">${L === 'ko' ? r.note_ko : r.note_en}</div>
         ${badge}
       </div>
@@ -3633,6 +3689,9 @@ function toggleLang() {
   if (curPage === 'pricing') {
     document.getElementById('planGrid').dataset.lang = '';
     renderPlans();
+  }
+  if (curPage === 'courses') {
+    refreshCourseDisplay();
   }
   if (curPage === 'gallery') {
     // Re-render gallery labels without rebuilding
@@ -5069,7 +5128,7 @@ function addMapLinks() {
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
         a.style.cssText = 'font-size:9px;color:#aaa;margin-left:6px;text-decoration:none;vertical-align:middle';
-        a.textContent = '🗺';
+        a.innerHTML = '<span class="ico-pin" style="display:inline-block;color:#aaa;font-size:16px"></span>';
         el.appendChild(a);
         break;
       }
@@ -5153,15 +5212,15 @@ function showScheduleSkeleton() {
   ].join(';');
 
   var items = [
-    {icon:'🏠', ko:'홈',    en:'Home',     page:'home'},
-    {icon:'🗓️',ko:'일정',  en:'Schedule', page:'schedule'},
-    {icon:'💰', ko:'가격',  en:'Price',    page:'pricing'},
-    {icon:'✉️', ko:'문의',  en:'Contact',  page:'contact'},
+    {icon:'ico-home', ko:'홈',    en:'Home',     page:'home'},
+    {icon:'ico-calendar',ko:'일정',  en:'Schedule', page:'schedule'},
+    {icon:'ico-money', ko:'가격',  en:'Price',    page:'pricing'},
+    {icon:'ico-mail', ko:'문의',  en:'Contact',  page:'contact'},
   ];
   items.forEach(function(item) {
     var btn = document.createElement('button');
     btn.style.cssText = 'flex:1;height:56px;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:inherit;-webkit-tap-highlight-color:transparent;transition:all .15s';
-    btn.innerHTML = '<span style="font-size:20px">'+item.icon+'</span><span style="font-size:9px;font-weight:600;color:#9e9e9e;letter-spacing:.04em" class="ko">'+item.ko+'</span><span style="font-size:9px;font-weight:600;color:#9e9e9e;letter-spacing:.04em" class="en">'+item.en+'</span>';
+    btn.innerHTML = '<span class="'+item.icon+'" style="display:inline-block;color:#d4af37;font-size:20px"></span><span style="font-size:9px;font-weight:600;color:#9e9e9e;letter-spacing:.04em" class="ko">'+item.ko+'</span><span style="font-size:9px;font-weight:600;color:#9e9e9e;letter-spacing:.04em" class="en">'+item.en+'</span>';
     btn.setAttribute('data-page', item.page);
     btn.onclick = function() { nav(item.page); };
     bar.appendChild(btn);
