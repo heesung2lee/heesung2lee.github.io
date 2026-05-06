@@ -77,10 +77,10 @@ nav.hero-mode .nav-logo{color:#fff}
 .nav-mid{display:flex;gap:2px;flex:1;justify-content:center;min-width:0;overflow:hidden}
 .nav-tab{font-size:13px;font-weight:400;color:#5c6a7a;background:none;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}@media(max-width:860px){.nav-tab,.nav-r .btn-book{display:none !important}.course-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.course-tabs::-webkit-scrollbar{display:none}.course-tab{flex-shrink:0;white-space:nowrap;font-size:11px;padding:6px 10px}}
 .nav-tab:hover{background:#f5eed6;color:#1a3450}
-.nav-tab.act{color:#d4af37;font-weight:700;background:#f5eed6}
+.nav-tab.act{color:#1a3450;font-weight:700;background:transparent;border:2px solid #d4af37;outline:2px solid #d4af37;outline-offset:-6px}
 nav.hero-mode .nav-tab{color:rgba(255,255,255,.8)}
 nav.hero-mode .nav-tab:hover{background:rgba(255,255,255,.12);color:#fff}
-nav.hero-mode .nav-tab.act{background:rgba(255,255,255,.18);color:#fff}
+nav.hero-mode .nav-tab.act{background:transparent;color:#fff;border:2px solid rgba(212,175,55,.7);outline:2px solid rgba(212,175,55,.5);outline-offset:-6px}
 .nav-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .btn-lang{font-size:12px;font-weight:500;background:none;border:1px solid rgba(212,175,55,.3);color:#d4af37;padding:6px 12px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
 nav.hero-mode .btn-lang{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85)}
@@ -425,11 +425,13 @@ button,.nav-tab,.dtab,.day-nav-btn,.btn-book,.btn-lang,.btn-w,.btn-d,.btn-sm,
 
 /* Day sub-tabs — pill shape when active */
 .dtab.act{
-  color:#171a20!important;
-  background:#fff!important;
-  border:1.5px solid rgba(23,26,32,.22)!important;
+  color:#1a3450!important;
+  background:transparent!important;
+  border:2px solid #d4af37!important;
+  outline:2px solid #d4af37!important;
+  outline-offset:-6px!important;
   font-weight:700!important;
-  box-shadow:0 1px 4px rgba(23,26,32,.1), 0 0 0 0px rgba(23,26,32,0)!important;
+  box-shadow:none!important;
   transform:none!important;
 }
 .dtab:active,.dtab.pressing{
@@ -439,9 +441,9 @@ button,.nav-tab,.dtab,.day-nav-btn,.btn-book,.btn-lang,.btn-w,.btn-d,.btn-sm,
   box-shadow:0 0 0 3px rgba(23,26,32,.08)!important;
 }
 .dtab.act:active,.dtab.act.pressing{
-  background:#efefef!important;
+  background:rgba(212,175,55,.08)!important;
   transform:scale(.95)!important;
-  box-shadow:0 0 0 4px rgba(23,26,32,.12)!important;
+  box-shadow:0 0 0 4px rgba(212,175,55,.15)!important;
 }
 
 /* Nav tabs */
@@ -1288,7 +1290,11 @@ nav.hero-mode .nav-tab {
 }
 nav.hero-mode .nav-tab.act {
   color: #fff !important;
+  background: transparent !important;
   font-weight: 700 !important;
+  border: 2px solid rgba(212,175,55,.7) !important;
+  outline: 2px solid rgba(212,175,55,.5) !important;
+  outline-offset: -6px !important;
 }
 
 /* Lang button on hero */
@@ -1755,7 +1761,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
   color:#9e9e9e;border-bottom:2px solid transparent;margin-bottom:-2px;
   transition:all .2s;
 }
-.course-tab.act{color:#d4af37;border-bottom-color:#d4af37;}
+.course-tab.act{color:#1a3450;background:transparent;border:2px solid #d4af37;outline:2px solid #d4af37;outline-offset:-6px;box-shadow:none;border-bottom:2px solid #d4af37}
 .course-panel{display:none}
 .course-panel.act{display:block}
 .course-stats{
@@ -1968,10 +1974,12 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
   -webkit-tap-highlight-color: transparent;
 }
 .course-tab.act {
-  background: #171a20;
-  color: #fff;
-  border-color: #171a20;
-  box-shadow: 0 2px 8px rgba(23,26,32,.18);
+  background: transparent;
+  color: #1a3450;
+  border: 2px solid #d4af37;
+  outline: 2px solid #d4af37;
+  outline-offset: -6px;
+  box-shadow: none;
 }
 .course-tab:hover:not(.act) {
   background: #e8e8e8;
@@ -2381,11 +2389,6 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
         <span class="ham-coming"><span class="ko">준비중</span><span class="en">Coming Soon</span></span>
       </span>
       <span class="ham-item-arrow" style="opacity:.3">›</span>
-    </button>
-    <button class="ham-item" onclick="nav('courses');closeHam()">
-      <span class="ham-item-ico ico-golf"></span>
-      <span class="ham-item-label"><span class="ko">골프 코스 안내</span><span class="en">Golf Courses</span></span>
-      <span class="ham-item-arrow">›</span>
     </button>
     <button class="ham-item" onclick="nav('faq');closeHam()">
       <span class="ham-item-ico ico-help"></span>
@@ -3383,12 +3386,16 @@ function nav(page, dayIdx) {
   updateNavMode();
   window.scrollTo({ top: 0, behavior: 'instant' });
 
-  // Bottom nav highlight
+  // Bottom nav highlight — double outline on active
   var bnav = document.getElementById('bottom-nav');
   if (bnav) bnav.querySelectorAll('button').forEach(function(b){
     var isAct = b.getAttribute('data-page') === page;
     b.querySelector('span:first-child').style.transform = isAct ? 'scale(1.15)' : '';
     b.querySelectorAll('span').forEach(function(s){ s.style.color = isAct ? '#d4af37' : '#9e9e9e'; });
+    b.style.border = isAct ? '2px solid #d4af37' : 'none';
+    b.style.outline = isAct ? '2px solid #d4af37' : 'none';
+    b.style.outlineOffset = isAct ? '-6px' : '0';
+    b.style.borderRadius = isAct ? '10px' : '0';
   });
 
   // Sticky CTA
