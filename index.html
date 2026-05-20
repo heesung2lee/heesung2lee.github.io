@@ -5334,7 +5334,7 @@ function showScheduleSkeleton() {
 
   // Show only on mobile
   function checkMobile() {
-if (ctrl) ctrl.style.display = "flex"; // show on all devices
+    bar.style.display = (window.innerWidth <= 860) ? 'flex' : 'none';
   }
   checkMobile();
   window.addEventListener('resize', checkMobile, { passive: true });
