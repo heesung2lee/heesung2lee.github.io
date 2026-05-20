@@ -89,14 +89,8 @@ nav.hero-mode .nav-tab:hover{background:rgba(255,255,255,.12);color:#fff}
 nav.hero-mode .nav-tab.act{background:transparent;color:#fff;border:2px solid rgba(212,175,55,.7)}
 .nav-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .btn-lang{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;background:none;border:1px solid rgba(212,175,55,.3);color:#d4af37;padding:6px 10px;border-radius:4px;cursor:pointer;font-family:inherit;transition:all .2s}
-.flag-kr,.flag-us{display:inline-block;width:18px;height:12px;border-radius:2px;background-size:cover;background-position:center;flex-shrink:0}
-.flag-kr{background:linear-gradient(#fff 33%,#1a3450 33% 66%,#cc0000 66%);position:relative}
-.flag-kr::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:6px;height:6px;border-radius:50%}
-.flag-us{background:linear-gradient(#fff 12%,#cc0000 12% 25%,#fff 25% 37%,#cc0000 37% 50%,#fff 50% 62%,#cc0000 62% 75%,#fff 75% 87%,#cc0000 87%);position:relative}
-.flag-us::before{content:'';position:absolute;top:0;left:0;width:7px;height:6px;background:#1a3450}
+
 nav.hero-mode .btn-lang{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85)}
-nav.hero-mode .flag-kr{filter:brightness(1.2)}
-nav.hero-mode .flag-us{filter:brightness(1.2)}
 .btn-book{font-size:13px;font-weight:500;background:#1a3450;color:#d4af37;border:1.5px solid rgba(212,175,55,.4);padding:8px 18px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
 .btn-book:hover{background:#264460;border-color:rgba(212,175,55,.7);transform:translateY(-1px)}
 .mob-btn{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
@@ -1925,11 +1919,11 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 .pd-ico{font-size:16px;width:24px;text-align:center;flex-shrink:0}
 .pd-sep{height:1px;background:#f0f0f0;margin:6px 0}
 .pd-cta{
-  margin:8px 10px 6px;padding:12px;
+  margin:8px 12px 6px;padding:12px;
   background:#171a20;color:#fff !important;
   border-radius:10px;font-weight:700 !important;
   justify-content:center;
-  width:calc(100% - 20px);
+  width:calc(100% - 24px);
   box-sizing:border-box;
 }
 .pd-sub{padding-left:28px;font-size:13px;color:#5c6a7a}
@@ -2524,7 +2518,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
   <!-- RIGHT: Lang + Hamburger — NEVER clips -->
   <div class="nav-r" style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px">
-    <button class="btn-lang" onclick="toggleLang()"><span class="flag-kr"></span><span class="flag-us"></span><span id="langLabel">EN</span></button>
+    <button class="btn-lang" onclick="toggleLang()"><span class="ko" style="display:inline-block;width:18px;height:12px;border-radius:2px;background:linear-gradient(#fff 33%,#1a3450 33% 66%,#cc0000 66%);flex-shrink:0"></span><span class="en" style="display:inline-block;width:18px;height:12px;border-radius:2px;background:linear-gradient(#fff 12%,#cc0000 12% 25%,#fff 25% 37%,#cc0000 37% 50%,#fff 50% 62%,#cc0000 62% 75%,#fff 75% 87%,#cc0000 87%);flex-shrink:0;position:relative"></span><span id="langLabel">EN</span></button>
     <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
       <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
       <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
@@ -4230,11 +4224,6 @@ function closeHam() {
 
 /* ═══ GALLERY PAGE ═══ */
 const GAL_ITEMS = [
-  {key:'hero-img-1',   day_ko:'Day 10', day_en:'Day 10', name_ko:'PCH 선셋 드라이브',   name_en:'PCH Sunset Drive',       tag:'The Crossings', tall:false},
-  {key:'hero-img-2',   day_ko:'Day 6·7',day_en:'Day 6·7',name_ko:'캘리포니아 골프',     name_en:'California Golf',        tag:'Sandpiper',     tall:true},
-  {key:'hero-img-3',   day_ko:'Day 5',  day_en:'Day 5',  name_ko:'은하수 아래',          name_en:'Under the Milky Way',   tag:'Family Day',    tall:false},
-  {key:'split-img-1',  day_ko:'Day 6',  day_en:'Day 6',  name_ko:'산타바바라 해안 절벽', name_en:'Santa Barbara Coast',   tag:'Santa Barbara', tall:true},
-  {key:'split-img-2',  day_ko:'Day 9',  day_en:'Day 9',  name_ko:'Elim 온천 & 사막',    name_en:'Elim Desert Spa',       tag:'Warner Springs',tall:false},
   // Alisal River Course (arr 1-8)
   {key:'g-arr-1',day_ko:'Alisal',day_en:'Alisal',name_ko:'River Course — 알리살 ①',name_en:'River Course — Alisal ①',tag:'Alisal Ranch',tall:true},
   {key:'g-arr-2',day_ko:'Alisal',day_en:'Alisal',name_ko:'알리살 코스 전경 ②',name_en:'Alisal Course View ②',tag:'Alisal Ranch',tall:false},
@@ -4292,14 +4281,7 @@ const GAL_ITEMS = [
   {key:'g-tc-8',day_ko:'Carlsbad',day_en:'Carlsbad',name_ko:'TC 선셋 ⑧',name_en:'TC Sunset ⑧',tag:'The Crossings',tall:false},
   {key:'g-tc-9',day_ko:'Carlsbad',day_en:'Carlsbad',name_ko:'TC 벙커 ⑨',name_en:'TC Bunker ⑨',tag:'The Crossings',tall:false},
   {key:'g-tc-10',day_ko:'Carlsbad',day_en:'Carlsbad',name_ko:'TC 에어리얼 ⑩',name_en:'TC Aerial ⑩',tag:'The Crossings',tall:false},
-  {key:'sb-coast',     day_ko:'Day 6',  day_en:'Day 6',  name_ko:'해안 절벽 선셋',       name_en:'Coastal Cliff Sunset',  tag:'Santa Barbara', tall:false},
-  {key:'solvang',      day_ko:'Day 7',  day_en:'Day 7',  name_ko:'Solvang 산타이네즈',   name_en:'Solvang Valley',        tag:'Alisal Ranch',  tall:true},
-  {key:'sunrise',      day_ko:'Day 1',  day_en:'Day 1',  name_ko:'LA 새벽 일출',         name_en:'LA Arrival Dawn',       tag:'Los Angeles',   tall:false},
-  {key:'elim',         day_ko:'Day 9',  day_en:'Day 9',  name_ko:'Elim 온천 스파',       name_en:'Elim Hot Springs Spa',  tag:'Elim Springs',  tall:true},
-  {key:'carlsbad',     day_ko:'Day 10', day_en:'Day 10', name_ko:'칼스배드 해안',         name_en:'Carlsbad Coast',        tag:'The Crossings', tall:false},
-  {key:'neighborhood', day_ko:'Day 2',  day_en:'Day 2',  name_ko:'LA 동네 산책',          name_en:'LA Neighborhood Walk',  tag:'Los Angeles',   tall:false},
 ];
-
 let lbIndex = 0;
 
 function buildGallery() {
