@@ -2512,7 +2512,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
   <!-- RIGHT: Lang + Hamburger — NEVER clips -->
   <div class="nav-r" style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px">
-    <button class="btn-lang" onclick="toggleLang()"><span class="ko" style="display:inline-block;width:18px;height:12px;border-radius:2px;background:linear-gradient(#fff 33%,#1a3450 33% 66%,#cc0000 66%);flex-shrink:0"></span><span class="en" style="display:inline-block;width:18px;height:12px;border-radius:2px;overflow:hidden;flex-shrink:0;position:relative"><span style="display:block;width:100%;height:100%;background:linear-gradient(#fff 12.5%,#cc0000 12.5% 25%,#fff 25% 37.5%,#cc0000 37.5% 50%,#fff 50% 62.5%,#cc0000 62.5% 75%,#fff 75% 87.5%,#cc0000 87.5%)"></span><span style="position:absolute;top:0;left:0;width:7px;height:7px;background:#1a3450"></span></span><span id="langLabel" style="font-weight:400">EN</span></button>
+<button class="btn-lang" onclick="toggleLang()"><span class="ko">🇰🇷</span><span class="en">🇺🇸</span><span id="langLabel" style="font-weight:400">EN</span></button>
     <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
       <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
       <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
@@ -2567,11 +2567,11 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
         
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-        <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="showDirectImage(this.getAttribute('data-key'))">
+        <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="event.stopPropagation();this.querySelector('img')&&showDirectImageBySrc(this.querySelector('img').src)">
           <img loading="lazy" id="gal-img-0" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .7s ease">
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.2) 0%,transparent 55%)"></div>
         </div>
-        <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="showDirectImage(this.getAttribute('data-key'))">
+        <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="event.stopPropagation();this.querySelector('img')&&showDirectImageBySrc(this.querySelector('img').src)">
           <img loading="lazy" id="gal-img-1" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .7s ease">
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.2) 0%,transparent 55%)"></div>
         </div>
