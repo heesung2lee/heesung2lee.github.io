@@ -7,8 +7,8 @@
 <script>tailwind.config={theme:{extend:{colors:{navy:{50:"#eef2f6",100:"#d4dfeb",200:"#b3c5d7",300:"#85a5bf",400:"#5b84a3",500:"#41698a",600:"#355672",700:"#2e4760",800:"#264460",900:"#1a3450"},gold:{50:"#fdf8ed",100:"#f9edcc",200:"#f2d88f",300:"#ebc057",400:"#e5b030",500:"#d4951c",600:"#b87414",700:"#925413",800:"#794318",900:"#653617"}}}}}</script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={theme:{extend:{colors:{navy:{50:"#eef2f6",100:"#d4dfeb",200:"#b3c5d7",300:"#85a5bf",400:"#5b84a3",500:"#41698a",600:"#355672",700:"#2e4760",800:"#264460",900:"#1a3450"},gold:{50:"#fdf8ed",100:"#f9edcc",200:"#f2d88f",300:"#ebc057",400:"#e5b030",500:"#d4951c",600:"#b87414",700:"#925413",800:"#794318",900:"#653617"}}}}}</script>
-<title>결 Resonate Tour — resonatetour.com</title><!-- v3 -->
-  <meta name="theme-color" content="#16213e">
+<title>결 Resonate Tour — resonatetour.com</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="theme-color" content="#16213e">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="description" content="결 Resonate Tour — Korea ↔ USA Premium Golf & Culture 13 Days. resonatetour.com">
@@ -4130,7 +4130,7 @@ function closeHam() {
 /* ═══ DIRECT IMAGE LIGHTBOX ═══ */
 function showDirectImage(key) {
   var src = imgs[key] || '';
-  if (!src) return;
+  if (!src || src.indexOf('data:') !== 0) return;
   var lb = document.getElementById('lightbox');
   var img = document.getElementById('lb-img');
   if (img) {
@@ -4156,7 +4156,7 @@ function showDayImage(dayIdx) {
   }
 }
 function showDirectImageBySrc(src) {
-  if (!src) return;
+  if (!src || src.indexOf('data:') !== 0) return;
   var lb = document.getElementById('lightbox');
   var img = document.getElementById('lb-img');
   if (img) {
