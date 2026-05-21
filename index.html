@@ -2512,7 +2512,7 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
 
   <!-- RIGHT: Lang + Hamburger — NEVER clips -->
   <div class="nav-r" style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px">
-    <button class="btn-lang" onclick="toggleLang()"><span class="ko" style="font-weight:700;font-size:11px;letter-spacing:.05em">KO</span><span class="en" style="font-weight:700;font-size:11px;letter-spacing:.05em">EN</span><span id="langLabel" style="font-weight:400">EN</span></button>
+    <button class="btn-lang" onclick="toggleLang()"><span class="ko" style="display:inline-block;width:18px;height:12px;border-radius:2px;background:linear-gradient(#fff 33%,#1a3450 33% 66%,#cc0000 66%);flex-shrink:0"></span><span class="en" style="display:inline-block;width:18px;height:12px;border-radius:2px;background:linear-gradient(#fff 12%,#cc0000 12% 25%,#fff 25% 37%,#cc0000 37% 50%,#fff 50% 62%,#cc0000 62% 75%,#fff 75% 87%,#cc0000 87%);flex-shrink:0;position:relative"></span><span id="langLabel" style="font-weight:400">EN</span></button>
     <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
       <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
       <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
@@ -2567,23 +2567,13 @@ html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
         
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-        <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="nav('schedule')">
+        <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="showDirectImage(this.querySelector('img').getAttribute('data-key'))">
           <img loading="lazy" id="gal-img-0" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .7s ease">
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 55%)"></div>
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px">
-            <div id="gal-day-0" style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:3px"></div>
-            <div id="gal-name-0" style="font-size:13px;font-weight:700;color:#fff;line-height:1.3"></div>
-          </div>
-          <div id="gal-tag-0" style="position:absolute;top:18px;right:-28px;background:rgba(212,175,55,.95);color:#1a1a2e;font-size:8.5px;font-weight:800;letter-spacing:.08em;padding:5px 40px;transform:rotate(35deg);white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.25)"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.2) 0%,transparent 55%)"></div>
         </div>
-        <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="nav('schedule')">
+        <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="showDirectImage(this.querySelector('img').getAttribute('data-key'))">
           <img loading="lazy" id="gal-img-1" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .7s ease">
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 55%)"></div>
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px">
-            <div id="gal-day-1" style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:3px"></div>
-            <div id="gal-name-1" style="font-size:13px;font-weight:700;color:#fff;line-height:1.3"></div>
-          </div>
-          <div id="gal-tag-1" style="position:absolute;top:18px;right:-28px;background:rgba(212,175,55,.95);color:#1a1a2e;font-size:8.5px;font-weight:800;letter-spacing:.08em;padding:5px 40px;transform:rotate(35deg);white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.25)"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.2) 0%,transparent 55%)"></div>
         </div>
       </div>
       <div style="text-align:center;margin-top:22px">
@@ -3612,7 +3602,7 @@ function buildPanel(day, i) {
 
   return `
     <div style="width:100%;height:200px;border-radius:10px;overflow:hidden;margin-bottom:22px;background:#e8e8e8;flex-shrink:0">
-      <img loading="lazy" src="${dayImg(i)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.9) saturate(1.1)">
+      <img loading="lazy" src="${dayImg(i)}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.9) saturate(1.1);cursor:pointer" onclick="event.stopPropagation();showDayImage(${i})">
     </div>
     <div class="dp-meta">
       <span class="dp-num">${day.n}</span>
@@ -4137,6 +4127,67 @@ function closeHam() {
 
 
 
+/* ═══ DIRECT IMAGE LIGHTBOX ═══ */
+function showDirectImage(key) {
+  var src = imgs[key] || '';
+  if (!src) return;
+  var lb = document.getElementById('lightbox');
+  var img = document.getElementById('lb-img');
+  if (img) {
+    img.src = src;
+    img.style.cursor = 'pointer';
+  }
+  // Hide prev/next buttons for single-image mode
+  var prev = document.querySelector('.lb-prev');
+  var next = document.querySelector('.lb-next');
+  var info = document.querySelector('.lb-info');
+  if (prev) prev.style.display = 'none';
+  if (next) next.style.display = 'none';
+  if (info) info.style.display = 'none';
+  lb.classList.add('open');
+  lb.setAttribute('data-single', '1');
+  document.body.style.overflow = 'hidden';
+}
+
+// Also make schedule day images open in lightbox
+function showDayImage(dayIdx) {
+  if (typeof dayImg === 'function') {
+    showDirectImageBySrc(dayImg(dayIdx));
+  }
+}
+function showDirectImageBySrc(src) {
+  if (!src) return;
+  var lb = document.getElementById('lightbox');
+  var img = document.getElementById('lb-img');
+  if (img) {
+    img.src = src;
+    img.style.cursor = 'pointer';
+  }
+  var prev = document.querySelector('.lb-prev');
+  var next = document.querySelector('.lb-next');
+  var info = document.querySelector('.lb-info');
+  if (prev) prev.style.display = 'none';
+  if (next) next.style.display = 'none';
+  if (info) info.style.display = 'none';
+  lb.classList.add('open');
+  lb.setAttribute('data-single', '1');
+  document.body.style.overflow = 'hidden';
+}
+
+// Restore nav buttons when lightbox is closed (for gallery page)
+var _origCloseLightbox = closeLightbox;
+closeLightbox = function() {
+  var prev = document.querySelector('.lb-prev');
+  var next = document.querySelector('.lb-next');
+  var info = document.querySelector('.lb-info');
+  if (prev) prev.style.display = '';
+  if (next) next.style.display = '';
+  if (info) info.style.display = '';
+  var lb = document.getElementById('lightbox');
+  if (lb) lb.removeAttribute('data-single');
+  _origCloseLightbox();
+};
+
 /* ═══ GALLERY SHOWCASE ROTATION ═══ */
 (function(){
   var GALLERY_ITEMS = [
@@ -4181,17 +4232,14 @@ function closeHam() {
   function updateCard(slot, item) {
     var lang = document.documentElement.getAttribute('data-lang')||'ko';
     var img = document.getElementById('gal-img-'+slot);
-    var dayEl = document.getElementById('gal-day-'+slot);
-    var nameEl = document.getElementById('gal-name-'+slot);
-    var tagEl = document.getElementById('gal-tag-'+slot);
+    // text overlays removed per user request
     if (!img) return;
 
     img.style.opacity='0';
     setTimeout(function(){
       img.src = imgs[item.key] || '';
-      if (dayEl) dayEl.textContent = lang==='ko' ? item.day_ko : item.day_en;
-      if (nameEl) nameEl.textContent = lang==='ko' ? item.name_ko : item.name_en;
-      if (tagEl) tagEl.textContent = item.tag;
+      img.setAttribute('data-key', item.key);
+      // text overlays removed per user request
       img.style.opacity='1';
     }, 350);
   }
