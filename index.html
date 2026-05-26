@@ -1651,40 +1651,6 @@ body {
 .bookmark-btn.saved { color: #e03535; }
 .bookmark-btn:not(.saved) { color: #aaa; }
 
-/* ── #65 Font size ── */
-#font-size-ctrl {
-  position: fixed;
-  bottom: 148px;
-  left: 14px;
-  z-index: 250;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.fs-btn {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.92);
-  border: 1px solid #e0e0e0;
-  cursor: pointer;
-  font-size: 14px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,.12);
-  transition: all .15s;
-  -webkit-tap-highlight-color: transparent;
-}
-.fs-btn:active { transform: scale(.9); }
-html.fs-lg body, html.fs-lg .dpanel, html.fs-lg .tl-name,
-html.fs-lg .plan-usd, html.fs-lg .plan-pp, html.fs-lg p,
-html.fs-lg .split-p, html.fs-lg .pillar-d, html.fs-lg .tl-note {
-  font-size: 1.12em !important;
-}
-html.fs-xl body, html.fs-xl .dpanel, html.fs-xl .tl-name,
-html.fs-xl .plan-usd, html.fs-xl .plan-pp, html.fs-xl p,
-html.fs-xl .split-p, html.fs-xl .pillar-d, html.fs-xl .tl-note {
-  font-size: 1.24em !important;
-}
-
 
 
 .nav-tab { will-change: transform; }
@@ -5735,57 +5701,6 @@ function filterFaq(cat) {
 </a>
 <div id="kakao-float-tip"><span class="ko">카카오톡 상담</span><span class="en">KakaoTalk Chat</span></div>
 
-
-<!-- #65 Font size controls -->
-<div id="font-size-ctrl">
-  <button class="fs-btn" id="fs-up" aria-label="글자 크게" title="글자 크게"><span class="ko">결+</span><span class="en">A+</span></button>
-  <button class="fs-btn" id="fs-dn" aria-label="글자 작게" title="글자 작게"><span class="ko">결-</span><span class="en">A-</span></button>
-</div>
-
-<!-- #65 Font size init — runs AFTER elements exist -->
-<script>
-(function(){
-  var SIZES = ['', 'fs-lg', 'fs-xl'];
-  var cur = parseInt(localStorage.getItem('resonate-fs') || '0');
-
-  function updateBtnLabels() {
-    var L = document.documentElement.getAttribute('data-lang') || 'ko';
-    var up = document.getElementById('fs-up');
-    var dn = document.getElementById('fs-dn');
-    if (!up || !dn) return;
-    if (L === 'ko') { up.textContent = '결+'; dn.textContent = '결-'; }
-    else            { up.textContent = 'A+';  dn.textContent = 'A-'; }
-    up.style.opacity = cur >= SIZES.length-1 ? '0.35' : '1';
-    dn.style.opacity = cur <= 0 ? '0.35' : '1';
-  }
-
-  function applySize() {
-    SIZES.forEach(function(c){ if(c) document.documentElement.classList.remove(c); });
-    if (SIZES[cur]) document.documentElement.classList.add(SIZES[cur]);
-    var scale = [1, 1.12, 1.24][cur];
-    document.body.style.fontSize = (scale * 14) + 'px';
-    localStorage.setItem('resonate-fs', String(cur));
-    updateBtnLabels();
-  }
-
-  var up = document.getElementById('fs-up');
-  var dn = document.getElementById('fs-dn');
-  if (up && dn) {
-    up.onclick = function() { if (cur < 2) { cur++; applySize(); } };
-    dn.onclick = function() { if (cur > 0) { cur--; applySize(); } };
-    applySize();
-
-    // Update labels on lang toggle
-    var origToggle = window.toggleLang;
-    if (origToggle) {
-      window.toggleLang = function() {
-        origToggle();
-        setTimeout(updateBtnLabels, 50);
-      };
-    }
-  }
-})();
-</script>
 
 </body>
 </html>
