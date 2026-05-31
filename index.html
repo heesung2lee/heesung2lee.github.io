@@ -91,6 +91,15 @@ nav.hero-mode .nav-tab.act{background:transparent;color:#fff;border:2px solid rg
 .btn-lang{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;background:none;border:1px solid rgba(212,175,55,.3);color:#d4af37;padding:6px 10px;border-radius:4px;cursor:pointer;font-family:inherit;transition:all .2s}
 
 nav.hero-mode .btn-lang{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85)}
+nav.hero-mode .btn-lang span{color:rgba(255,255,255,.85)}
+.lc-dropdown{display:none;position:absolute;top:48px;right:20px;background:#fff;border:1px solid #eee;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.12);z-index:400;min-width:200px;overflow:hidden}
+.lc-dropdown.show{display:block}
+.lc-section{padding:8px 0;border-bottom:1px solid #f0f0f0}
+.lc-section:last-child{border-bottom:none}
+.lc-section-title{font-size:10px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.06em;padding:6px 16px 4px}
+.lc-option{display:block;width:100%;text-align:left;font-size:13px;font-weight:500;color:#5c6a7a;background:none;border:none;padding:8px 16px;cursor:pointer;transition:all .15s}
+.lc-option:hover{background:#f5eed6;color:#1a3450}
+.lc-option.active{color:#1a3450;font-weight:700;background:#fdf8ed}
 .btn-book{font-size:13px;font-weight:500;background:#1a3450;color:#d4af37;border:1.5px solid rgba(212,175,55,.4);padding:8px 18px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all .2s}
 .btn-book:hover{background:#264460;border-color:rgba(212,175,55,.7);transform:translateY(-1px)}
 .mob-btn{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
@@ -203,6 +212,7 @@ nav.hero-mode .mob-btn span{background:#fff}
 .b-free{background:#e8f5e9;color:#2e7d32}
 .b-paid{background:#fff3e0;color:#e65100}
 .b-high{background:#fce4ec;color:#c62828}
+.b-inquire{background:#fdf8ed;color:#d4af37;font-weight:600}
 .b-stay{background:#e3f2fd;color:#1565c0}
 .b-tbd{background:#f5f5f5;color:#9e9e9e}
 .b-jc{background:#f3e5f5;color:#6a1b9a}
@@ -2478,7 +2488,19 @@ body {
 
   <!-- RIGHT: Lang + Hamburger — NEVER clips -->
   <div class="nav-r" style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px">
-<button class="btn-lang" onclick="toggleLang()"><span class="ko">🇺🇸</span><span class="en">🇰🇷</span><span id="langLabel" style="font-weight:400">EN</span></button>
+<button class="btn-lang" onclick="toggleLangCurrency(event)" id="lcBtn"><span id="lcLabel">KO · USD</span> ▾</button>
+    <div class="lc-dropdown" id="lcDropdown">
+      <div class="lc-section">
+        <div class="lc-section-title">Language / 언어</div>
+        <button class="lc-option" onclick="setLang('en',this)">🇺🇸 English</button>
+        <button class="lc-option active" onclick="setLang('ko',this)">🇰🇷 한국어</button>
+      </div>
+      <div class="lc-section">
+        <div class="lc-section-title">Currency / 통화</div>
+        <button class="lc-option active" onclick="setCurrency('USD',this)">$ USD</button>
+        <button class="lc-option" onclick="setCurrency('KRW',this)">₩ KRW</button>
+      </div>
+    </div>
     <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
       <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
       <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
@@ -3266,6 +3288,8 @@ function refreshCourseDisplay() {
 }
 
 let curLang = 'ko';
+let curCurrency = 'USD';
+const EXCHANGE_RATE = 1350; // 1 USD = 1,350 KRW
 let curPage = 'home';
 let liveRate = 1380;
 let schedBuilt = false;
@@ -3530,10 +3554,10 @@ function buildPanel(day, i) {
   // cost tags
   const tags = day.costs.map(c => {
     let cls = 't-fam';
-    if (c.t === 'FREE' || c.t === '$0') cls = 't-free';
-    else if (c.t === '$140') cls = 't-high';
-    else if (c.t === '$100' || c.t === '$7' || c.t === '$75' || c.t === '$55' || c.t === '$90') cls = 't-paid';
-    return `<span class="dp-tag ${cls}">${c.t}</span>`;
+    let label = c.t;
+    if (c.t === 'FREE' || c.t === '$0') { cls = 't-free'; label = c.t; }
+    else if (c.t[0] === '$') { cls = 't-paid'; label = L === 'ko' ? '문의' : 'Inquire'; }
+    return `<span class="dp-tag ${cls}">${label}</span>`;
   }).join('');
   const wk = day.weekend ? `<span class="dp-tag t-wk">WEEKEND</span>` : '';
 
@@ -3545,8 +3569,7 @@ function buildPanel(day, i) {
     else if (r.badge === 'jc') badge = `<span class="tl-badge b-jc">${L==='ko'?'현지 맛집':'Local Fave'}</span>`;
     else if (r.badge === 'tbd') badge = `<span class="tl-badge b-tbd">${L === 'ko' ? '미정' : 'TBD'}</span>`;
     else if (r.badge && r.badge[0] === '$') {
-      const v = parseFloat(r.badge.replace('$',''));
-      badge = `<span class="tl-badge ${v >= 90 ? 'b-high' : 'b-paid'}">${r.badge}</span>`;
+      badge = '<span class="tl-badge b-inquire">' + (L === 'ko' ? '가격 별도 문의' : 'Inquire for Price') + '</span>';
     }
     return `<div class="tl-item">
       <div class="tl-time">${r.time}</div>
@@ -3614,9 +3637,7 @@ function renderPlans() {
     return `<div class="plan${p.hot ? ' hot' : ''}" data-usd="${p.usd}" data-pp="${p.pp}">
 
       <div class="plan-pax">${L === 'ko' ? p.pax_ko : p.pax_en}</div>
-      <div class="plan-usd"><sup>$</sup>${p.usd.toLocaleString()}</div>
-      <div class="plan-krw p-krw">${fmtKRW(p.usd * liveRate)}</div>
-      <div class="plan-pp"><b style="color:#171a20">${fmtUSD(p.pp)}</b> / ${L === 'ko' ? '인' : 'pax'}</div>
+      <div class="plan-usd" style="font-size:15px;color:#d4af37;font-weight:600;line-height:1.5"><span class="ko">가격 별도 문의</span><span class="en">Inquire for Price</span></div>
       <div class="plan-div"></div>
       <ul class="plan-list">${items}</ul>
       <button class="plan-btn def" onclick="nav('contact')">
@@ -3654,26 +3675,17 @@ async function fetchRate() {
 }
 
 function calcUpdate() {
-  var r = parseFloat((document.getElementById('calcRate') || {}).value || liveRate);
-  var rate = (isNaN(r) || r < 500) ? liveRate : r;
   var out = document.getElementById('calcOut');
   if (!out) return;
   var L = curLang;
-  var plans = [
-    {pax:1, usd:100,  pp:100,  ko:'1인 · 솔로',  en:'1 Guest · Solo'},
-    {pax:2, usd:100, pp:100,  ko:'2인 · 듀오',   en:'2 Guests · Duo'},
-    {pax:4, usd:100, pp:100,  ko:'4인 · 그룹',   en:'4 Guests · Group'},
-  ];
-  out.innerHTML = plans.map(function(p) {
-    var totalKRW = Math.round(p.usd * rate).toLocaleString();
-    var ppKRW    = Math.round(p.pp  * rate).toLocaleString();
-    return '<div class="cc-card">'
-      + '<div class="cc-lbl">' + (L==='ko' ? p.ko : p.en) + '</div>'
-      + '<div class="cc-usd">$' + p.usd.toLocaleString() + ' USD</div>'
-      + '<div class="cc-krw">&#8776; &#8361;' + totalKRW + ' KRW</div>'
-      + '<div class="cc-pp"><span class="ko">1인당</span><span class="en">per person</span> &#8361;' + ppKRW + '</div>'
-      + '</div>';
-  }).join('');
+  out.innerHTML = '<div class="cc-card" style="text-align:center;padding:24px">'
+    + '<div class="cc-lbl" style="font-size:16px;color:#d4af37;font-weight:600">'
+    + '<span class="ko">가격 별도 문의</span><span class="en">Inquire for Price</span>'
+    + '</div>'
+    + '<div style="font-size:13px;color:#888;margin-top:8px">'
+    + '<span class="ko">견적은 문의 시 개별 안내드립니다</span>'
+    + '<span class="en">Individual quotes provided upon inquiry</span>'
+    + '</div></div>';
 }
 
 function updatePlanKRW(rate) {
@@ -3685,25 +3697,73 @@ function updatePlanKRW(rate) {
 }
 
 /* ══════════════════════════════
-   LANGUAGE
+   LANGUAGE + CURRENCY
 ══════════════════════════════ */
-function toggleLang() {
-  const _sy = window.scrollY;
-  curLang = curLang === 'ko' ? 'en' : 'ko';
-  document.documentElement.setAttribute('data-lang', curLang);
-  const lbl = curLang === 'ko' ? 'EN' : 'KO';
-  ['langLabel','langM'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = lbl;
+function updateLCButton() {
+  var curLabel = (curLang === 'en' ? 'EN' : 'KO') + ' · ' + curCurrency;
+  var el = document.getElementById('lcLabel');
+  if (el) el.textContent = curLabel;
+}
+function toggleLangCurrency(e) {
+  e.stopPropagation();
+  var dd = document.getElementById('lcDropdown');
+  if (dd) dd.classList.toggle('show');
+}
+function setLang(lang, btn) {
+  if (curLang !== lang) _applyLang(lang);
+  var dd = document.getElementById('lcDropdown');
+  if (dd) {
+    dd.querySelectorAll('.lc-section:first-child .lc-option').forEach(function(b,i){
+      b.classList.toggle('active', (i===0 && lang==='en') || (i===1 && lang==='ko'));
+    });
+    dd.classList.remove('show');
+  }
+  updateLCButton();
+  convertPrices();
+}
+function setCurrency(curr, btn) {
+  curCurrency = curr;
+  var dd = document.getElementById('lcDropdown');
+  if (dd) {
+    dd.querySelectorAll('.lc-section:last-child .lc-option').forEach(function(b,i){
+      b.classList.toggle('active', (i===0 && curr==='USD') || (i===1 && curr==='KRW'));
+    });
+    dd.classList.remove('show');
+  }
+  updateLCButton();
+  convertPrices();
+}
+function convertPrices() {
+  document.querySelectorAll('[data-price-usd]').forEach(function(el){
+    var usd = parseFloat(el.getAttribute('data-price-usd'));
+    if (!isNaN(usd)) {
+      if (curCurrency === 'KRW') {
+        var krw = Math.round(usd * EXCHANGE_RATE / 1000) * 1000;
+        el.textContent = '₩' + krw.toLocaleString();
+      } else {
+        el.textContent = '$' + usd.toLocaleString();
+      }
+    }
   });
+}
+// Close dropdown on outside click
+document.addEventListener('click', function(e) {
+  var dd = document.getElementById('lcDropdown');
+  var btn = document.getElementById('lcBtn');
+  if (dd && btn && !btn.contains(e.target) && !dd.contains(e.target)) {
+    dd.classList.remove('show');
+  }
+});
+function _applyLang(lang) {
+  const _sy = window.scrollY;
+  curLang = lang;
+  document.documentElement.setAttribute('data-lang', curLang);
   // Re-render dynamic text WITHOUT resetting the page
   if (curPage === 'schedule') {
-    // Re-render only text content of current active panel, keep scroll position
     const scrollY = window.scrollY;
     schedBuilt = false;
     buildSchedule();
-    // Restore scroll position after rebuild
-    requestAnimationFrame(() => { window.scrollTo({ top: scrollY, behavior: 'instant' }); window.scrollTo({ top: _sy, behavior: 'instant' }); });
+    requestAnimationFrame(function() { window.scrollTo({ top: scrollY, behavior: 'instant' }); window.scrollTo({ top: _sy, behavior: 'instant' }); });
   }
   if (curPage === 'pricing') {
     document.getElementById('planGrid').dataset.lang = '';
@@ -3713,16 +3773,20 @@ function toggleLang() {
     refreshCourseDisplay();
   }
   if (curPage === 'gallery') {
-    // Re-render gallery labels without rebuilding
-    document.querySelectorAll('.gal-item').forEach((el, i) => {
-      const item = GAL_ITEMS[i];
+    document.querySelectorAll('.gal-item').forEach(function(el, i) {
+      var item = GAL_ITEMS[i];
       if (!item) return;
-      const day = el.querySelector('.gal-item-day');
-      const name = el.querySelector('.gal-item-name');
+      var day = el.querySelector('.gal-item-day');
+      var name = el.querySelector('.gal-item-name');
       if (day) day.textContent = curLang === 'ko' ? item.day_ko : item.day_en;
       if (name) name.textContent = curLang === 'ko' ? item.name_ko : item.name_en;
     });
   }
+  updateLCButton();
+  convertPrices();
+}
+function toggleLang() {
+  _applyLang(curLang === 'ko' ? 'en' : 'ko');
 }
 
 /* ══════════════════════════════
@@ -3836,6 +3900,7 @@ function toast(msg, type) {
    INIT
 ══════════════════════════════ */
 updateNavMode();
+updateLCButton();
 nav('home');
 // Ensure schedule header hidden on load
 const _sh = document.querySelector('.sched-sticky-header');
