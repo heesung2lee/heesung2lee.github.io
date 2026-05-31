@@ -2918,15 +2918,15 @@ const imgs = {
  
 /* ── PLAN DATA ── */
 const PLAN_DATA = [
- {usd:100, pp:100, pax:1,
+ {usd:0, pp:0, pax:1,
  pax_ko:'1인 · 솔로 여정', pax_en:'1 GUEST · SOLO JOURNEY', hot:false,
  items_ko:['왕복 항공 ICN–LAX','숙박 전체 7박','골프 10+ 라운드','현지 인기 맛집 식사 큐레이션','전용 차량 (일부 구간)','전문 Solo Journey 릴','한국어 가이드'],
  items_en:['Round-trip ICN–LAX flight','All accommodations 7 nights','10+ golf rounds','Curated local restaurant dining','Transport (select legs)','Solo Journey reel','Korean-speaking guide']},
- {usd:100, pp:100, pax:2,
+ {usd:0, pp:0, pax:2,
  pax_ko:'2인 · 듀오 익스피리언스', pax_en:'2 GUESTS · DUO EXPERIENCE', hot:true,
  items_ko:['왕복 항공 ICN–LAX 2매','숙박 전체 7박 (2인)','골프 10+ 라운드 (2인)','차량 & 이동비 전체','Duo Experience 릴','한국어 가이드 & 오리엔테이션','현지 인기 맛집 식사 큐레이션'],
  items_en:['2x round-trip ICN–LAX','All accommodations 7 nights (2)','10+ golf rounds (2 guests)','All transport & driving costs','Duo Experience reel','Korean guide & pre-departure brief','Curated local restaurant dining']},
- {usd:100, pp:100, pax:4,
+ {usd:0, pp:0, pax:4,
  pax_ko:'4인 · 그룹 이스케이프', pax_en:'4 GUESTS · GROUP ESCAPE', hot:false,
  items_ko:['왕복 항공 ICN–LAX 4매','숙박 전체 7박 (4인)','골프 10+ 라운드 (4인)','전용 밴 & 전 구간 이동비','Group Escape 릴','한국어 전담 가이드','현지 맛집 & 스파 혜택'],
  items_en:['4x round-trip ICN–LAX','All accommodations 7 nights (4)','10+ golf rounds (4 guests)','Private van & all transport','Group Escape reel','Dedicated Korean guide','Local dining & spa perks']},
@@ -2934,7 +2934,7 @@ const PLAN_DATA = [
  
 const DAYS = [
  {n:"DAY 1",date:"5/5 화 TUE",ko:"도착 · 시차 적응",en:"Arrival · Jet Lag Recovery",
- costs:[{t:"FREE",c:"cp-green"}],
+ costs:[],
  rows:[
  {time:"08:20",ko:"LA 도착 · ICN→LAX",en:"LA Arrival · ICN→LAX",spot:"Los Angeles International Airport (LAX)",note_ko:"인천 출발 → LAX 0820 착륙. 공항 픽업 후 집으로 이동.",note_en:"Depart ICN → Land LAX 08:20. Airport pickup, transfer home.",badge:""},
  {time:"오전",ko:"귀가 · 짐 정리",en:"Home · Unpack",spot:"Home, Los Angeles area",note_ko:"13시간 비행 후 귀가. 짐 풀고 간단히 정리.",note_en:"After 13-hour flight. Unpack and settle in.",badge:""},
@@ -2942,7 +2942,7 @@ const DAYS = [
  {time:"숙소",ko:"집 (시차 적응 우선)",en:"Home (jet lag priority)",spot:"Home",note_ko:"숙소: 집. 다음 날을 위해 충분한 수면 확보.",note_en:"Stay: Home. Prioritize sleep for tomorrow.",badge:"stay"}
  ]},
  {n:"DAY 2",date:"5/6 수 WED",ko:"엄마아빠 동네 관광",en:"Local Sightseeing w/ Parents",
- costs:[{t:"FREE",c:"cp-green"}],
+ costs:[],
  rows:[
  {time:"오전",ko:"느긋한 아침 · 한식 조식",en:"Slow Morning · Korean Breakfast",spot:"Home",note_ko:"어제 피로 회복 후 여유로운 아침. 집에서 한식 조식.",note_en:"Recovery morning after arrival. Korean breakfast at home.",badge:""},
  {time:"오전~오후",ko:"엄마아빠와 동네 관광",en:"Local Sightseeing with Parents",spot:"Local neighborhood, LA area",note_ko:"부모님과 함께 동네 산책 및 관광. 한인마트, 공원, 익숙한 LA 명소 방문. 무리 없이 가볍게.",note_en:"Casual neighborhood tour with Mom & Dad. Korean market, local park, familiar LA spots. Easy pace.",badge:""},
@@ -2967,7 +2967,7 @@ const DAYS = [
  {time:"숙소",ko:"집",en:"Home",spot:"Home",note_ko:"숙소: 집",note_en:"Stay: Home",badge:"stay"}
  ]},
  {n:"DAY 5",date:"5/9 토 SAT",ko:"가족 시간",en:"Family Day",
- costs:[{t:"가족",c:"cp-blue"}],
+ costs:[],
  weekend:true,
  rows:[
  {time:"하루",ko:"가족 시간 · 자유 일정",en:"Family Time · Free Day",spot:"",note_ko:"가족과 함께하는 자유 시간. 별도 골프 일정 없음.",note_en:"Free day with family. No golf scheduled.",badge:""},
@@ -3031,7 +3031,7 @@ const DAYS = [
  {time:"숙소",ko:"집",en:"Home",spot:"",note_ko:"숙소: 집",note_en:"Stay: Home",badge:"stay"}
  ]},
  {n:"DAY 12",date:"5/16 토 SAT",ko:"가족 시간",en:"Family Day",
- costs:[{t:"가족",c:"cp-blue"}],
+ costs:[],
  weekend:true,
  rows:[
  {time:"하루",ko:"가족 시간 · 자유 일정",en:"Family Time · Free Day",spot:"",note_ko:"가족과 함께하는 마지막 주말 자유 시간.",note_en:"Last weekend free day with family.",badge:""},
@@ -3554,9 +3554,8 @@ function buildPanel(day, i) {
  // cost tags
  const tags = day.costs.map(c => {
  let cls = 't-fam';
- let label = c.t;
- // price labels removed
- else if (c.t[0] === '$') { cls = 't-paid'; label = L === 'ko' ? '문의' : 'Inquire'; }
+    let label = c.t;
+    if (c.t[0] === '$') { cls = 't-paid'; label = L === 'ko' ? '문의' : 'Inquire'; }
  return `<span class="dp-tag ${cls}">${label}</span>`;
  }).join('');
  const wk = day.weekend ? `<span class="dp-tag t-wk">WEEKEND</span>` : '';
