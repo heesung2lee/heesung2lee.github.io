@@ -3071,7 +3071,7 @@ const GOLF_SCORECARDS = {
       {name:"Copper",color:"#c87533",yards:5626,rating:67.6,slope:120,
        yd:[454,376,353,165,430,125,357,350,368, 315,148,252,392,330,471,337,304,99]}
     ]
-  }
+  },
   // === Trump National LA — Wikipedia: 7,242 yds tips. Yardages scaled proportionally. ===
   trump: {
     name: "Trump National Golf Club LA", location: "Rancho Palos Verdes, CA",
@@ -3563,13 +3563,12 @@ function buildPanel(day, i) {
  // rows
  const rows = day.rows.map(r => {
  let badge = '';
- if (r.badge && r.badge !== '') badge = `<span class="tl-badge">${r.badge}</span>`;
- else if (r.badge === 'stay') badge = `<span class="tl-badge b-stay"><span class="ico-hotel" style="display:inline-flex;margin-right:2px"></span>${L === 'ko' ? '숙소' : 'Stay'}</span>`;
+ if (r.badge === 'stay') badge = `<span class="tl-badge b-stay"><span class="ico-hotel" style="display:inline-flex;margin-right:2px"></span>${L === 'ko' ? '숙소' : 'Stay'}</span>`;
  else if (r.badge === 'jc') badge = `<span class="tl-badge b-jc">${L==='ko'?'현지 맛집':'Local Fave'}</span>`;
  else if (r.badge === 'tbd') badge = `<span class="tl-badge b-tbd">${L === 'ko' ? '미정' : 'TBD'}</span>`;
  else if (r.badge && r.badge[0] === '$') {
  badge = '<span class="tl-badge b-inquire">' + (L === 'ko' ? '가격 별도 문의' : 'Inquire for Price') + '</span>';
- }
+ } else if (r.badge && r.badge !== '') badge = `<span class="tl-badge">${r.badge}</span>`;
  return `<div class="tl-item">
  <div class="tl-time">${r.time}</div>
  <div>
