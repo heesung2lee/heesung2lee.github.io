@@ -3236,7 +3236,7 @@ function buildCourseScorecard(courseKey) {
  
  return '<div class="course-panel-card">' +
  '<div class="course-hero">' +
- '<div class="course-hero-bg" style="background-image:url(\'' + course.image + '\');background-size:cover;background-position:center"></div>' +
+ '<div class="course-hero-bg" style="background-image:url('' + (course.image || 'golfpic2.jpg') + '');background-size:cover;background-position:center"></div>' +
  '<div class="course-hero-grad"></div>' +
  '<div class="course-hero-info"><div class="course-badge">' + course.badge + '</div><div class="course-hero-name">' + course.name + '</div><div class="course-hero-loc">' + course.location + '</div></div>' +
  '</div>' +
@@ -3265,7 +3265,7 @@ function buildCourseScorecard(courseKey) {
  '</div>' +
  '<div class="course-tips">' +
  '<h3>' + (L==='ko'?'라운딩 팁':'Playing Tips') + '</h3>' +
- (L==='ko'?course.tips_ko:course.tips_en).map(function(t){return '<div class="tip-item"><span class="tip-ico">'+t.i+'</span><span>'+t.t+'</span></div>';}).join('') +
+ '<p>' + (L==='ko'?course.tips_ko:course.tips_en) + '</p>' +
  '</div>' +
  '</div>';
 }
