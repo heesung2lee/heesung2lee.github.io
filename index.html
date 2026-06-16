@@ -2512,7 +2512,7 @@ body {
  <button class="pd-item" onclick="nav('reviews')"><span class="pd-ico ico-star"></span><span class="ko">고객 후기</span><span class="en">Reviews</span></button>
  <button class="pd-item" onclick="nav('faq')"><span class="pd-ico">❓</span><span class="ko">FAQ</span><span class="en">FAQ</span></button>
  <div class="pd-sep"></div>
- <button class="pd-item pd-cta" onclick="nav('contact')"><span class="ko"><span class="ico-chat" style="display:inline-flex;margin-right:3px"></span>상담 신청</span><span class="en"><span class="ico-chat" style="display:inline-flex;margin-right:3px"></span>Book Now</span></button>
+ <button class="pd-item pd-cta" onclick="nav('contact')"><span class="ko"><span class="ico-chat" style="display:inline-flex;margin-right:3px"></span>상담 문의</span><span class="en"><span class="ico-chat" style="display:inline-flex;margin-right:3px"></span>Contact Us</span></button>
  </div>
  </div>
  </div>
@@ -2534,7 +2534,7 @@ body {
  <p class="hero-p"><span class="ko">삶의 결을 따라, 당신만의 여정으로.</span><span class="en">Your Life's Texture, Our Signature Touch.</span></p>
  <div class="hero-btns">
  <button class="btn-w" onclick="nav('schedule')"><span class="ko">일정 보기</span><span class="en">View Schedule</span></button>
- <button class="btn-d" onclick="nav('pricing')"><span class="ko">가격 안내</span><span class="en">See Pricing</span></button>
+ <button class="btn-d" onclick="nav('pricing')"><span class="ko">계획중</span><span class="en">Coming Soon</span></button>
  </div>
  </div>
  </div>
@@ -2579,7 +2579,7 @@ body {
  <p class="hero-p"><span class="ko">10개 이상의 프리미엄 코스를 13일 동안.</span><span class="en">10+ premium courses across 13 unforgettable days.</span></p>
  <div class="hero-btns">
  <button class="btn-w" onclick="nav('schedule')"><span class="ko">전체 일정 보기</span><span class="en">View Full Schedule</span></button>
- <button class="btn-d" onclick="nav('contact')"><span class="ko">지금 신청하기</span><span class="en">Book Now</span></button>
+ <button class="btn-d" onclick="nav('contact')"><span class="ko">상담 문의</span><span class="en">Contact Us</span></button>
  </div>
  </div>
  </div>
@@ -2628,12 +2628,12 @@ body {
  
 <!-- ══════ PAGE: PRICING ══════ -->
 <div id="pg-pricing" class="page">
- <div class="page-hdr">
- <h1><span class="ko">올인클루시브 가격</span><span class="en">All-Inclusive Pricing</span></h1>
- <p><span class="ko">항공권부터 전문 릴까지 — 한 번의 결제로 완성됩니다</span><span class="en">Flights to cinematic reel — one payment, everything included</span></p>
+ <div class="page-hdr" style="text-align:center">
+ <h1><span class="ko">계획중</span><span class="en">Coming Soon</span></h1>
+ <p><span class="ko">기획여행 패키지는 현재 준비 중입니다. 빠른 시일 내에 찾아뵙겠습니다.</span><span class="en">Our planned travel packages are currently in preparation. We'll be launching soon.</span></p>
  </div>
  <div class="pricing-wrap">
- <div class="plan-grid" id="planGrid"></div>
+ <div class="plan-grid" id="planGrid" style="display:flex;justify-content:center;align-items:center"></div>
  <div class="inc-sec">
  <h3><span class="ko">포함 사항</span><span class="en">What's Included</span></h3>
  <div class="inc-grid">
@@ -2814,7 +2814,7 @@ body {
  <div style="text-align:center;margin-top:48px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;padding:40px 32px;color:#fff">
  <h3 style="font-size:22px;font-weight:700;margin-bottom:8px"><span class="ko">당신의 이야기를 들려주세요</span><span class="en">Share Your Story</span></h3>
  <p style="font-size:14px;opacity:.8;margin-bottom:20px"><span class="ko">투어 후기를 남겨주시면 다음 여행 크레딧 드립니다</span><span class="en">Leave a review after your tour and receive travel credit</span></p>
- <button class="btn-book" style="font-size:14px;padding:14px 32px;border-radius:100px" onclick="nav('contact')"><span class="ko">지금 예약하기</span><span class="en">Book Now</span></button>
+ <button class="btn-book" style="font-size:14px;padding:14px 32px;border-radius:100px" onclick="nav('contact')"><span class="ko">상담 문의</span><span class="en">Contact Us</span></button>
  </div>
  </div>
 </div>
@@ -3630,19 +3630,19 @@ function renderPlans() {
  if (!grid || grid.dataset.lang === curLang) return;
  grid.dataset.lang = curLang;
  const L = curLang;
- grid.innerHTML = PLAN_DATA.map(p => {
- const items = (L === 'ko' ? p.items_ko : p.items_en).map(i => `<li>${i}</li>`).join('');
- return `<div class="plan${p.hot ? ' hot' : ''}" data-usd="${p.usd}" data-pp="${p.pp}">
- 
- <div class="plan-pax">${L === 'ko' ? p.pax_ko : p.pax_en}</div>
- <div class="plan-usd" style="font-size:15px;color:#d4af37;font-weight:600;line-height:1.5"><span class="ko">가격 별도 문의</span><span class="en">Inquire for Price</span></div>
- <div class="plan-div"></div>
- <ul class="plan-list">${items}</ul>
- <button class="plan-btn def" onclick="nav('contact')">
- <span class="ko">견적 문의하기</span><span class="en">Get a Quote</span>
+ grid.innerHTML = `<div style="text-align:center;padding:48px 32px;max-width:600px">
+ <div style="font-size:clamp(28px,5vw,42px);margin-bottom:12px">⏳</div>
+ <h2 style="font-size:clamp(20px,3vw,28px);font-weight:700;color:#1a3450;margin:0 0 12px">
+ <span class="ko">계획중</span><span class="en">Coming Soon</span>
+ </h2>
+ <p style="font-size:15px;color:#5c6a7a;line-height:1.7;margin:0 0 28px">
+ <span class="ko">기획여행 패키지는 현재 준비 단계에 있습니다.<br>출시 알림을 원하시면 하단 문의하기를 통해 연락 주세요.</span>
+ <span class="en">Our planned travel packages are currently in preparation.<br>Contact us below if you'd like to be notified at launch.</span>
+ </p>
+ <button class="plan-btn def" onclick="nav('contact')" style="display:inline-block;margin:0 auto">
+ <span class="ko">출시 알림 신청</span><span class="en">Notify Me</span>
  </button>
  </div>`;
- }).join('');
 }
  
 /* ══════════════════════════════
