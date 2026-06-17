@@ -3567,7 +3567,7 @@ function buildPanel(day, i) {
  else if (r.badge === 'jc') badge = `<span class="tl-badge b-jc">${L==='ko'?'현지 맛집':'Local Fave'}</span>`;
  else if (r.badge === 'tbd') badge = `<span class="tl-badge b-tbd">${L === 'ko' ? '미정' : 'TBD'}</span>`;
  else if (r.badge && r.badge[0] === '$') {
- badge = '<span class="tl-badge b-inquire">' + (L === 'ko' ? '가격 별도 문의' : 'Inquire for Price') + '</span>';
+ badge = '<span class="tl-badge b-inquire">' + (L === 'ko' ? '맞춤 견적' : 'Custom Quote') + '</span>';
  } else if (r.badge && r.badge !== '') badge = `<span class="tl-badge">${r.badge}</span>`;
  return `<div class="tl-item">
  <div class="tl-time">${r.time}</div>
@@ -3678,7 +3678,7 @@ function calcUpdate() {
  var L = curLang;
  out.innerHTML = '<div class="cc-card" style="text-align:center;padding:24px">'
  + '<div class="cc-lbl" style="font-size:16px;color:#d4af37;font-weight:600">'
- + '<span class="ko">가격 별도 문의</span><span class="en">Inquire for Price</span>'
+ + '<span class="ko">맞춤 견적</span><span class="en">Custom Quote</span>'
  + '</div>'
  + '<div style="font-size:13px;color:#888;margin-top:8px">'
  + '<span class="ko">견적은 문의 시 개별 안내드립니다</span>'
