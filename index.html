@@ -2936,16 +2936,16 @@ const DAYS = [
  {n:"DAY 1",date:"DATE",ko:"도착 · 시차 적응",en:"Arrival · Jet Lag Recovery",
  costs:[],
  rows:[
- {time:"08:20",ko:"LA 도착 · ICN→LAX",en:"LA Arrival · ICN→LAX",spot:"Los Angeles International Airport (LAX)",note_ko:"인천 출발 → LAX 0820 착륙. 공항 픽업 후 집으로 이동.",note_en:"Depart ICN → Land LAX 08:20. Airport pickup, transfer home.",badge:""},
+ {time:"오전",ko:"LA 도착 · ICN→LAX",en:"LA Arrival · ICN→LAX",spot:"Los Angeles International Airport (LAX)",note_ko:"인천 출발 → LAX 오전 도착. 공항 픽업 후 숙소로 이동.",note_en:"Depart ICN → Land LAX AM. Airport pickup, transfer to lodging.",badge:""},
  {time:"오전",ko:"귀가 · 짐 정리",en:"Home · Unpack",spot:"Home, Los Angeles area",note_ko:"13시간 비행 후 귀가. 짐 풀고 간단히 정리.",note_en:"After 13-hour flight. Unpack and settle in.",badge:""},
  {time:"낮~저녁",ko:"시차 적응 · 완전 휴식",en:"Jet Lag Recovery · Full Rest",spot:"Home",note_ko:"시차 8시간 차이. 무리하지 않고 완전 휴식. 가벼운 산책 가능. 한식으로 식사.",note_en:"8-hour time difference from Korea. Full rest — light walk OK. Korean home meal.",badge:""},
  {time:"숙소",ko:"숙소 (시차 적응 우선)",en:"Lodging (jet lag priority)",spot:"Lodging",note_ko:"숙소. 다음 날을 위해 충분한 수면 확보.",note_en:"Lodging. Prioritize sleep for tomorrow.",badge:"stay"}
  ]},
- {n:"DAY 2",date:"DATE",ko:"엄마아빠 동네 관광",en:"Local Sightseeing w/ Parents",
+ {n:"DAY 2",date:"DATE",ko:"가족과 동네 관광",en:"Family Neighborhood Tour",
  costs:[],
  rows:[
  {time:"오전",ko:"느긋한 아침 · 한식 조식",en:"Slow Morning · Korean Breakfast",spot:"Home",note_ko:"어제 피로 회복 후 여유로운 아침. 집에서 한식 조식.",note_en:"Recovery morning after arrival. Korean breakfast at home.",badge:""},
- {time:"오전~오후",ko:"엄마아빠와 동네 관광",en:"Local Sightseeing with Parents",spot:"Local neighborhood, LA area",note_ko:"부모님과 함께 동네 산책 및 관광. 한인마트, 공원, 익숙한 LA 명소 방문. 무리 없이 가볍게.",note_en:"Casual neighborhood tour with Mom & Dad. Korean market, local park, familiar LA spots. Easy pace.",badge:""},
+ {time:"오전~오후",ko:"가족과 동네 관광",en:"Family Neighborhood Tour",spot:"Local neighborhood, LA area",note_ko:"부모님과 함께 동네 산책 및 관광. 한인마트, 공원, 익숙한 LA 명소 방문. 무리 없이 가볍게.",note_en:"Casual neighborhood tour with Mom & Dad. Korean market, local park, familiar LA spots. Easy pace.",badge:""},
  {time:"점심",ko:"동네 한식당 점심",en:"Local Korean Restaurant Lunch",spot:"Korean restaurant, LA area",note_ko:"부모님과 함께 동네 한식당에서 점심 식사.",note_en:"Korean lunch with parents at a local restaurant.",badge:""},
  {time:"오후",ko:"휴식 · 골프 준비",en:"Rest · Golf Prep",spot:"Home",note_ko:"오후에는 집에서 충분히 쉬기. 내일부터 시작되는 골프 일정 준비 및 장비 점검.",note_en:"Afternoon rest at home. Prep for golf starting tomorrow — check gear.",badge:""},
  {time:"숙소",ko:"집",en:"Home",spot:"Lodging",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
@@ -2978,8 +2978,8 @@ const DAYS = [
  weekend:true,
  rows:[
  {time:"이동",ko:"LA → Sandpiper 이동 (약 1시간 50분)",en:"Drive LA → Sandpiper (~1h 50min)",spot:"US-101 N → Hollister Ave, Goleta, CA · 약 100마일",note_ko:"LA 출발. US-101 북상. 약 100마일, 1시간 50분 소요. 개인 운전.",note_en:"Drive north on US-101. ~100 miles, ~1h 50min. Self-drive.",badge:""},
- {time:"08:00",ko:"골프 라운드 1 — SANDPIPER (주말 시장가)",en:"Golf Round 1 — Sandpiper (weekend rate)",spot:"Sandpiper Golf Club, 7925 Hollister Ave, Goleta (Santa Barbara), CA",note_ko:"0800 티오프. 주말 시장가 오션뷰 챔피언십 코스. Golf Digest Top 50.",note_en:"0800 tee time. Weekend market rate Ocean-view championship course. Golf Digest Top 50.",badge:""},
- {time:"14:30",ko:"골프 라운드 2 — SANDPIPER (트와일라잇)",en:"Golf Round 2 — Sandpiper (twilight)",spot:"Sandpiper Golf Club, Goleta, CA",note_ko:"1430 티오프. 트와일라잇/오후 할인 또는 무료 라운드.",note_en:"1430 tee time. Twilight/afternoon discounted or free round.",badge:""},
+ {time:"오전",ko:"골프 라운드 1 — SANDPIPER",en:"Golf Round 1 — Sandpiper",spot:"Sandpiper Golf Club, 7925 Hollister Ave, Goleta (Santa Barbara), CA",note_ko:"오전 티오프. 오션뷰 챔피언십 코스. Golf Digest Top 50.",note_en:"AM tee time. Ocean-view championship course. Golf Digest Top 50.",badge:""},
+ {time:"오후",ko:"골프 라운드 2 — SANDPIPER",en:"Golf Round 2 — Sandpiper",spot:"Sandpiper Golf Club, Goleta, CA",note_ko:"오후 티오프. 오션뷰 챔피언십 코스.",note_en:"PM tee time. Ocean-view championship course.",badge:""},
  {time:"저녁",ko:"노을 감상 @ HASKELL'S BEACH",en:"Sunset @ Haskell's Beach",spot:"Haskell's Beach, Goleta, CA (US-101 exit Haskell's Beach Rd)",note_ko:"해스켈스 비치에서 석양 감상. Sandpiper에서 차로 5분.",note_en:"Sunset at Haskell's Beach. 5 min drive from Sandpiper.",badge:""},
  {time:"숙소",ko:"집",en:"Home",spot:"Lodging",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
  ]},
@@ -3041,9 +3041,9 @@ const DAYS = [
  costs:[],
  weekend:true,
  rows:[
- {time:"새벽",ko:"출발 준비 · 짐 챙기기",en:"Early Morning · Pack & Prep",spot:"Home",note_ko:"0730 공항 도착 마감 기준 새벽 출발 준비.",note_en:"Prep for 07:30 airport deadline.",badge:""},
- {time:"07:30",ko:"LAX 공항 도착 마감",en:"LAX Airport Deadline",spot:"Los Angeles International Airport (LAX), Los Angeles, CA",note_ko:"국제선 3시간 전 체크인 권장. 0730까지 공항 도착 필수.",note_en:"International check-in 3 hours before. Must arrive by 07:30.",badge:""},
- {time:"10:50",ko:"LA 출발 → 인천",en:"Depart LA → Incheon",spot:"LAX → ICN",note_ko:"1050 인천 방면 출발. 약 13시간 비행. 안전한 귀국!",note_en:"Depart 10:50 for Incheon. ~13 hr flight. Safe travels!",badge:""}
+ {time:"새벽",ko:"출발 준비 · 짐 챙기기",en:"Early Morning · Pack & Prep",spot:"Home",note_ko:"공항 도착 기준 새벽 출발 준비.",note_en:"Early morning departure prep for airport.",badge:""},
+ {time:"오전",ko:"LAX 공항 도착 마감",en:"LAX Airport Deadline",spot:"Los Angeles International Airport (LAX), Los Angeles, CA",note_ko:"국제선 3시간 전 체크인 권장. 오전 공항 도착.",note_en:"International check-in 3 hours before. Arrive at airport in the morning.",badge:""},
+ {time:"오전",ko:"LA 출발 → 인천",en:"Depart LA → Incheon",spot:"LAX → ICN",note_ko:"오전 인천 방면 출발. 약 13시간 비행. 안전한 귀국!",note_en:"Depart AM for Incheon. ~13 hr flight. Safe travels!",badge:""}
  ]}
 ];;
  
