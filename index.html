@@ -3499,7 +3499,6 @@ function nav(page, dayIdx) {
  if (dayIdx !== undefined) setTimeout(function(){ switchDay(dayIdx); }, 60);
  setTimeout(function(){
  if(typeof addMapLinks==='function') addMapLinks();
- if(typeof initScheduleSearch==='function') initScheduleSearch();
  }, 200);
  }
  if (page === 'pricing') { renderPlans(); calcUpdate(); fetchRate(); }
