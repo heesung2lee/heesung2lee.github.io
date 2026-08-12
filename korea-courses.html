@@ -84,21 +84,12 @@ h1 { font-size:2em; font-weight:700; color:#fff; }
   <div class="sub">프리미엄 골프 투어 · 직접 엄선한 코스</div>
 </header>
 
-<div class="region-tabs" id="regionTabs">
-  <button class="region-tab active" onclick="switchRegion('gangwon')">강원도</button>
-  <button class="region-tab" onclick="switchRegion('gyeonggi')">경기도</button>
-  <button class="region-tab" onclick="switchRegion('incheon')">인천</button>
-  <button class="region-tab" onclick="switchRegion('busan')">부산·경남</button>
-</div>
 
-<!-- Map wrappers -->
-<div class="map-wrap" id="map-wrap-gangwon"><div><div class="map-label">📍 강원도</div><div class="map-container" id="mapGangwon"></div></div></div>
-<div class="map-wrap" id="map-wrap-gyeonggi" style="display:none"><div><div class="map-label">📍 경기도</div><div class="map-container" id="mapGyeonggi"></div></div></div>
-<div class="map-wrap" id="map-wrap-incheon" style="display:none"><div><div class="map-label">📍 인천 · 영종도</div><div class="map-container" id="mapIncheon"></div></div></div>
-<div class="map-wrap" id="map-wrap-busan" style="display:none"><div><div class="map-label">📍 부산 · 기장</div><div class="map-container" id="mapBusan"></div></div></div>
+
+<div class="map-wrap"><div><div class="map-label">📍 대한민국 — 전국 골프 코스</div><div class="map-container" id="mapKorea"></div></div></div>
 
 <!-- ═══════════ GANGWON ═══════════ -->
-<div class="region-header" data-region="gangwon"><h2 class="region-title">춘천 · 원주 · 홍천</h2></div>
+<div class="region-header"><h2 class="region-title">춘천 · 원주 · 홍천</h2></div>
 <div class="region-group" data-region="gangwon">
 
   <!-- 1: 라비에벨CC -->
@@ -164,7 +155,7 @@ h1 { font-size:2em; font-weight:700; color:#fff; }
 </div>
 
 <!-- ═══════════ GYEONGGI ═══════════ -->
-<div class="region-header" data-region="gyeonggi"><h2 class="region-title">여주 · 양주 · 남양주 · 가평</h2></div>
+<div class="region-header"><h2 class="region-title">여주 · 양주 · 남양주 · 가평</h2></div>
 <div class="region-group" data-region="gyeonggi">
 
   <!-- 6: 렉스필드 CC -->
@@ -210,11 +201,11 @@ h1 { font-size:2em; font-weight:700; color:#fff; }
 </div>
 
 <!-- ═══════════ INCHEON ═══════════ -->
-<div class="region-header" data-region="incheon"><h2 class="region-title">영종도</h2></div>
+<div class="region-header"><h2 class="region-title">영종도</h2></div>
 <div class="region-group" data-region="incheon">
 
   <!-- 10: 클럽72 하늘코스 -->
-  <div class="course-card" data-region="incheon">
+  <div class="course-card">
     <div class="course-head"><span class="course-num">11</span><span class="course-title">클럽72 — 하늘코스</span></div>
     <div class="loc-bar"><span class="loc-dot">●</span> 인천광역시 중구 영종도 · 퍼블릭</div>
     <div class="course-carousel" onclick="openLightbox(event,['images/kr_club72_1.jpg'])"><img src="images/kr_club72_1.jpg" class="active" alt="클럽72 하늘코스"></div>
@@ -226,11 +217,11 @@ h1 { font-size:2em; font-weight:700; color:#fff; }
 </div>
 
 <!-- ═══════════ BUSAN ═══════════ -->
-<div class="region-header" data-region="busan"><h2 class="region-title">기장 · 해운대</h2></div>
+<div class="region-header"><h2 class="region-title">기장 · 해운대</h2></div>
 <div class="region-group" data-region="busan">
 
   <!-- 11: 해운대비치 골프앤리조트 -->
-  <div class="course-card" data-region="busan">
+  <div class="course-card">
     <div class="course-head"><span class="course-num">12</span><span class="course-title">해운대비치 골프앤리조트 · 레스트필드</span></div>
     <div class="loc-bar"><span class="loc-dot">●</span> 부산 기장군 기장읍 청연로 19 · 프라이빗 풀빌라</div>
     <div class="course-carousel" onclick="openLightbox(event,['images/kr_haeundae_1.jpg'])"><img src="images/kr_haeundae_1.jpg" class="active" alt="해운대비치 골프앤리조트"></div>
@@ -259,25 +250,7 @@ function navLightbox(d){lbIdx=(lbIdx+d+lbGallery.length)%lbGallery.length;docume
 document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)closeLightbox();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')navLightbox(1);if(e.key==='ArrowLeft')navLightbox(-1);});
 
-// ── Region switching ──
-var REGIONS=['gangwon','gyeonggi','incheon','busan'];
-var mapsInit={gangwon:false,gyeonggi:false,incheon:false,busan:false};
-var maps={};
-
-function switchRegion(region){
-  document.querySelectorAll('.region-tab').forEach(function(t,i){
-    t.classList.toggle('active',REGIONS[i]===region);
-  });
-  document.querySelectorAll('[data-region]').forEach(function(el){
-    if(el.tagName==='BUTTON')return;
-    if(el.dataset.region)el.classList.toggle('hidden',el.dataset.region!==region);
-  });
-  REGIONS.forEach(function(r){
-    document.getElementById('map-wrap-'+r).style.display=r===region?'block':'none';
-  });
-  if(!mapsInit[region]){initMap(region);mapsInit[region]=true;}
-  setTimeout(function(){if(maps[region])maps[region].invalidateSize();},150);
-}
+// ── Single unified Korea map ──
 
 // ── Staggered reveal ──
 var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('revealed');});},{threshold:0.12,rootMargin:'0px 0px -30px 0px'});
@@ -287,44 +260,27 @@ document.querySelectorAll('.course-card').forEach(function(c){obs.observe(c);});
 window.addEventListener('scroll',function(){document.getElementById('scrollTop').classList.toggle('show',window.scrollY>400);});
 
 // ── Map data ──
-var allMarkers={
-  gangwon:[
-    {num:1,name:'라비에벨CC',loc:'춘천시 동산면',lat:37.92,lng:127.67},
-    {num:2,name:'베어크리크GC',loc:'춘천시 신동면',lat:37.82,lng:127.72},
-    {num:3,name:'휘슬링락 프라이빗',loc:'춘천시',lat:37.86,lng:127.70},
-    {num:4,name:'성문안 CC',loc:'원주시',lat:37.34,lng:127.95},
-    {num:5,name:'카스카디아 CC',loc:'홍천군',lat:37.70,lng:127.88},
-    {num:6,name:'오크밸리 CC',loc:'원주시',lat:37.30,lng:128.05}
-  ],
-  gyeonggi:[
-    {num:7,name:'렉스필드 CC',loc:'여주시',lat:37.30,lng:127.63},
-    {num:8,name:'송추 CC',loc:'양주시',lat:37.77,lng:126.98},
-    {num:9,name:'비전힐스 CC',loc:'남양주시',lat:37.65,lng:127.20},
-    {num:10,name:'가평베네스트 GC',loc:'가평군',lat:37.83,lng:127.51}
-  ],
-  incheon:[
-    {num:11,name:'클럽72 하늘코스',loc:'영종도',lat:37.48,lng:126.42}
-  ],
-  busan:[
-    {num:12,name:'해운대비치 골프앤리조트',loc:'부산 기장군',lat:35.25,lng:129.22}
-  ]
-};
+var allMarkers=[
+  {num:1,name:'라비에벨CC',loc:'춘천시 동산면',lat:37.92,lng:127.67},
+  {num:2,name:'베어크리크GC',loc:'춘천시 신동면',lat:37.82,lng:127.72},
+  {num:3,name:'휘슬링락 프라이빗',loc:'춘천시',lat:37.86,lng:127.70},
+  {num:4,name:'성문안 CC',loc:'원주시',lat:37.34,lng:127.95},
+  {num:5,name:'카스카디아 CC',loc:'홍천군',lat:37.70,lng:127.88},
+  {num:6,name:'오크밸리 CC',loc:'원주시',lat:37.30,lng:128.05},
+  {num:7,name:'렉스필드 CC',loc:'여주시',lat:37.30,lng:127.63},
+  {num:8,name:'송추 CC',loc:'양주시',lat:37.77,lng:126.98},
+  {num:9,name:'비전힐스 CC',loc:'남양주시',lat:37.65,lng:127.20},
+  {num:10,name:'가평베네스트 GC',loc:'가평군',lat:37.83,lng:127.51},
+  {num:11,name:'클럽72 하늘코스',loc:'영종도',lat:37.48,lng:126.42},
+  {num:12,name:'해운대비치 골프앤리조트',loc:'부산 기장군',lat:35.25,lng:129.22}
+];
 
-var centerCoords={gangwon:[37.65,127.80],gyeonggi:[37.60,127.35],incheon:[37.48,126.42],busan:[35.25,129.22]};
-var zoomLevels={gangwon:9,gyeonggi:9,incheon:11,busan:12};
-
-function initMap(region){
-  var m=L.map('map'+region.charAt(0).toUpperCase()+region.slice(1),{zoomControl:true,attributionControl:false}).setView(centerCoords[region],zoomLevels[region]);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(m);
-  allMarkers[region].forEach(function(c){
-    var icon=L.divIcon({className:'',html:'<div class="course-marker">'+c.num+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-16]});
-    L.marker([c.lat,c.lng],{icon:icon}).addTo(m).bindPopup('<b>'+c.name+'</b><br><span style="font-size:11px;color:#8090a8">'+c.loc+'</span>');
-  });
-  maps[region]=m;
-}
-
-// Init default map
-initMap('gangwon');mapsInit.gangwon=true;
+var mapKorea=L.map('mapKorea',{zoomControl:true,attributionControl:false}).setView([36.5,127.8],8);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(mapKorea);
+allMarkers.forEach(function(c){
+  var icon=L.divIcon({className:'',html:'<div class="course-marker">'+c.num+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-16]});
+  L.marker([c.lat,c.lng],{icon:icon}).addTo(mapKorea).bindPopup('<b>'+c.name+'</b><br><span style="font-size:11px;color:#8090a8">'+c.loc+'</span>');
+});
 </script>
 </body>
 </html>
