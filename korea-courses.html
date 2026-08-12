@@ -275,9 +275,11 @@ var allMarkers=[
   {num:12,name:'해운대비치 골프앤리조트',loc:'부산 기장군',lat:35.25,lng:129.22}
 ];
 
-var mapKorea=L.map('mapKorea',{zoomControl:true,attributionControl:false}).setView([36.5,127.8],8);
+var mapKorea=L.map('mapKorea',{zoomControl:true,attributionControl:false});
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(mapKorea);
+var krBounds=[];
 allMarkers.forEach(function(c){
+  krBounds.push([c.lat,c.lng]);
   var icon=L.divIcon({className:'',html:'<div class="course-marker">'+c.num+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-16]});
   var marker=L.marker([c.lat,c.lng],{icon:icon}).addTo(mapKorea)
     .bindPopup('<b>'+c.name+'</b><br><a href="#course-'+c.num+'" style="color:#d4af37;font-size:11px;text-decoration:none;border-bottom:1px dotted #d4af37">→ 코스 정보 보기</a><br><span style="font-size:11px;color:#8090a8">'+c.loc+'</span>');
@@ -297,6 +299,7 @@ allMarkers.forEach(function(c){
     },50);
   });
 });
+mapKorea.fitBounds(krBounds,{padding:[30,30]});
 </script>
 </body>
 </html>
