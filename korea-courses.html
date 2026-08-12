@@ -6,12 +6,7 @@
 <title>Resonate Tour — 한국 골프 코스 가이드</title>
 <style>
 :root {
-  --bg: #0b1420;
-  --card: #101c30;
-  --line: #1e3050;
-  --gold: #d4af37;
-  --dim: #8090a8;
-  --txt: #e8e6e1;
+  --bg: #0b1420; --card: #101c30; --line: #1e3050; --gold: #d4af37; --dim: #8090a8; --txt: #e8e6e1;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:var(--bg); color:var(--txt); font-family:-apple-system,'Noto Sans KR',sans-serif; line-height:1.6; }
@@ -20,71 +15,64 @@ header { text-align:center; padding:48px 20px 32px; }
 h1 { font-size:2em; font-weight:700; color:#fff; }
 .sub { font-size:14px; color:var(--dim); margin-top:8px; }
 
-/* Container */
-.container { max-width:960px; margin:0 auto; padding:0 16px; }
-
-/* Region tabs */
-.region-tabs { display:flex; gap:4px; margin:0 auto 24px; max-width:960px; padding:0 16px; position:sticky; top:0; z-index:20; background:var(--bg); padding-top:8px; padding-bottom:8px; }
-.region-tab { padding:8px 20px; border:1px solid var(--line); border-radius:20px; cursor:pointer; font-size:14px; color:var(--dim); background:transparent; transition:all .2s; white-space:nowrap; }
+.region-tabs { display:flex; gap:4px; margin:0 auto 24px; max-width:960px; padding:0 16px; position:sticky; top:0; z-index:20; background:var(--bg); padding-top:8px; padding-bottom:8px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.region-tab { padding:8px 16px; border:1px solid var(--line); border-radius:20px; cursor:pointer; font-size:13px; color:var(--dim); background:transparent; transition:all .2s; white-space:nowrap; flex-shrink:0; }
 .region-tab.active { background:var(--gold); color:#0b1420; border-color:var(--gold); font-weight:700; }
 .region-tab:hover:not(.active) { border-color:var(--gold); color:var(--txt); }
 
-/* Region header */
 .region-header { max-width:960px; margin:0 auto; padding:0 16px; position:sticky; top:46px; z-index:10; background:var(--bg); }
 .region-title { font-size:13px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin:0; padding:10px 0 8px; }
 
-/* Course cards */
 .region-group { max-width:960px; margin:0 auto 32px; padding:0 16px; }
-.course-card { background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; margin-bottom:28px; padding:28px; opacity:0; transform:translateY(30px); outline:none; -webkit-tap-highlight-color:transparent; }
+.course-card { background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; margin-bottom:24px; padding:28px; opacity:0; transform:translateY(30px); outline:none; -webkit-tap-highlight-color:transparent; }
 .course-card.revealed { opacity:1; transform:translateY(0); transition:opacity .6s ease, transform .6s ease; }
 .course-card:hover { border-color:var(--gold); }
-.course-card:focus, .course-card:focus-visible { outline:none; }
+.course-card:focus,.course-card:focus-visible { outline:none; }
 .course-card.hidden { display:none; }
 
-.course-head { display:flex; align-items:baseline; gap:14px; margin-bottom:10px; }
-.course-num { font-size:18px; font-weight:700; color:var(--gold); min-width:28px; }
-.course-title { font-size:1.15em; font-weight:700; color:#fff; }
-.loc-bar { font-size:13px; color:var(--dim); margin-bottom:16px; }
+.course-head { display:flex; align-items:baseline; gap:14px; padding:0 0 4px; }
+.course-num { color:var(--gold); font-size:24px; font-weight:900; flex-shrink:0; min-width:32px; line-height:1.1; }
+.course-title { font-size:19px; font-weight:700; line-height:1.3; }
+.loc-bar { font-size:13px; color:var(--dim); margin-bottom:14px; }
 .loc-dot { color:var(--gold); margin-right:4px; }
 
-/* Carousel */
-.course-carousel { width:100%; aspect-ratio:16/10; border-radius:10px; overflow:hidden; margin-bottom:16px; cursor:pointer; position:relative; background:#0a1628; }
+.course-carousel { width:100%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; margin-bottom:16px; cursor:pointer; position:relative; background:#0a1628; }
 .course-carousel img { width:100%; height:100%; object-fit:cover; display:none; }
 .course-carousel img.active { display:block; }
 
-.course-why { font-size:14px; color:var(--txt); line-height:1.7; margin-bottom:12px; }
-.course-info { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
-.course-tag { padding:4px 12px; border-radius:14px; font-size:12px; background:rgba(212,175,55,.1); color:var(--gold); border:1px solid rgba(212,175,55,.2); }
+.why { font-size:14.5px; color:var(--txt); margin:14px 0 18px; line-height:1.75; }
+.sig { border-left:3px solid var(--gold); padding:14px 16px; background:rgba(212,175,55,.05); font-size:14px; margin-bottom:16px; line-height:1.65; border-radius:0 8px 8px 0; }
+.tip { font-size:13.5px; color:var(--dim); line-height:1.6; }
 
-/* Floating CTA */
-.cta-float { position:fixed; bottom:0; left:0; right:0; background:linear-gradient(0deg, var(--bg) 80%, transparent); padding:16px 20px 20px; text-align:center; z-index:50; opacity:0; pointer-events:none; transform:translateY(20px); transition:opacity .3s,transform .3s; }
-.cta-float.show { opacity:1; pointer-events:auto; transform:translateY(0); }
-.cta-btn { display:inline-block; padding:14px 36px; background:var(--gold); color:#0b1420; border-radius:30px; font-size:15px; font-weight:700; text-decoration:none; }
+/* Lightbox */
+.lb { display:none; position:fixed; inset:0; z-index:99; background:rgba(0,0,0,.94); }
+.lb.open { display:flex; align-items:center; justify-content:center; }
+.lb img { max-width:92vw; max-height:85vh; object-fit:contain; border-radius:6px; }
+.lb-close { position:absolute; top:16px; right:20px; font-size:32px; color:#fff; cursor:pointer; z-index:100; background:none; border:none; }
+.lb-prev,.lb-next { position:absolute; top:50%; transform:translateY(-50%); font-size:36px; color:#fff; cursor:pointer; background:none; border:none; padding:16px; z-index:100; }
+.lb-prev { left:8px; } .lb-next { right:8px; }
 
-/* Scroll to top */
-#scrollTop { position:fixed; bottom:24px; right:24px; width:44px; height:44px; border-radius:50%; background:var(--gold); color:#0b1420; border:none; cursor:pointer; font-size:18px; z-index:40; opacity:0; pointer-events:none; transition:opacity .3s; display:flex; align-items:center; justify-content:center; }
-#scrollTop.show { opacity:1; pointer-events:auto; }
-
-/* Map */
 .map-wrap { max-width:960px; margin:0 auto 20px; padding:0 16px; }
-.map-wrap > div:first-child { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px; margin:16px 0 24px; text-align:center; }
+.map-wrap>div:first-child { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px; margin:16px 0 24px; text-align:center; }
 .map-label { font-size:11px; color:var(--dim); letter-spacing:1px; margin-bottom:8px; text-transform:uppercase; }
 .map-container { width:100%; height:360px; border-radius:8px; background:#0b1420; }
 
-/* Leaflet overrides */
 .leaflet-container { background:#0b1420; font-family:-apple-system,sans-serif; }
 .leaflet-control-zoom a { background:#101c30!important; color:#e8e6e1!important; border-color:#1e3050!important; }
 .leaflet-popup-content-wrapper { background:#101c30!important; color:#e8e6e1!important; border-radius:10px!important; border:1px solid #1e3050!important; }
 .leaflet-popup-tip { background:#101c30!important; }
 .course-marker { width:28px; height:28px; border-radius:50%; background:#d4af37; border:3px solid #0b1420; color:#0b1420; font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(212,175,55,.4); cursor:pointer; }
 
+#scrollTop { position:fixed; bottom:24px; right:24px; width:44px; height:44px; border-radius:50%; background:var(--gold); color:#0b1420; border:none; cursor:pointer; font-size:18px; z-index:40; opacity:0; pointer-events:none; transition:opacity .3s; display:flex; align-items:center; justify-content:center; }
+#scrollTop.show { opacity:1; pointer-events:auto; }
+
 @media (max-width:600px) {
   h1 { font-size:1.5em; }
   .course-card { padding:20px; }
-  .region-tab { padding:6px 14px; font-size:13px; }
+  .region-tab { padding:6px 12px; font-size:12px; }
+  .course-title { font-size:17px; }
 }
 </style>
-
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -96,146 +84,236 @@ h1 { font-size:2em; font-weight:700; color:#fff; }
   <div class="sub">프리미엄 골프 투어 · 직접 엄선한 코스</div>
 </header>
 
-<!-- Region Tabs -->
 <div class="region-tabs" id="regionTabs">
   <button class="region-tab active" onclick="switchRegion('gangwon')">강원도</button>
+  <button class="region-tab" onclick="switchRegion('gyeonggi')">경기도</button>
+  <button class="region-tab" onclick="switchRegion('incheon')">인천</button>
   <button class="region-tab" onclick="switchRegion('busan')">부산·경남</button>
 </div>
 
-<!-- Map -->
-<div class="map-wrap" id="map-wrap-gangwon">
-  <div><div class="map-label">📍 강원도 · 춘천</div><div class="map-container" id="mapGangwon"></div></div>
-</div>
-<div class="map-wrap" id="map-wrap-busan" style="display:none">
-  <div><div class="map-label">📍 부산 · 기장</div><div class="map-container" id="mapBusan"></div></div>
-</div>
+<!-- Map wrappers -->
+<div class="map-wrap" id="map-wrap-gangwon"><div><div class="map-label">📍 강원도</div><div class="map-container" id="mapGangwon"></div></div></div>
+<div class="map-wrap" id="map-wrap-gyeonggi" style="display:none"><div><div class="map-label">📍 경기도</div><div class="map-container" id="mapGyeonggi"></div></div></div>
+<div class="map-wrap" id="map-wrap-incheon" style="display:none"><div><div class="map-label">📍 인천 · 영종도</div><div class="map-container" id="mapIncheon"></div></div></div>
+<div class="map-wrap" id="map-wrap-busan" style="display:none"><div><div class="map-label">📍 부산 · 기장</div><div class="map-container" id="mapBusan"></div></div></div>
 
-<!-- ═══════════ GANGWON COURSES ═══════════ -->
-<div class="region-header" data-region="gangwon"><h2 class="region-title">춘천</h2></div>
+<!-- ═══════════ GANGWON ═══════════ -->
+<div class="region-header" data-region="gangwon"><h2 class="region-title">춘천 · 원주 · 홍천</h2></div>
 <div class="region-group" data-region="gangwon">
 
-  <!-- Course 1: 라비에벨CC -->
+  <!-- 1: 라비에벨CC -->
   <div class="course-card" data-region="gangwon">
-    <div class="course-head">
-      <span class="course-num">1</span>
-      <span class="course-title">라비에벨CC</span>
-    </div>
+    <div class="course-head"><span class="course-num">1</span><span class="course-title">라비에벨CC</span></div>
     <div class="loc-bar"><span class="loc-dot">●</span> 강원도 춘천시 동산면 · 퍼블릭</div>
-    <div class="course-why">
-      <b>La Vie est Belle</b> — "인생은 아름답다." 이름 그대로 춘천의 호수와 산자락이 어우러진 자연 친화적 코스. <b>Old 코스</b>는 전통적인 산악 코스의 정석, <b>듄스코스</b>는 모래 언덕 지형을 살린 한국에서 보기 드문 링크스 스타일. 두 가지 성격이 전혀 다른 코스를 한 곳에서 경험할 수 있는 곳.
-    </div>
-    <div class="course-info">
-      <span class="course-tag">🏌️ 36홀 (Old + Dunes)</span>
-      <span class="course-tag">🏔️ Old 코스</span>
-      <span class="course-tag">🌊 듄스코스</span>
-      <span class="course-tag">📞 033-245-7100</span>
-      <span class="course-tag">📍 춘천 동산면</span>
-    </div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_laviebel_1.jpg'])"><img src="images/kr_laviebel_1.jpg" class="active" alt="라비에벨CC"></div>
+    <p class="why"><b>La Vie est Belle</b> — "인생은 아름답다." 한옥 클럽하우스와 춘천의 호수·산자락이 어우러진 36홀. <b>Old 코스</b>는 전통 산악 코스의 정석, <b>듄스코스</b>는 한국에서 보기 드문 링크스 스타일. <b>KPGA 코리아오픈</b> 개최지 — 국내 최정상급 선수들이 격돌하는 무대로 선정될 만큼 코스의 완성도와 난이도를 공인받은 명문 코스.</p>
+    <div class="sig"><b>누구에게</b> — KPGA 대회가 열리는 코스에서 플레이하고 싶은 골퍼. 링크스와 산악, 두 스타일을 한 곳에서 경험하려는 여행자.</div>
+    <p class="tip"><b>팁:</b> Old 코스와 듄스코스는 완전히 다른 성격 — 당일 36홀보다는 두 번 방문해 각각 즐기는 걸 추천. 한옥 클럽하우스의 닭갈비도 놓치지 말 것.</p>
   </div>
 
-  <!-- Course 2: 베어크리크GC -->
+  <!-- 2: 베어크리크GC -->
   <div class="course-card" data-region="gangwon">
-    <div class="course-head">
-      <span class="course-num">2</span>
-      <span class="course-title">베어크리크GC</span>
-    </div>
+    <div class="course-head"><span class="course-num">2</span><span class="course-title">베어크리크GC</span></div>
     <div class="loc-bar"><span class="loc-dot">●</span> 강원도 춘천시 신동면 김유정로 730 · 퍼블릭</div>
-    <div class="course-why">
-      <b>Bear Creek</b> — 김유정 문학의 고향 춘천 신동면에 자리한 골프장. 페어웨이 컨디션이 뛰어나고 그린 스피드도 안정적이라는 평가. 개장 시즌에 맞춰 찾는 골퍼들이 많으며, 강원도 골프의 가성비를 대표하는 코스로 꼽힌다. 자연 지형을 최대한 살린 설계가 인상적.
-    </div>
-    <div class="course-info">
-      <span class="course-tag">🏌️ 18홀</span>
-      <span class="course-tag">⭐ 평점 9/10</span>
-      <span class="course-tag">📞 1899-0115</span>
-      <span class="course-tag">🌐 bearcreek.co.kr</span>
-    </div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_bearcreek_1.jpg'])"><img src="images/kr_bearcreek_1.jpg" class="active" alt="베어크리크GC"></div>
+    <p class="why">김유정 문학의 고향 신동면에 자리한 <b>강원도 숨은 진주</b>. 페어웨이 컨디션과 그린 스피드가 웬만한 탑티어 프라이빗 코스를 능가한다는 평가를 받는 곳. 자연 지형을 최대한 살린 설계, 꾸준한 관리 상태, 그리고 합리적 비용까지 — 명문 프라이빗에 견줄 만한 품질을 퍼블릭에서 경험할 수 있는 보기 드문 코스.</p>
+    <div class="sig"><b>누구에게</b> — 프라이빗 수준의 코스 퀄리티를 합리적 비용에 즐기고 싶은 골퍼. 이름값보다 실속을 중시하는 진지한 플레이어.</div>
+    <p class="tip"><b>팁:</b> 개장 시즌(4~5월)이 베스트 컨디션. 주말은 2주 전 예약 필수. 김유정 문학촌과 연계한 당일 코스 추천.</p>
+  </div>
+
+  <!-- 3: 성문안 CC -->
+  <div class="course-card" data-region="gangwon">
+    <div class="course-head"><span class="course-num">3</span><span class="course-title">성문안 CC</span></div>
+    <div class="loc-bar"><span class="loc-dot">●</span> 강원도 원주시 · 퍼블릭</div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_seongmoonan_1.jpg'])"><img src="images/kr_seongmoonan_1.jpg" class="active" alt="성문안 CC"></div>
+    <p class="why"><b>원주의 숨은 명작</b> — 치악산 자락에 안긴 자연 친화적 코스. 페어웨이가 널찍해 초중급자도 부담 없이 즐길 수 있으면서, 그린 주변 전략적 배치가 상급자에게도 생각할 거리를 준다. 도심에서 가까워 접근성이 뛰어나고, 계절마다 다른 얼굴을 보여주는 산악 골프의 정수.</p>
+    <div class="sig"><b>누구에게</b> — 원주·횡성 지역 골프 여행의 거점으로 삼고 싶은 골퍼. 부담 없는 라운드와 산악 풍경을 동시에 원하는 플레이어.</div>
+    <p class="tip"><b>팁:</b> 가을 단풍 시즌(10월 중순~11월 초)이 절경. 원주 한우와 연계한 골프+미식 코스 추천.</p>
+  </div>
+
+  <!-- 4: 카스카디아 CC -->
+  <div class="course-card" data-region="gangwon">
+    <div class="course-head"><span class="course-num">4</span><span class="course-title">카스카디아 CC</span></div>
+    <div class="loc-bar"><span class="loc-dot">●</span> 강원도 홍천군 · 퍼블릭</div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_seongmoonan_1.jpg'])"><img src="images/kr_seongmoonan_1.jpg" class="active" alt="카스카디아 CC"></div>
+    <p class="why"><b>홍천의 떠오르는 별</b> — 광활한 대지 위에 펼쳐진 모던 스타일 코스. 워터 해저드를 전략적으로 배치해 시각적 즐거움과 도전을 동시에 제공한다. 강원도 특유의 청정 자연 속에서 도심에서는 느낄 수 없는 탁 트인 라운드를 경험할 수 있다. 최근 골퍼들 사이에서 입소문을 타고 급부상 중.</p>
+    <div class="sig"><b>누구에게</b> — 새로운 강원도 코스를 개척하고 싶은 골퍼. 워터 플레이의 긴장감을 즐기는 플레이어.</div>
+    <p class="tip"><b>팁:</b> 홍천 강변과 계곡이 가까워 여름 라운드 후 물놀이 연계 가능. 홍천 한우·더덕 요리도 필수.</p>
+  </div>
+
+  <!-- 5: 오크밸리 CC -->
+  <div class="course-card" data-region="gangwon">
+    <div class="course-head"><span class="course-num">5</span><span class="course-title">오크밸리 CC</span></div>
+    <div class="loc-bar"><span class="loc-dot">●</span> 강원도 원주시 · 회원제</div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_seongmoonan_1.jpg'])"><img src="images/kr_seongmoonan_1.jpg" class="active" alt="오크밸리 CC"></div>
+    <p class="why"><b>원주를 대표하는 프리미엄 코스</b> — 참나무 숲 사이로 굽이치는 페어웨이가 인상적인 산악 골프의 교과서. 시즌별로 전혀 다른 표정을 보여주는 자연 경관이 최대 강점. 회원제로 운영되어 코스 관리 상태가 항상 최상위권을 유지하며, 스노우 시즌에는 스키장으로 변신하는 복합 리조트의 골프장이라는 독특한 정체성도 갖고 있다.</p>
+    <div class="sig"><b>누구에게</b> — 사계절 리조트에서 골프를 즐기고 싶은 골퍼. 회원제 수준의 관리 상태를 경험하려는 플레이어.</div>
+    <p class="tip"><b>팁:</b> 참나무 숲 단풍이 절정인 10월 말~11월 초가 베스트 시즌. 리조트 내 숙박+골프 패키지 이용 시 할인 혜택.</p>
   </div>
 
 </div>
 
-<!-- ═══════════ BUSAN COURSES ═══════════ -->
+<!-- ═══════════ GYEONGGI ═══════════ -->
+<div class="region-header" data-region="gyeonggi"><h2 class="region-title">여주 · 양주 · 남양주 · 가평</h2></div>
+<div class="region-group" data-region="gyeonggi">
+
+  <!-- 6: 렉스필드 CC -->
+  <div class="course-card" data-region="gyeonggi">
+    <div class="course-head"><span class="course-num">6</span><span class="course-title">렉스필드 CC</span></div>
+    <div class="loc-bar"><span class="loc-dot">●</span> 경기도 여주시 · 퍼블릭</div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_club72_1.jpg'])"><img src="images/kr_club72_1.jpg" class="active" alt="렉스필드 CC"></div>
+    <p class="why"><b>여주의 숨은 보석</b> — 남한강을 조망하는 탁 트인 레이아웃이 돋보이는 퍼블릭 코스. 페어웨이가 넓고 시야가 열려 있어 초보자도 위축되지 않고 스윙할 수 있는 반면, 그린 주변의 언덜레이션과 벙커 배치가 만만찮은 긴장감을 유지한다. 수도권에서의 접근성과 여주 특유의 한적한 분위기가 공존하는 곳.</p>
+    <div class="sig"><b>누구에게</b> — 수도권에서 당일치기로 여유로운 라운드를 원하는 골퍼. 강변 풍경과 함께하는 힐링 골프를 찾는 플레이어.</div>
+    <p class="tip"><b>팁:</b> 여주 도자기 축제 시즌과 연계하면 골프+문화 여행. 남한강변 일몰 라운드가 특히 아름답다.</p>
+  </div>
+
+  <!-- 7: 송추 CC -->
+  <div class="course-card" data-region="gyeonggi">
+    <div class="course-head"><span class="course-num">7</span><span class="course-title">송추 CC</span></div>
+    <div class="loc-bar"><span class="loc-dot">●</span> 경기도 양주시 · 퍼블릭</div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_club72_1.jpg'])"><img src="images/kr_club72_1.jpg" class="active" alt="송추 CC"></div>
+    <p class="why"><b>북한산 자락의 도심형 골프장</b> — 서울에서 40분 거리라는 압도적 접근성을 무기로 수도권 골퍼들의 사랑을 받는 코스. 산을 깎아 만든 레이아웃이 독특하며, 고저차를 활용한 홀들이 많아 매 샷마다 전략적 판단을 요구한다. 비교적 짧은 전장이지만 좁은 페어웨이와 경사진 라이가 정확성을 시험한다.</p>
+    <div class="sig"><b>누구에게</b> — 서울 근교에서 빠르게 라운드하고 싶은 골퍼. 짧지만 정교한 플레이를 요구하는 코스를 선호하는 플레이어.</div>
+    <p class="tip"><b>팁:</b> 주말 오전은 매우 혼잡 — 주중이나 오후 티타임이 쾌적. 북한산 등산과 연계한 당일 코스 추천.</p>
+  </div>
+
+  <!-- 8: 비전힐스 CC -->
+  <div class="course-card" data-region="gyeonggi">
+    <div class="course-head"><span class="course-num">8</span><span class="course-title">비전힐스 CC</span></div>
+    <div class="loc-bar"><span class="loc-dot">●</span> 경기도 남양주시 · 퍼블릭</div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_club72_1.jpg'])"><img src="images/kr_club72_1.jpg" class="active" alt="비전힐스 CC"></div>
+    <p class="why"><b>남양주의 떠오르는 퍼블릭</b> — 베드 타운으로만 알려졌던 남양주에 골프 여행의 새로운 축을 만든 코스. 구릉 지형을 따라 펼쳐진 현대적 레이아웃에, 곳곳에 전략적으로 배치된 벙커와 워터 해저드가 단조로움을 없앤다. 수도권 동부에서 접근성이 좋아 평일 골퍼들에게 특히 인기.</p>
+    <div class="sig"><b>누구에게</b> — 수도권 동부에서 새로운 골프 경험을 찾는 골퍼. 현대적인 코스 디자인을 즐기는 플레이어.</div>
+    <p class="tip"><b>팁:</b> 남양주 카페 거리와 연계하면 골프+카페 투어. 구릉 지형이 많아 전동 카트 이용이 쾌적함을 더한다.</p>
+  </div>
+
+  <!-- 9: 가평베네스트 GC -->
+  <div class="course-card" data-region="gyeonggi">
+    <div class="course-head"><span class="course-num">9</span><span class="course-title">가평베네스트 GC</span></div>
+    <div class="loc-bar"><span class="loc-dot">●</span> 경기도 가평군 · 퍼블릭</div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_gapyeongbest_1.jpg'])"><img src="images/kr_gapyeongbest_1.jpg" class="active" alt="가평베네스트 GC"></div>
+    <p class="why"><b>북한강이 내려다보이는 산악 코스</b> — 가평의 청정 자연 속에서 북한강과 산맥을 배경으로 티샷을 날리는 호쾌함이 매력. 전장이 길고 고저차가 커서 체력 소모가 있지만, 그만큼 라운드의 성취감이 크다. 계곡과 숲 사이를 오가는 라우팅이 단조로움을 없애고 매 홀 새로운 풍경을 선사한다.</p>
+    <div class="sig"><b>누구에게</b> — 도심을 벗어나 진정한 산악 골프에 도전하고 싶은 골퍼. 북한강 풍경과 함께하는 호쾌한 라운드를 원하는 플레이어.</div>
+    <p class="tip"><b>팁:</b> 가평의 수상 레저(래프팅, 카약)와 연계한 액티브 골프 여행 가능. 여름철 계곡 피서와 조합하면 최고의 시즌.</p>
+  </div>
+
+</div>
+
+<!-- ═══════════ INCHEON ═══════════ -->
+<div class="region-header" data-region="incheon"><h2 class="region-title">영종도</h2></div>
+<div class="region-group" data-region="incheon">
+
+  <!-- 10: 클럽72 하늘코스 -->
+  <div class="course-card" data-region="incheon">
+    <div class="course-head"><span class="course-num">10</span><span class="course-title">클럽72 — 하늘코스</span></div>
+    <div class="loc-bar"><span class="loc-dot">●</span> 인천광역시 중구 영종도 · 퍼블릭</div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_club72_1.jpg'])"><img src="images/kr_club72_1.jpg" class="active" alt="클럽72 하늘코스"></div>
+    <p class="why"><b>영종도 바다 위에 떠 있는 코스</b> — 인천공항과 인접한 입지 덕분에 해외 여행 전후로 라운드하기에 최적. <b>하늘코스</b>는 이름 그대로 탁 트인 시야와 바다를 배경으로 한 링크스 스타일 레이아웃이 특징. 바람이 강한 날에는 완전히 다른 코스로 변신하며, 서해 낙조를 바라보는 해질녘 라운드는 이곳에서만 경험할 수 있는 시그니처.</p>
+    <div class="sig"><b>누구에게</b> — 인천공항 경유 일정에 골프를 추가하고 싶은 여행자. 바다와 바람을 벗 삼는 링크스 골프를 즐기는 플레이어.</div>
+    <p class="tip"><b>팁:</b> 해외 출국 전 이른 아침 라운드 또는 입국 후 저녁 라운드 모두 가능. 바람이 강한 날은 2~3클럽 더 잡을 것.</p>
+  </div>
+
+</div>
+
+<!-- ═══════════ BUSAN ═══════════ -->
 <div class="region-header" data-region="busan"><h2 class="region-title">기장 · 해운대</h2></div>
 <div class="region-group" data-region="busan">
 
-  <!-- Course 3: 해운대비치 골프앤리조트 / 레스트필드 -->
+  <!-- 11: 해운대비치 골프앤리조트 -->
   <div class="course-card" data-region="busan">
-    <div class="course-head">
-      <span class="course-num">3</span>
-      <span class="course-title">해운대비치 골프앤리조트 · 레스트필드</span>
-    </div>
+    <div class="course-head"><span class="course-num">11</span><span class="course-title">해운대비치 골프앤리조트 · 레스트필드</span></div>
     <div class="loc-bar"><span class="loc-dot">●</span> 부산 기장군 기장읍 청연로 19 · 프라이빗 풀빌라</div>
-    <div class="course-why">
-      <b>골프 + 풀빌라</b> — 골프와 럭셔리 숙박을 한 번에. 프라이빗 독채 구조로, 골프 시설을 갖춘 풀빌라에서 자유롭게 스윙 연습과 휴식을 동시에 즐길 수 있다. 기장의 조용한 바다 전망과 함께하는 특별한 골프 여행지. 커플, 가족, 친구 모임 어디에나 어울리는 이색 숙소형 골프 리조트. 평점 9.8/10.
-    </div>
-    <div class="course-info">
-      <span class="course-tag">🏠 독채 풀빌라</span>
-      <span class="course-tag">⭐ 평점 9.8/10</span>
-      <span class="course-tag">🌊 오션뷰</span>
-      <span class="course-tag">📍 기장군</span>
-    </div>
+    <div class="course-carousel" onclick="openLightbox(event,['images/kr_haeundae_1.jpg'])"><img src="images/kr_haeundae_1.jpg" class="active" alt="해운대비치 골프앤리조트"></div>
+    <p class="why"><b>골프 + 프라이빗 풀빌라</b> — 기장의 조용한 해안가에 자리한 이색 골프 리조트. 독채 구조의 풀빌라에 골프 연습 시설이 완비되어 있어, 스윙 연습과 럭셔리 휴식을 동시에 즐길 수 있다. 커플, 가족, 친구 모임 어디에나 어울리는 하이브리드 골프 여행지. 숙소 평점 9.8/10.</p>
+    <div class="sig"><b>누구에게</b> — 골프와 휴양을 함께 원하는 커플·가족. 프라이빗한 공간에서 자유롭게 즐기고 싶은 골퍼.</div>
+    <p class="tip"><b>팁:</b> 풀빌라 인기 많아 1개월 전 예약 권장. 기장 주변 해산물 맛집(대게, 장어)과 연계하면 완벽한 골프+미식 여행.</p>
   </div>
 
 </div>
 
-<!-- Floating CTA -->
-<div class="cta-float" id="ctaFloat">
-  <a class="cta-btn" href="../resonatetour.com#contact">견적 요청하기</a>
+<div class="lb" id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()">&times;</button>
+  <button class="lb-prev" onclick="navLightbox(-1)">‹</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-next" onclick="navLightbox(1)">›</button>
 </div>
 
-<!-- Scroll Top -->
 <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-// ── Region tabs ──
-function switchRegion(region) {
-  document.querySelectorAll('.region-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`.region-tab:nth-child(${region==='gangwon'?1:2})`).classList.add('active');
-  document.querySelectorAll('[data-region]').forEach(el => {
-    if (el.tagName === 'BUTTON') return;
-    if (el.dataset.region) el.classList.toggle('hidden', el.dataset.region !== region);
+// ── Lightbox ──
+var lbGallery=[], lbIdx=0;
+function openLightbox(e,g){e.stopPropagation();lbGallery=g;lbIdx=0;document.getElementById('lbImg').src=g[0];document.getElementById('lightbox').classList.add('open');}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+function navLightbox(d){lbIdx=(lbIdx+d+lbGallery.length)%lbGallery.length;document.getElementById('lbImg').src=lbGallery[lbIdx];}
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)closeLightbox();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox();if(e.key==='ArrowRight')navLightbox(1);if(e.key==='ArrowLeft')navLightbox(-1);});
+
+// ── Region switching ──
+var REGIONS=['gangwon','gyeonggi','incheon','busan'];
+var mapsInit={gangwon:false,gyeonggi:false,incheon:false,busan:false};
+var maps={};
+
+function switchRegion(region){
+  document.querySelectorAll('.region-tab').forEach(function(t,i){
+    t.classList.toggle('active',REGIONS[i]===region);
   });
-  document.getElementById('map-wrap-gangwon').style.display = region==='gangwon'?'block':'none';
-  document.getElementById('map-wrap-busan').style.display = region==='busan'?'block':'none';
-  if (region==='busan' && !window._busanMapInit) { initBusanMap(); window._busanMapInit=true; }
-  setTimeout(() => { if (region==='gangwon') mapGangwon.invalidateSize(); else mapBusan.invalidateSize(); }, 100);
+  document.querySelectorAll('[data-region]').forEach(function(el){
+    if(el.tagName==='BUTTON')return;
+    if(el.dataset.region)el.classList.toggle('hidden',el.dataset.region!==region);
+  });
+  REGIONS.forEach(function(r){
+    document.getElementById('map-wrap-'+r).style.display=r===region?'block':'none';
+  });
+  if(!mapsInit[region]){initMap(region);mapsInit[region]=true;}
+  setTimeout(function(){if(maps[region])maps[region].invalidateSize();},150);
 }
 
 // ── Staggered reveal ──
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
-}, { threshold:0.12, rootMargin:'0px 0px -30px 0px' });
-document.querySelectorAll('.course-card').forEach(c => observer.observe(c));
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('revealed');});},{threshold:0.12,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.course-card').forEach(function(c){obs.observe(c);});
 
-// ── Floating CTA ──
-let ctaHidden = false;
-window.addEventListener('scroll', () => {
-  const cta = document.getElementById('ctaFloat');
-  const st = document.getElementById('scrollTop');
-  const y = window.scrollY;
-  st.classList.toggle('show', y > 400);
-  if (y > 600 && !ctaHidden) cta.classList.add('show');
-  else if (y <= 600) cta.classList.remove('show');
-});
+// ── Scroll top ──
+window.addEventListener('scroll',function(){document.getElementById('scrollTop').classList.toggle('show',window.scrollY>400);});
 
-// ── Gangwon Map ──
-const mapGangwon = L.map('mapGangwon', { zoomControl:true, attributionControl:false }).setView([37.85, 127.73], 11);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom:18 }).addTo(mapGangwon);
-[
-  { num:1, name:'라비에벨CC', loc:'춘천시 동산면', lat:37.92, lng:127.67 },
-  { num:2, name:'베어크리크GC', loc:'춘천시 신동면', lat:37.82, lng:127.72 },
-].forEach(c => {
-  const icon = L.divIcon({ className:'', html:`<div class="course-marker">${c.num}</div>`, iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-16] });
-  L.marker([c.lat, c.lng], { icon }).addTo(mapGangwon).bindPopup(`<b>${c.name}</b><br><span style="font-size:11px;color:#8090a8">${c.loc}</span>`);
-});
+// ── Map data ──
+var allMarkers={
+  gangwon:[
+    {num:1,name:'라비에벨CC',loc:'춘천시 동산면',lat:37.92,lng:127.67},
+    {num:2,name:'베어크리크GC',loc:'춘천시 신동면',lat:37.82,lng:127.72},
+    {num:3,name:'성문안 CC',loc:'원주시',lat:37.34,lng:127.95},
+    {num:4,name:'카스카디아 CC',loc:'홍천군',lat:37.70,lng:127.88},
+    {num:5,name:'오크밸리 CC',loc:'원주시',lat:37.30,lng:128.05}
+  ],
+  gyeonggi:[
+    {num:6,name:'렉스필드 CC',loc:'여주시',lat:37.30,lng:127.63},
+    {num:7,name:'송추 CC',loc:'양주시',lat:37.77,lng:126.98},
+    {num:8,name:'비전힐스 CC',loc:'남양주시',lat:37.65,lng:127.20},
+    {num:9,name:'가평베네스트 GC',loc:'가평군',lat:37.83,lng:127.51}
+  ],
+  incheon:[
+    {num:10,name:'클럽72 하늘코스',loc:'영종도',lat:37.48,lng:126.42}
+  ],
+  busan:[
+    {num:11,name:'해운대비치 골프앤리조트',loc:'부산 기장군',lat:35.25,lng:129.22}
+  ]
+};
 
-// ── Busan Map ──
-function initBusanMap() {
-  window.mapBusan = L.map('mapBusan', { zoomControl:true, attributionControl:false }).setView([35.23, 129.22], 12);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom:18 }).addTo(mapBusan);
-  const icon = L.divIcon({ className:'', html:`<div class="course-marker">3</div>`, iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-16] });
-  L.marker([35.25, 129.22], { icon }).addTo(mapBusan).bindPopup(`<b>해운대비치 골프앤리조트</b><br><span style="font-size:11px;color:#8090a8">부산 기장군</span>`);
+var centerCoords={gangwon:[37.65,127.80],gyeonggi:[37.60,127.35],incheon:[37.48,126.42],busan:[35.25,129.22]};
+var zoomLevels={gangwon:9,gyeonggi:9,incheon:11,busan:12};
+
+function initMap(region){
+  var m=L.map('map'+region.charAt(0).toUpperCase()+region.slice(1),{zoomControl:true,attributionControl:false}).setView(centerCoords[region],zoomLevels[region]);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(m);
+  allMarkers[region].forEach(function(c){
+    var icon=L.divIcon({className:'',html:'<div class="course-marker">'+c.num+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-16]});
+    L.marker([c.lat,c.lng],{icon:icon}).addTo(m).bindPopup('<b>'+c.name+'</b><br><span style="font-size:11px;color:#8090a8">'+c.loc+'</span>');
+  });
+  maps[region]=m;
 }
-</script>
 
+// Init default map
+initMap('gangwon');mapsInit.gangwon=true;
+</script>
 </body>
 </html>
