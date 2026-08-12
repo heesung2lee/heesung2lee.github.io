@@ -279,7 +279,23 @@ var mapKorea=L.map('mapKorea',{zoomControl:true,attributionControl:false}).setVi
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(mapKorea);
 allMarkers.forEach(function(c){
   var icon=L.divIcon({className:'',html:'<div class="course-marker">'+c.num+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-16]});
-  L.marker([c.lat,c.lng],{icon:icon}).addTo(mapKorea).bindPopup('<b>'+c.name+'</b><br><span style="font-size:11px;color:#8090a8">'+c.loc+'</span>');
+  var marker=L.marker([c.lat,c.lng],{icon:icon}).addTo(mapKorea)
+    .bindPopup('<b>'+c.name+'</b><br><a href="#course-'+c.num+'" style="color:#d4af37;font-size:11px;text-decoration:none;border-bottom:1px dotted #d4af37">→ 코스 정보 보기</a><br><span style="font-size:11px;color:#8090a8">'+c.loc+'</span>');
+  marker.on('popupopen',function(){
+    setTimeout(function(){
+      var popup=marker.getPopup().getElement();
+      if(popup){
+        var link=popup.querySelector('a');
+        if(link){
+          link.addEventListener('click',function(e){
+            e.preventDefault();
+            var card=document.getElementById('course-'+c.num);
+            if(card){mapKorea.closePopup();card.scrollIntoView({behavior:'smooth',block:'center'});card.style.borderColor='var(--gold)';setTimeout(function(){card.style.borderColor='';},1500);}
+          });
+        }
+      }
+    },50);
+  });
 });
 </script>
 </body>
