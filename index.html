@@ -2977,14 +2977,14 @@ const DAYS = [
  {time:"오후",ko:"휴식 · 골프 준비",en:"Rest · Golf Prep",spot:"숙소",note_ko:"오후에는 충분히 쉬기. 내일부터 시작되는 골프 일정 준비 및 장비 점검.",note_en:"Afternoon rest. Prep for golf starting tomorrow — check gear.",badge:""},
  {time:"숙소",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
  ]},
- {n:"DAY 3",date:"DATE",ko:"골프 연습 라운드",en:"Practice Golf Rounds",
+ {n:"DAY 3",date:"DATE",ko:"골프 워밍업",en:"Golf Warm-up",
  costs:[],
  rows:[
  {time:"아침",ko:"연습 라운딩 (아침)",en:"Practice Round (AM)",spot:"골프 연습장",note_ko:"연습 라운딩. 몸 풀기.",note_en:"Practice round. Warm-up.",badge:""},
  {time:"오후",ko:"골프 — 시립 코스 라운드",en:"Golf — Municipal Course Round",spot:"시립 골프장",note_ko:"오후 라운드. 시립 골프장. 숙소에서 차로 약 20분.",note_en:"Afternoon round. Municipal course. ~20 min drive from lodging.",badge:""},
  {time:"저녁",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
  ]},
- {n:"DAY 4",date:"DATE",ko:"골프 × 2 + 로컬 디너",en:"Double Golf + Local Dinner",
+ {n:"DAY 4",date:"DATE",ko:"골프 라운드 + 로컬 디너",en:"Golf Round + Local Dinner",
  costs:[],
  rows:[
  {time:"아침",ko:"골프 — 시립 코스 라운드",en:"Golf — Municipal Course Round",spot:"시립 골프장",note_ko:"아침 라운드. 시립 코스. 숙소에서 차로 약 25분.",note_en:"Morning round at municipal courses. ~25 min drive.",badge:""},
@@ -3000,7 +3000,7 @@ const DAYS = [
  {time:"하루",ko:"자유 시간 · 자유 일정",en:"Free Time · Free Day",spot:"",note_ko:"자유 시간. 별도 골프 일정 없음.",note_en:"Free day. No golf scheduled.",badge:""},
  {time:"숙소",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
  ]},
- {n:"DAY 6",date:"DATE",ko:"해안 코스 골프 × 2",en:"Coastal Double Round",
+ {n:"DAY 6",date:"DATE",ko:"오션뷰 코스 골프 × 2",en:"Ocean-View Double Round",
  costs:[],
  weekend:true,
  rows:[
@@ -3022,7 +3022,7 @@ const DAYS = [
  {n:"DAY 8",date:"DATE",ko:"골프 라운드 × 2",en:"Double Golf Round",
  costs:[],
  rows:[
- {time:"이동",ko:"남부 골프 지역 이동 (약 1시간 15분)",en:"Drive to Southern Golf Region (~1h 15min)",spot:"남부 도로 · 약 65마일",note_ko:"남부 방면 이동. 약 65마일, 1시간 15분.",note_en:"Drive south. ~65 miles, 1h 15min.",badge:""},
+ {time:"이동",ko:"내륙 코스 이동 (약 1시간 15분)",en:"Drive to Inland Course (~1h 15min)",spot:"내륙 도로 · 약 65마일",note_ko:"내륙 방면 이동. 약 65마일, 1시간 15분.",note_en:"Drive inland. ~65 miles, 1h 15min.",badge:""},
  {time:"AM",ko:"골프 라운드 1",en:"Golf Round 1",spot:"골프장",note_ko:"오전 라운드.",note_en:"Morning round.",badge:""},
  {time:"점심",ko:"현지 와이너리 런치",en:"Local Winery Lunch",spot:"현지 와이너리",note_ko:"현지인들이 즐겨 찾는 와이너리 런치. 야외 테이블, 캘리포니아 와인.",note_en:"Winery lunch — beloved by locals. Outdoor tables, California wine.",badge:""},
  {time:"PM",ko:"골프 라운드 2",en:"Golf Round 2",spot:"골프장",note_ko:"오후 라운드.",note_en:"Afternoon round.",badge:""},
@@ -3032,7 +3032,7 @@ const DAYS = [
  {n:"DAY 9",date:"DATE",ko:"골프 + 온천 스파",en:"Golf + Hot Springs",
  costs:[],
  rows:[
- {time:"AM",ko:"골프 라운드",en:"Golf Round",spot:"골프장",note_ko:"라운드.",note_en:"Golf round.",badge:""},
+ {time:"AM",ko:"골프 라운드",en:"Golf Round",spot:"골프장",note_ko:"오전 라운드.",note_en:"Morning round.",badge:""},
  {time:"이동",ko:"온천 스파 이동 (약 1시간)",en:"Drive to Hot Springs (~1hr)",spot:"내륙 도로 · 약 45마일",note_ko:"내륙 방향 이동. 약 45마일, 1시간.",note_en:"Drive inland. ~45 miles, 1 hour.",badge:""},
  {time:"PM",ko:"온천 스파",en:"Hot Springs Spa",spot:"온천 리조트",note_ko:"천연 온천 스파. 라운드 후 피로 회복. 온천 입욕 및 휴식.",note_en:"Natural hot springs spa. Perfect recovery after golf round.",badge:""},
  {time:"저녁",ko:"미정",en:"TBD",spot:"",note_ko:"저녁 미정.",note_en:"Dinner TBD.",badge:"tbd"},
@@ -3049,7 +3049,7 @@ const DAYS = [
  {time:"저녁",ko:"미정",en:"TBD",spot:"",note_ko:"저녁 미정.",note_en:"Dinner TBD.",badge:"tbd"},
  {time:"숙소",ko:"숙소 복귀",en:"Return to Lodging",spot:"",note_ko:"숙소 복귀.",note_en:"Return to lodging.",badge:"stay"}
  ]},
- {n:"DAY 11",date:"DATE",ko:"골프 연습",en:"Golf Practice",
+ {n:"DAY 11",date:"DATE",ko:"마무리 골프",en:"Final Golf",
  costs:[],
  rows:[
  {time:"AM",ko:"골프 라운드",en:"Golf Round",spot:"시립 골프장",note_ko:"시립 코스.",note_en:"Municipal course.",badge:""},
