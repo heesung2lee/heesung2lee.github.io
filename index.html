@@ -2474,20 +2474,17 @@ body {
  <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
  <polyline points="16,22 16,14 24,14"/><polyline points="404,22 404,14 396,14"/>
  </g>
- <text x="210" y="155" text-anchor="middle" dominant-baseline="middle"
- font-family="Apple SD Gothic Neo,Malgun Gothic,NanumGothic,sans-serif"
- font-weight="700" font-size="70" fill="url(#nl-gH)">레조네이트</text>
- <path d="M 0,148 C 42,128 78,168 120,148 C 162,128 198,168 240,148 C 282,128 318,168 360,148 C 385,138 400,142 420,140" fill="none" stroke="url(#nl-w1)" stroke-width="2.0" stroke-linecap="round" opacity="0.55"/>
- <path d="M 0,162 C 38,146 80,178 118,162 C 158,146 198,178 238,162 C 278,146 318,178 358,162 C 386,154 402,157 420,155" fill="none" stroke="url(#nl-w2)" stroke-width="1.4" stroke-linecap="round" opacity="0.38"/>
- <path d="M 0,174 C 42,164 82,184 122,174 C 162,164 202,184 242,174 C 282,164 322,184 362,174 C 388,169 404,171 420,170" fill="none" stroke="url(#nl-w3)" stroke-width="1.0" stroke-linecap="round" opacity="0.22"/>
+ <text x="210" y="165" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="9" fill="url(#nl-gH)">RESONATE</text>
+ <text x="210" y="202" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" letter-spacing="15" fill="#c8a844" opacity="0.88">TOUR</text>
+ <path d="M 0,285 C 42,265 78,305 120,285 C 162,265 198,305 240,285 C 282,265 318,305 360,285 C 385,275 400,279 420,277" fill="none" stroke="url(#nl-w1)" stroke-width="2.0" stroke-linecap="round" opacity="0.55"/>
+ <path d="M 0,297 C 38,281 80,313 118,297 C 158,281 198,313 238,297 C 278,281 318,313 358,297 C 386,289 402,292 420,290" fill="none" stroke="url(#nl-w2)" stroke-width="1.4" stroke-linecap="round" opacity="0.38"/>
+ <path d="M 0,307 C 42,297 82,317 122,307 C 162,297 202,317 242,307 C 282,297 322,317 362,307 C 388,302 404,304 420,303" fill="none" stroke="url(#nl-w3)" stroke-width="1.0" stroke-linecap="round" opacity="0.22"/>
  <line x1="100" y1="236" x2="320" y2="236" stroke="url(#nl-gH)" stroke-width="0.7" opacity="0.42"/>
  <polygon points="210,246 219,255 210,264 201,255" fill="url(#nl-gD)" opacity="0.92"/>
  <circle cx="178" cy="255" r="2.6" fill="url(#nl-gD)" opacity="0.60"/>
  <circle cx="165" cy="255" r="1.6" fill="url(#nl-gD)" opacity="0.36"/>
  <circle cx="242" cy="255" r="2.6" fill="url(#nl-gD)" opacity="0.60"/>
  <circle cx="255" cy="255" r="1.6" fill="url(#nl-gD)" opacity="0.36"/>
- <text x="210" y="313" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="9" fill="url(#nl-gH)">RESONATE</text>
- <text x="210" y="348" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" letter-spacing="15" fill="#c8a844" opacity="0.88">TOUR</text>
  <text x="210" y="371" text-anchor="middle" font-family="Georgia,serif" font-size="11" letter-spacing="4" fill="#c8a844" opacity="0.72">KOREA → USA</text>
  <line x1="55" y1="398" x2="365" y2="398" stroke="url(#nl-gH)" stroke-width="0.9" opacity="0.55"/>
  <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
@@ -2509,7 +2506,7 @@ body {
  
  <!-- RIGHT: Lang + Hamburger — NEVER clips -->
  <div class="nav-r" style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px">
-<button class="btn-lang" onclick="toggleLangCurrency(event)" id="lcBtn"><span id="lcLabel">KO · USD</span> ▾<span style="font-size:8px;color:#d4af37;font-weight:700;margin-left:1px;position:relative;top:-4px">v3</span></button>
+<button class="btn-lang" onclick="toggleLangCurrency(event)" id="lcBtn"><span id="lcLabel">KO · USD</span> ▾</button>
  <div class="lc-dropdown" id="lcDropdown">
  <div class="lc-section">
  <div class="lc-section-title">Language / 언어</div>
@@ -2620,8 +2617,8 @@ body {
  
  <div class="quote-blk">
  <div id="review-display" style="position:absolute;inset:40px 44px;display:flex;flex-direction:column;justify-content:center">
- <blockquote id="review-text" style="margin:0 0 12px;flex:1;display:flex;align-items:center"></blockquote>
- <cite id="review-cite" style="display:block"></cite>
+ <blockquote id="review-text" style="margin:0 0 12px;flex:1;display:flex;align-items:center;justify-content:center;text-align:center"></blockquote>
+ <cite id="review-cite" style="display:block;text-align:center"></cite>
  </div>
  <div style="display:flex;justify-content:center;gap:8px;position:absolute;bottom:20px;left:0;right:0" id="review-dots"></div>
  </div>
@@ -2890,7 +2887,7 @@ body {
 </div>
  
 <footer style="scroll-margin-top:0">
- <div class="footer-logo">레조네이트 투어<small>KOREA → USA · EST. 2026</small></div>
+ <div class="footer-logo"><span class="ko">레조네이트 투어</span><span class="en">Resonate Tour</span><small>KOREA → USA</small></div>
  <div class="footer-links">
  <button onclick="nav('schedule')"><span class="ko">일정</span><span class="en">Schedule</span></button>
  <button onclick="nav('pricing')"><span class="ko">구성</span><span class="en">Plan</span></button>
@@ -5804,20 +5801,17 @@ function filterFaq(cat) {
  <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
  <polyline points="16,22 16,14 24,14"/><polyline points="404,22 404,14 396,14"/>
  </g>
- <text x="210" y="155" text-anchor="middle" dominant-baseline="middle"
- font-family="Apple SD Gothic Neo,Malgun Gothic,NanumGothic,sans-serif"
- font-weight="700" font-size="70" fill="url(#pl-gH)">레조네이트</text>
- <path d="M 0,148 C 42,128 78,168 120,148 C 162,128 198,168 240,148 C 282,128 318,168 360,148 C 385,138 400,142 420,140" fill="none" stroke="url(#pl-w1)" stroke-width="2.0" stroke-linecap="round" opacity="0.55"/>
- <path d="M 0,162 C 38,146 80,178 118,162 C 158,146 198,178 238,162 C 278,146 318,178 358,162 C 386,154 402,157 420,155" fill="none" stroke="url(#pl-w2)" stroke-width="1.4" stroke-linecap="round" opacity="0.38"/>
- <path d="M 0,174 C 42,164 82,184 122,174 C 162,164 202,184 242,174 C 282,164 322,184 362,174 C 388,169 404,171 420,170" fill="none" stroke="url(#pl-w3)" stroke-width="1.0" stroke-linecap="round" opacity="0.22"/>
+ <text x="210" y="165" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="9" fill="url(#pl-gH)">RESONATE</text>
+ <text x="210" y="202" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" letter-spacing="15" fill="#c8a844" opacity="0.88">TOUR</text>
+ <path d="M 0,285 C 42,265 78,305 120,285 C 162,265 198,305 240,285 C 282,265 318,305 360,285 C 385,275 400,279 420,277" fill="none" stroke="url(#pl-w1)" stroke-width="2.0" stroke-linecap="round" opacity="0.55"/>
+ <path d="M 0,297 C 38,281 80,313 118,297 C 158,281 198,313 238,297 C 278,281 318,313 358,297 C 386,289 402,292 420,290" fill="none" stroke="url(#pl-w2)" stroke-width="1.4" stroke-linecap="round" opacity="0.38"/>
+ <path d="M 0,307 C 42,297 82,317 122,307 C 162,297 202,317 242,307 C 282,297 322,317 362,307 C 388,302 404,304 420,303" fill="none" stroke="url(#pl-w3)" stroke-width="1.0" stroke-linecap="round" opacity="0.22"/>
  <line x1="100" y1="236" x2="320" y2="236" stroke="url(#pl-gH)" stroke-width="0.7" opacity="0.42"/>
  <polygon points="210,246 219,255 210,264 201,255" fill="url(#pl-gD)" opacity="0.92"/>
  <circle cx="178" cy="255" r="2.6" fill="url(#pl-gD)" opacity="0.60"/>
  <circle cx="165" cy="255" r="1.6" fill="url(#pl-gD)" opacity="0.36"/>
  <circle cx="242" cy="255" r="2.6" fill="url(#pl-gD)" opacity="0.60"/>
  <circle cx="255" cy="255" r="1.6" fill="url(#pl-gD)" opacity="0.36"/>
- <text x="210" y="313" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="9" fill="url(#pl-gH)">RESONATE</text>
- <text x="210" y="348" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" letter-spacing="15" fill="#c8a844" opacity="0.88">TOUR</text>
  <text x="210" y="371" text-anchor="middle" font-family="Georgia,serif" font-size="11" letter-spacing="4" fill="#c8a844" opacity="0.72">KOREA → USA</text>
  <line x1="55" y1="398" x2="365" y2="398" stroke="url(#pl-gH)" stroke-width="0.9" opacity="0.55"/>
  <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
