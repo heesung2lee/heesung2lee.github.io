@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="420" height="420" viewBox="0 0 420 420"
      xmlns="http://www.w3.org/2000/svg" role="img">
-<title>결 Resonate Tour</title>
-<desc>결 Resonate Tour — Korea USA premium travel logo</desc>
+<title>레조네이트 투어 · Resonate Tour</title>
+<desc>레조네이트 투어 · Resonate Tour — Korea USA premium travel logo</desc>
 <defs>
   <style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;display=swap');</style>
   <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
@@ -62,14 +62,14 @@
   <polyline points="404,22 404,14 396,14"/>
 </g>
 
-<!-- 결 — tight under top rule -->
+<!-- 레조네이트 — tight under top rule -->
 <text x="210" y="155"
       text-anchor="middle"
       dominant-baseline="middle"
       font-family="'Apple SD Gothic Neo','Malgun Gothic','NanumGothic',sans-serif"
       font-weight="700"
-      font-size="185"
-      fill="url(#goldH)">결</text>
+      font-size="70"
+      fill="url(#goldH)">레조네이트</text>
 
 <!-- Waves through middle of 결 -->
 <path d="M 0,148 C 42,128 78,168 120,148 C 162,128 198,168 240,148 C 282,128 318,168 360,148 C 385,138 400,142 420,140"
