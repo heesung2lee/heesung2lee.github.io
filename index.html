@@ -655,7 +655,7 @@ footer{background:#f4f4f4!important}
 /* ── HAMBURGER MENU SHEET ── */
 #ham-sheet{
  position:fixed;top:0;right:0;bottom:0;
- width:min(320px,88vw);
+ width:min(296px,82vw);
  background:#fff;
  z-index:500;
  transform:translateX(110%);
@@ -708,7 +708,7 @@ footer{background:#f4f4f4!important}
  transform:scale(.98);
 }
 .ham-item-ico{font-size:20px;width:28px;text-align:center;flex-shrink:0}
-.ham-item-label{flex:1}
+.ham-item-label{flex:1 1 auto;text-align:left;min-width:0}
 .ham-item-arrow{font-size:11px;color:#bbb}
 .ham-section-label{
  padding:16px 22px 6px;
@@ -716,6 +716,7 @@ footer{background:#f4f4f4!important}
  text-transform:uppercase;color:#bbb;
 }
 .ham-cta{
+ display:block;width:calc(100% - 32px);
  margin:16px 16px 8px;
  padding:16px 14px;border-radius:14px;
  background:#171a20;color:#fff;
@@ -726,7 +727,6 @@ footer{background:#f4f4f4!important}
  flex-shrink:0;
  white-space:normal;word-break:keep-all;
  overflow-wrap:break-word;
- max-width:calc(100% - 32px);
  box-sizing:border-box;
 }
 .ham-cta:active{transform:scale(.96);background:#393c41}
@@ -907,7 +907,7 @@ nav.hero-mode .nav-tab:hover{
  
 /* Ham CTA */
 .ham-cta:hover{
- transform:translateY(-2px) scale(1.02) !important;
+ transform:translateY(-2px) !important;
  box-shadow:0 6px 18px rgba(23,26,32,.3) !important;
 }
 .ham-cta:active,.ham-cta.pressing{
@@ -2717,9 +2717,9 @@ body {
  <div class="testi-sec">
  <h2><span class="ko">고객 후기</span><span class="en">Testimonials</span></h2>
  <div class="testi-cards">
- <div class="testi-card"><p class="testi-q"><span class="ko">"미국에 이렇게 다녀올 수 있는 줄 몰랐어요. 돌아오는 비행기 안에서 눈물이 났습니다. 제 삶에서 가장 감동적인 여정이었어요."</span><span class="en">"I had no idea America could move me like this. I cried on the flight home. The most unforgettable journey of my life."</span></p><div class="testi-by"><span class="ko">— 김 ○○ 님 · 서울 · 캘리포니아 골프 투어</span><span class="en">— Kim ○○ · Seoul · California Golf Tour</span></div></div>
- <div class="testi-card"><p class="testi-q"><span class="ko">"출발 전 오리엔테이션 덕분에 Day 1부터 자신 있었어요. 현지에서도 한국어로 소통할 수 있어서 정말 편했습니다."</span><span class="en">"The pre-departure briefing made me confident from Day 1. Being able to communicate in Korean on-site was such a relief."</span></p><div class="testi-by"><span class="ko">— 박 ○○ 님 · 부산 · 미서부 투어</span><span class="en">— Park ○○ · Busan · Western USA Tour</span></div></div>
- <div class="testi-card"><p class="testi-q"><span class="ko">"여정 영상을 받고 가족들이 모두 감동받았습니다. 영상 하나로 여행 전체가 다시 살아났어요."</span><span class="en">"When our family received the journey reel, everyone was moved. The video brought the entire trip back to life."</span></p><div class="testi-by"><span class="ko">— 이 ○○ 님 · 서울 · 효도 투어</span><span class="en">— Lee ○○ · Seoul · Family Tour</span></div></div>
+ <div class="testi-card"><p class="testi-q"><span class="ko">"미국에 이렇게 다녀올 수 있는 줄 몰랐어요. 돌아오는 비행기 안에서 눈물이 났습니다. 제 삶에서 가장 감동적인 여정이었어요."</span><span class="en">"I had no idea America could move me like this. I cried on the flight home. The most unforgettable journey of my life."</span></p><div class="testi-by"><span class="ko">— 김**</span><span class="en">— Kim**</span></div></div>
+ <div class="testi-card"><p class="testi-q"><span class="ko">"출발 전 오리엔테이션 덕분에 Day 1부터 자신 있었어요. 현지에서도 한국어로 소통할 수 있어서 정말 편했습니다."</span><span class="en">"The pre-departure briefing made me confident from Day 1. Being able to communicate in Korean on-site was such a relief."</span></p><div class="testi-by"><span class="ko">— 박**</span><span class="en">— Park**</span></div></div>
+ <div class="testi-card"><p class="testi-q"><span class="ko">"여정 영상을 받고 가족들이 모두 감동받았습니다. 영상 하나로 여행 전체가 다시 살아났어요."</span><span class="en">"When our family received the journey reel, everyone was moved. The video brought the entire trip back to life."</span></p><div class="testi-by"><span class="ko">— 이**</span><span class="en">— Lee**</span></div></div>
  </div>
  </div>
  </div>
@@ -2963,7 +2963,7 @@ const DAYS = [
  {time:"오전",ko:"도착 · 공항 이동",en:"Arrival · Airport Transfer",spot:"국제공항",note_ko:"출발지에서 공항 도착. 공항 픽업 후 숙소로 이동.",note_en:"Land at the airport. Pickup and transfer to lodging.",badge:""},
  {time:"오전",ko:"숙소 · 짐 정리",en:"Lodging · Unpack",spot:"숙소",note_ko:"장거리 비행 후 숙소로. 짐 풀고 간단히 정리.",note_en:"After a long flight. Unpack and settle in.",badge:""},
  {time:"낮~저녁",ko:"시차 적응 · 완전 휴식",en:"Jet Lag Recovery · Full Rest",spot:"숙소",note_ko:"시차 적응. 무리하지 않고 완전 휴식. 가벼운 산책 가능.",note_en:"Recover from jet lag. Full rest — light walk OK.",badge:""},
- {time:"숙소",ko:"숙소 (시차 적응 우선)",en:"Lodging (jet lag priority)",spot:"숙소",note_ko:"숙소. 다음 날을 위해 충분한 수면 확보.",note_en:"Lodging. Prioritize sleep for tomorrow.",badge:"stay"}
+ {time:"저녁",ko:"일찍 취침",en:"Early Night",spot:"",note_ko:"시차 적응을 위해 일찍 취침. 다음 날을 위한 충분한 수면.",note_en:"Early bedtime for jet lag recovery. Get plenty of sleep for tomorrow.",badge:"stay"}
  ]},
  {n:"DAY 2",date:"DATE",ko:"주변 관광",en:"Neighborhood Tour",
  costs:[],
@@ -2972,14 +2972,14 @@ const DAYS = [
  {time:"오전~오후",ko:"주변 관광",en:"Neighborhood Tour",spot:"현지 동네",note_ko:"일행과 함께 동네 산책 및 관광. 마트, 공원, 인근 명소 방문. 무리 없이 가볍게.",note_en:"Casual neighborhood tour. Market, local park, familiar spots. Easy pace.",badge:""},
  {time:"점심",ko:"현지 식당 점심",en:"Local Restaurant Lunch",spot:"현지 식당",note_ko:"일행과 함께 현지 식당에서 점심 식사.",note_en:"Lunch with your group at a local restaurant.",badge:""},
  {time:"오후",ko:"휴식 · 골프 준비",en:"Rest · Golf Prep",spot:"숙소",note_ko:"오후에는 충분히 쉬기. 내일부터 시작되는 골프 일정 준비 및 장비 점검.",note_en:"Afternoon rest. Prep for golf starting tomorrow — check gear.",badge:""},
- {time:"숙소",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
+ {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
  ]},
  {n:"DAY 3",date:"DATE",ko:"골프 워밍업",en:"Golf Warm-up",
  costs:[],
  rows:[
  {time:"아침",ko:"연습 라운딩 (아침)",en:"Practice Round (AM)",spot:"골프 연습장",note_ko:"연습 라운딩. 몸 풀기.",note_en:"Practice round. Warm-up.",badge:""},
  {time:"오후",ko:"골프 — 시립 코스 라운드",en:"Golf — Municipal Course Round",spot:"시립 골프장",note_ko:"오후 라운드. 시립 골프장. 숙소에서 차로 약 20분.",note_en:"Afternoon round. Municipal course. ~20 min drive from lodging.",badge:""},
- {time:"저녁",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
+ {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"라운드 후 숙소에서 휴식.",note_en:"Rest at the lodging after the round.",badge:"stay"}
  ]},
  {n:"DAY 4",date:"DATE",ko:"골프 라운드 + 로컬 디너",en:"Golf Round + Local Dinner",
  costs:[],
@@ -2988,14 +2988,14 @@ const DAYS = [
  {time:"점심",ko:"점심 식사",en:"Lunch",spot:"현지 카페",note_ko:"현지 카페에서 점심 식사.",note_en:"Lunch at a local cafe.",badge:""},
  {time:"오후",ko:"골프 연습",en:"Golf Practice",spot:"골프 연습장",note_ko:"오후 추가 연습 라운딩.",note_en:"Additional afternoon practice.",badge:""},
  {time:"저녁",ko:"로컬 디너",en:"Local Dinner",spot:"로컬 레스토랑",note_ko:"현지인과의 저녁 식사.",note_en:"Dinner with local contacts.",badge:""},
- {time:"숙소",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
+ {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
  ]},
  {n:"DAY 5",date:"DATE",ko:"자유 시간",en:"Free Day",
  costs:[],
  weekend:true,
  rows:[
  {time:"하루",ko:"자유 시간 · 자유 일정",en:"Free Time · Free Day",spot:"",note_ko:"자유 시간. 별도 골프 일정 없음.",note_en:"Free day. No golf scheduled.",badge:""},
- {time:"숙소",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
+ {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
  ]},
  {n:"DAY 6",date:"DATE",ko:"오션뷰 코스 골프 × 2",en:"Ocean-View Double Round",
  costs:[],
@@ -3005,7 +3005,7 @@ const DAYS = [
  {time:"오전",ko:"골프 라운드 1",en:"Golf Round 1",spot:"해안 골프장",note_ko:"오전 티오프. 오션뷰 챔피언십 코스.",note_en:"AM tee time. Ocean-view championship course.",badge:""},
  {time:"오후",ko:"골프 라운드 2",en:"Golf Round 2",spot:"해안 골프장",note_ko:"오후 티오프. 오션뷰 챔피언십 코스.",note_en:"PM tee time. Ocean-view championship course.",badge:""},
  {time:"저녁",ko:"해변 노을 감상",en:"Sunset at the Beach",spot:"해변",note_ko:"해변에서 석양 감상. 골프장에서 차로 5분.",note_en:"Sunset at the beach. 5 min drive from the course.",badge:""},
- {time:"숙소",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
+ {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
  ]},
  {n:"DAY 7",date:"DATE",ko:"밸리 코스 골프",en:"Valley Course Golf",
  costs:[],
@@ -3014,7 +3014,7 @@ const DAYS = [
  {time:"AM",ko:"골프 라운드",en:"Golf Round",spot:"밸리 골프장",note_ko:"퍼블릭 코스. 산악 뷰.",note_en:"Public course. Mountain views.",badge:""},
  {time:"점심",ko:"덴마크풍 마을 관광 & 식사",en:"Danish Village Lunch & Stroll",spot:"덴마크풍 마을",note_ko:"덴마크풍 마을 구경. 데니쉬 페이스트리 유명.",note_en:"Danish-style village stroll. Famous for Danish pastries.",badge:""},
  {time:"저녁",ko:"미정",en:"TBD",spot:"",note_ko:"저녁 미정.",note_en:"Dinner TBD.",badge:"tbd"},
- {time:"숙소",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
+ {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
  ]},
  {n:"DAY 8",date:"DATE",ko:"골프 라운드 × 2",en:"Double Golf Round",
  costs:[],
@@ -3024,7 +3024,7 @@ const DAYS = [
  {time:"점심",ko:"현지 와이너리 런치",en:"Local Winery Lunch",spot:"현지 와이너리",note_ko:"현지인들이 즐겨 찾는 와이너리 런치. 야외 테이블, 캘리포니아 와인.",note_en:"Winery lunch — beloved by locals. Outdoor tables, California wine.",badge:""},
  {time:"PM",ko:"골프 라운드 2",en:"Golf Round 2",spot:"골프장",note_ko:"오후 라운드.",note_en:"Afternoon round.",badge:""},
  {time:"저녁",ko:"미정",en:"TBD",spot:"",note_ko:"저녁 미정.",note_en:"Dinner TBD.",badge:"tbd"},
- {time:"숙소",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
+ {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
  ]},
  {n:"DAY 9",date:"DATE",ko:"골프 + 온천 스파",en:"Golf + Hot Springs",
  costs:[],
@@ -3033,7 +3033,7 @@ const DAYS = [
  {time:"이동",ko:"온천 스파 이동 (약 1시간)",en:"Drive to Hot Springs (~1hr)",spot:"내륙 도로 · 약 45마일",note_ko:"내륙 방향 이동. 약 45마일, 1시간.",note_en:"Drive inland. ~45 miles, 1 hour.",badge:""},
  {time:"PM",ko:"온천 스파",en:"Hot Springs Spa",spot:"온천 리조트",note_ko:"천연 온천 스파. 라운드 후 피로 회복. 온천 입욕 및 휴식.",note_en:"Natural hot springs spa. Perfect recovery after golf round.",badge:""},
  {time:"저녁",ko:"미정",en:"TBD",spot:"",note_ko:"저녁 미정.",note_en:"Dinner TBD.",badge:"tbd"},
- {time:"숙소",ko:"숙소",en:"Lodging",spot:"숙소",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
+ {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
  ]},
  {n:"DAY 10",date:"DATE",ko:"해안 코스 + 선셋 드라이브",en:"Coastal Course + Sunset Drive",
  costs:[],
@@ -3044,7 +3044,7 @@ const DAYS = [
  {time:"점심",ko:"해안 뷔페 점심",en:"Ocean Buffet Lunch",spot:"해안",note_ko:"해안 오션 뷔페 점심.",note_en:"Ocean buffet lunch on the coast.",badge:""},
  {time:"PM",ko:"해안 도로 선셋 드라이브",en:"Coastal Sunset Drive",spot:"해안 도로",note_ko:"해안 도로 선셋 드라이브.",note_en:"Coastal sunset scenic drive.",badge:""},
  {time:"저녁",ko:"미정",en:"TBD",spot:"",note_ko:"저녁 미정.",note_en:"Dinner TBD.",badge:"tbd"},
- {time:"숙소",ko:"숙소 복귀",en:"Return to Lodging",spot:"",note_ko:"숙소 복귀.",note_en:"Return to lodging.",badge:"stay"}
+ {time:"저녁",ko:"숙소 복귀",en:"Return to Lodging",spot:"",note_ko:"드라이브 후 숙소로 복귀.",note_en:"Back to the lodging after the drive.",badge:"stay"}
  ]},
  {n:"DAY 11",date:"DATE",ko:"마무리 골프",en:"Final Golf",
  costs:[],
@@ -3052,14 +3052,14 @@ const DAYS = [
  {time:"AM",ko:"골프 라운드",en:"Golf Round",spot:"시립 골프장",note_ko:"시립 코스.",note_en:"Municipal course.",badge:""},
  {time:"점심",ko:"캠퍼스 카페 점심",en:"Lunch at Campus Cafe",spot:"대학 캠퍼스 카페",note_ko:"대학 캠퍼스 카페. 점심.",note_en:"Campus cafeteria. Lunch.",badge:""},
  {time:"PM",ko:"연습 라운딩",en:"Practice Round",spot:"골프 연습장",note_ko:"마무리 연습.",note_en:"Final practice round.",badge:""},
- {time:"숙소",ko:"숙소",en:"Lodging",spot:"",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
+ {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
  ]},
  {n:"DAY 12",date:"DATE",ko:"자유 시간",en:"Free Day",
  costs:[],
  weekend:true,
  rows:[
  {time:"하루",ko:"자유 시간 · 자유 일정",en:"Free Time · Free Day",spot:"",note_ko:"마지막 주말 자유 시간.",note_en:"Last weekend free day.",badge:""},
- {time:"숙소",ko:"숙소",en:"Lodging",spot:"",note_ko:"숙소",note_en:"Lodging",badge:"stay"}
+ {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
  ]},
  {n:"DAY 13",date:"DATE",ko:"귀국 출발",en:"Departure Day",
  costs:[],
@@ -3786,6 +3786,7 @@ function setLang(lang, btn) {
  }
  updateLCButton();
  convertPrices();
+ if (window.refreshReview) window.refreshReview();
 }
 function setCurrency(curr, btn) {
  curCurrency = curr;
@@ -4123,25 +4124,25 @@ function closeHam() {
  var REVIEWS = [
  { ko: '"미국에 이렇게 다녀올 수 있는 줄 몰랐어요.<br>돌아오는 비행기 안에서 눈물이 났습니다.<br>제 삶에서 가장 감동적인 여정이었어요."',
  en: '"I had no idea America could move me like this.<br>I cried on the flight home.<br>The most unforgettable journey of my life."',
- by_ko: '— 김 ○○ 님 · 서울 · 캘리포니아 골프 투어',
- by_en: '— Kim ○○ · Seoul · California Golf Tour' },
- { ko: '"출발 전 오리엔테이션 덕분에 Day 1부터 자신 있었어요.<br>현지에서도 한국어로 소통할 수 있어서 정말 편했습니다."',
+ by_ko: '— 김**',
+ by_en: '— Kim**' },
+{ ko: '"출발 전 오리엔테이션 덕분에 Day 1부터 자신 있었어요.<br>현지에서도 한국어로 소통할 수 있어서 정말 편했습니다."',
  en: '"The pre-departure briefing made me confident from Day 1.<br>Being able to communicate in Korean on-site was such a relief."',
- by_ko: '— 박 ○○ 님 · 부산 · 미서부 투어',
- by_en: '— Park ○○ · Busan · Western USA Tour' },
- { ko: '"여정 영상을 받고 가족들이 모두 감동받았습니다.<br>영상 하나로 여행 전체가 다시 살아났어요."',
+ by_ko: '— 박**',
+ by_en: '— Park**' },
+{ ko: '"여정 영상을 받고 가족들이 모두 감동받았습니다.<br>영상 하나로 여행 전체가 다시 살아났어요."',
  en: '"When our family received the journey reel, everyone was moved.<br>The video brought the entire trip back to life."',
- by_ko: '— 이 ○○ 님 · 서울 · 투어 참가',
- by_en: '— Lee ○○ · Seoul · Tour Participant' },
- { ko: '"Sandpiper 코스에서 바라보는 태평양은<br>평생 잊을 수 없는 장면이었습니다."',
+ by_ko: '— 이**',
+ by_en: '— Lee**' },
+{ ko: '"Sandpiper 코스에서 바라보는 태평양은<br>평생 잊을 수 없는 장면이었습니다."',
  en: '"The view of the Pacific from Sandpiper Golf Club<br>is a scene I will never forget."',
- by_ko: '— 최 ○○ 님 · 대구 · 골프 투어',
- by_en: '— Choi ○○ · Daegu · Golf Tour' },
- { ko: '"Elim Hot Springs에서의 하룻밤이<br>여행 중 가장 기억에 남아요. 완전한 힐링이었습니다."',
+ by_ko: '— 최**',
+ by_en: '— Choi**' },
+{ ko: '"Elim Hot Springs에서의 하룻밤이<br>여행 중 가장 기억에 남아요. 완전한 힐링이었습니다."',
  en: '"The night at Elim Hot Springs was the most memorable<br>of the entire trip. True healing."',
- by_ko: '— 정 ○○ 님 · 인천 · 캘리포니아 투어',
- by_en: '— Jung ○○ · Incheon · California Tour' }
- ];
+ by_ko: '— 정**',
+ by_en: '— Jung**' }
+];
  
  var queue = [];
  var curIdx = -1;
@@ -4216,10 +4217,14 @@ function closeHam() {
  setTimeout(initReviews, 100);
  var origToggle = window.toggleLang;
  window.toggleLang = function() {
- origToggle();
- if (curIdx >= 0) showReview(curIdx);
+  origToggle();
+  if (curIdx >= 0) showReview(curIdx);
  };
-})();
+ // Expose so setLang() (dropdown language switch) also refreshes the quote band
+ window.refreshReview = function() {
+  if (curIdx >= 0) showReview(curIdx);
+ };
+ })();
  
  
  
