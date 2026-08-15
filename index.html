@@ -2863,6 +2863,7 @@ body {
  <p><span class="ko">클릭하면 큰 화면으로 감상할 수 있습니다</span><span class="en">Click any image to view full-size</span></p>
  </div>
  <div class="gal-grid" id="galGrid"></div>
+ <div id="galVideoRail" style="padding:8px 20px 36px;max-width:1120px;margin:0 auto"></div>
 </div>
  
 <!-- LIGHTBOX -->
@@ -4273,6 +4274,24 @@ closeLightbox = function() {
 };
  
 /* ═══ GALLERY SHOWCASE ROTATION ═══ */
+/* ── 여정 영상 목록 (YouTube) ── */
+var HOME_VIDEOS = [
+ {id:'togOf_PZG14', type:'shorts'},
+ {id:'26eA6_mfd28', type:'shorts'},
+ {id:'LuDAOPw8esI', type:'shorts'},
+ {id:'IIDC7TaCBz4', type:'shorts'},
+ {id:'PpZXIidJng0', type:'shorts'},
+ {id:'lh4tyRGT9Eg', type:'shorts'},
+ {id:'mKIF8rCz7C4', type:'shorts'},
+ {id:'133fE5fKb8Y', type:'shorts'},
+ {id:'1EoqSikjT0w', type:'shorts'},
+ {id:'mcv_nloRK6Q', type:'shorts'},
+ {id:'q-pih3bqyhU', type:'video'},
+ {id:'SLgqcaJqGCI', type:'video'}
+];
+function ytUrl(v) { return v.type === 'shorts' ? 'https://www.youtube.com/shorts/' + v.id : 'https://www.youtube.com/watch?v=' + v.id; }
+function ytPoster(v) { return 'https://i.ytimg.com/vi/' + v.id + (v.type === 'shorts' ? '/oardefault.jpg' : '/hqdefault.jpg'); }
+
 (function(){
  var GALLERY_ITEMS = [
  {key:'hero-img-1', day_ko:'Day 10', day_en:'Day 10', name_ko:'PCH 선셋 드라이브', name_en:'PCH Sunset Drive', tag:'The Crossings'},
@@ -4286,7 +4305,9 @@ closeLightbox = function() {
  {key:'carlsbad', day_ko:'Day 10', day_en:'Day 10', name_ko:'칼스배드 해안', name_en:'Carlsbad Coast', tag:'The Crossings'},
  {key:'neighborhood', day_ko:'Day 2', day_en:'Day 2', name_ko:'LA 동네 산책', name_en:'LA Neighborhood Walk', tag:'Los Angeles'},
  {key:'hero-img-3', day_ko:'Day 5 & 12', day_en:'Day 5 & 12', name_ko:'은하수 아래', name_en:'Under the Milky Way', tag:'Family Day'},
- ];
+ ].concat(HOME_VIDEOS.map(function(v, i) {
+ return {key:'yt-v-' + i, type:'video', url: ytUrl(v), poster: ytPoster(v), day_ko:'영상', day_en:'Video', name_ko:'여정 영상 ' + (i + 1), name_en:'Journey Film ' + (i + 1), tag:'YouTube'};
+ }));
  
  // 영상 항목은 {key, type:'video', url:'<YouTube URL>', poster:'<이미지파일>'} 형식으로 추가하면
  // 카드에 재생 버튼이 뜨고 클릭 시 새 탭에서 영상이 열립니다. (poster 생략 시 imgs[key] 사용)
@@ -4302,6 +4323,7 @@ closeLightbox = function() {
  var img = document.getElementById('gal-img-'+slot);
  if (img && img.src) showDirectImageBySrc(img.src);
  }
+ window.openShowcaseCard = openShowcaseCard; // 인라인 onclick에서 사용
 
  function updateCard(slot, item) {
  var img = document.getElementById('gal-img-'+slot);
@@ -4310,7 +4332,9 @@ closeLightbox = function() {
  if (!img) return;
  var isVideo = item.type === 'video' && item.url;
  img.style.opacity='0';
+ img.onerror = function(){ this.onerror = null; if (this.getAttribute('data-fallback') !== '1') { this.setAttribute('data-fallback','1'); this.src = 'golfpic1.png'; } };
  setTimeout(function(){
+ img.setAttribute('data-fallback','0');
  img.src = isVideo ? (item.poster || imgs[item.key] || '') : (imgs[item.key] || '');
  img.setAttribute('data-key', item.key);
  if (slotEl) {
@@ -4344,11 +4368,16 @@ closeLightbox = function() {
  setTimeout(initGallery, 150);
 })();
 
-/* ── 홈 시네마틱 필름 (HOME_FILM_URL에 YouTube 링크를 넣으면 재생) ── */
+/* ── 홈 시네마틱 필름 (HOME_FILM_URL 지정 시 고정 영상, 아니면 여정 영상 중 랜덤 재생) ── */
 var HOME_FILM_URL = ''; // 예: 'https://www.youtube.com/watch?v=XXXX'
 function playFilm() {
- if (HOME_FILM_URL) { window.open(HOME_FILM_URL, '_blank'); }
- else { nav('gallery'); }
+ if (HOME_FILM_URL) { window.open(HOME_FILM_URL, '_blank'); return; }
+ if (HOME_VIDEOS.length) {
+ var v = HOME_VIDEOS[Math.floor(Math.random() * HOME_VIDEOS.length)];
+ window.open(ytUrl(v), '_blank');
+ return;
+ }
+ nav('gallery');
 }
  
  
@@ -4474,6 +4503,29 @@ function buildGallery() {
  
  // Hero parallax
  initGalHeroParallax();
+ // 여정 영상 rail
+ buildGalleryVideos();
+}
+
+function buildGalleryVideos() {
+ var rail = document.getElementById('galVideoRail');
+ if (!rail || rail.dataset.built) return;
+ rail.dataset.built = '1';
+ if (!HOME_VIDEOS.length) return;
+ var L = curLang;
+ var cards = HOME_VIDEOS.map(function(v, i) {
+ var w = v.type === 'video' ? 220 : 150;
+ var ar = v.type === 'video' ? '16/9' : '9/16';
+ var poster = ytPoster(v);
+ var url = ytUrl(v);
+ return '<div onclick="window.open(\'' + url + '\',\'_blank\')" style="flex-shrink:0;width:' + w + 'px;cursor:pointer;position:relative;border-radius:12px;overflow:hidden;aspect-ratio:' + ar + ';background:#e0e0e0;box-shadow:0 4px 16px rgba(0,0,0,.12)">'
+ + '<img src="' + poster + '" alt="' + (L==='ko'?'여정 영상 '+(i+1):'Journey Film '+(i+1)) + '" loading="lazy" onerror="this.onerror=null;this.src=\'golfpic1.png\'" style="width:100%;height:100%;object-fit:cover;display:block">'
+ + '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 60%)"></div>'
+ + '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.9);background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px">▶</div>'
+ + '</div>';
+ }).join('');
+ rail.innerHTML = '<div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#9e9e9e;margin-bottom:12px"><span class="ko">여정 영상</span><span class="en">Journey Films</span></div>'
+ + '<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch">' + cards + '</div>';
 }
  
 function initGalHeroParallax() {
