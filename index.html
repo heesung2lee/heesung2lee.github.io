@@ -2640,7 +2640,7 @@ body {
  <div class="day-tab-bar jrail-mode" id="dayTabBar"></div>
  <div class="jprog"><span class="jptxt" id="jProgTxt"></span><span class="jbar"><i id="jProgBar"></i></span></div>
  </div>
- <button class="btn-sm" onclick="printSchedule()" style="margin:8px auto;display:block;font-size:11px;padding:8px 18px;border-radius:100px;background:#f4f4f4;color:#5c5e62;border:1px solid #e0e0e0">
+ <button class="btn-sm" id="schedulePrintBtn" onclick="printSchedule()" style="margin:8px auto;display:block;font-size:11px;padding:8px 18px;border-radius:100px;background:#f4f4f4;color:#5c5e62;border:1px solid #e0e0e0">
  <span class="ko"><span class="ico-doc" style="display:inline-block;vertical-align:-0.15em;margin-right:4px"></span>일정 PDF 저장</span><span class="en"><span class="ico-doc" style="display:inline-block;vertical-align:-0.15em;margin-right:4px"></span>Save PDF</span>
 </button>
  <div class="day-panels" id="dayPanels"></div>
@@ -3469,7 +3469,10 @@ function nav(page, dayIdx) {
  sh.classList.toggle('visible', page === 'schedule');
  if (page === 'schedule') requestAnimationFrame(function(){
  var panels = document.getElementById('dayPanels');
- if (panels && sh) panels.style.paddingTop = sh.getBoundingClientRect().height + 'px';
+ var hh = sh.getBoundingClientRect().height;
+ if (panels) panels.style.paddingTop = '8px';
+ var pb = document.getElementById('schedulePrintBtn');
+ if (pb) pb.style.marginTop = (52 + hh + 8) + 'px';
  });
  }
  // Course sticky header
