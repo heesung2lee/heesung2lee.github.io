@@ -111,6 +111,7 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
  
 /* ── HOME ── */
 .hero-slide{position:relative;height:100svh;min-height:580px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center}
+@keyframes filmPulse{0%{box-shadow:0 0 0 0 rgba(212,175,55,.45)}70%{box-shadow:0 0 0 22px rgba(212,175,55,0)}100%{box-shadow:0 0 0 0 rgba(212,175,55,0)}}
 .hero-eye{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:14px}
 .hero-h1{font-size:clamp(38px,7vw,70px);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:12px;color:#fff}
 .hero-p{font-size:clamp(14px,2vw,19px);font-weight:300;color:rgba(255,255,255,.85);margin-bottom:32px;line-height:1.6}
@@ -2550,10 +2551,6 @@ body {
  <div class="hero-eye"><span class="ko">레조네이트 투어 · Korea → USA · 2026</span><span class="en">Resonate Tour · Korea → USA · 2026</span></div>
  <h1 class="hero-h1"><span class="ko">캘리포니아 골프<br>& 문화 투어</span><span class="en">California Golf<br>& Culture Tour</span></h1>
  <p class="hero-p"><span class="ko">삶의 결을 따라, 당신만의 여정으로.</span><span class="en">Your Life's Texture, Our Signature Touch.</span></p>
- <div class="hero-btns">
- <button class="btn-w" onclick="nav('schedule')"><span class="ko">일정 보기</span><span class="en">View Schedule</span></button>
- <button class="btn-d" onclick="nav('pricing')"><span class="ko">맞춤 견적</span><span class="en">Custom Quote</span></button>
- </div>
  </div>
  </div>
  
@@ -2573,32 +2570,28 @@ body {
  
  </div>
  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
- <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="event.stopPropagation();this.querySelector('img')&&showDirectImageBySrc(this.querySelector('img').src)">
+ <div id="gal-slot-0" data-type="img" data-url="" style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="openShowcaseCard(0)">
  <img loading="lazy" id="gal-img-0" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity.7s ease">
+ <div id="gal-play-0" style="position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:2"><div style="width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,255,255,.9);background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;backdrop-filter:blur(4px)">▶</div></div>
  <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.2) 0%,transparent 55%)"></div>
  </div>
- <div style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="event.stopPropagation();this.querySelector('img')&&showDirectImageBySrc(this.querySelector('img').src)">
+ <div id="gal-slot-1" data-type="img" data-url="" style="position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#e0e0e0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.1)" onclick="openShowcaseCard(1)">
  <img loading="lazy" id="gal-img-1" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity.7s ease">
+ <div id="gal-play-1" style="position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:2"><div style="width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,255,255,.9);background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;backdrop-filter:blur(4px)">▶</div></div>
  <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.2) 0%,transparent 55%)"></div>
  </div>
- </div>
- <div style="text-align:center;margin-top:22px">
- <button class="btn-sm" onclick="nav('schedule')" style="font-size:13px;padding:11px 28px"><span class="ko">전체 일정 보기</span><span class="en">View Full Schedule</span></button>
  </div>
  </div>
  </div>
  
  <div class="hero-slide">
- <div class="hero-bg" id="h4-bg" style="background-image:url('golfpic1.png');background-size:cover;background-position:center;background-attachment:fixed"><img id="h4" src="" alt="" style="display:none"></div>
+ <div class="hero-bg-a" id="film-layer" style="background-image:url('golfpic1.png');background-size:cover;background-position:center"></div>
  <div class="hero-grad"></div>
- <div class="hero-cnt">
- <div class="hero-eye"><span class="ko">캘리포니아 대표 골프 코스</span><span class="en">California's Premier Courses</span></div>
- <h1 class="hero-h1">Sandpiper · The Crossings · Alisal Ranch</h1>
- <p class="hero-p"><span class="ko">엄선한 프리미엄 코스를 한 여정에.</span><span class="en">Handpicked premium courses in one seamless journey.</span></p>
- <div class="hero-btns">
- <button class="btn-w" onclick="nav('schedule')"><span class="ko">전체 일정 보기</span><span class="en">View Full Schedule</span></button>
- <button class="btn-d" onclick="nav('contact')"><span class="ko">상담 문의</span><span class="en">Contact Us</span></button>
- </div>
+ <div class="hero-cnt" style="text-align:center">
+ <button class="film-play" onclick="playFilm()" aria-label="여정 영상 재생" style="width:88px;height:88px;border-radius:50%;border:2px solid rgba(212,175,55,.9);background:rgba(0,0,0,.35);color:#d4af37;font-size:30px;cursor:pointer;margin-bottom:22px;backdrop-filter:blur(6px);transition:transform.25s;animation:filmPulse 2.6s infinite" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform=''">▶</button>
+ <div class="hero-eye"><span class="ko">시네마틱 저니</span><span class="en">Cinematic Journey</span></div>
+ <h1 class="hero-h1"><span class="ko">당신의 여정,<br>하나의 필름으로.</span><span class="en">Your journey,<br>one film.</span></h1>
+ <p class="hero-p"><span class="ko">60–90초 시네마틱 편집 영상으로 여정의 순간을 남겨드립니다.</span><span class="en">A 60–90 sec cinematic reel — your moments, kept.</span></p>
  </div>
  </div>
  
@@ -2625,7 +2618,7 @@ body {
  
  <div class="home-cta-strip">
  <p style="font-size:15px;font-weight:300;color:#5c5e62;margin-bottom:20px"><span class="ko">인원·날짜·예산만 알려주시면 맞춤 제안서를 보내드립니다.</span><span class="en">Share group size, dates & budget — a custom proposal will follow.</span></p>
- <button class="btn-book" style="font-size:14px;padding:14px 40px;border-radius:100px" onclick="nav('contact')"><span class="ko">지금 상담 신청하기</span><span class="en">Start Resonating</span></button>
+ <button class="btn-book" style="font-size:14px;padding:14px 40px;border-radius:4px" onclick="nav('contact')"><span class="ko">지금 상담 신청하기</span><span class="en">Start Resonating</span></button>
  </div>
 </div>
  
@@ -2640,9 +2633,6 @@ body {
  <div class="day-tab-bar jrail-mode" id="dayTabBar"></div>
  <div class="jprog"><span class="jptxt" id="jProgTxt"></span><span class="jbar"><i id="jProgBar"></i></span></div>
  </div>
- <button class="btn-sm" id="schedulePrintBtn" onclick="printSchedule()" style="margin:8px auto;display:block;font-size:11px;padding:8px 18px;border-radius:100px;background:#f4f4f4;color:#5c5e62;border:1px solid #e0e0e0">
- <span class="ko"><span class="ico-doc" style="display:inline-block;vertical-align:-0.15em;margin-right:4px"></span>일정 PDF 저장</span><span class="en"><span class="ico-doc" style="display:inline-block;vertical-align:-0.15em;margin-right:4px"></span>Save PDF</span>
-</button>
  <div class="day-panels" id="dayPanels"></div>
 </div>
  
@@ -3448,17 +3438,7 @@ function nav(page, dayIdx) {
  if (_dd) _dd.classList.remove('show');
  updateNavMode();
  window.scrollTo({ top: 0, behavior: 'instant' });
- 
- // Bottom nav highlight — single outline on active
- var bnav = document.getElementById('bottom-nav');
- if (bnav) bnav.querySelectorAll('button').forEach(function(b){
- var isAct = b.getAttribute('data-page') === page;
- b.querySelector('span:first-child').style.transform = isAct ? 'scale(1.15)' : '';
- b.querySelectorAll('span').forEach(function(s){ s.style.color = isAct ? '#d4af37' : '#9e9e9e'; });
- b.style.border = isAct ? '2px solid #d4af37' : 'none';
- b.style.borderRadius = isAct ? '4px' : '0';
- });
- 
+
  // Sticky CTA
  var cta = document.getElementById('pricing-sticky-cta');
  if (cta) cta.style.display = (page === 'pricing') ? '' : 'none';
@@ -3470,9 +3450,7 @@ function nav(page, dayIdx) {
  if (page === 'schedule') requestAnimationFrame(function(){
  var panels = document.getElementById('dayPanels');
  var hh = sh.getBoundingClientRect().height;
- if (panels) panels.style.paddingTop = '8px';
- var pb = document.getElementById('schedulePrintBtn');
- if (pb) pb.style.marginTop = (52 + hh + 8) + 'px';
+ if (panels) panels.style.paddingTop = (52 + hh + 8) + 'px';
  });
  }
  // Course sticky header
@@ -3634,9 +3612,10 @@ function buildPanel(day, i) {
  const wk = day.weekend ? `<span class="dp-tag t-wk">WEEKEND</span>` : '';
  
  // rows
- const rows = day.rows.map(r => {
+ const rows = day.rows.map((r, ri) => {
  let badge = '';
- if (r.badge === 'stay') badge = `<span class="tl-badge b-stay"><span class="ico-hotel" style="display:inline-flex;margin-right:2px"></span>${L === 'ko' ? '숙소' : 'Stay'}</span>`;
+ const prevSpot = ri > 0 ? (day.rows[ri-1].spot || '') : '';
+ if (r.badge === 'stay') badge = (prevSpot === '숙소') ? '' : `<span class="tl-badge b-stay"><span class="ico-hotel" style="display:inline-flex;margin-right:2px"></span>${L === 'ko' ? '숙소' : 'Stay'}</span>`;
  else if (r.badge === 'jc') badge = `<span class="tl-badge b-jc">${L==='ko'?'현지 맛집':'Local Fave'}</span>`;
  else if (r.badge === 'tbd') badge = `<span class="tl-badge b-tbd">${L === 'ko' ? '미정' : 'TBD'}</span>`;
  else if (r.badge && r.badge[0] === '$') {
@@ -3646,7 +3625,7 @@ function buildPanel(day, i) {
  <div class="tl-time">${r.time}</div>
  <div>
  <div class="tl-name">${L === 'ko' ? r.ko : r.en}</div>
- ${r.spot ? `<div class="tl-spot"><span class="ico-pin" style="display:inline-flex;margin-right:3px"></span>${r.spot}</div>` : ''}
+ ${(r.spot && r.spot !== prevSpot) ? `<div class="tl-spot"><span class="ico-pin" style="display:inline-flex;margin-right:3px"></span>${r.spot}</div>` : ''}
  <div class="tl-note">${L === 'ko' ? r.note_ko : r.note_en}</div>
  ${badge}
  </div>
@@ -4309,64 +4288,68 @@ closeLightbox = function() {
  {key:'hero-img-3', day_ko:'Day 5 & 12', day_en:'Day 5 & 12', name_ko:'은하수 아래', name_en:'Under the Milky Way', tag:'Family Day'},
  ];
  
- var queue0 = [], queue1 = [];
+ // 영상 항목은 {key, type:'video', url:'<YouTube URL>', poster:'<이미지파일>'} 형식으로 추가하면
+ // 카드에 재생 버튼이 뜨고 클릭 시 새 탭에서 영상이 열립니다. (poster 생략 시 imgs[key] 사용)
  var lastIdx0 = -1, lastIdx1 = -1;
- 
- function shuffleQueue(exclude) {
- var indices = GALLERY_ITEMS.map(function(_,i){return i;})
- .filter(function(i){return i !== exclude;});
- for (var i=indices.length-1;i>0;i--) {
- var j=Math.floor(Math.random()*(i+1));
- var t=indices[i];indices[i]=indices[j];indices[j]=t;
+
+ function openShowcaseCard(slot) {
+ var slotEl = document.getElementById('gal-slot-'+slot);
+ if (!slotEl) return;
+ if (slotEl.getAttribute('data-type') === 'video' && slotEl.getAttribute('data-url')) {
+ window.open(slotEl.getAttribute('data-url'), '_blank');
+ return;
  }
- return indices;
- }
- 
- function pickNext(queue, otherIdx, lastIdx) {
- if (!queue.length) {
- var q = shuffleQueue(-1);
- // avoid same as other card and as last shown
- var filtered = q.filter(function(i){return i!==otherIdx && i!==lastIdx;});
- queue.push.apply(queue, filtered.length ? filtered : q);
- }
- // also skip if top matches other card
- while (queue.length && queue[0] === otherIdx) queue.splice(0,1);
- return queue.length ? queue.shift() : 0;
- }
- 
- function updateCard(slot, item) {
- var lang = document.documentElement.getAttribute('data-lang')||'ko';
  var img = document.getElementById('gal-img-'+slot);
- // text overlays removed per user request
+ if (img && img.src) showDirectImageBySrc(img.src);
+ }
+
+ function updateCard(slot, item) {
+ var img = document.getElementById('gal-img-'+slot);
+ var slotEl = document.getElementById('gal-slot-'+slot);
+ var play = document.getElementById('gal-play-'+slot);
  if (!img) return;
- 
+ var isVideo = item.type === 'video' && item.url;
  img.style.opacity='0';
  setTimeout(function(){
- img.src = imgs[item.key] || '';
+ img.src = isVideo ? (item.poster || imgs[item.key] || '') : (imgs[item.key] || '');
  img.setAttribute('data-key', item.key);
- img.parentElement.setAttribute('data-key', item.key);
- // text overlays removed per user request
+ if (slotEl) {
+ slotEl.setAttribute('data-type', isVideo ? 'video' : 'img');
+ slotEl.setAttribute('data-url', isVideo ? item.url : '');
+ }
+ if (play) play.style.display = isVideo ? 'flex' : 'none';
  img.style.opacity='1';
  }, 350);
  }
- 
+
  function rotate() {
- var idx0 = pickNext(queue0, lastIdx1, lastIdx0);
- var idx1 = pickNext(queue1, idx0, lastIdx1);
+ var pool0 = [];
+ for (var i=0;i<GALLERY_ITEMS.length;i++) if (i!==lastIdx0 && i!==lastIdx1) pool0.push(i);
+ var idx0 = pool0[Math.floor(Math.random()*pool0.length)];
+ var pool1 = [];
+ for (var j=0;j<GALLERY_ITEMS.length;j++) if (j!==idx0 && j!==lastIdx0 && j!==lastIdx1) pool1.push(j);
+ var idx1 = pool1[Math.floor(Math.random()*pool1.length)];
  lastIdx0 = idx0;
  lastIdx1 = idx1;
  updateCard(0, GALLERY_ITEMS[idx0]);
  updateCard(1, GALLERY_ITEMS[idx1]);
  }
- 
+
  function initGallery() {
  if (!document.getElementById('gal-img-0')) return;
  rotate();
- setInterval(rotate, 8000);
+ setInterval(rotate, 5000);
  }
  
  setTimeout(initGallery, 150);
 })();
+
+/* ── 홈 시네마틱 필름 (HOME_FILM_URL에 YouTube 링크를 넣으면 재생) ── */
+var HOME_FILM_URL = ''; // 예: 'https://www.youtube.com/watch?v=XXXX'
+function playFilm() {
+ if (HOME_FILM_URL) { window.open(HOME_FILM_URL, '_blank'); }
+ else { nav('gallery'); }
+}
  
  
 /* ═══ JS PARALLAX FALLBACK for hero backgrounds ═══ */
@@ -5478,57 +5461,6 @@ function showScheduleSkeleton() {
  }
 })();
  
-/* ── #51 Bottom nav bar (mobile) ── */
-(function(){
- var bar = document.createElement('nav');
- bar.id = 'bottom-nav';
- bar.style.cssText = [
- 'position:fixed','bottom:0','left:0','right:0',
- 'height:calc(56px + env(safe-area-inset-bottom))',
- 'padding-bottom:env(safe-area-inset-bottom)',
- 'background:rgba(255,255,255,.96)',
- 'backdrop-filter:blur(12px)',
- '-webkit-backdrop-filter:blur(12px)',
- 'border-top:1px solid #e8e8e8',
- 'display:none',
- 'align-items:center',
- 'justify-content:space-around',
- 'z-index:199',
- 'box-shadow:0 -2px 12px rgba(0,0,0,.08)',
- ].join(';');
- 
- var items = [
- {icon:'ico-home', ko:'홈', en:'Home', page:'home'},
- {icon:'ico-calendar',ko:'일정', en:'Schedule', page:'schedule'},
- {icon:'ico-money', ko:'구성', en:'Plan', page:'pricing'},
- {icon:'ico-mail', ko:'문의', en:'Contact', page:'contact'},
- ];
- items.forEach(function(item) {
- var btn = document.createElement('button');
- btn.style.cssText = 'flex:1;height:56px;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:inherit;-webkit-tap-highlight-color:transparent;transition:all.15s';
- btn.innerHTML = '<span class="'+item.icon+'" style="display:inline-block;color:#d4af37;font-size:20px"></span><span style="font-size:9px;font-weight:600;color:#9e9e9e;letter-spacing:.04em" class="ko">'+item.ko+'</span><span style="font-size:9px;font-weight:600;color:#9e9e9e;letter-spacing:.04em" class="en">'+item.en+'</span>';
- btn.setAttribute('data-page', item.page);
- btn.onclick = function() { nav(item.page); };
- bar.appendChild(btn);
- });
- 
- document.body.appendChild(bar);
- 
- // Show only on mobile
- function checkMobile() {
- bar.style.display = (window.innerWidth <= 860) ? 'flex' : 'none';
- }
- checkMobile();
- window.addEventListener('resize', checkMobile, { passive: true });
- 
- // Highlight active tab
- 
- // Also add bottom padding to body on mobile
- if (window.innerWidth <= 860) {
- document.body.style.paddingBottom = '56px';
- }
-})();
- 
 /* ── #52 Phone tap-to-call ── */
 (function(){
  document.querySelectorAll('.c-phone, [data-phone]').forEach(function(el) {
@@ -5652,27 +5584,6 @@ function initScheduleSearch() {
  if (tab) tab.style.opacity = matches ? '1' : '0.35';
  });
  });
-}
- 
-/* ── #63 Print/PDF schedule ── */
-function printSchedule() {
- var style = '<style>body{font-family:sans-serif;padding:20px;max-width:800px;margin:0 auto}h1{font-size:24px;margin-bottom:4px}.day{page-break-inside:avoid;margin-bottom:24px;border-bottom:1px solid #eee;padding-bottom:12px}.day-title{font-size:16px;font-weight:700;margin-bottom:8px;color:#171a20}.tl-row{display:flex;gap:12px;margin-bottom:6px;font-size:13px}.tl-time{color:#aaa;width:60px;flex-shrink:0}@media print{button{display:none}}</style>';
- var panels = document.querySelectorAll('.dpanel');
- var html = '<html><head><title>레조네이트 투어 — 전체 일정</title>' + style + '</head><body>';
-html += '<h1>레조네이트 투어</h1><p style="color:#aaa;font-size:12px;margin-bottom:24px">California · resonatetour.com</p>';
- panels.forEach(function(p, i) {
- html += '<div class="day"><div class="day-title">DAY ' + (i+1) + ' — ' + (p.querySelector('.dp-h') ? p.querySelector('.dp-h').textContent : '') + '</div>';
- p.querySelectorAll('.tl-item').forEach(function(item) {
- var time = item.querySelector('.tl-time') ? item.querySelector('.tl-time').textContent : '';
- var name = item.querySelector('.tl-name') ? item.querySelector('.tl-name').textContent : '';
- var note = item.querySelector('.tl-note') ? item.querySelector('.tl-note').textContent : '';
- html += '<div class="tl-row"><span class="tl-time">' + time + '</span><span><strong>' + name + '</strong>' + (note ? ' — ' + note : '') + '</span></div>';
- });
- html += '</div>';
- });
- html += '</body></html>';
- var win = window.open('', '_blank');
- if (win) { win.document.write(html); win.document.close(); win.print(); }
 }
  
 /* ── #64 Bookmark hearts ── */
