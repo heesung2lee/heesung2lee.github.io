@@ -1896,6 +1896,10 @@ body {
 #pg-courses .leaflet-popup-content{margin:10px 14px!important;font-size:13px!important;line-height:1.5!important}
 #pg-courses .leaflet-popup-content b{color:#d4af37}
 #pg-courses .course-marker{width:28px;height:28px;border-radius:50%;background:#d4af37;border:3px solid #0b1420;color:#0b1420;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 10px rgba(212,175,55,.4);cursor:pointer}
+#pg-courses .leaflet-bar{border:1px solid rgba(212,175,55,.4);box-shadow:0 2px 10px rgba(0,0,0,.45);border-radius:6px;overflow:hidden}
+#pg-courses .leaflet-bar a{width:34px;height:34px;line-height:34px;background:#1a3450;color:#d4af37;font-size:19px;font-weight:700;border-bottom:1px solid rgba(212,175,55,.25)}
+#pg-courses .leaflet-bar a:last-child{border-bottom:none}
+#pg-courses .leaflet-bar a:hover{background:#264460;color:#fff}
 #pg-courses .region-group{margin-bottom:22px;max-width:860px;margin-left:auto;margin-right:auto;padding:0 16px}
 #pg-courses .region-header{position:sticky;top:100px;z-index:10;background:var(--crsbg);padding:10px 16px 6px;margin:0 0 8px;max-width:860px;margin-left:auto;margin-right:auto}
 #pg-courses .region-title{font-size:14px;font-weight:700;color:var(--crstxt);margin:0;padding-bottom:6px;border-bottom:2px solid rgba(212,175,55,.3)}
@@ -5559,7 +5563,7 @@ var CRS_CAN = [
 var crsMapUsa = null, crsMapCan = null, crsUsaBounds = null, crsCanBounds = null, crsMapsInit = false, crsCur = 'usa';
 
 function crsCreateMap(containerId, courses) {
-var map = L.map(containerId, {zoomControl:false, scrollWheelZoom:false, touchZoom:true, doubleClickZoom:true, dragging:true, attributionControl:true});
+var map = L.map(containerId, {zoomControl:true, scrollWheelZoom:false, touchZoom:true, doubleClickZoom:true, dragging:true, attributionControl:true});
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>', subdomains:'abcd', maxZoom:19}).addTo(map);
 courses.forEach(function(c) {
 var icon = L.divIcon({className:'course-marker-icon', html:'<div class="course-marker">'+c.num+'</div>', iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-16]});
@@ -5568,6 +5572,17 @@ L.marker([c.lat, c.lng], {icon:icon}).addTo(map)
 });
 var bounds = L.latLngBounds(courses.map(function(c){ return [c.lat, c.lng]; }));
 map.fitBounds(bounds, {padding:[40,40]});
+// PC: Ctrl + 마우스휠 줌 (일반 휠은 페이지 스크롤 유지)
+(function(){
+var el = map.getContainer();
+el.addEventListener('wheel', function(e){
+if (!e.ctrlKey) return;
+e.preventDefault();
+var z = map.getZoom();
+if (e.deltaY < 0) map.setZoom(Math.min(z + 1, map.getMaxZoom()));
+else map.setZoom(Math.max(z - 1, map.getMinZoom()));
+}, {passive:false});
+})();
 return {map:map, bounds:bounds};
 }
 
