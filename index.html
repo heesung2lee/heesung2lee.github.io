@@ -1374,8 +1374,8 @@ html {
  position:fixed;
  top:60px;
  left:12px;
- width:180px;
- height:180px;
+ width:270px;
+ height:270px;
  border-radius:14px;
  box-shadow:0 8px 40px rgba(0,0,0,.45), 0 2px 10px rgba(0,0,0,.25);
  z-index:9999;
@@ -1391,8 +1391,8 @@ html {
  transform:scale(1) translateY(0);
 }
 #logo-preview svg{
- width:180px;
- height:180px;
+ width:270px;
+ height:270px;
  display:block;
 }
  
@@ -1959,6 +1959,20 @@ body {
 .crs-lb .lb-prev{left:10px}
 .crs-lb .lb-next{right:10px}
 
+/* ═══ 취향 선택 (구성 탭) ═══ */
+.act-cat{margin-bottom:26px}
+.act-cat h3{font-size:15px;font-weight:700;color:#1a3450;margin:0 0 10px}
+.act-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:10px}
+.act-item{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #e3e6ec;border-radius:12px;padding:12px 14px;cursor:pointer;font-size:13.5px;color:#171a20;transition:border-color .15s,background .15s;user-select:none;-webkit-tap-highlight-color:transparent}
+.act-item:hover{border-color:#d4af37}
+.act-item.on{background:rgba(212,175,55,.12);border-color:#d4af37}
+.act-ck{width:20px;height:20px;border-radius:6px;border:1.5px solid #c9d2dd;display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:transparent;flex-shrink:0;transition:.15s}
+.act-item.on .act-ck{background:#1a3450;border-color:#1a3450;color:#d4af37}
+.act-send{display:inline-block;background:#1a3450;color:#fff;font-size:15px;font-weight:700;padding:15px 38px;border-radius:100px;border:none;cursor:pointer;font-family:inherit;letter-spacing:.02em;transition:background .18s,transform .18s}
+.act-send:hover{background:#264460;transform:translateY(-2px)}
+@media(max-width:640px){.act-grid{grid-template-columns:1fr 1fr}}
+
+
 
 /* Dropdown item overflow fix */
 .pd-item { width:100%; box-sizing:border-box; overflow:hidden; }
@@ -2310,7 +2324,7 @@ body {
  </button>
  <button class="ham-item" onclick="nav('courses');closeHam()">
  <span class="ham-item-ico ico-golf"></span>
- <span class="ham-item-label"><span class="ko">골프 코스</span><span class="en">Golf Courses</span></span>
+ <span class="ham-item-label"><span class="ko">골프코스</span><span class="en">Golf Courses</span></span>
  <span class="ham-item-arrow">›</span>
  </button>
  <button class="ham-item" onclick="nav('gallery');closeHam()">
@@ -2418,7 +2432,7 @@ body {
  <div class="nav-mid" style="display:flex;justify-content:center;align-items:center;gap:2px;overflow:hidden;min-width:0">
  <button class="nav-tab" data-page="about" onclick="nav('about')"><span class="ko">소개</span><span class="en">About</span></button>
  <button class="nav-tab" data-page="schedule" onclick="nav('schedule')"><span class="ko">일정</span><span class="en">Schedule</span></button>
- <button class="nav-tab" data-page="courses" onclick="nav('courses')"><span class="ko">골프 코스</span><span class="en">Golf Courses</span></button>
+ <button class="nav-tab" data-page="courses" onclick="nav('courses')"><span class="ko">골프코스</span><span class="en">Golf Courses</span></button>
  <button class="nav-tab" data-page="pricing" onclick="nav('pricing')"><span class="ko">구성</span><span class="en">Plan</span></button>
  <button class="nav-tab" data-page="gallery" onclick="nav('gallery')"><span class="ko">갤러리</span><span class="en">Gallery</span></button>
  <button class="nav-tab" data-page="contact" onclick="nav('contact')"><span class="ko">문의</span><span class="en">Contact</span></button>
@@ -2443,7 +2457,7 @@ body {
  <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
  <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
  <button class="pd-item" onclick="nav('about')"><span class="pd-ico">✦</span><span class="ko">소개</span><span class="en">About</span></button>
- <button class="pd-item" onclick="nav('courses')"><span class="pd-ico ico-golf"></span><span class="ko">골프 코스</span><span class="en">Courses</span></button>
+ <button class="pd-item" onclick="nav('courses')"><span class="pd-ico ico-golf"></span><span class="ko">골프코스</span><span class="en">Courses</span></button>
  <button class="pd-item pd-sub" onclick="nav('gallery')"><span class="pd-ico ico-gallery"></span><span class="ko"> 갤러리</span><span class="en"> Gallery</span></button>
  <button class="pd-item" onclick="nav('schedule')"><span class="pd-ico ico-calendar"></span><span class="ko">전체 일정</span><span class="en">Itinerary</span></button>
  <button class="pd-item" onclick="nav('pricing')"><span class="pd-ico ico-money"></span><span class="ko">구성</span><span class="en">Plan</span></button>
@@ -2600,6 +2614,65 @@ body {
  </div>
  <div class="all-in-note" style="display:none"><b style="color:#171a20"><span class="ko">포함 사항 안내</span><span class="en">What's Included</span></b><br><span class="ko">항공권, 숙소, 골프 전 라운드, 포함 식사, 전용 차량, 한국어 가이드, 여정 영상이 포함됩니다. 핵심 경비가 포함되어 예산 관리가 간편합니다.</span><span class="en">Flights, lodging, all golf rounds, included meals, private vehicle, Korean guide, and journey reel included. No hidden fees — transparent and straightforward.</span></div>
  </div>
+
+ <div style="max-width:960px;margin:0 auto;padding:56px 24px 74px">
+ <div style="text-align:center;margin-bottom:30px">
+ <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#9e9e9e;margin-bottom:8px"><span class="ko">취향 선택</span><span class="en">Pick Your Interests</span></div>
+ <h2 style="font-size:clamp(22px,3.5vw,32px);font-weight:700;letter-spacing:-.02em;margin-bottom:10px;color:#171a20"><span class="ko">골프만? 아니죠 — 취향대로 골라보세요</span><span class="en">It is not just golf — build your own journey</span></h2>
+ <p style="font-size:14px;color:#6b7280;max-width:620px;margin:0 auto;line-height:1.7"><span class="ko">관심 있는 항목을 체크하고 문의하기를 누르면, 선택 내용이 그대로 저희에게 전달됩니다.</span><span class="en">Check what you love and hit send — your picks come straight to us.</span></p>
+ </div>
+
+ <div class="act-cat">
+ <h3>🍷 <span class="ko">와이너리 &amp; 다이닝</span><span class="en">Winery &amp; Dining</span></h3>
+ <div class="act-grid">
+  <div class="act-item" data-ko="나파 밸리 와이너리 투어" data-en="Napa Valley Winery Tour" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">나파 밸리 와이너리 투어</span><span class="en">Napa Valley Winery Tour</span></span></div>
+  <div class="act-item" data-ko="파인다이닝 셰프 테이블" data-en="Fine Dining Chef Table" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">파인다이닝 셰프 테이블</span><span class="en">Fine Dining Chef Table</span></span></div>
+  <div class="act-item" data-ko="캘리포니아 해산물 레스토랑" data-en="California Seafood Dining" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">캘리포니아 해산물 레스토랑</span><span class="en">California Seafood Dining</span></span></div>
+  <div class="act-item" data-ko="정통 BBQ 스모크하우스" data-en="Authentic BBQ Smokehouse" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">정통 BBQ 스모크하우스</span><span class="en">Authentic BBQ Smokehouse</span></span></div>
+  <div class="act-item" data-ko="한인타운 &amp; 퓨전 다이닝" data-en="Koreatown &amp; Fusion Dining" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">한인타운 &amp; 퓨전 다이닝</span><span class="en">Koreatown &amp; Fusion Dining</span></span></div>
+ </div>
+ </div>
+
+ <div class="act-cat">
+ <h3>🌉 <span class="ko">랜드마크 &amp; 관광</span><span class="en">Landmarks &amp; Sightseeing</span></h3>
+ <div class="act-grid">
+  <div class="act-item" data-ko="골든게이트 브릿지" data-en="Golden Gate Bridge" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">골든게이트 브릿지</span><span class="en">Golden Gate Bridge</span></span></div>
+  <div class="act-item" data-ko="요세미티 국립공원" data-en="Yosemite National Park" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">요세미티 국립공원</span><span class="en">Yosemite National Park</span></span></div>
+  <div class="act-item" data-ko="PCH 해안 드라이브" data-en="Pacific Coast Highway Drive" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">PCH 해안 드라이브</span><span class="en">Pacific Coast Highway Drive</span></span></div>
+  <div class="act-item" data-ko="할리우드 · 비버리힐스" data-en="Hollywood &amp; Beverly Hills" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">할리우드 · 비버리힐스</span><span class="en">Hollywood &amp; Beverly Hills</span></span></div>
+  <div class="act-item" data-ko="그랜드 캐니언 (헬기 옵션)" data-en="Grand Canyon (helicopter option)" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">그랜드 캐니언 (헬기 옵션)</span><span class="en">Grand Canyon (helicopter option)</span></span></div>
+ </div>
+ </div>
+
+ <div class="act-cat">
+ <h3>🎟️ <span class="ko">체험 &amp; 엔터테인먼트</span><span class="en">Experiences &amp; Entertainment</span></h3>
+ <div class="act-grid">
+  <div class="act-item" data-ko="MLB · NBA 직관" data-en="MLB · NBA Live Game" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">MLB · NBA 직관</span><span class="en">MLB · NBA Live Game</span></span></div>
+  <div class="act-item" data-ko="라스베이거스 쇼" data-en="Las Vegas Show" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">라스베이거스 쇼</span><span class="en">Las Vegas Show</span></span></div>
+  <div class="act-item" data-ko="프리미엄 아울렛 쇼핑" data-en="Premium Outlet Shopping" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">프리미엄 아울렛 쇼핑</span><span class="en">Premium Outlet Shopping</span></span></div>
+  <div class="act-item" data-ko="스파 &amp; 웰니스" data-en="Spa &amp; Wellness" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">스파 &amp; 웰니스</span><span class="en">Spa &amp; Wellness</span></span></div>
+  <div class="act-item" data-ko="PGA 프로 레슨 클리닉" data-en="PGA Pro Lesson Clinic" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">PGA 프로 레슨 클리닉</span><span class="en">PGA Pro Lesson Clinic</span></span></div>
+ </div>
+ </div>
+
+ <div class="act-cat">
+ <h3>🏘️ <span class="ko">로컬 라이프</span><span class="en">Local Life</span></h3>
+ <div class="act-grid">
+  <div class="act-item" data-ko="현지인 추천 로컬 맛집" data-en="Locals Only Food Spots" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">현지인 추천 로컬 맛집</span><span class="en">Locals Only Food Spots</span></span></div>
+  <div class="act-item" data-ko="파머스 마켓 &amp; 아침 산책" data-en="Farmers Market &amp; Morning Walk" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">파머스 마켓 &amp; 아침 산책</span><span class="en">Farmers Market &amp; Morning Walk</span></span></div>
+  <div class="act-item" data-ko="사막 지프 투어 &amp; 별보기" data-en="Desert Jeep Tour &amp; Stargazing" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">사막 지프 투어 &amp; 별보기</span><span class="en">Desert Jeep Tour &amp; Stargazing</span></span></div>
+  <div class="act-item" data-ko="새벽 열기구 투어" data-en="Sunrise Hot Air Balloon" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">새벽 열기구 투어</span><span class="en">Sunrise Hot Air Balloon</span></span></div>
+  <div class="act-item" data-ko="요트 &amp; 베이 크루즈" data-en="Yacht &amp; Bay Cruise" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">요트 &amp; 베이 크루즈</span><span class="en">Yacht &amp; Bay Cruise</span></span></div>
+ </div>
+ </div>
+
+ <div style="text-align:center;margin-top:34px">
+ <div id="act-count" style="font-size:13px;font-weight:700;color:#1a3450;margin-bottom:14px">0 <span class="ko">개 선택됨</span><span class="en">selected</span></div>
+ <button class="act-send" onclick="actSend()"><span class="ko">선택 항목 문의하기 →</span><span class="en">Send My Selection →</span></button>
+ <div style="margin-top:16px;font-size:12px;color:#6b7280;line-height:1.6"><span class="ko">이메일(info@resonatetour.com)로 선택 내용이 담긴 메일이 열립니다.<br>카카오톡 @resonatetour로도 동일하게 문의하실 수 있어요.</span><span class="en">Opens an email to info@resonatetour.com with your picks ready to send.<br>You can also reach us on KakaoTalk @resonatetour.</span></div>
+ </div>
+ </div>
+
 </div>
  
 <!-- ══════ PAGE: ABOUT ══════ -->
@@ -2662,7 +2735,7 @@ body {
 <div id="pg-courses" class="page" style="background:#f7f8fa;color:#171a20">
 <div class="crs-hero">
 <div class="crs-hero-eye"><span class="ko">코스 가이드</span><span class="en">Course Guide</span></div>
-<h1><span class="ko">골프 코스 가이드</span><span class="en">Golf Course Guide</span></h1>
+<h1><span class="ko">골프코스 가이드</span><span class="en">Golf Course Guide</span></h1>
 <p class="crs-hero-sub"><span class="ko">캘리포니아 · 네바다 · 캐나디안 로키 — 리조네이트가 큐레이션한 북미 명문 코스</span><span class="en">California · Nevada · Canadian Rockies — championship North American courses curated by Resonate</span></p>
 </div>
 <div class="country-tabs" id="countryTabs">
@@ -2738,7 +2811,7 @@ body {
 <div class="region-group" data-country="canada">
 <div class="course-card" data-country="canada" data-course="1"><div class="course-head"><span class="course-num">1</span><span class="course-title">Canmore Golf &amp; Curling Club</span></div><div class="loc-bar"><span class="loc-dot">●</span><span class="ko">캔모어, AB — 보우 밸리</span><span class="en">Canmore, AB — Bow Valley</span></div><div class="course-carousel" onclick="crsLbOpen(event, ['images/img_536d6a9b10.webp', 'images/img_54de6a074f.jpg', 'images/img_ceef54d034.webp'])"><div class="carousel-track"><div class="carousel-slide"><img src="images/img_536d6a9b10.webp" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_54de6a074f.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_ceef54d034.webp" alt="course photo" loading="lazy"></div></div><div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div><div class="carousel-counter">1 / 3</div></div><p class="why"><span class="ko">Bow River 따라 평평하게 깔린 1926년 코스. 페어웨이 어디서든 <b>Ha Ling Peak + Three Sisters</b> 정면. Canmore 최저가·최평탄 — 장거리 비행 후 몸 풀기 최적.</span><span class="en">A flat, welcoming 1926 course along the Bow River. <b>Ha Ling Peak and the Three Sisters</b> dead ahead from every fairway. Canmore's lowest price and gentlest terrain — ideal for shaking off jet lag.</span></p><div class="sig"><span class="ko"><b>누구에게</b> — 도착 첫날 시차 적응 겸 여유 라운딩.</span><span class="en"><b>Best for</b> — an easy arrival-day round while your body adjusts.</span></div><p class="tip"><span class="ko"><b>팁:</b> 늦은 오후 티타임 빛 최고. 해가 Three Sisters 뒤로.</span><span class="en"><b>Tip:</b> Late-afternoon tee times catch the best light as the sun sets behind the Three Sisters.</span></p></div>
 <div class="course-card" data-country="canada" data-course="2"><div class="course-head"><span class="course-num">2</span><span class="course-title">Silvertip Resort</span></div><div class="loc-bar"><span class="loc-dot">●</span><span class="ko">캔모어, AB — 캐나디안 로키</span><span class="en">Canmore, AB — Canadian Rockies</span></div><div class="course-carousel" onclick="crsLbOpen(event, ['images/img_33433821f3.webp', 'images/img_dcbb809c20.webp', 'images/img_960f67e165.webp'])"><div class="carousel-track"><div class="carousel-slide"><img src="images/img_33433821f3.webp" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_dcbb809c20.webp" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_960f67e165.webp" alt="course photo" loading="lazy"></div></div><div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div><div class="carousel-counter">1 / 3</div></div><p class="why"><span class="ko">Canmore 남쪽 언덕, 모든 홀 <b>Bow Valley 파노라마</b>. 경사·벙커 극심 "Alberta 최고 호불호". 경치만은 이견 없음. 부담되면 블루(6,166yd) 티.</span><span class="en">On the hills south of Canmore, a <b>Bow Valley panorama from every hole</b>. Severe slopes and bunkers make it "Alberta's most polarizing". The scenery, though, is beyond debate. Play the Blue (6,166 yd) tees if it intimidates.</span></p><div class="sig"><span class="ko"><b>시그니처</b> — 13번 100피트 낙하. Three Sisters 배경. 캐나다 최고 티샷.</span><span class="en"><b>Signature</b> — the 13th drops 100 feet with the Three Sisters behind. Canada's greatest tee shot.</span></div><p class="tip"><span class="ko"><b>볼거리:</b> 터키석 연못 18번 피날레. Stoney's Grill.</span><span class="en"><b>Highlight:</b> The turquoise pond on the 18th finale. Stoney's Grill.</span></p></div>
-<div class="course-card" data-country="canada" data-course="3"><div class="course-head"><span class="course-num">3</span><span class="course-title">Stewart Creek G&amp;CC</span></div><div class="loc-bar"><span class="loc-dot">●</span><span class="ko">캔모어, AB — 쓰리 시스터스 마운틴 빌리지</span><span class="en">Canmore, AB — Three Sisters Mountain Village</span></div><div class="course-carousel" onclick="crsLbOpen(event, ['images/img_0d09b1782a.jpg', 'images/img_3c97920397.jpg', 'images/img_cfb8ad28a8.jpg'])"><div class="carousel-track"><div class="carousel-slide"><img src="images/img_0d09b1782a.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_3c97920397.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_cfb8ad28a8.jpg" alt="course photo" loading="lazy"></div></div><div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div><div class="carousel-counter">1 / 3</div></div><p class="why"><span class="ko">Silvertip보다 넓고 관대해 <b>실력 편차 큰 그룹</b> 최적. 전반 산 파노라마 강점. Canmore에서 가장 균형 잡힌 코스.</span><span class="en">Wider and more forgiving than Silvertip — ideal for <b>groups with mixed skill levels</b>. Front-nine mountain panoramas. Canmore's most balanced course.</span></p><div class="sig"><span class="ko"><b>누구에게</b> — 초보+상급 섞인 그룹. Kananaskis 대신 18홀 선택지.</span><span class="en"><b>Best for</b> — mixed beginner/advanced groups. An 18-hole alternative to Kananaskis.</span></div><p class="tip"><span class="ko"><b>팁:</b> 토·일 오전 10:30까지 멤버 전용.</span><span class="en"><b>Tip:</b> Members-only until 10:30 AM on weekends.</span></p></div>
+<div class="course-card" data-country="canada" data-course="3"><div class="course-head"><span class="course-num">3</span><span class="course-title">Stewart Creek Golf &amp; Country Club</span></div><div class="loc-bar"><span class="loc-dot">●</span><span class="ko">캔모어, AB — 쓰리 시스터스 마운틴 빌리지</span><span class="en">Canmore, AB — Three Sisters Mountain Village</span></div><div class="course-carousel" onclick="crsLbOpen(event, ['images/img_0d09b1782a.jpg', 'images/img_3c97920397.jpg', 'images/img_cfb8ad28a8.jpg'])"><div class="carousel-track"><div class="carousel-slide"><img src="images/img_0d09b1782a.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_3c97920397.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_cfb8ad28a8.jpg" alt="course photo" loading="lazy"></div></div><div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div><div class="carousel-counter">1 / 3</div></div><p class="why"><span class="ko">Silvertip보다 넓고 관대해 <b>실력 편차 큰 그룹</b> 최적. 전반 산 파노라마 강점. Canmore에서 가장 균형 잡힌 코스.</span><span class="en">Wider and more forgiving than Silvertip — ideal for <b>groups with mixed skill levels</b>. Front-nine mountain panoramas. Canmore's most balanced course.</span></p><div class="sig"><span class="ko"><b>누구에게</b> — 초보+상급 섞인 그룹. Kananaskis 대신 18홀 선택지.</span><span class="en"><b>Best for</b> — mixed beginner/advanced groups. An 18-hole alternative to Kananaskis.</span></div><p class="tip"><span class="ko"><b>팁:</b> 토·일 오전 10:30까지 멤버 전용.</span><span class="en"><b>Tip:</b> Members-only until 10:30 AM on weekends.</span></p></div>
 <div class="course-card" data-country="canada" data-course="4"><div class="course-head"><span class="course-num">4</span><span class="course-title">Fairmont Banff Springs</span></div><div class="loc-bar"><span class="loc-dot">●</span><span class="ko">밴프, AB — 유네스코 세계유산</span><span class="en">Banff, AB — UNESCO World Heritage</span></div><div class="course-carousel" onclick="crsLbOpen(event, ['images/banff_new1.jpg', 'images/banff_new2.jpg', 'images/banff_new3.jpg'])"><div class="carousel-track"><div class="carousel-slide"><img src="images/banff_new1.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/banff_new2.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/banff_new3.jpg" alt="course photo" loading="lazy"></div></div><div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div><div class="carousel-counter">1 / 3</div></div><p class="why"><span class="ko">캐나다 최고·최고의 골프. 성 같은 Fairmont 호텔, 에메랄드빛 Bow River, 그림자 드리울 산들. 체크아웃 후 25분, 끝나면 Calgary — 여행 피날레 최적.</span><span class="en">Canada's best of the best. A castle-like Fairmont hotel, the emerald Bow River, mountains casting shadows. 25 minutes after checkout, then on to Calgary — the perfect journey finale.</span></p><div class="sig"><span class="ko"><b>Devil's Cauldron</b> — 4번 (파3, 192yd) 산 정상이 그린보다 1,000피트 위. 세계 최고의 파3.</span><span class="en"><b>Devil's Cauldron</b> — the 4th (par 3, 192 yd) with peaks 1,000 feet above the green. One of the world's great par 3s.</span></div><p class="tip"><span class="ko"><b>볼거리:</b> 15번 파4 끝없는 내리막 티샷. 성수기 최우선 예약.</span><span class="en"><b>Highlight:</b> The endless downhill tee shot on the par-4 15th. Book well ahead in high season.</span></p></div>
 <div class="course-card" data-country="canada" data-course="5"><div class="course-head"><span class="course-num">5</span><span class="course-title">Kananaskis Country</span></div><div class="loc-bar"><span class="loc-dot">●</span><span class="ko">카나나스키스 밸리, AB — 와일드 로즈 컨트리</span><span class="en">Kananaskis Valley, AB — Wild Rose Country</span></div><div class="course-carousel" onclick="crsLbOpen(event, ['images/kan_new1.jpg', 'images/kan_new2.jpg', 'images/kan_new3.jpg'])"><div class="carousel-track"><div class="carousel-slide"><img src="images/kan_new1.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/kan_new2.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/kan_new3.jpg" alt="course photo" loading="lazy"></div></div><div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div><div class="carousel-counter">1 / 3</div></div><p class="why"><span class="ko">계곡 깊숙이 — 빙하 시내, 120+ 흰 벙커, 페어웨이 위 엘크. 북미 최고 평가에 가격 가장 착함. 2013년 홍수→2018년 재건.</span><span class="en">Deep in the valley — glacial creeks, 120+ white bunkers, elk on the fairways. North America's highest-rated value. Rebuilt in 2018 after the 2013 floods.</span></p><div class="sig"><span class="ko"><b>추천</b> — 오전 Mt Kidd(장타자) + 오후 Lorette(강변). 36홀 정복.</span><span class="en"><b>Recommendation</b> — morning Mt Kidd (for long hitters) plus afternoon Lorette (riverside). Conquer all 36.</span></div><p class="tip"><span class="ko"><b>팁:</b> 진짜 산악 골프. 체력 안배 필수.</span><span class="en"><b>Tip:</b> True mountain golf. Pace yourself.</span></p></div>
 </div>
@@ -4038,6 +4111,24 @@ closeLightbox = function() {
  if (lb) lb.removeAttribute('data-single');
  _origCloseLightbox();
 };
+
+/* ── 취향 선택 (구성 탭) ── */
+function actToggle(el){ el.classList.toggle('on'); actCount(); }
+function actCount(){
+ var n = document.querySelectorAll('.act-item.on').length;
+ var el = document.getElementById('act-count');
+ if (el) el.textContent = n + ' ' + (curLang === 'ko' ? '개 선택됨' : 'selected');
+}
+function actSend(){
+ var items = [].slice.call(document.querySelectorAll('.act-item.on')).map(function(el){
+  return curLang === 'ko' ? el.getAttribute('data-ko') : el.getAttribute('data-en');
+ });
+ if (!items.length){ alert(curLang === 'ko' ? '먼저 관심 있는 항목을 선택해 주세요' : 'Please select your interests first'); return; }
+ var L = curLang === 'ko';
+ var body = (L ? '관심 항목:\n' : 'Interested in:\n') + items.map(function(s){ return '- ' + s; }).join('\n') + '\n\n' + (L ? '이름 / 연락처: ' : 'Name / Contact: ');
+ window.location.href = 'mailto:info@resonatetour.com?subject=' + encodeURIComponent(L ? '[레조네이트 투어] 맞춤 여행 문의' : '[Resonate Tour] Custom Tour Inquiry') + '&body=' + encodeURIComponent(body);
+}
+
  
 /* ═══ GALLERY SHOWCASE ROTATION ═══ */
 /* ── 여정 영상 목록 (YouTube) ── */
@@ -5556,7 +5647,7 @@ var CRS_USA = [
 var CRS_CAN = [
 {num:1,name:"Canmore G&CC",loc:"Canmore, AB",lat:51.09,lng:-115.35},
 {num:2,name:"Silvertip Resort",loc:"Canmore, AB",lat:51.07,lng:-115.355},
-{num:3,name:"Stewart Creek G&CC",loc:"Canmore, AB",lat:51.08,lng:-115.33},
+{num:3,name:"Stewart Creek Golf & Country Club",loc:"Canmore, AB",lat:51.08,lng:-115.33},
 {num:4,name:"Banff Springs",loc:"Banff, AB",lat:51.17,lng:-115.55},
 {num:5,name:"Kananaskis Country",loc:"Kananaskis Valley, AB",lat:50.9,lng:-115.15}
 ];
@@ -5752,7 +5843,7 @@ crsInitQuiz();
 </script>
  
 <div id="logo-preview">
- <svg viewBox="0 0 420 420" width="180" height="180" xmlns="http://www.w3.org/2000/svg">
+ <svg viewBox="0 0 420 420" width="270" height="270" xmlns="http://www.w3.org/2000/svg">
  <defs>
  <linearGradient id="pl-bg" x1="0" y1="0" x2="0.6" y2="1">
  <stop offset="0%" stop-color="#4a6680"/><stop offset="35%" stop-color="#3a5570"/>
@@ -5791,18 +5882,18 @@ crsInitQuiz();
  <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
  <polyline points="16,22 16,14 24,14"/><polyline points="404,22 404,14 396,14"/>
  </g>
- <text x="210" y="165" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="9" fill="url(#pl-gH)">RESONATE</text>
- <text x="210" y="202" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" letter-spacing="15" fill="#c8a844" opacity="0.88">TOUR</text>
- <path d="M 0,285 C 42,265 78,305 120,285 C 162,265 198,305 240,285 C 282,265 318,305 360,285 C 385,275 400,279 420,277" fill="none" stroke="url(#pl-w1)" stroke-width="2.0" stroke-linecap="round" opacity="0.55"/>
- <path d="M 0,297 C 38,281 80,313 118,297 C 158,281 198,313 238,297 C 278,281 318,313 358,297 C 386,289 402,292 420,290" fill="none" stroke="url(#pl-w2)" stroke-width="1.4" stroke-linecap="round" opacity="0.38"/>
- <path d="M 0,307 C 42,297 82,317 122,307 C 162,297 202,317 242,307 C 282,297 322,317 362,307 C 388,302 404,304 420,303" fill="none" stroke="url(#pl-w3)" stroke-width="1.0" stroke-linecap="round" opacity="0.22"/>
- <line x1="100" y1="236" x2="320" y2="236" stroke="url(#pl-gH)" stroke-width="0.7" opacity="0.42"/>
- <polygon points="210,246 219,255 210,264 201,255" fill="url(#pl-gD)" opacity="0.92"/>
- <circle cx="178" cy="255" r="2.6" fill="url(#pl-gD)" opacity="0.60"/>
- <circle cx="165" cy="255" r="1.6" fill="url(#pl-gD)" opacity="0.36"/>
- <circle cx="242" cy="255" r="2.6" fill="url(#pl-gD)" opacity="0.60"/>
- <circle cx="255" cy="255" r="1.6" fill="url(#pl-gD)" opacity="0.36"/>
- <text x="210" y="371" text-anchor="middle" font-family="Georgia,serif" font-size="11" letter-spacing="4" fill="#c8a844" opacity="0.72">KOREA → USA</text>
+ <text x="210" y="190" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="9" fill="url(#pl-gH)">RESONATE</text>
+ <text x="210" y="228" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" letter-spacing="15" fill="#c8a844" opacity="0.88">TOUR</text>
+ <path d="M 0,258 C 42,238 78,278 120,258 C 162,238 198,278 240,258 C 282,238 318,278 360,258 C 385,248 400,252 420,250" fill="none" stroke="url(#pl-w1)" stroke-width="2.0" stroke-linecap="round" opacity="0.55"/>
+ <path d="M 0,270 C 38,254 80,286 118,270 C 158,254 198,286 238,270 C 278,254 318,286 358,270 C 386,262 402,265 420,263" fill="none" stroke="url(#pl-w2)" stroke-width="1.4" stroke-linecap="round" opacity="0.38"/>
+ <path d="M 0,280 C 42,270 82,290 122,280 C 162,270 202,290 242,280 C 282,270 322,290 362,280 C 388,275 404,277 420,276" fill="none" stroke="url(#pl-w3)" stroke-width="1.0" stroke-linecap="round" opacity="0.22"/>
+ <line x1="100" y1="250" x2="320" y2="250" stroke="url(#pl-gH)" stroke-width="0.7" opacity="0.42"/>
+ 
+ 
+ 
+ 
+ 
+ 
  <line x1="55" y1="398" x2="365" y2="398" stroke="url(#pl-gH)" stroke-width="0.9" opacity="0.55"/>
  <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
  <polyline points="16,398 16,406 24,406"/><polyline points="404,398 404,406 396,406"/>
