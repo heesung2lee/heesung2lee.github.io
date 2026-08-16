@@ -439,7 +439,7 @@ footer{background:#f4f4f4;border-top:1px solid #e8e8e8;padding:36px 40px;display
  .inc-grid{grid-template-columns:1fr}
 }
 @media(max-width:560px){
- .split-txt{padding:36px 24px}.about-wrap,.pricing-wrap,.contact-left,.contact-right{padding:44px 24px}
+ .split-txt{padding:36px 24px}.about-wrap,.pricing-wrap,.contact-right{padding:44px 24px}.contact-left{padding:64px 24px 44px}
  .dpanel{padding:28px 20px 60px}.tl-item{grid-template-columns:60px 1fr;gap:12px}
  .why-grid{grid-template-columns:1fr}.stats-row{flex-wrap:wrap}.stat{flex:1 0 50%}
  .soc-grid{grid-template-columns:repeat(3,1fr)}.hero-btns{flex-direction:column;align-items:center}
@@ -1168,6 +1168,8 @@ html {
  box-shadow:0 24px 80px rgba(0,0,0,.6);
 }
 #lb-img{width:100%;max-height:80svh;object-fit:contain;display:block;background:#111}
+.lb-vid{display:none;width:100%;max-width:1000px}
+.lb-vid iframe{width:100%;aspect-ratio:16/9;max-height:80svh;border:0;background:#000;display:block}
 #lb-info{
  background:#111;padding:16px 20px;
  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
@@ -1700,7 +1702,7 @@ body {
 }
  
  
-#pg-pricing.page-hdr { padding-top: 72px; }
+#pg-pricing.page-hdr, #pg-about .page-hdr { padding-top: 72px; }
 #pg-pricing.pricing-wrap { scroll-margin-top: 60px; }
  
  
@@ -2299,7 +2301,7 @@ body {
  </button>
  <button class="ham-item" onclick="nav('schedule');closeHam()">
  <span class="ham-item-ico ico-calendar"></span>
- <span class="ham-item-label"><span class="ko">캘리포니아 골프 투어</span><span class="en">California Golf Tour</span></span>
+ <span class="ham-item-label"><span class="ko">투어 일정표</span><span class="en">Tour Schedule</span></span>
  <span class="ham-item-arrow">›</span>
  </button>
  <button class="ham-item" onclick="nav('courses');closeHam()">
@@ -2328,11 +2330,6 @@ body {
  <span class="ham-item-arrow">›</span>
  </button>
  </div>
- 
- <button class="ham-cta" onclick="nav('contact');closeHam()">
- <span class="ko"><span class="ico-phone" style="display:inline-flex;align-items:center;gap:4px"></span> 지금 상담 신청하기</span>
- <span class="en"><span class="ico-phone" style="display:inline-flex;align-items:center;gap:4px"></span> Book a Consultation</span>
- </button>
  
  <div class="ham-footer">
  <div class="ham-footer-txt">
@@ -2526,12 +2523,12 @@ body {
  </div>
  </div>
  
- <div class="quote-blk">
- <div id="review-display" style="position:absolute;inset:40px 44px;display:flex;flex-direction:column;justify-content:center">
- <blockquote id="review-text" style="margin:0 0 12px;flex:1;display:flex;align-items:center;justify-content:center;text-align:center"></blockquote>
- <cite id="review-cite" style="display:block;text-align:center"></cite>
+ <div style="padding:72px 0 8px;background:#fff">
+ <div style="max-width:860px;margin:0 auto;padding:0 24px 56px;text-align:center">
+ <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#9e9e9e;margin-bottom:8px"><span class="ko">레조네이트 투어 소개</span><span class="en">About Resonate Tour</span></div>
+ <h2 style="font-size:clamp(24px,4vw,38px);font-weight:700;letter-spacing:-.02em;margin-bottom:16px;color:#171a20"><span class="ko">경험이 공명할 때,<br>여행은 전율이 됩니다</span><span class="en">When Experience Resonates,<br>Travel Becomes Unforgettable</span></h2>
+ <p style="font-size:15px;line-height:1.8;color:#5c5e62;max-width:680px;margin:0 auto"><span class="ko">레조네이트 투어는 한국에서 미국 서부로 떠나는 프리미엄 여행을 통해, 당신의 삶에 오래 남는 울림을 설계합니다. Resonate — 공명하다. 그 이름처럼, 우리의 모든 여정은 돌아온 후에도 계속 울립니다.</span><span class="en">Resonate Tour designs premium journeys from Korea to the American West — experiences that resonate long after you return home. Like the word itself: to vibrate, to echo, to move deeply. Every journey we craft continues to resonate.</span></p>
  </div>
- <div style="display:flex;justify-content:center;gap:8px;position:absolute;bottom:20px;left:0;right:0" id="review-dots"></div>
  </div>
  
  <div class="home-cta-strip">
@@ -2565,7 +2562,7 @@ body {
  <div class="inc-sec" style="display:none">
  <h3><span class="ko">포함 사항</span><span class="en">What's Included</span></h3>
  <div class="inc-grid">
- <div class="inc-item"><div class="inc-ico ico-plane"></div><div><div class="inc-t"><span class="ko">항공권 예약 대행</span><span class="en">Flight Booking Service</span></div><div class="inc-d"><span class="ko">ICN ↔ 미국 왕복 예약 지원. 좌석 등급 협의 가능.</span><span class="en">ICN ↔ USA round-trip booking support. Class upgrades available on request.</span></div></div></div>
+ <div class="inc-item"><div class="inc-ico ico-plane"></div><div><div class="inc-t"><span class="ko">항공권 예약 대행</span><span class="en">Flight Booking Service</span></div><div class="inc-d"><span class="ko">ICN-USA 왕복 예약 지원. 좌석 등급 협의 가능.</span><span class="en">ICN-USA round-trip booking support. Class upgrades available on request.</span></div></div></div>
  <div class="inc-item"><div class="inc-ico ico-hotel"></div><div><div class="inc-t"><span class="ko">숙소</span><span class="en">Accommodations</span></div><div class="inc-d"><span class="ko">숙소.</span><span class="en">Lodging.</span></div></div></div>
  <div class="inc-item"><div class="inc-ico ico-golf"></div><div><div class="inc-t"><span class="ko">골프 전 라운드</span><span class="en">All Golf Rounds</span></div><div class="inc-d"><span class="ko">Sandpiper · Alisal Ranch · Glen Ivy · Golf Club of CA · The Crossings 외.</span><span class="en">Sandpiper · Alisal Ranch · Glen Ivy · Golf Club of CA · The Crossings and more.</span></div></div></div>
  <div class="inc-item"><div class="inc-ico ico-car"></div><div><div class="inc-t"><span class="ko">전용 차량 & 기사</span><span class="en">Private Vehicle & Driver</span></div><div class="inc-d"><span class="ko">전일 전용 차량. 원하는 곳 자유 정차.</span><span class="en">Dedicated vehicle all day. Stop anywhere.</span></div></div></div>
@@ -2622,14 +2619,7 @@ body {
  <div class="pillar"><div class="pillar-n">03</div><div class="pillar-t"><span class="ko">공명하는 루트</span><span class="en">Routes That Resonate</span></div><div class="pillar-d"><span class="ko">Sandpiper, The Crossings, Alisal Ranch — 현지 파트너십으로만 가능한 코스들. 일반 관광객이 경험하지 못하는 미국을 Resonate가 안내합니다.</span><span class="en">Sandpiper, The Crossings, Alisal Ranch — courses accessible only through local partnerships. Resonate takes you to an America no ordinary tourist experiences.</span></div></div>
  <div class="pillar"><div class="pillar-n">04</div><div class="pillar-t"><span class="ko">귀국 후에도 울립니다</span><span class="en">It Resonates After You Return</span></div><div class="pillar-d"><span class="ko">시네마틱 여정 영상 + 다음 여정 제안. 여행이 끝나도 Resonate의 울림은 계속됩니다.</span><span class="en">A cinematic journey reel + your next journey proposal. Even after the trip ends, the resonance continues.</span></div></div>
  </div>
- <div class="testi-sec">
- <h2><span class="ko">고객 후기</span><span class="en">Testimonials</span></h2>
- <div class="testi-cards">
- <div class="testi-card"><p class="testi-q"><span class="ko">"미국에 이렇게 다녀올 수 있는 줄 몰랐어요. 돌아오는 비행기 안에서 눈물이 났습니다. 제 삶에서 가장 감동적인 여정이었어요."</span><span class="en">"I had no idea America could move me like this. I cried on the flight home. The most unforgettable journey of my life."</span></p><div class="testi-by"><span class="ko">— 김**</span><span class="en">— Kim**</span></div></div>
- <div class="testi-card"><p class="testi-q"><span class="ko">"출발 전 오리엔테이션 덕분에 Day 1부터 자신 있었어요. 현지에서도 한국어로 소통할 수 있어서 정말 편했습니다."</span><span class="en">"The pre-departure briefing made me confident from Day 1. Being able to communicate in Korean on-site was such a relief."</span></p><div class="testi-by"><span class="ko">— 박**</span><span class="en">— Park**</span></div></div>
- <div class="testi-card"><p class="testi-q"><span class="ko">"여정 영상을 받고 가족들이 모두 감동받았습니다. 영상 하나로 여행 전체가 다시 살아났어요."</span><span class="en">"When our family received the journey reel, everyone was moved. The video brought the entire trip back to life."</span></p><div class="testi-by"><span class="ko">— 이**</span><span class="en">— Lee**</span></div></div>
- </div>
- </div>
+ 
  </div>
 </div>
  
@@ -2821,12 +2811,12 @@ body {
  </div>
  </div>
  <div class="review-grid">
- <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"Sandpiper에서 바다를 바라보며 친 티샷은 평생 잊지 못할 것 같습니다. 모든 일정이 촘촘하게 짜여져 있어서 허투루 보낸 시간이 단 하루도 없었습니다."</span><span class="en">"The tee shot at Sandpiper overlooking the Pacific is something I will never forget. Every single day was meaningful, nothing wasted."</span></div><div class="rv-author"><div class="rv-avatar">김</div><div><div class="rv-name"><span class="ko">김재원 · 51세</span><span class="en">Jaewon Kim · 51</span></div><div class="rv-meta"><span class="ko">서울 · 골프 경력 8년</span><span class="en">Seoul · 8 yrs golf</span></div><div class="rv-tag">Sandpiper 버디 ⛳</div></div></div></div>
- <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"혼자 신청했는데 동행분들과 금방 친해져서 마지막 날엔 가족 같은 느낌이었어요. PCH 석양, Solvang 풍경. 캘리포니아가 이렇게 다채로운 곳인 줄 처음 알았습니다."</span><span class="en">"I came alone but felt like family with the group by the last day. The PCH sunset, Solvang. I discovered how incredibly diverse California really is."</span></div><div class="rv-author"><div class="rv-avatar">이</div><div><div class="rv-name"><span class="ko">이수진 · 45세</span><span class="en">Sujin Lee · 45</span></div><div class="rv-meta"><span class="ko">부산 · 솔로 참가</span><span class="en">Busan · Solo</span></div><div class="rv-tag">솔로 참가 ✓</div></div></div></div>
- <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"회사 동료 4명이 함께 갔는데 팀빌딩 효과가 엄청났습니다. 코스에서 함께 전략을 짜고, 저녁엔 플레이를 복기하며 웃고. 돈 주고 살 수 없는 추억을 만들었습니다."</span><span class="en">"Four colleagues went together — the team-building effect was incredible. Strategizing on the course, reviewing plays over dinner. memories money cannot buy."</span></div><div class="rv-author"><div class="rv-avatar">박</div><div><div class="rv-name"><span class="ko">박성훈 · 48세</span><span class="en">Sunghoon Park · 48</span></div><div class="rv-meta"><span class="ko">성남 · 4인 그룹</span><span class="en">Seongnam · Group</span></div><div class="rv-tag">그룹 참가 🔄</div></div></div></div>
- <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"Elim 온천에서 하루를 보낸 것이 예상치 못한 하이라이트였어요. 골프 라운딩 후 사막 온천에 몸을 담그는 경험. 일정 구성이 정말 탁월합니다."</span><span class="en">"The day at Elim Hot Springs was an unexpected highlight. Soaking in a desert hot spring after golf. the itinerary's variety is truly outstanding."</span></div><div class="rv-author"><div class="rv-avatar">최</div><div><div class="rv-name"><span class="ko">최민정 · 39세</span><span class="en">Minjeong Choi · 39</span></div><div class="rv-meta"><span class="ko">대구 · 2인</span><span class="en">Daegu · Duo</span></div><div class="rv-tag">Elim 온천 ♨️</div></div></div></div>
- <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"가이드분이 각 코스 특성을 미리 설명해주셔서 Alisal Ranch에서 생애 첫 파 under를 기록했어요! 디테일한 케어에 감동받았습니다."</span><span class="en">"Our guide briefed us on each course and I shot my first ever under-par round at Alisal Ranch! The detail-oriented care was genuinely moving."</span></div><div class="rv-author"><div class="rv-avatar">정</div><div><div class="rv-name"><span class="ko">정기호 · 55세</span><span class="en">Kiho Jung · 55</span></div><div class="rv-meta"><span class="ko">인천 · 경력 12년</span><span class="en">Incheon · 12 yrs</span></div><div class="rv-tag">Alisal 언더파 🏆</div></div></div></div>
- <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"골프를 못 치는 아내를 위한 별도 관광 일정까지 세심하게 배려해 주셔서 둘 다 만족스러운 여행이 됐습니다. 아내가 저보다 더 좋았다고 합니다."</span><span class="en">"The thoughtful alternate activities arranged for my non-golfing wife made it perfect for both of us. She says she enjoyed it more than I did!"</span></div><div class="rv-author"><div class="rv-avatar">윤</div><div><div class="rv-name"><span class="ko">윤태호 · 52세</span><span class="en">Taeho Yoon · 52</span></div><div class="rv-meta"><span class="ko">수원 · 부부</span><span class="en">Suwon · Couple</span></div><div class="rv-tag">부부 동반 ❤️</div></div></div></div>
+ <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"Sandpiper에서 바다를 바라보며 친 티샷은 평생 잊지 못할 것 같습니다. 모든 일정이 촘촘하게 짜여져 있어서 허투루 보낸 시간이 단 하루도 없었습니다."</span><span class="en">"The tee shot at Sandpiper overlooking the Pacific is something I will never forget. Every single day was meaningful, nothing wasted."</span></div><div class="rv-author"><div class="rv-avatar">김</div><div><div class="rv-name"><span class="ko">김**</span><span class="en">Kim**</span></div><div class="rv-tag">Sandpiper 버디 ⛳</div></div></div></div>
+ <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"혼자 신청했는데 동행분들과 금방 친해져서 마지막 날엔 가족 같은 느낌이었어요. PCH 석양, Solvang 풍경. 캘리포니아가 이렇게 다채로운 곳인 줄 처음 알았습니다."</span><span class="en">"I came alone but felt like family with the group by the last day. The PCH sunset, Solvang. I discovered how incredibly diverse California really is."</span></div><div class="rv-author"><div class="rv-avatar">이</div><div><div class="rv-name"><span class="ko">이**</span><span class="en">Lee**</span></div><div class="rv-tag">솔로 참가 ✓</div></div></div></div>
+ <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"회사 동료 4명이 함께 갔는데 팀빌딩 효과가 엄청났습니다. 코스에서 함께 전략을 짜고, 저녁엔 플레이를 복기하며 웃고. 돈 주고 살 수 없는 추억을 만들었습니다."</span><span class="en">"Four colleagues went together — the team-building effect was incredible. Strategizing on the course, reviewing plays over dinner. memories money cannot buy."</span></div><div class="rv-author"><div class="rv-avatar">박</div><div><div class="rv-name"><span class="ko">박**</span><span class="en">Park**</span></div><div class="rv-tag">그룹 참가 🔄</div></div></div></div>
+ <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"Elim 온천에서 하루를 보낸 것이 예상치 못한 하이라이트였어요. 골프 라운딩 후 사막 온천에 몸을 담그는 경험. 일정 구성이 정말 탁월합니다."</span><span class="en">"The day at Elim Hot Springs was an unexpected highlight. Soaking in a desert hot spring after golf. the itinerary's variety is truly outstanding."</span></div><div class="rv-author"><div class="rv-avatar">최</div><div><div class="rv-name"><span class="ko">최**</span><span class="en">Choi**</span></div><div class="rv-tag">Elim 온천 ♨️</div></div></div></div>
+ <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"가이드분이 각 코스 특성을 미리 설명해주셔서 Alisal Ranch에서 생애 첫 파 under를 기록했어요! 디테일한 케어에 감동받았습니다."</span><span class="en">"Our guide briefed us on each course and I shot my first ever under-par round at Alisal Ranch! The detail-oriented care was genuinely moving."</span></div><div class="rv-author"><div class="rv-avatar">정</div><div><div class="rv-name"><span class="ko">정**</span><span class="en">Jung**</span></div><div class="rv-tag">Alisal 언더파 🏆</div></div></div></div>
+ <div class="rv-card fi"><div class="rv-stars">★★★★★</div><div class="rv-text"><span class="ko">"골프를 못 치는 아내를 위한 별도 관광 일정까지 세심하게 배려해 주셔서 둘 다 만족스러운 여행이 됐습니다. 아내가 저보다 더 좋았다고 합니다."</span><span class="en">"The thoughtful alternate activities arranged for my non-golfing wife made it perfect for both of us. She says she enjoyed it more than I did!"</span></div><div class="rv-author"><div class="rv-avatar">윤</div><div><div class="rv-name"><span class="ko">윤**</span><span class="en">Yoon**</span></div><div class="rv-tag">부부 동반 ❤️</div></div></div></div>
  </div>
  <div style="text-align:center;margin-top:48px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;padding:40px 32px;color:#fff">
  <h3 style="font-size:22px;font-weight:700;margin-bottom:8px"><span class="ko">당신의 이야기를 들려주세요</span><span class="en">Share Your Story</span></h3>
@@ -2874,6 +2864,7 @@ body {
  <button class="lb-close" onclick="closeLightbox()">✕</button>
  <button class="lb-prev" onclick="event.stopPropagation();lbNav(-1)">‹</button>
  <img id="lb-img" src="" alt="">
+ <div class="lb-vid" id="lb-vid" onclick="event.stopPropagation()"><iframe id="lb-frame" src="about:blank" title="Journey Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
  <button class="lb-next" onclick="event.stopPropagation();lbNav(1)">›</button>
  <div class="lb-info">
  <div id="lb-name"></div>
@@ -4010,6 +4001,26 @@ function showDirectImageBySrc(src) {
  document.body.style.overflow = 'hidden';
 }
  
+function showDirectVideo(vidId) {
+ if (!vidId) return;
+ var lb = document.getElementById('lightbox');
+ var vwrap = document.getElementById('lb-vid');
+ var frame = document.getElementById('lb-frame');
+ var img = document.getElementById('lb-img');
+ if (vwrap) vwrap.style.display = 'block';
+ if (frame) frame.src = ytEmbed(vidId);
+ if (img) img.style.display = 'none';
+ var prev = document.querySelector('.lb-prev');
+ var next = document.querySelector('.lb-next');
+ var info = document.querySelector('.lb-info');
+ if (prev) prev.style.display = 'none';
+ if (next) next.style.display = 'none';
+ if (info) info.style.display = 'none';
+ lb.classList.add('open');
+ lb.setAttribute('data-single', '1');
+ document.body.style.overflow = 'hidden';
+}
+ 
 // Restore nav buttons when lightbox is closed (for gallery page)
 var _origCloseLightbox = closeLightbox;
 closeLightbox = function() {
@@ -4070,7 +4081,9 @@ function ytPoster(v) { return 'https://i.ytimg.com/vi/' + v.id + (v.type === 'sh
  var slotEl = document.getElementById('gal-slot-'+slot);
  if (!slotEl) return;
  if (slotEl.getAttribute('data-type') === 'video' && slotEl.getAttribute('data-url')) {
- window.open(slotEl.getAttribute('data-url'), '_blank');
+ var vurl = slotEl.getAttribute('data-url');
+ var m2 = vurl.match(/(?:shorts\/|watch\?v=)([A-Za-z0-9_-]{6,})/);
+ if (m2) { showDirectVideo(m2[1]); } else { window.open(vurl, '_blank'); }
  return;
  }
  var img = document.getElementById('gal-img-'+slot);
@@ -4272,7 +4285,7 @@ function buildGalleryVideos() {
  var ar = v.type === 'video' ? '16/9' : '9/16';
  var poster = ytPoster(v);
  var url = ytUrl(v);
- return '<div onclick="window.open(\'' + url + '\',\'_blank\')" style="flex-shrink:0;width:' + w + 'px;cursor:pointer;position:relative;border-radius:12px;overflow:hidden;aspect-ratio:' + ar + ';background:#e0e0e0;box-shadow:0 4px 16px rgba(0,0,0,.12)">'
+ return '<div onclick="openLightbox(' + (GAL_ITEMS.length + i) + ')" style="flex-shrink:0;width:' + w + 'px;cursor:pointer;position:relative;border-radius:12px;overflow:hidden;aspect-ratio:' + ar + ';background:#e0e0e0;box-shadow:0 4px 16px rgba(0,0,0,.12)">'
  + '<img src="' + poster + '" alt="' + (L==='ko'?'여정 영상 '+(i+1):'Journey Film '+(i+1)) + '" loading="lazy" onerror="this.onerror=null;this.src=\'golfpic1.png\'" style="width:100%;height:100%;object-fit:cover;display:block">'
  + '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 60%)"></div>'
  + '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.9);background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px">▶</div>'
@@ -4311,6 +4324,18 @@ function initGalHeroParallax() {
 }
  
 /* LIGHTBOX */
+/* ── 라이트박스 통합 풀: 사진(GAL_ITEMS) + 여정 영상(HOME_VIDEOS) ── */
+const LB_POOL = (function(){
+ var photos = (typeof GAL_ITEMS !== 'undefined' ? GAL_ITEMS : []).map(function(p){
+  return {type:'img', key:p.key, name_ko:p.name_ko||'', name_en:p.name_en||''};
+ });
+ var vids = (typeof HOME_VIDEOS !== 'undefined' ? HOME_VIDEOS : []).map(function(v, i){
+  return {type:'video', id:v.id, name_ko:'여정 영상 ' + (i+1), name_en:'Journey Film ' + (i+1)};
+ });
+ return photos.concat(vids);
+})();
+function ytEmbed(id){ return 'https://www.youtube.com/embed/' + id + '?autoplay=1&loop=1&playlist=' + id + '&rel=0&playsinline=1'; }
+
 function openLightbox(idx) {
  lbIndex = idx;
  updateLightbox();
@@ -4321,22 +4346,44 @@ function openLightbox(idx) {
 }
  
 function closeLightbox() {
+ var f = document.getElementById('lb-frame');
+ if (f) f.src = 'about:blank';
+ var vw = document.getElementById('lb-vid');
+ if (vw) vw.style.display = 'none';
+ var im = document.getElementById('lb-img');
+ if (im) im.style.display = '';
  document.getElementById('lightbox').classList.remove('open');
  document.body.style.overflow = '';
 }
  
 function lbNav(dir) {
- lbIndex = (lbIndex + dir + GAL_ITEMS.length) % GAL_ITEMS.length;
+ lbIndex = (lbIndex + dir + LB_POOL.length) % LB_POOL.length;
  updateLightbox();
 }
  
 function updateLightbox() {
  const L = curLang;
- const item = GAL_ITEMS[lbIndex];
+ const item = LB_POOL[lbIndex];
  const img = document.getElementById('lb-img');
- if (img) { img.style.opacity='0'; setTimeout(() => { img.src = imgs[item.key]||''; img.style.opacity='1'; img.style.transition='opacity.3s'; }, 80); }
+ const vid = document.getElementById('lb-vid');
+ const frame = document.getElementById('lb-frame');
  const name = document.getElementById('lb-name');
- if (name) name.textContent = '';
+ if (!item) return;
+ if (item.type === 'video') {
+  if (vid) vid.style.display = 'block';
+  if (frame) frame.src = ytEmbed(item.id);
+  if (img) img.style.display = 'none';
+  if (name) name.textContent = L === 'ko' ? item.name_ko : item.name_en;
+ } else {
+  if (vid) vid.style.display = 'none';
+  if (frame) frame.src = 'about:blank';
+  if (img) {
+   img.style.display = '';
+   img.style.opacity='0';
+   setTimeout(() => { img.src = imgs[item.key]||''; img.style.opacity='1'; img.style.transition='opacity.3s'; }, 80);
+  }
+  if (name) name.textContent = '';
+ }
 }
  
 document.addEventListener('keydown', e => {
