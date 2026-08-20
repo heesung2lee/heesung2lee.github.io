@@ -299,7 +299,7 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 .all-in-note{padding:16px 20px;background:#fafafa;border:1px solid #e8e8e8;border-radius:8px;border-left:3px solid #d4af37;font-size:13px;color:#5c5e62;line-height:1.8}
  
 /* ── ABOUT ── */
-.about-wrap{max-width:760px;margin:0 auto;padding:36px 40px 56px}
+.about-wrap{max-width:760px;margin:0 auto;padding:56px 40px 64px}
 .about-hero-txt{margin-bottom:32px;text-align:center}
 .about-hero-txt h1{font-size:clamp(27px,4.6vw,46px);font-weight:700;letter-spacing:-.03em;line-height:1.18;margin:0 0 20px;color:#1a3450}
 .about-hero-txt h1 .gold{color:#d4af37}
@@ -1187,20 +1187,15 @@ html {
  
 /* ── SCHEDULE STICKY HEADER ── */
 .sched-sticky-header{
- position:fixed;
+ position:sticky;
  top:52px;
  left:0;right:0;
  z-index:49;
  background:#fff;
  border-bottom:1px solid #e8e8e8;
  box-shadow:0 2px 10px rgba(0,0,0,.08);
- transform:translateY(-100%);
- transition:transform.25s ease;
- pointer-events:none;
 }
 .sched-sticky-header.visible{
- transform:translateY(0);
- pointer-events:all;
 }
 .page-hdr{
  padding:14px 24px 10px;
@@ -2525,14 +2520,14 @@ body {
  <div class="inc-item"><div class="inc-ico ico-food"></div><div><div class="inc-t"><span class="ko">현지 인기 맛집 식사</span><span class="en">Local Favorite Dining</span></div><div class="inc-d"><span class="ko">현지인이 즐겨 찾는 숨은 맛집 위주로 선정. 한식·멕시칸·캘리포니아 퀴진.</span><span class="en">Handpicked local favorites — Korean, Mexican, California cuisine off the tourist trail.</span></div></div></div>
  </div>
  </div>
- <div style="text-align:center;padding:32px 20px;color:#d4af37;font-size:15px;font-weight:600;letter-spacing:.04em">
+ <div style="text-align:center;padding:14px 20px;color:#d4af37;font-size:15px;font-weight:600;letter-spacing:.04em">
    <span class="ko">✦ 포함 구성은 상담 시 맞춤 안내드립니다 ✦</span>
    <span class="en">✦ Inclusions are tailored and provided during consultation ✦</span>
  </div>
  <div class="all-in-note" style="display:none"><b style="color:#171a20"><span class="ko">포함 사항 안내</span><span class="en">What's Included</span></b><br><span class="ko">항공권, 숙소, 골프 전 라운드, 포함 식사, 전용 차량, 한국어 가이드, 여정 영상이 포함됩니다. 핵심 경비가 포함되어 예산 관리가 간편합니다.</span><span class="en">Flights, lodging, all golf rounds, included meals, private vehicle, Korean guide, and journey reel included. No hidden fees — transparent and straightforward.</span></div>
  </div>
 
- <div style="max-width:960px;margin:0 auto;padding:44px 24px 56px">
+ <div style="max-width:960px;margin:0 auto;padding:24px 24px 40px">
  <div class="act-cat act-golf">
 <h3>⛳ <span class="ko">골프 코스</span><span class="en">Golf Courses</span></h3>
 <div class="act-subrow">
@@ -2635,10 +2630,6 @@ body {
  
 <!-- ══════ PAGE: ABOUT ══════ -->
 <div id="pg-about" class="page">
- <div class="page-hdr">
- <h1><span class="ko">레조네이트 투어 소개</span><span class="en">About Resonate Tour</span></h1>
- <p><span class="ko">한국 → 미국 · 진짜 감동을 경험하는 프리미엄 투어</span><span class="en">Korea → USA · Premium Travel That Resonates</span></p>
- </div>
  <div class="about-wrap">
  <div class="about-hero-txt">
  <h1><span class="ko">경험이 공명할 때,<br><span class="gold">여행은 전율이 됩니다</span></span><span class="en">When Experience Resonates,<br><span class="gold">Travel Becomes Unforgettable</span></span></h1>
@@ -2654,9 +2645,6 @@ body {
  <div class="pillar"><div class="pillar-n">02</div><div class="pillar-t"><span class="ko">5★ 프리미엄 케어</span><span class="en">5★ Premium Care</span></div><div class="pillar-d"><span class="ko">출발 전 1:1 오리엔테이션부터 귀국 후 여정 영상 전달까지. 한국어 구사 전담 가이드와 함께, 5성급 서비스가 여정 전체를 감쌉니다.</span><span class="en">From pre-departure 1:1 briefing to post-return journey reel delivery. Korean-speaking dedicated guides and 5-star service wrap every moment of your journey.</span></div></div>
  <div class="pillar"><div class="pillar-n">03</div><div class="pillar-t"><span class="ko">공명하는 루트</span><span class="en">Routes That Resonate</span></div><div class="pillar-d"><span class="ko">Sandpiper, The Crossings, Alisal Ranch — 현지 파트너십으로만 가능한 코스들. 일반 관광객이 경험하지 못하는 미국을 Resonate가 안내합니다.</span><span class="en">Sandpiper, The Crossings, Alisal Ranch — courses accessible only through local partnerships. Resonate takes you to an America no ordinary tourist experiences.</span></div></div>
  <div class="pillar"><div class="pillar-n">04</div><div class="pillar-t"><span class="ko">귀국 후에도 울립니다</span><span class="en">It Resonates After You Return</span></div><div class="pillar-d"><span class="ko">시네마틱 여정 영상 + 다음 여정 제안. 여행이 끝나도 Resonate의 울림은 계속됩니다.</span><span class="en">A cinematic journey reel + your next journey proposal. Even after the trip ends, the resonance continues.</span></div></div>
- </div>
- <div class="about-cta">
- <button class="btn-book" onclick="nav('contact')"><span class="ko">맞춤 여정 상담하기</span><span class="en">Plan Your Journey</span></button>
  </div>
 
  </div>
@@ -3269,12 +3257,11 @@ function nav(page, dayIdx) {
  // Schedule sticky header
  var sh = document.querySelector('.sched-sticky-header');
  if (sh) {
- sh.classList.toggle('visible', page === 'pricing');
- if (page === 'pricing') requestAnimationFrame(function(){
- var panels = document.getElementById('dayPanels');
- var hh = sh.getBoundingClientRect().height;
- if (panels) panels.style.paddingTop = (52 + hh + 8) + 'px';
- });
+  sh.classList.toggle('visible', page === 'pricing');
+  if (page === 'pricing') requestAnimationFrame(function(){
+  var panels = document.getElementById('dayPanels');
+  if (panels) panels.style.paddingTop = '0px';
+  });
  }
  // Bookmarks
  if (page === 'pricing') setTimeout(function(){ if(typeof addHearts==='function') addHearts(); }, 150);
@@ -4325,7 +4312,7 @@ function buildGalleryVideos() {
  var poster = ytPoster(v);
  var url = ytUrl(v);
  return '<div onclick="openLightbox(' + (GAL_ITEMS.length + i) + ')" style="flex-shrink:0;width:' + w + 'px;cursor:pointer;position:relative;border-radius:12px;overflow:hidden;aspect-ratio:' + ar + ';background:#e0e0e0;box-shadow:0 4px 16px rgba(0,0,0,.12)">'
- + '<img src=" + poster + " alt="' + (L==='ko'?'여정 영상 '+(i+1):'Journey Film '+(i+1)) + '" loading="lazy" onerror="this.onerror=null;this.src=\'golfpic1.png\'" style="width:100%;height:100%;object-fit:cover;display:block">'
+ + '<img src="' + poster + '" alt="' + (L==='ko'?'여정 영상 '+(i+1):'Journey Film '+(i+1)) + '" loading="lazy" onerror="this.onerror=null;this.src=\'golfpic1.png\'" style="width:100%;height:100%;object-fit:cover;display:block">'
  + '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 60%)"></div>'
  + '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.9);background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px">▶</div>'
  + '</div>';
@@ -5726,6 +5713,7 @@ var km = document.getElementById('crs-map-kr'); if (km) km.style.display = c==='
 crsCur = c;
 document.querySelectorAll('#pg-courses .region-group').forEach(function(g) { g.classList.toggle('hidden', g.getAttribute('data-country') !== c); });
 document.querySelectorAll('#pg-courses .region-header').forEach(function(h) { h.classList.toggle('hidden', h.getAttribute('data-country') !== c); });
+document.querySelectorAll('#pg-courses .region-tab').forEach(function(t) { t.style.display = (t.getAttribute('data-country') === c) ? '' : 'none'; });
 crsRegion(c === 'usa' ? 'usa1' : (c === 'canada' ? 'canada1' : 'kr1'), true);
 
 crsInitMaps();
