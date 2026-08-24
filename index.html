@@ -2921,6 +2921,7 @@ body {
  <button class="lb-next" onclick="event.stopPropagation();lbNav(1)">›</button>
  <div class="lb-info">
  <div id="lb-name"></div>
+ <div id="lb-progress" style="font-size:11px;color:#888;letter-spacing:.08em;margin-top:6px"></div>
  </div>
 </div>
  
@@ -4000,6 +4001,14 @@ function showDirectImageBySrc(src) {
  
 function showDirectVideo(vidId) {
  if (!vidId) return;
+ // 통합 연속 뷰어: 이 영상을 라이트박스에서 자동 이어보기 시작
+ var idx = -1;
+ for (var i=0; i<HOME_VIDEOS.length; i++){ if (HOME_VIDEOS[i].id === vidId) { idx = i; break; } }
+ if (idx >= 0) {
+  openLightbox((typeof GAL_ITEMS !== 'undefined' ? GAL_ITEMS.length : 0) + idx);
+  return;
+ }
+ // fallback: 단일 영상 직접 재생
  var lb = document.getElementById('lightbox');
  var vwrap = document.getElementById('lb-vid');
  var frame = document.getElementById('lb-frame');
@@ -4007,12 +4016,6 @@ function showDirectVideo(vidId) {
  if (vwrap) vwrap.style.display = 'block';
  if (frame) frame.src = ytEmbed(vidId);
  if (img) img.style.display = 'none';
- var prev = document.querySelector('.lb-prev');
- var next = document.querySelector('.lb-next');
- var info = document.querySelector('.lb-info');
- if (prev) prev.style.display = 'none';
- if (next) next.style.display = 'none';
- if (info) info.style.display = 'none';
  lb.classList.add('open');
  lb.setAttribute('data-single', '1');
  document.body.style.overflow = 'hidden';
@@ -4376,7 +4379,7 @@ const LB_POOL = (function(){
  });
  return photos.concat(vids);
 })();
-function ytEmbed(id){ return 'https://www.youtube.com/embed/' + id + '?autoplay=1&loop=1&playlist=' + id + '&rel=0&playsinline=1'; }
+function ytEmbed(id){ return 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&enablejsapi=1'; }
 
 function openLightbox(idx) {
  lbIndex = idx;
@@ -4416,6 +4419,11 @@ function updateLightbox() {
   if (frame) frame.src = ytEmbed(item.id);
   if (img) img.style.display = 'none';
   if (name) name.textContent = L === 'ko' ? item.name_ko : item.name_en;
+  var vi = -1;
+  for (var vi2=0; vi2<HOME_VIDEOS.length; vi2++){ if (HOME_VIDEOS[vi2].id === item.id){ vi=vi2; break; } }
+  if (vi >= 0) journeyVideoIdx = vi;
+  var prog = document.getElementById('lb-progress');
+  if (prog) prog.textContent = (vi >= 0) ? ((L==='ko' ? '여정 영상 ' : 'Journey Film ') + (vi+1) + ' / ' + HOME_VIDEOS.length) : '';
  } else {
   if (vid) vid.style.display = 'none';
   if (frame) frame.src = 'about:blank';
@@ -4428,6 +4436,27 @@ function updateLightbox() {
  }
 }
  
+/* 여정 영상 자동 이어보기: 한 창에서 다음 영상 자동 재생 */
+var journeyVideoIdx = -1;
+function advanceJourneyVideo(){
+  if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
+  var lb = document.getElementById('lightbox');
+  if (!lb || !lb.classList.contains('open')) return;
+  var cur = LB_POOL[lbIndex];
+  if (!cur || cur.type !== 'video') return;
+  var n = (journeyVideoIdx + 1) % HOME_VIDEOS.length;
+  if (journeyVideoIdx < 0) n = 0;
+  openLightbox((typeof GAL_ITEMS !== 'undefined' ? GAL_ITEMS.length : 0) + n);
+}
+window.addEventListener('message', function(e){
+  try {
+    var d = JSON.parse(e.data);
+    if (d && d.event === 'infoDelivery' && d.info && d.info.playerState === 0) {
+      advanceJourneyVideo();
+    }
+  } catch(_){}
+});
+
 document.addEventListener('keydown', e => {
  if (document.getElementById('lightbox')?.classList.contains('open')) {
  if (e.key === 'ArrowRight') lbNav(1);
