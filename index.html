@@ -87,7 +87,7 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 #mainNav.hero-mode .nav-tab:hover{background:rgba(255,255,255,.12);color:#fff}
 #mainNav.hero-mode .nav-tab.act{background:transparent;color:#fff;border:2px solid rgba(212,175,55,.7)}
 .nav-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.btn-lang{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;background:none;border:1px solid rgba(212,175,55,.3);color:#d4af37;padding:6px 10px;border-radius:4px;cursor:pointer;font-family:inherit;transition:all.2s}
+.btn-lang{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;background:none;border:1px solid rgba(212,175,55,.3);color:#d4af37;padding:6px 10px;border-radius:4px;cursor:pointer;font-family:inherit;transition:all.2s}#lcFlag{display:inline-flex;margin-right:4px}.lc-cur-badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#1a3450,#2a4a6e);color:#d4af37;font-weight:700;font-size:12px;border:1px solid rgba(212,175,55,.45);margin-right:6px}.lc-caret{margin-left:2px;font-size:10px;opacity:.7}.cur-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#1a3450,#2a4a6e);color:#d4af37;font-weight:700;font-size:13px;vertical-align:-4px;margin-right:7px;border:1px solid rgba(212,175,55,.45)}.lc-dropdown .lc-option{display:flex;align-items:center}
  
 #mainNav.hero-mode .btn-lang{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85)}
 #mainNav.hero-mode .btn-lang span{color:rgba(255,255,255,.85)}
@@ -2389,7 +2389,7 @@ body {
  
  <!-- RIGHT: Lang + Hamburger — NEVER clips -->
  <div class="nav-r" style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px">
-<button class="btn-lang" onclick="toggleLangCurrency(event)" id="lcBtn"><span id="lcLabel">KO · USD</span> ▾</button>
+<button class="btn-lang" onclick="toggleLangCurrency(event)" id="lcBtn"><span id="lcFlag"></span><span id="lcCur" class="lc-cur-badge">$</span><span id="lcLabel">KO · USD</span><span class="lc-caret"> ▾</span></button>
  <div class="lc-dropdown" id="lcDropdown">
  <div class="lc-section">
  <div class="lc-section-title">Language / 언어</div>
@@ -2398,8 +2398,8 @@ body {
  </div>
  <div class="lc-section">
  <div class="lc-section-title">Currency / 통화</div>
- <button class="lc-option active" onclick="setCurrency('USD',this)">$ USD</button>
- <button class="lc-option" onclick="setCurrency('KRW',this)">₩ KRW</button>
+ <button class="lc-option active" onclick="setCurrency('USD',this)"><span class="cur-badge">$</span>USD</button>
+ <button class="lc-option" onclick="setCurrency('KRW',this)"><span class="cur-badge">₩</span>KRW</button>
  </div>
  </div>
  <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
@@ -3491,10 +3491,16 @@ function renderPlans() {
 /* ══════════════════════════════
  LANGUAGE + CURRENCY
 ══════════════════════════════ */
+var FLAG_US = '<svg viewBox="0 0 18 12" width="16" height="11" style="vertical-align:-1px;border-radius:2px"><rect width="18" height="12" fill="#fff"/><g fill="#b22234"><rect width="18" height="1"/><rect y="2" width="18" height="1"/><rect y="4" width="18" height="1"/><rect y="6" width="18" height="1"/><rect y="8" width="18" height="1"/><rect y="10" width="18" height="1"/></g><rect width="8" height="6.5" fill="#3c3b6e"/></svg>';
+var FLAG_KR = '<svg viewBox="0 0 18 12" width="16" height="11" style="vertical-align:-1px;border-radius:2px"><rect width="18" height="12" fill="#fff"/><circle cx="9" cy="6" r="3" fill="#cd2e3a"/><path d="M9 3a3 3 0 0 1 0 6z" fill="#0047a0"/><g fill="#0b0b0b"><rect x="3.1" y="1.4" width="2.6" height=".42"/><rect x="3.1" y="2.24" width="2.6" height=".42"/><rect x="3.1" y="3.08" width="2.6" height=".42"/><rect x="12.3" y="1.4" width=".85" height=".42"/><rect x="14.05" y="1.4" width=".85" height=".42"/><rect x="12.3" y="2.24" width="2.6" height=".42"/><rect x="12.3" y="3.08" width=".85" height=".42"/><rect x="14.05" y="3.08" width=".85" height=".42"/><rect x="3.1" y="8.5" width="2.6" height=".42"/><rect x="3.1" y="9.34" width=".85" height=".42"/><rect x="4.85" y="9.34" width=".85" height=".42"/><rect x="3.1" y="10.18" width="2.6" height=".42"/><rect x="12.3" y="8.5" width=".85" height=".42"/><rect x="14.05" y="8.5" width=".85" height=".42"/><rect x="12.3" y="9.34" width=".85" height=".42"/><rect x="14.05" y="9.34" width=".85" height=".42"/><rect x="12.3" y="10.18" width=".85" height=".42"/><rect x="14.05" y="10.18" width=".85" height=".42"/></g></svg>';
 function updateLCButton() {
  var curLabel = (curLang === 'en' ? 'EN' : 'KO') + ' · ' + curCurrency;
  var el = document.getElementById('lcLabel');
  if (el) el.textContent = curLabel;
+ var flag = document.getElementById('lcFlag');
+ if (flag) flag.innerHTML = (curLang === 'en') ? FLAG_US : FLAG_KR;
+ var cur = document.getElementById('lcCur');
+ if (cur) cur.textContent = (curCurrency === 'USD') ? '$' : '₩';
 }
 function toggleLangCurrency(e) {
  e.stopPropagation();
