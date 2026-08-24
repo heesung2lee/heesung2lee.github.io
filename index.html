@@ -2468,15 +2468,12 @@ body {
  </div>
  </div>
  
- <div class="hero-slide">
- <div class="hero-bg-a" id="film-layer" style="background-image:url('golfpic1.png');background-size:cover;background-position:center"></div>
- <div class="hero-grad"></div>
- <div class="hero-cnt" style="text-align:center">
- <button class="film-play" onclick="playFilm()" aria-label="여정 영상 재생" style="width:88px;height:88px;border-radius:50%;border:2px solid rgba(212,175,55,.9);background:rgba(0,0,0,.35);color:#d4af37;font-size:30px;cursor:pointer;margin-bottom:22px;backdrop-filter:blur(6px);transition:transform.25s;animation:filmPulse 2.6s infinite" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform=''">▶</button>
- <div class="hero-eye"><span class="ko">시네마틱 저니</span><span class="en">Cinematic Journey</span></div>
- <h1 class="hero-h1"><span class="ko">당신의 여정,<br>하나의 필름으로.</span><span class="en">Your journey,<br>one film.</span></h1>
- <p class="hero-p"><span class="ko">60–90초 시네마틱 편집 영상으로 여정의 순간을 남겨드립니다.</span><span class="en">A 60–90 sec cinematic reel — your moments, kept.</span></p>
- </div>
+ <div class="hero-slide" id="cinematic-sec" style="height:auto;min-height:0;background:linear-gradient(160deg,#0b0e15,#131a28 55%,#0b0e15);padding:76px 18px 84px;display:block;text-align:center">
+ <div class="hero-eye" style="margin-bottom:12px"><span class="ko">시네마틱 저니</span><span class="en">Cinematic Journey</span></div>
+ <h1 class="hero-h1" style="font-size:clamp(30px,5vw,52px);margin-bottom:10px"><span class="ko">당신의 여정,<br>하나의 필름으로.</span><span class="en">Your journey,<br>one film.</span></h1>
+ <p class="hero-p" style="font-size:clamp(13px,1.8vw,16px);margin-bottom:38px;max-width:660px;margin-left:auto;margin-right:auto"><span class="ko">60–90초 시네마틱 편집 영상으로 여정의 순간을 남겨드립니다. 자동 재생되며, 클릭하면 전체 화면으로 감상할 수 있습니다.</span><span class="en">A 60–90 sec cinematic reel — your moments, kept. Auto-playing; click any film to watch full-screen.</span></p>
+ <div id="cinematic-rail" style="display:flex;gap:14px;overflow-x:auto;padding:8px 4px 16px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;max-width:1280px;margin:0 auto;scrollbar-width:thin"></div>
+ <div style="color:rgba(255,255,255,.45);font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-top:4px"><span class="ko">◀ 옆으로 스크롤하여 감상 ▶</span><span class="en">◀ Swipe sideways to watch ▶</span></div>
  </div>
  
  <div style="padding:48px 0 0;background:#fff">
@@ -3175,51 +3172,55 @@ let curDay = 0;
  el.style.opacity = '0';
  }
  
+ // 갤러리 사진 풀 (영상 제외) — 랜덤 백그라운드용
+ var POOL = [];
+ try {
+   if (typeof GAL_ITEMS !== 'undefined' && GAL_ITEMS.length && typeof imgs !== 'undefined') {
+     GAL_ITEMS.forEach(function(it){ var u = imgs[it.key]; if (u) POOL.push(u); });
+   }
+ } catch(e){}
+ if (POOL.length < 2) { POOL = PH.slice(); }
+ var lastIdx = -1;
+ function rndPool() {
+   if (POOL.length <= 1) return 0;
+   var i; do { i = Math.floor(Math.random()*POOL.length); } while (i === lastIdx);
+   lastIdx = i; return i;
+ }
+
  // Init layer A on top, layer B behind
  A.style.opacity = '1';
  A.style.zIndex = '2';
  B.style.opacity = '0';
  B.style.zIndex = '1';
- applyBg(A, PH[0]);
- applyBg(B, PH[1]);
+ applyBg(A, POOL[rndPool()]);
+ applyBg(B, POOL[rndPool()]);
  startKB(A, KB[0], 8000);
- 
- // Try loading real images
- [0,1].forEach(function(i){
- var img = new window.Image();
- var el = i===0 ? A : B;
- img.onload = function(){ applyBg(el, REAL[i]); };
- img.src = REAL[i];
- });
- 
- // Swap every 8s
+
+ // Swap every 8s — 랜덤 갤러리 사진 (동일 duration/setting)
  setInterval(function() {
  cur = 1 - cur; // toggle 0/1
  var top = cur===0 ? A : B;
  var bot = cur===0 ? B : A;
- 
- // Prepare bottom layer with next image (already set)
- bot.style.zIndex = '3'; // bring to front
+
+ // Bring bottom layer to front with a random gallery photo
+ var next = POOL[rndPool()];
+ bot.style.zIndex = '3';
  bot.style.transform = 'scale(1) translate(0,0)';
+ applyBg(bot, next);
  startKB(bot, KB[cur], 8000);
  fadeIn(bot);
- 
+
  // Fade out old top layer
  setTimeout(function(){
  top.style.zIndex = '1';
  fadeOut(top);
- // Reset transform after hidden
+ // Reset transform after hidden, prime next random photo on hidden layer
  setTimeout(function(){
  top.style.transform = 'scale(1) translate(0,0)';
- // Set next image on hidden layer
- var nextPH = PH[1-cur];
- applyBg(top, nextPH);
- var img2 = new window.Image();
- img2.onload = function(){ applyBg(top, REAL[1-cur]); };
- img2.src = REAL[1-cur];
+ applyBg(top, POOL[rndPool()]);
  }, 1200);
  }, 100);
- 
+
  }, 8000);
  
  // Other split images
@@ -4319,7 +4320,26 @@ function buildGalleryVideos() {
  }).join('');
  rail.innerHTML = '<div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#9e9e9e;margin-bottom:12px"><span class="ko">여정 영상</span><span class="en">Journey Films</span></div>'
  + '<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch">' + cards + '</div>';
-}
+ }
+
+ /* ── 홈 시네마틱 저니 영상 레일 (자동재생·반복·옆스크롤·클릭재생) ── */
+ function buildCinematicRail() {
+  var rail = document.getElementById('cinematic-rail');
+  if (!rail || rail.dataset.built) return;
+  rail.dataset.built = '1';
+  if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
+  HOME_VIDEOS.forEach(function(v, i) {
+   var w = 320;
+   var embed = 'https://www.youtube.com/embed/' + v.id + '?autoplay=1&mute=1&loop=1&playlist=' + v.id + '&rel=0&playsinline=1&controls=0&disablekb=1&modestbranding=1';
+   var card = document.createElement('div');
+   card.style.cssText = 'flex-shrink:0;width:' + w + 'px;aspect-ratio:16/9;position:relative;border-radius:14px;overflow:hidden;cursor:pointer;background:#000;box-shadow:0 8px 30px rgba(0,0,0,.45);scroll-snap-align:start;border:1px solid rgba(212,175,55,.18)';
+   card.innerHTML = '<iframe src="' + embed + '" title="Journey Film ' + (i+1) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy" style="width:100%;height:100%;border:0;pointer-events:none"></iframe>'
+    + '<div class="cv-play" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.18);transition:background .3s"><div style="width:52px;height:52px;border-radius:50%;border:2px solid rgba(212,175,55,.95);background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:#d4af37;font-size:19px;backdrop-filter:blur(4px)">▶</div></div>';
+   card.onclick = function(){ openLightbox((typeof GAL_ITEMS!=='undefined'?GAL_ITEMS.length:0) + i); };
+   rail.appendChild(card);
+  });
+ }
+ setTimeout(buildCinematicRail, 250);
  
 function initGalHeroParallax() {
  const bg = document.getElementById('gal-hero-bg');
