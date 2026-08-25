@@ -2389,18 +2389,14 @@ body {
  
  <!-- RIGHT: Lang + Hamburger — NEVER clips -->
  <div class="nav-r" style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px">
-<button class="btn-lang" onclick="toggleLangCurrency(event)" id="lcBtn"><span id="lcFlag"></span><span id="lcCur" class="lc-cur-badge">$</span><span id="lcLabel">KO · USD</span><span class="lc-caret"> ▾</span></button>
+<button class="btn-lang" onclick="toggleLangCurrency(event)" id="lcBtn"><span id="lcFlag"></span><span id="lcLabel">KO</span><span class="lc-caret"> ▾</span></button>
  <div class="lc-dropdown" id="lcDropdown">
  <div class="lc-section">
  <div class="lc-section-title">Language / 언어</div>
  <button class="lc-option" onclick="setLang('en',this)"><svg viewBox="0 0 18 12" width="16" height="11" style="vertical-align:-1px;border-radius:2px"><rect width="18" height="12" fill="#fff"/><g fill="#b22234"><rect width="18" height="1"/><rect y="2" width="18" height="1"/><rect y="4" width="18" height="1"/><rect y="6" width="18" height="1"/><rect y="8" width="18" height="1"/><rect y="10" width="18" height="1"/></g><rect width="8" height="6.5" fill="#3c3b6e"/></svg> English</button>
  <button class="lc-option active" onclick="setLang('ko',this)"><svg viewBox="0 0 18 12" width="16" height="11" style="vertical-align:-1px;border-radius:2px"><rect width="18" height="12" fill="#fff"/><circle cx="9" cy="6" r="3" fill="#cd2e3a"/><path d="M9 3a3 3 0 0 1 0 6z" fill="#0047a0"/><g fill="#0b0b0b"><rect x="3.1" y="1.4" width="2.6" height=".42"/><rect x="3.1" y="2.24" width="2.6" height=".42"/><rect x="3.1" y="3.08" width="2.6" height=".42"/><rect x="12.3" y="1.4" width=".85" height=".42"/><rect x="14.05" y="1.4" width=".85" height=".42"/><rect x="12.3" y="2.24" width="2.6" height=".42"/><rect x="12.3" y="3.08" width=".85" height=".42"/><rect x="14.05" y="3.08" width=".85" height=".42"/><rect x="3.1" y="8.5" width="2.6" height=".42"/><rect x="3.1" y="9.34" width=".85" height=".42"/><rect x="4.85" y="9.34" width=".85" height=".42"/><rect x="3.1" y="10.18" width="2.6" height=".42"/><rect x="12.3" y="8.5" width=".85" height=".42"/><rect x="14.05" y="8.5" width=".85" height=".42"/><rect x="12.3" y="9.34" width=".85" height=".42"/><rect x="14.05" y="9.34" width=".85" height=".42"/><rect x="12.3" y="10.18" width=".85" height=".42"/><rect x="14.05" y="10.18" width=".85" height=".42"/></g></svg> 한국어</button>
  </div>
- <div class="lc-section">
- <div class="lc-section-title">Currency / 통화</div>
- <button class="lc-option active" onclick="setCurrency('USD',this)"><span class="cur-badge">$</span>USD</button>
- <button class="lc-option" onclick="setCurrency('KRW',this)"><span class="cur-badge">₩</span>KRW</button>
- </div>
+ 
  </div>
  <div style="position:relative;display:flex;align-items:center;height:52px" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
  <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
@@ -3111,8 +3107,6 @@ const DAYS = [
 ];;
  
 let curLang = 'ko';
-let curCurrency = 'USD';
-const EXCHANGE_RATE = 1350; // 1 USD = 1,350 KRW
 let curPage = 'home';
 let schedBuilt = false;
 let curDay = 0;
@@ -3494,13 +3488,11 @@ function renderPlans() {
 var FLAG_US = '<svg viewBox="0 0 18 12" width="16" height="11" style="vertical-align:-1px;border-radius:2px"><rect width="18" height="12" fill="#fff"/><g fill="#b22234"><rect width="18" height="1"/><rect y="2" width="18" height="1"/><rect y="4" width="18" height="1"/><rect y="6" width="18" height="1"/><rect y="8" width="18" height="1"/><rect y="10" width="18" height="1"/></g><rect width="8" height="6.5" fill="#3c3b6e"/></svg>';
 var FLAG_KR = '<svg viewBox="0 0 18 12" width="16" height="11" style="vertical-align:-1px;border-radius:2px"><rect width="18" height="12" fill="#fff"/><circle cx="9" cy="6" r="3" fill="#cd2e3a"/><path d="M9 3a3 3 0 0 1 0 6z" fill="#0047a0"/><g fill="#0b0b0b"><rect x="3.1" y="1.4" width="2.6" height=".42"/><rect x="3.1" y="2.24" width="2.6" height=".42"/><rect x="3.1" y="3.08" width="2.6" height=".42"/><rect x="12.3" y="1.4" width=".85" height=".42"/><rect x="14.05" y="1.4" width=".85" height=".42"/><rect x="12.3" y="2.24" width="2.6" height=".42"/><rect x="12.3" y="3.08" width=".85" height=".42"/><rect x="14.05" y="3.08" width=".85" height=".42"/><rect x="3.1" y="8.5" width="2.6" height=".42"/><rect x="3.1" y="9.34" width=".85" height=".42"/><rect x="4.85" y="9.34" width=".85" height=".42"/><rect x="3.1" y="10.18" width="2.6" height=".42"/><rect x="12.3" y="8.5" width=".85" height=".42"/><rect x="14.05" y="8.5" width=".85" height=".42"/><rect x="12.3" y="9.34" width=".85" height=".42"/><rect x="14.05" y="9.34" width=".85" height=".42"/><rect x="12.3" y="10.18" width=".85" height=".42"/><rect x="14.05" y="10.18" width=".85" height=".42"/></g></svg>';
 function updateLCButton() {
- var curLabel = (curLang === 'en' ? 'EN' : 'KO') + ' · ' + curCurrency;
+ var curLabel = (curLang === 'en') ? 'EN' : 'KO';
  var el = document.getElementById('lcLabel');
  if (el) el.textContent = curLabel;
  var flag = document.getElementById('lcFlag');
  if (flag) flag.innerHTML = (curLang === 'en') ? FLAG_US : FLAG_KR;
- var cur = document.getElementById('lcCur');
- if (cur) cur.textContent = (curCurrency === 'USD') ? '$' : '₩';
 }
 function toggleLangCurrency(e) {
  e.stopPropagation();
@@ -3517,34 +3509,10 @@ function setLang(lang, btn) {
  dd.classList.remove('show');
  }
  updateLCButton();
- convertPrices();
  if (window.refreshReview) window.refreshReview();
 }
-function setCurrency(curr, btn) {
- curCurrency = curr;
- var dd = document.getElementById('lcDropdown');
- if (dd) {
- dd.querySelectorAll('.lc-section:last-child.lc-option').forEach(function(b,i){
- b.classList.toggle('active', (i===0 && curr==='USD') || (i===1 && curr==='KRW'));
- });
- dd.classList.remove('show');
- }
- updateLCButton();
- convertPrices();
-}
-function convertPrices() {
- document.querySelectorAll('[data-price-usd]').forEach(function(el){
- var usd = parseFloat(el.getAttribute('data-price-usd'));
- if (!isNaN(usd)) {
- if (curCurrency === 'KRW') {
- var krw = Math.round(usd * EXCHANGE_RATE / 1000) * 1000;
- el.textContent = '₩' + krw.toLocaleString();
- } else {
- el.textContent = '$' + usd.toLocaleString();
- }
- }
- });
-}
+
+
 // Close dropdown on outside click
 document.addEventListener('click', function(e) {
  var dd = document.getElementById('lcDropdown');
@@ -3579,7 +3547,6 @@ function _applyLang(lang) {
  });
  }
  updateLCButton();
- convertPrices();
 }
 function toggleLang() {
  _applyLang(curLang === 'ko' ? 'en' : 'ko');
