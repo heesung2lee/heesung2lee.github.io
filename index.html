@@ -1836,7 +1836,7 @@ body {
 #pg-courses .crs-hero h1{font-size:clamp(24px,4vw,34px);font-weight:700;color:#171a20;margin:0 0 8px}
 #pg-courses .crs-hero-sub{font-size:13.5px;color:var(--crsdim);max-width:560px;margin:0 auto}
 #pg-courses .filter-bar{position:sticky;top:60px;z-index:20;background:var(--crscard);border:1px solid var(--crsline);border-radius:12px;box-shadow:0 2px 12px rgba(23,26,32,.07);max-width:860px;margin:0 auto 16px;padding:8px 10px}
-#pg-courses .filter-bar .country-tabs{display:flex;gap:4px;justify-content:stretch;margin:0;border:none;border-radius:0;overflow:visible;width:100%}
+#pg-courses .filter-bar .country-tabs{display:flex;flex-wrap:wrap;gap:4px;justify-content:stretch;margin:0;border:none;border-radius:0;overflow:visible;width:100%}
 #pg-courses .filter-bar .country-tab{flex:1;padding:8px 6px;font-size:12.5px;font-weight:600;cursor:pointer;background:transparent;border:none;border-radius:8px;color:var(--crsdim);font-family:inherit;transition:all .2s;white-space:nowrap;text-align:center}
 #pg-courses .filter-bar .country-tab.act{background:var(--crsgold);color:#1a3450}
 #pg-courses .filter-bar .country-tab:hover:not(.act){color:var(--crstxt)}#pg-courses .filter-bar .region-tabs{position:static;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin:8px 0 0;padding:10px 2px 2px;border-top:1px solid var(--crsline)}#pg-courses .filter-bar .region-tabs::-webkit-scrollbar{display:none}#pg-courses .region-tab{flex-shrink:0;padding:6px 12px;border:1px solid var(--crsline);border-radius:16px;background:var(--crsbg);color:var(--crsdim);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}#pg-courses .region-tab.act{background:var(--crsgold);color:#1a3450;border-color:var(--crsgold)}
@@ -1911,14 +1911,25 @@ body {
 #pg-courses .cta-btn{display:inline-block;padding:14px 32px;background:var(--crsgold);color:#1a3450;font-size:14px;font-weight:700;text-decoration:none;border-radius:4px;letter-spacing:.5px;transition:.2s;border:none;cursor:pointer;font-family:inherit}
 #pg-courses .cta-btn:hover{background:#e5c050}
 #pg-courses .crs-footer{margin:36px auto 0;color:var(--crsdim);font-size:11.5px;text-align:center;padding-bottom:40px;max-width:860px}
-.crs-lb{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;cursor:pointer;touch-action:pan-y pinch-zoom}
+.crs-lb{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;touch-action:pan-y pinch-zoom}
 .crs-lb.show{display:flex}
-.crs-lb img{max-width:95vw;max-height:90vh;border-radius:6px;box-shadow:0 0 80px rgba(0,0,0,.6);transition:opacity .3s;user-select:none;pointer-events:none}
+.crs-lb img{max-width:95vw;max-height:calc(100vh - 175px);border-radius:6px;box-shadow:0 0 80px rgba(0,0,0,.6);transition:opacity .3s;user-select:none;pointer-events:none}
 .crs-lb .lb-close{position:absolute;top:20px;right:24px;font-size:32px;color:rgba(255,255,255,.7);cursor:pointer;z-index:10;background:none;border:none}
 .crs-lb .lb-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:rgba(255,255,255,.5);cursor:pointer;z-index:10;padding:20px;user-select:none;background:none;border:none}
 .crs-lb .lb-arrow:hover{color:#fff}
 .crs-lb .lb-prev{left:10px}
 .crs-lb .lb-next{right:10px}
+.crs-lb .lb-info{width:100%;max-width:880px;margin:0 auto 16px;padding:14px 20px 16px;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.78));border-top:1px solid rgba(212,175,55,.35);color:#fff;text-align:left;cursor:default;user-select:text}
+.crs-lb .lb-info-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.crs-lb .lb-info-title{font-size:16px;font-weight:700;color:#fff;letter-spacing:.02em;font-family:Georgia,'Times New Roman',serif}
+.crs-lb .lb-info-badge{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a3450;background:#d4af37;padding:4px 12px;border-radius:999px;white-space:nowrap}
+.crs-lb .lb-info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px}
+.crs-lb .lb-info-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:8px 12px}
+.crs-lb .lb-info-lbl{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px}
+.crs-lb .lb-info-val{font-size:14px;font-weight:700;color:#fff;line-height:1.3}
+.crs-lb .lb-info-val .en{font-family:Georgia,'Times New Roman',serif}
+@media(max-width:520px){.crs-lb .lb-info{padding:12px 14px 14px;margin-bottom:8px}.crs-lb .lb-info-title{font-size:14px}.crs-lb .lb-info-grid{grid-template-columns:repeat(2,1fr)}}
+
 
 /* ═══ 취향 선택 (구성 탭) ═══ */
 .act-subrow{margin:12px 0 4px}
@@ -2822,6 +2833,11 @@ body {
 <button class="lb-arrow lb-prev" onclick="event.stopPropagation();crsLbPrev()">‹</button>
 <img id="crsLbImg" src="" alt="" decoding="async" fetchpriority="high">
 <button class="lb-arrow lb-next" onclick="event.stopPropagation();crsLbNext()">›</button>
+
+<div id="crsLbInfo" class="lb-info" style="display:none" onclick="event.stopPropagation()">
+<div class="lb-info-head"><div class="lb-info-title" id="crsLbInfoTitle"></div><div class="lb-info-badge" id="crsLbInfoBadge"></div></div>
+<div class="lb-info-grid" id="crsLbInfoGrid"></div>
+</div>
 </div>
 <!-- FAQ PAGE -->
 <div id="pg-faq" class="page">
@@ -5813,12 +5829,84 @@ el.addEventListener('mouseleave', function(){ id = setInterval(function(){ goTo(
 
 /* ── Course lightbox ── */
 var crsLbImages = [], crsLbIndex = 0;
+var COURSE_INFO = {
+"usa-1":{par:72,yards:7008,slope:136,rating:75.1,designer:{ko:"피트 다이",en:"Pete Dye"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-2":{par:72,yards:6500,designer:{ko:"데이비드 레인빌",en:"David Rainville"},diff:{ko:"프라이빗",en:"Private"}},
+"usa-3":{par:72,yards:6600,slope:137,rating:74.1,designer:{ko:"윌리엄 왓슨",en:"William Watson"},diff:{ko:"프라이빗",en:"Private"}},
+"usa-4":{par:72,yards:6700,slope:141,rating:74.9,designer:{ko:"윌리엄 F. 벨",en:"William F. Bell"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-5":{par:72,yards:6200,designer:{ko:"윌리엄 F. 벨",en:"William F. Bell"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-6":{par:72,yards:6600,slope:140,rating:74.0,diff:{ko:"챔피언십",en:"Championship"}},
+"usa-7":{par:72,yards:6700,designer:{ko:"그렉 내시",en:"Greg Nash"},diff:{ko:"퍼블릭",en:"Public"}},
+"usa-8":{par:72,yards:7007,designer:{ko:"아널드 파머",en:"Arnold Palmer"},diff:{ko:"리조트",en:"Resort"}},
+"usa-9":{par:72,yards:7000,designer:{ko:"허잔 & 프라이",en:"Hurdzan & Fry"},diff:{ko:"프라이빗",en:"Private"}},
+"usa-10":{par:72,yards:6600,designer:{ko:"아서 힐스",en:"Arthur Hills"},diff:{ko:"퍼블릭",en:"Public"}},
+"usa-11":{par:72,yards:7000,designer:{ko:"아서 힐스",en:"Arthur Hills"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-12":{par:72,yards:7300,slope:150,rating:76.1,designer:{ko:"피트 다이",en:"Pete Dye"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-13":{par:72,yards:7000,designer:{ko:"피트 다이",en:"Pete Dye"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-14":{par:72,yards:7200,designer:{ko:"잭 니클라우스",en:"Jack Nicklaus"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-15":{par:72,yards:7300,designer:{ko:"톰 파지오",en:"Tom Fazio"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-16":{par:72,yards:6800,designer:{ko:"윌리엄 F. 벨",en:"William F. Bell"},diff:{ko:"링크스",en:"Links"}},
+"usa-17":{par:72,yards:7100,designer:{ko:"로널드 프림",en:"Ronald Fream"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-18":{par:72,yards:6500,designer:{ko:"콘리시 & 실바",en:"Cornish & Silva"},diff:{ko:"리조트",en:"Resort"}},
+"usa-19":{par:72,yards:6800,designer:{ko:"길 한스",en:"Gil Hanse"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-20":{par:72,yards:7802,slope:148,rating:78.8,designer:{ko:"리스 존스",en:"Rees Jones"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-21":{par:72,yards:7000,designer:{ko:"윌리엄 F. 벨 · 웨이스코프 2016",en:"William F. Bell · Weiskopf 2016"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-22":{par:70,yards:7000,designer:{ko:"톰 파지오",en:"Tom Fazio"},diff:{ko:"리조트",en:"Resort"}},
+"usa-23":{par:72,yards:7300,designer:{ko:"피트 다이",en:"Pete Dye"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-24":{par:72,yards:7200,designer:{ko:"피트 다이",en:"Pete Dye"},diff:{ko:"챔피언십",en:"Championship"}},
+"usa-25":{par:72,yards:7604,designer:{ko:"피트 다이",en:"Pete Dye"},diff:{ko:"챔피언십",en:"Championship"}},
+"canada-1":{par:72,yards:6600,diff:{ko:"퍼블릭",en:"Public"}},
+"canada-2":{par:72,yards:7000,designer:{ko:"레스 퍼버",en:"Les Furber"},diff:{ko:"리조트",en:"Resort"}},
+"canada-3":{par:72,yards:6900,designer:{ko:"게리 브라우닝",en:"Gary Browning"},diff:{ko:"챔피언십",en:"Championship"}},
+"canada-4":{par:72,yards:6900,designer:{ko:"스탠리 톰슨",en:"Stanley Thompson"},diff:{ko:"챔피언십",en:"Championship"}},
+"canada-5":{par:72,yards:7100,designer:{ko:"로버트 트렌트 존스 Sr.",en:"Robert Trent Jones Sr."},diff:{ko:"챔피언십",en:"Championship"}},
+"kr-1":{par:72,diff:{ko:"챔피언십",en:"Championship"}},
+"kr-2":{par:72,diff:{ko:"프리미엄",en:"Premier"}},
+"kr-3":{par:72,diff:{ko:"프리미엄",en:"Premier"}},
+"kr-4":{par:72,designer:{ko:"잭 니클라우스",en:"Jack Nicklaus"},diff:{ko:"프리미엄",en:"Premier"}},
+"kr-5":{par:72,designer:{ko:"잭 니클라우스",en:"Jack Nicklaus"},diff:{ko:"리조트",en:"Resort"}},
+"kr-6":{par:72,diff:{ko:"프리미엄",en:"Premier"}},
+"kr-7":{par:72,diff:{ko:"프리미엄",en:"Premier"}},
+"kr-8":{par:72,diff:{ko:"프리미엄",en:"Premier"}},
+"kr-9":{par:72,designer:{ko:"잭 니클라우스",en:"Jack Nicklaus"},diff:{ko:"챔피언십",en:"Championship"}},
+"kr-10":{par:72,diff:{ko:"프리미엄",en:"Premier"}},
+"kr-11":{par:72,diff:{ko:"리조트",en:"Resort"}},
+"kr-12":{par:72,diff:{ko:"리조트",en:"Resort"}},
+};
+
+function _ci(ko,en){return '<span class="ko">'+ko+'</span><span class="en">'+en+'</span>';}
+function renderCourseInfo(card) {
+  var info = document.getElementById('crsLbInfo');
+  if (!info) return;
+  var clear = function(){
+    var t=document.getElementById('crsLbInfoTitle'), b=document.getElementById('crsLbInfoBadge'), g=document.getElementById('crsLbInfoGrid');
+    if(t) t.innerHTML=''; if(b) b.innerHTML=''; if(g) g.innerHTML='';
+  };
+  if (!card) { clear(); info.style.display='none'; return; }
+  var key = (card.getAttribute('data-country')||'') + '-' + (card.getAttribute('data-course')||'');
+  var d = COURSE_INFO[key];
+  if (!d) { clear(); info.style.display='none'; return; }
+  var t = card.querySelector('.course-title');
+  document.getElementById('crsLbInfoTitle').innerHTML = t ? t.innerHTML : '';
+  document.getElementById('crsLbInfoBadge').innerHTML = d.diff ? _ci(d.diff.ko, d.diff.en) : '';
+  var chips = '';
+  function chip(lbl, val){ chips += '<div class="lb-info-chip"><div class="lb-info-lbl">'+lbl+'</div><div class="lb-info-val">'+val+'</div></div>'; }
+  if (d.par)  chip(_ci('파','Par'), d.par);
+  if (d.yards) chip(_ci('야드','Yards'), d.yards + ' yd');
+  if (d.slope) chip(_ci('슬로프','Slope'), d.slope);
+  if (d.rating) chip(_ci('레이트','Rating'), d.rating);
+  if (d.designer) chip(_ci('설계자','Designer'), _ci(d.designer.ko, d.designer.en));
+  document.getElementById('crsLbInfoGrid').innerHTML = chips;
+  info.style.display = 'block';
+}
 function crsLbOpen(e, urls) {
 e.stopPropagation();
 crsLbImages = Array.isArray(urls) ? urls : [urls];
 crsLbIndex = 0;
 var img = document.getElementById('crsLbImg');
 if (img) img.src = crsLbImages[0];
+var card = (e.target && e.target.closest) ? e.target.closest('.course-card') : null;
+renderCourseInfo(card);
 document.getElementById('crsLb').classList.add('show');
 document.body.style.overflow = 'hidden';
 }
