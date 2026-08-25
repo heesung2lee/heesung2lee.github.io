@@ -5893,7 +5893,9 @@ var p = top[0][0];
 var r = CRS_RES[p] || CRS_RES.balanced;
 var L = curLang;
 var recs = r.rec.map(function(x){ return '<span>' + x + '</span>'; }).join('');
-res.innerHTML = '<h3><span class="ko">🎯 당신의 골퍼 유형</span><span class="en">🎯 Your Golfer Profile</span></h3><p><span class="ko">' + r.d_ko + '</span><span class="en">' + r.d_en + '</span></p><div class="rec-courses"><b><span class="ko">추천 코스:</span><span class="en">Recommended courses:</span></b> ' + recs + '</div><button class="quiz-opt" style="margin-top:16px;text-align:center;width:100%" onclick="crsInitQuiz()"><span class="ko">🔄 다시 테스트하기</span><span class="en">🔄 Retake the test</span></button>';
+var qBody = encodeURIComponent((L==='ko' ? '골퍼 유형: ' : 'Golfer Profile: ') + p + '\n\n' + (L==='ko' ? '추천 코스:\n' : 'Recommended courses:\n') + r.rec.join('\n'));
+var qHref = 'mailto:info@resonatetour.com?subject=' + encodeURIComponent('Resonate Tour - Custom Quote Request') + '&body=' + qBody;
+res.innerHTML = '<h3><span class="ko">🎯 당신의 골퍼 유형</span><span class="en">🎯 Your Golfer Profile</span></h3><p><span class="ko">' + r.d_ko + '</span><span class="en">' + r.d_en + '</span></p><div class="rec-courses"><b><span class="ko">추천 코스:</span><span class="en">Recommended courses:</span></b> ' + recs + '</div><button class="quiz-opt" style="margin-top:16px;text-align:center;width:100%" onclick="crsInitQuiz()"><span class="ko">🔄 다시 테스트하기</span><span class="en">🔄 Retake the test</span></button><a class="quiz-opt" href="' + qHref + '" style="margin-top:10px;text-align:center;width:100%;display:block;text-decoration:none;color:inherit"><span class="ko">💬 이 결과로 맞춤 견적 요청</span><span class="en">💬 Request a quote with this result</span></a>';
 }
 
 /* ── Init carousels + reveal ── */
