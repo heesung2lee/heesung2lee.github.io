@@ -2463,8 +2463,14 @@ body {
  <div class="hero-eye" style="margin-bottom:12px"><span class="ko">시네마틱 저니</span><span class="en">Cinematic Journey</span></div>
  <h1 class="hero-h1" style="font-size:clamp(30px,5vw,52px);margin-bottom:10px"><span class="ko">여정의 순간을,<br>영상으로.</span><span class="en">Journey moments,<br>in motion.</span></h1>
  <p class="hero-p" style="font-size:clamp(13px,1.8vw,16px);margin-bottom:38px;max-width:660px;margin-left:auto;margin-right:auto"><span class="ko">여정의 순간을 담은 영상 모음입니다. 자동 재생되며, 클릭하면 전체 화면으로 감상하세요.</span><span class="en">A collection of moments from the journey. Auto-playing; click to watch full-screen.</span></p>
- <div id="cinematic-rail" style="display:flex;gap:14px;overflow-x:auto;padding:8px 4px 16px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;max-width:1280px;margin:0 auto;scrollbar-width:thin"></div>
- <div style="color:rgba(255,255,255,.45);font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-top:4px"><span class="ko">◀ 옆으로 스크롤하여 감상 ▶</span><span class="en">◀ Swipe sideways to watch ▶</span></div>
+ <div id="cinematic-player" style="max-width:920px;margin:0 auto;position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/9;background:#000;box-shadow:0 12px 44px rgba(0,0,0,.5);border:1px solid rgba(212,175,55,.28)">
+ <iframe id="journeyPlayer" src="about:blank" title="Journey Film" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen style="width:100%;height:100%;border:0;display:block"></iframe>
+ </div>
+ <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;color:rgba(255,255,255,.6);font-size:13px;letter-spacing:.04em;flex-wrap:wrap">
+ <span><span class="ko">자동 재생 · 끝나면 다음 영상으로</span><span class="en">Auto-playing · advances to the next</span></span>
+ <span id="journeyCounter" style="color:#d4af37;font-weight:600">Journey Film 1 / 12</span>
+ <button onclick="openLightbox((typeof GAL_ITEMS!=='undefined'?GAL_ITEMS.length:0)+landingVideoIdx)" style="background:rgba(212,175,55,.14);color:#d4af37;border:1px solid rgba(212,175,55,.5);border-radius:999px;padding:6px 16px;font-size:12px;cursor:pointer"><span class="ko">전체 화면</span><span class="en">Full screen</span></button>
+ </div>
  </div>
  
  <div style="padding:48px 0 0;background:#fff">
@@ -4294,23 +4300,28 @@ function buildGalleryVideos() {
  }
 
  /* ── 홈 시네마틱 저니 영상 레일 (자동재생·반복·옆스크롤·클릭재생) ── */
- function buildCinematicRail() {
-  var rail = document.getElementById('cinematic-rail');
-  if (!rail || rail.dataset.built) return;
-  rail.dataset.built = '1';
+ function buildJourneyPlayer() {
+  var player = document.getElementById('journeyPlayer');
+  if (!player || player.dataset.built) return;
+  player.dataset.built = '1';
   if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
-  HOME_VIDEOS.forEach(function(v, i) {
-   var w = 320;
-   var embed = 'https://www.youtube.com/embed/' + v.id + '?autoplay=1&mute=1&loop=1&playlist=' + v.id + '&rel=0&playsinline=1&controls=0&disablekb=1&modestbranding=1';
-   var card = document.createElement('div');
-   card.style.cssText = 'flex-shrink:0;width:' + w + 'px;aspect-ratio:16/9;position:relative;border-radius:14px;overflow:hidden;cursor:pointer;background:#000;box-shadow:0 8px 30px rgba(0,0,0,.45);scroll-snap-align:start;border:1px solid rgba(212,175,55,.18)';
-   card.innerHTML = '<iframe src="' + embed + '" title="Journey Film ' + (i+1) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy" style="width:100%;height:100%;border:0;pointer-events:none"></iframe>'
-    + '<div class="cv-play" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.18);transition:background .3s"><div style="width:52px;height:52px;border-radius:50%;border:2px solid rgba(212,175,55,.95);background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:#d4af37;font-size:19px;backdrop-filter:blur(4px)">▶</div></div>';
-   card.onclick = function(){ openLightbox((typeof GAL_ITEMS!=='undefined'?GAL_ITEMS.length:0) + i); };
-   rail.appendChild(card);
-  });
- }
- setTimeout(buildCinematicRail, 250);
+  landingVideoIdx = 0;
+  player.src = ytEmbed(HOME_VIDEOS[0].id) + '&mute=1&controls=1';
+  updateJourneyCounter();
+}
+function updateJourneyCounter() {
+  var el = document.getElementById('journeyCounter');
+  if (el && typeof HOME_VIDEOS !== 'undefined') el.textContent = 'Journey Film ' + (landingVideoIdx + 1) + ' / ' + HOME_VIDEOS.length;
+}
+function advanceLandingVideo() {
+  if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
+  landingVideoIdx = (landingVideoIdx + 1) % HOME_VIDEOS.length;
+  var player = document.getElementById('journeyPlayer');
+  if (player) player.src = ytEmbed(HOME_VIDEOS[landingVideoIdx].id) + '&mute=1&controls=1';
+  updateJourneyCounter();
+}
+var landingVideoIdx = 0;
+setTimeout(buildJourneyPlayer, 250);
  
 function initGalHeroParallax() {
  const bg = document.getElementById('gal-hero-bg');
@@ -4425,7 +4436,14 @@ window.addEventListener('message', function(e){
   try {
     var d = JSON.parse(e.data);
     if (d && d.event === 'infoDelivery' && d.info && d.info.playerState === 0) {
-      advanceJourneyVideo();
+      var vid = d.info.videoData && d.info.videoData.video_id;
+      var lb = document.getElementById('lightbox');
+      var lbOpen = lb && lb.classList.contains('open');
+      if (lbOpen && LB_POOL && LB_POOL[lbIndex] && LB_POOL[lbIndex].id === vid) {
+        advanceJourneyVideo();
+      } else if (!lbOpen && typeof HOME_VIDEOS !== 'undefined' && HOME_VIDEOS[landingVideoIdx] && HOME_VIDEOS[landingVideoIdx].id === vid) {
+        advanceLandingVideo();
+      }
     }
   } catch(_){}
 });
