@@ -2927,7 +2927,7 @@ body {
  </div>
 </div>
  
-<footer style="scroll-margin-top:0">
+<footer style="scroll-margin-top:0;content-visibility:auto;contain-intrinsic-size:auto 600px">
  <div class="footer-logo"><span class="ko">레조네이트 투어</span><span class="en">Resonate Tour</span><small>KOREA → USA</small></div>
  <div class="footer-links">
  <button onclick="nav('pricing')"><span class="ko">구성</span><span class="en">Plan &amp; Schedule</span></button>
@@ -4530,10 +4530,10 @@ document.addEventListener('keydown', e => {
  if (document.readyState === 'loading') {
  document.addEventListener('DOMContentLoaded', function() {
  // Small delay so landing page renders first
- setTimeout(preloadGallery, 800);
+ (window.requestIdleCallback ? requestIdleCallback(preloadGallery, {timeout: 2500}) : setTimeout(preloadGallery, 800));
  });
  } else {
- setTimeout(preloadGallery, 800);
+ (window.requestIdleCallback ? requestIdleCallback(preloadGallery, {timeout: 2500}) : setTimeout(preloadGallery, 800));
  }
 })();
  
@@ -4927,24 +4927,29 @@ document.addEventListener('keydown', e => {
  scrollBoost=Math.min(Math.abs(dy)*0.15,2.5);
  },{passive:true});
  
+ var REDUCED_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ var IS_MOBILE = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+ var drawCount = 0;
  function tick(){
- requestAnimationFrame(tick);
- // 자연 효과(갈매기·햇살·잎)는 랜딩(home)·소개(about)·문의(contact)에서만 표시
- var NATURE = (curPage === 'home' || curPage === 'about' || curPage === 'contact');
- cv.style.display = NATURE ? 'block' : 'none';
- if (!NATURE) return;
- ctx.clearRect(0,0,W,H);
- frame++;
- scrollBoost*=0.92;
- 
- drawBeam();
- birds.forEach(function(b){
- b.speed=b.speed+(scrollBoost*0.08);
- b.speed=Math.max(0.24,Math.min(b.speed,2.1));
- drawBird(b);
- });
- winds.forEach(drawWind);
- leaves.forEach(drawLeaf);
+  requestAnimationFrame(tick);
+  // 자연 효과(갈매기·햇살·잎)는 랜딩(home)·소개(about)·문의(contact)에서만 표시
+  var NATURE = (curPage === 'home' || curPage === 'about' || curPage === 'contact');
+  cv.style.display = NATURE ? 'block' : 'none';
+  if (!NATURE || document.hidden || REDUCED_MOTION) return;
+  // 성능: 모바일은 ~4프레임마다(~15fps), 데스크톱은 ~2프레임마다(~30fps)만 그림 — choppy 방지
+  if ((++drawCount % (IS_MOBILE ? 4 : 2)) !== 0) return;
+  ctx.clearRect(0,0,W,H);
+  frame++;
+  scrollBoost*=0.92;
+  
+  drawBeam();
+  birds.forEach(function(b){
+   b.speed=b.speed+(scrollBoost*0.08);
+   b.speed=Math.max(0.24,Math.min(b.speed,2.1));
+   drawBird(b);
+  });
+  winds.forEach(drawWind);
+  leaves.forEach(drawLeaf);
  }
  
  setTimeout(tick, 400);
