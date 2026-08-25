@@ -113,9 +113,9 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 /* ── HOME ── */
 .hero-slide{position:relative;height:100svh;min-height:580px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center}
 @keyframes filmPulse{0%{box-shadow:0 0 0 0 rgba(212,175,55,.45)}70%{box-shadow:0 0 0 22px rgba(212,175,55,0)}100%{box-shadow:0 0 0 0 rgba(212,175,55,0)}}
-.hero-eye{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:14px}
-.hero-h1{font-size:clamp(38px,7vw,70px);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:12px;color:#fff}
-.hero-p{font-size:clamp(14px,2vw,19px);font-weight:300;color:rgba(255,255,255,.85);margin-bottom:32px;line-height:1.6}
+.hero-eye{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:14px;text-shadow:0 1px 4px rgba(0,0,0,.7),0 2px 12px rgba(0,0,0,.5)}
+.hero-h1{font-size:clamp(38px,7vw,70px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:12px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6),0 3px 14px rgba(0,0,0,.6),0 8px 40px rgba(0,0,0,.45)}
+.hero-p{font-size:clamp(14px,2vw,19px);font-weight:400;color:rgba(255,255,255,.95);margin-bottom:32px;line-height:1.6;text-shadow:0 1px 5px rgba(0,0,0,.7),0 2px 14px rgba(0,0,0,.55)}
 .hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .btn-w{font-size:14px;font-weight:500;background:rgba(255,255,255,.88);color:#1a3450;border:none;padding:13px 28px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all.2s;min-width:170px;white-space:nowrap;text-align:center}
 .btn-w:hover{background:#fff;transform:scale(1.02)}
@@ -1231,7 +1231,7 @@ html {
  
  
 .hero-bg{display:none!important}
-.hero-grad{position:absolute;top:0;left:0;right:0;bottom:0;z-index:2;background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,transparent 30%,rgba(0,0,0,.5) 70%,rgba(0,0,0,.72) 100%)}
+.hero-grad{position:absolute;top:0;left:0;right:0;bottom:0;z-index:2;background:linear-gradient(to bottom,rgba(0,0,0,.18) 0%,rgba(0,0,0,.28) 45%,rgba(0,0,0,.55) 75%,rgba(0,0,0,.75) 100%)}
 .hero-cnt{position:relative;z-index:3}
  
 /* ═══ HERO TEXT CONTRAST — always legible over any photo ═══ */
@@ -1911,24 +1911,24 @@ body {
 #pg-courses .cta-btn{display:inline-block;padding:14px 32px;background:var(--crsgold);color:#1a3450;font-size:14px;font-weight:700;text-decoration:none;border-radius:4px;letter-spacing:.5px;transition:.2s;border:none;cursor:pointer;font-family:inherit}
 #pg-courses .cta-btn:hover{background:#e5c050}
 #pg-courses .crs-footer{margin:36px auto 0;color:var(--crsdim);font-size:11.5px;text-align:center;padding-bottom:40px;max-width:860px}
-.crs-lb{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;touch-action:pan-y pinch-zoom}
+.crs-lb{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;cursor:pointer;touch-action:pan-y pinch-zoom}
 .crs-lb.show{display:flex}
-.crs-lb img{max-width:95vw;max-height:calc(100vh - 175px);border-radius:6px;box-shadow:0 0 80px rgba(0,0,0,.6);transition:opacity .3s;user-select:none;pointer-events:none}
+.crs-lb img{max-width:95vw;max-height:90vh;border-radius:6px;box-shadow:0 0 80px rgba(0,0,0,.6);transition:opacity .3s;user-select:none;pointer-events:none}
 .crs-lb .lb-close{position:absolute;top:20px;right:24px;font-size:32px;color:rgba(255,255,255,.7);cursor:pointer;z-index:10;background:none;border:none}
 .crs-lb .lb-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:rgba(255,255,255,.5);cursor:pointer;z-index:10;padding:20px;user-select:none;background:none;border:none}
 .crs-lb .lb-arrow:hover{color:#fff}
 .crs-lb .lb-prev{left:10px}
 .crs-lb .lb-next{right:10px}
-.crs-lb .lb-info{width:100%;max-width:880px;margin:0 auto 16px;padding:14px 20px 16px;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.78));border-top:1px solid rgba(212,175,55,.35);color:#fff;text-align:left;cursor:default;user-select:text}
-.crs-lb .lb-info-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:12px}
-.crs-lb .lb-info-title{font-size:16px;font-weight:700;color:#fff;letter-spacing:.02em;font-family:Georgia,'Times New Roman',serif}
-.crs-lb .lb-info-badge{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a3450;background:#d4af37;padding:4px 12px;border-radius:999px;white-space:nowrap}
-.crs-lb .lb-info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px}
-.crs-lb .lb-info-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:8px 12px}
-.crs-lb .lb-info-lbl{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px}
-.crs-lb .lb-info-val{font-size:14px;font-weight:700;color:#fff;line-height:1.3}
-.crs-lb .lb-info-val .en{font-family:Georgia,'Times New Roman',serif}
-@media(max-width:520px){.crs-lb .lb-info{padding:12px 14px 14px;margin-bottom:8px}.crs-lb .lb-info-title{font-size:14px}.crs-lb .lb-info-grid{grid-template-columns:repeat(2,1fr)}}
+
+.crs-info{margin:10px 2px 4px;padding:12px 14px;background:#f6f7f9;border:1px solid #e4e7ec;border-radius:12px}
+.crs-info-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a3450;background:#d4af37;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+.ci-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:6px}
+.ci-chip{background:#fff;border:1px solid #e8eaf0;border-radius:9px;padding:7px 10px}
+.ci-lbl{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:#7a8699;margin-bottom:2px}
+.ci-val{font-size:13.5px;font-weight:700;color:#1a3450;line-height:1.3}
+.ci-val .en{font-family:Georgia,'Times New Roman',serif}
+@media(max-width:520px){.crs-info{padding:10px 12px}.ci-grid{grid-template-columns:repeat(2,1fr)}}
+
 
 
 /* ═══ 취향 선택 (구성 탭) ═══ */
@@ -2470,16 +2470,14 @@ body {
  </div>
  </div>
  
- <div class="hero-slide" id="cinematic-sec" style="height:auto;min-height:0;background:linear-gradient(160deg,#0b0e15,#131a28 55%,#0b0e15);padding:76px 18px 84px;display:block;text-align:center">
- <div class="hero-eye" style="margin-bottom:12px"><span class="ko">시네마틱 저니</span><span class="en">Cinematic Journey</span></div>
+ <div class="hero-slide" id="cinematic-sec" style="height:auto;min-height:0;background:linear-gradient(160deg,#0b0e15,#131a28 55%,#0b0e15);padding:52px 18px 60px;display:block;text-align:center">
+ 
  <h1 class="hero-h1" style="font-size:clamp(30px,5vw,52px);margin-bottom:10px"><span class="ko">여정의 순간을,<br>영상으로.</span><span class="en">Journey moments,<br>in motion.</span></h1>
- <p class="hero-p" style="font-size:clamp(13px,1.8vw,16px);margin-bottom:38px;max-width:660px;margin-left:auto;margin-right:auto"><span class="ko">여정의 순간을 담은 영상 모음입니다. 자동 재생되며, 클릭하면 전체 화면으로 감상하세요.</span><span class="en">A collection of moments from the journey. Auto-playing; click to watch full-screen.</span></p>
+ 
  <div id="cinematic-player" style="max-width:920px;margin:0 auto;position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/9;background:#000;box-shadow:0 12px 44px rgba(0,0,0,.5);border:1px solid rgba(212,175,55,.28)">
  <iframe id="journeyPlayer" src="about:blank" title="Journey Film" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen style="width:100%;height:100%;border:0;display:block"></iframe>
  </div>
  <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;color:rgba(255,255,255,.6);font-size:13px;letter-spacing:.04em;flex-wrap:wrap">
- <span><span class="ko">자동 재생 · 끝나면 다음 영상으로</span><span class="en">Auto-playing · advances to the next</span></span>
- <span id="journeyCounter" style="color:#d4af37;font-weight:600">Journey Film 1 / 12</span>
  <button onclick="openLightbox((typeof GAL_ITEMS!=='undefined'?GAL_ITEMS.length:0)+landingVideoIdx)" style="background:rgba(212,175,55,.14);color:#d4af37;border:1px solid rgba(212,175,55,.5);border-radius:999px;padding:6px 16px;font-size:12px;cursor:pointer"><span class="ko">전체 화면</span><span class="en">Full screen</span></button>
  </div>
  </div>
@@ -2492,7 +2490,7 @@ body {
  <div class="why-grid" style="background:#fff">
  <div class="why-c"><div class="why-ico ico-usa"></div><div class="why-t"><span class="ko">현지 네트워크</span><span class="en">Local Network</span></div><div class="why-d"><span class="ko">LA & 샌디에이고 현지 파트너. 관광객이 갈 수 없는 코스까지.</span><span class="en">LA & San Diego local partners. Access no ordinary tourist gets.</span></div></div>
  <div class="why-c"><div class="why-ico ico-target"></div><div class="why-t"><span class="ko">완전 맞춤 설계</span><span class="en">Fully Custom</span></div><div class="why-d"><span class="ko">처음부터 끝까지 당신만을 위해 설계합니다.</span><span class="en">Designed from scratch, exclusively for you.</span></div></div>
- <div class="why-c"><div class="why-ico ico-phone"></div><div class="why-t"><span class="ko">사전 오리엔테이션</span><span class="en">Pre-Departure Brief</span></div><div class="why-d"><span class="ko">출발 전 1:1 통화. Day 1의 불안을 없앱니다.</span><span class="en">1:1 call before you depart. Zero Day 1 anxiety.</span></div></div>
+ <div class="why-c"><div class="why-ico ico-phone"></div><div class="why-t"><span class="ko">사전 오리엔테이션</span><span class="en">Pre-Departure Brief</span></div><div class="why-d"><span class="ko">출발 전 1:1 상담으로 일정·코스를 미리 확정. 첫 날부터 현지처럼 여유롭게.</span><span class="en">A 1:1 call before departure finalizes your courses &amp; itinerary — relaxed from day one.</span></div></div>
  <div class="why-c"><div class="why-ico ico-star"></div><div class="why-t"><span class="ko">프라이빗 액세스</span><span class="en">Private Access</span></div><div class="why-d"><span class="ko">현지 네트워크로 예약이 어려운 프라이빗 코스와 티타임을 확보합니다.</span><span class="en">Our local network secures private courses and tee times others can't reach.</span></div></div>
  </div>
  </div>
@@ -2833,11 +2831,6 @@ body {
 <button class="lb-arrow lb-prev" onclick="event.stopPropagation();crsLbPrev()">‹</button>
 <img id="crsLbImg" src="" alt="" decoding="async" fetchpriority="high">
 <button class="lb-arrow lb-next" onclick="event.stopPropagation();crsLbNext()">›</button>
-
-<div id="crsLbInfo" class="lb-info" style="display:none" onclick="event.stopPropagation()">
-<div class="lb-info-head"><div class="lb-info-title" id="crsLbInfoTitle"></div><div class="lb-info-badge" id="crsLbInfoBadge"></div></div>
-<div class="lb-info-grid" id="crsLbInfoGrid"></div>
-</div>
 </div>
 <!-- FAQ PAGE -->
 <div id="pg-faq" class="page">
@@ -4032,6 +4025,12 @@ closeLightbox = function() {
 
 /* ── 취향 선택 (구성 탭) ── */
 function actToggle(el){ el.classList.toggle('on'); actCount(); }
+(function(){
+  var _tx=0,_ty=0,_drag=false;
+  document.addEventListener('touchstart',function(e){var t=e.touches[0];if(t){_tx=t.clientX;_ty=t.clientY;}_drag=false;},{passive:true});
+  document.addEventListener('touchmove',function(e){if(!_drag){var t=e.touches[0];if(t&&(Math.abs(t.clientX-_tx)>10||Math.abs(t.clientY-_ty)>10)){_drag=true;}}},{passive:true});
+  document.addEventListener('click',function(e){if(_drag){e.stopPropagation();e.preventDefault();_drag=false;}},true);
+})();
 function actCount(){
  var n = document.querySelectorAll('.act-item.on').length;
  var el = document.getElementById('act-count');
@@ -5875,38 +5874,41 @@ var COURSE_INFO = {
 };
 
 function _ci(ko,en){return '<span class="ko">'+ko+'</span><span class="en">'+en+'</span>';}
-function renderCourseInfo(card) {
-  var info = document.getElementById('crsLbInfo');
-  if (!info) return;
-  var clear = function(){
-    var t=document.getElementById('crsLbInfoTitle'), b=document.getElementById('crsLbInfoBadge'), g=document.getElementById('crsLbInfoGrid');
-    if(t) t.innerHTML=''; if(b) b.innerHTML=''; if(g) g.innerHTML='';
-  };
-  if (!card) { clear(); info.style.display='none'; return; }
-  var key = (card.getAttribute('data-country')||'') + '-' + (card.getAttribute('data-course')||'');
-  var d = COURSE_INFO[key];
-  if (!d) { clear(); info.style.display='none'; return; }
-  var t = card.querySelector('.course-title');
-  document.getElementById('crsLbInfoTitle').innerHTML = t ? t.innerHTML : '';
-  document.getElementById('crsLbInfoBadge').innerHTML = d.diff ? _ci(d.diff.ko, d.diff.en) : '';
+function _courseInfoChips(d) {
   var chips = '';
-  function chip(lbl, val){ chips += '<div class="lb-info-chip"><div class="lb-info-lbl">'+lbl+'</div><div class="lb-info-val">'+val+'</div></div>'; }
+  function chip(lbl, val){ chips += '<div class="ci-chip"><div class="ci-lbl">'+lbl+'</div><div class="ci-val">'+val+'</div></div>'; }
   if (d.par)  chip(_ci('파','Par'), d.par);
   if (d.yards) chip(_ci('야드','Yards'), d.yards + ' yd');
   if (d.slope) chip(_ci('슬로프','Slope'), d.slope);
   if (d.rating) chip(_ci('레이트','Rating'), d.rating);
   if (d.designer) chip(_ci('설계자','Designer'), _ci(d.designer.ko, d.designer.en));
-  document.getElementById('crsLbInfoGrid').innerHTML = chips;
-  info.style.display = 'block';
+  return chips;
 }
+function renderAllCourseInfo() {
+  var cards = document.querySelectorAll('.course-card');
+  cards.forEach(function(card) {
+    var key = (card.getAttribute('data-country')||'') + '-' + (card.getAttribute('data-course')||'');
+    var d = COURSE_INFO[key];
+    if (!d) return;
+    if (card.querySelector('.crs-info')) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'crs-info';
+    wrap.innerHTML = '<div class="crs-info-badge">' + (d.diff ? _ci(d.diff.ko, d.diff.en) : '') + '</div><div class="ci-grid">' + _courseInfoChips(d) + '</div>';
+    var car = card.querySelector('.course-carousel');
+    if (car) car.insertAdjacentElement('afterend', wrap);
+    else card.appendChild(wrap);
+  });
+}
+(function(){
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderAllCourseInfo);
+  else renderAllCourseInfo();
+})();
 function crsLbOpen(e, urls) {
 e.stopPropagation();
 crsLbImages = Array.isArray(urls) ? urls : [urls];
 crsLbIndex = 0;
 var img = document.getElementById('crsLbImg');
 if (img) img.src = crsLbImages[0];
-var card = (e.target && e.target.closest) ? e.target.closest('.course-card') : null;
-renderCourseInfo(card);
 document.getElementById('crsLb').classList.add('show');
 document.body.style.overflow = 'hidden';
 }
