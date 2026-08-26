@@ -4320,16 +4320,39 @@ function buildGalleryVideos() {
  + '<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch">' + cards + '</div>';
  }
 
- /* ── 홈 시네마틱 저니 영상 레일 (자동재생·반복·옆스크롤·클릭재생) ── */
+ /* ── 홈 시네마틱 저니 영상 (연속 자동재생: 영상 종료 시 다음 랜덤 영상, 끊김없이) ── */
+ var ytPlayer = null;
+ function loadYTAPI() {
+  if (window.YT && window.YT.Player) { initYTPlayer(); return; }
+  if (document.getElementById('ytapi-script')) return;
+  var s = document.createElement('script');
+  s.id = 'ytapi-script';
+  s.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(s);
+ }
+ window.onYouTubeIframeAPIReady = function(){ initYTPlayer(); };
+ function initYTPlayer() {
+  if (!window.YT || !window.YT.Player || ytPlayer) return;
+  if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
+  var el = document.getElementById('journeyPlayer');
+  if (!el) return;
+  ytPlayer = new YT.Player('journeyPlayer', {
+   videoId: HOME_VIDEOS[landingVideoIdx].id,
+   playerVars: { autoplay:1, mute:1, rel:0, controls:0, modestbranding:1, iv_load_policy:3, playsinline:1 },
+   events: { onStateChange: function(e){ if (e && e.data === 0) advanceLandingVideo(); } }
+  });
+ }
  function buildJourneyPlayer() {
   var player = document.getElementById('journeyPlayer');
   if (!player || player.dataset.built) return;
   player.dataset.built = '1';
   if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
   landingVideoIdx = 0;
-  player.src = ytEmbed(HOME_VIDEOS[0].id) + '&mute=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1';
   setCinematicPlayer();
   updateJourneyCounter();
+  loadYTAPI();
+  // API가 2초 내 로드 안 되면(방해/차단 환경) 직접 iframe src로 폴백 — 종료 이벤트 리스너가 대신 진행
+  setTimeout(function(){ if (!ytPlayer) player.src = ytEmbed(HOME_VIDEOS[landingVideoIdx].id) + '&mute=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1'; }, 2000);
  }
  function setCinematicPlayer() {
   var wrap = document.getElementById('cinematic-player');
@@ -4347,21 +4370,25 @@ function buildGalleryVideos() {
   var el = document.getElementById('journeyCounter');
   if (el && typeof HOME_VIDEOS !== 'undefined') el.textContent = 'Journey Film ' + (landingVideoIdx + 1) + ' / ' + HOME_VIDEOS.length;
  }
+ function playVideoById(id) {
+  if (ytPlayer && ytPlayer.loadVideoById) { ytPlayer.loadVideoById(id); return; }
+  var player = document.getElementById('journeyPlayer');
+  if (player) player.src = ytEmbed(id) + '&mute=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1';
+ }
  function advanceLandingVideo() {
   if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
   var next;
   if (HOME_VIDEOS.length === 1) { next = 0; }
   else { do { next = Math.floor(Math.random() * HOME_VIDEOS.length); } while (next === landingVideoIdx); }
   landingVideoIdx = next;
-  var player = document.getElementById('journeyPlayer');
-  if (player) player.src = ytEmbed(HOME_VIDEOS[landingVideoIdx].id) + '&mute=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1';
+  playVideoById(HOME_VIDEOS[landingVideoIdx].id);
   setCinematicPlayer();
   updateJourneyCounter();
  }
  var landingVideoIdx = 0;
  setTimeout(buildJourneyPlayer, 250);
- /* 백그라운드처럼 자동 진행되는 안전망 — 영상 종료 이벤트가 안 잡히면 주기적으로 다음 랜덤 영상으로 */
- setInterval(function(){ advanceLandingVideo(); }, 28000);
+ /* 안전망 — 영상 종료 이벤트가 안 잡히더라도 30초마다 다음 랜덤 영상으로 진행 */
+ setInterval(function(){ advanceLandingVideo(); }, 30000);
  
 function initGalHeroParallax() {
  const bg = document.getElementById('gal-hero-bg');
