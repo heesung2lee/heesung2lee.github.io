@@ -3541,9 +3541,17 @@ document.addEventListener('click', function(e) {
  var dd = document.getElementById('lcDropdown');
  var btn = document.getElementById('lcBtn');
  if (dd && btn && !btn.contains(e.target) && !dd.contains(e.target)) {
- dd.classList.remove('show');
+  dd.classList.remove('show');
  }
 });
+// iOS/터치: 빈 영역 탭 시 click 이벤트가 안 오는 환경 대응 — touchstart로 닫기
+document.addEventListener('touchstart', function(e) {
+ var dd = document.getElementById('lcDropdown');
+ var btn = document.getElementById('lcBtn');
+ if (dd && btn && dd.classList.contains('show') && !btn.contains(e.target) && !dd.contains(e.target)) {
+  dd.classList.remove('show');
+ }
+}, {passive:true});
 function _applyLang(lang) {
  const _sy = window.scrollY;
  curLang = lang;
