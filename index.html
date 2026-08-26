@@ -1156,6 +1156,8 @@ html {
 #lb-img{width:100%;max-height:80svh;object-fit:contain;display:block;background:#111}
 .lb-vid{display:none;width:100%;max-width:1000px}
 .lb-vid iframe{width:100%;aspect-ratio:16/9;max-height:80svh;border:0;background:#000;display:block}
+/* 랜딩 시네마틱 영상 — 배경처럼 유튜브 제목/채널 오버레이가 뜨지 않도록 비인터랙트 처리 */
+#journeyPlayer{pointer-events:none !important}
 #lb-info{
  background:#111;padding:16px 20px;
  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
@@ -4387,8 +4389,7 @@ function buildGalleryVideos() {
  }
  var landingVideoIdx = 0;
  setTimeout(buildJourneyPlayer, 250);
- /* 안전망 — 영상 종료 이벤트가 안 잡히더라도 30초마다 다음 랜덤 영상으로 진행 */
- setInterval(function(){ advanceLandingVideo(); }, 30000);
+ /* 영상 종료 이벤트(onStateChange ENDED)에서만 다음 랜덤 영상으로 진행 — 고정 시간 아님 */
  
 function initGalHeroParallax() {
  const bg = document.getElementById('gal-hero-bg');
