@@ -717,8 +717,8 @@ footer{background:#f4f4f4!important}
  display:block;width:calc(100% - 32px);
  margin:16px 16px 8px;
  padding:16px 14px;border-radius:14px;
- background:#171a20;color:#fff;
- font-family:inherit;font-size:14px;font-weight:600;
+ background:linear-gradient(135deg,#d4af37,#b8942a);color:#1a1a1a;
+ font-family:inherit;font-size:14px;font-weight:700;
  border:none;cursor:pointer;text-align:center;
  transition:all.18s cubic-bezier(.34,1.56,.64,1);
  -webkit-tap-highlight-color:transparent;
@@ -726,8 +726,9 @@ footer{background:#f4f4f4!important}
  white-space:normal;word-break:keep-all;
  overflow-wrap:break-word;
  box-sizing:border-box;
+ letter-spacing:.02em;
 }
-.ham-cta:active{transform:scale(.96);background:#393c41}
+.ham-cta:active{transform:scale(.96);background:#c9a63a}
 .ham-footer{padding:12px 22px 20px;margin-top:auto;flex-shrink:0}
 .ham-footer-txt{font-size:11px;color:#bbb;line-height:1.7}
  
@@ -1594,49 +1595,8 @@ body {
  0%,100% { opacity: 1; } 50% { opacity: 0; }
 }
  
-/* ── #53 KakaoTalk floating button ── */
-#kakao-float {
- position: fixed;
- bottom: 86px;
- right: 18px;
- width: 52px; height: 52px;
- border-radius: 50%;
- background: #fee500;
- border: none;
- cursor: pointer;
- z-index: 250;
- display: flex;
- align-items: center;
- justify-content: center;
- box-shadow: 0 4px 16px rgba(0,0,0,.22);
- transition: transform.18s cubic-bezier(.34,1.56,.64,1), box-shadow.18s;
- -webkit-tap-highlight-color: transparent;
-}
-#kakao-float:hover { transform: scale(1.1); box-shadow: 0 6px 22px rgba(0,0,0,.28); }
-#kakao-float:active { transform: scale(.92); }
-#kakao-float svg { width: 28px; height: 28px; }
-#kakao-float-tip {
- position: fixed;
- bottom: 148px;
- right: 18px;
- background: rgba(0,0,0,.78);
- color: #fff;
- font-size: 11px;
- padding: 6px 12px;
- border-radius: 100px;
- white-space: nowrap;
- opacity: 0;
- transform: translateY(6px);
- transition: all.2s;
- pointer-events: none;
- z-index: 250;
-}
-#kakao-float:hover + #kakao-float-tip,
-#kakao-float-tip.show {
- opacity: 1;
- transform: translateY(0);
-}
- 
+/* ── #53 KakaoTalk floating button — 제거됨(2026-08) ── */
+
 /* ── #57 Count-up ── */
 .stat-val[data-target] { transition: none; }
  
@@ -2319,12 +2279,12 @@ body {
  <span class="ham-item-label"><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span></span>
  <span class="ham-item-arrow">›</span>
  </button>
- <button class="ham-item" onclick="nav('contact');closeHam()">
- <span class="ham-item-ico ico-mail"></span>
- <span class="ham-item-label"><span class="ko">문의 & 상담</span><span class="en">Contact & Consultation</span></span>
- <span class="ham-item-arrow">›</span>
- </button>
  </div>
+
+ <button class="ham-cta" onclick="nav('contact');closeHam()">
+ <span class="ko"><span class="ico-chat" style="display:inline-flex;margin-right:4px"></span>문의 & 상담</span>
+ <span class="en" style="display:block;font-size:11px;opacity:.85;margin-top:2px"><span class="ico-chat" style="display:inline-flex;margin-right:4px"></span>Contact &amp; Consultation</span>
+ </button>
  
  <div class="ham-footer">
  <div class="ham-footer-txt">
@@ -2844,10 +2804,6 @@ body {
 <!-- FAQ PAGE -->
 <div id="pg-faq" class="page">
  <div class="faq-wrap">
- <div class="page-hdr" style="padding:0 0 32px;border:none;text-align:left">
- <h1><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span></h1>
- <p><span class="ko">궁금한 점을 아래에서 먼저 확인해 보세요</span><span class="en">Find answers to the most common questions</span></p>
- </div>
  <div class="faq-cats">
  <button class="faq-cat act" onclick="filterFaq('all')"><span class="ko">전체</span><span class="en">All</span></button>
  <button class="faq-cat" onclick="filterFaq('golf')"><span class="ko">골프</span><span class="en">Golf</span></button>
@@ -2870,7 +2826,7 @@ body {
  </div>
  <div style="text-align:center;margin-top:48px;padding:36px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;color:#fff">
  <h3 style="font-size:20px;font-weight:700;margin-bottom:8px"><span class="ko">더 궁금한 점이 있으신가요?</span><span class="en">Still have questions?</span></h3>
- <p style="font-size:14px;opacity:.8;margin-bottom:20px"><span class="ko">카카오톡 또는 이메일로 연락주세요. 24시간 내 답변드립니다</span><span class="en">Reach out via KakaoTalk or email. We respond within 24 hours</span></p>
+ <p style="font-size:14px;opacity:.8;margin-bottom:20px"><span class="ko">카카오톡 또는 이메일로 연락주세요</span><span class="en">Reach out via KakaoTalk or email</span></p>
  <button class="btn-book" style="font-size:14px;padding:14px 32px;border-radius:100px" onclick="nav('contact')"><span class="ko">상담 신청하기</span><span class="en">Contact Us</span></button>
  </div>
  </div>
@@ -5298,38 +5254,8 @@ function showScheduleSkeleton() {
  }).join('');
 }
  
-/* ── #47 Swipe to close ham menu ── */
-(function(){
- var sheet = null;
- var startX = 0, startY = 0;
- document.addEventListener('touchstart', function(e) {
- sheet = document.getElementById('ham-sheet');
- if (!sheet || !sheet.classList.contains('open')) return;
- startX = e.touches[0].clientX;
- startY = e.touches[0].clientY;
- }, { passive: true });
- document.addEventListener('touchmove', function(e) {
- if (!sheet || !sheet.classList.contains('open')) return;
- var dx = e.touches[0].clientX - startX;
- var dy = Math.abs(e.touches[0].clientY - startY);
- if (dx > 18 && dy < 60) {
- var pct = Math.min(dx / sheet.offsetWidth, 1);
- sheet.style.transform = 'translateX(' + (pct * 110) + '%)';
- sheet.style.transition = 'none';
- }
- }, { passive: true });
- document.addEventListener('touchend', function(e) {
- if (!sheet || !sheet.classList.contains('open')) return;
- var dx = e.changedTouches[0].clientX - startX;
- sheet.style.transition = '';
- if (dx > sheet.offsetWidth * 0.38) {
- if (window.closeHam) closeHam();
- } else {
- sheet.style.transform = '';
- }
- }, { passive: true });
-})();
- 
+/* ── #47 Swipe to close ham menu — 제거됨: 슬라이드로 인해 시트가 오른쪽으로 밀린 채 stuck되는 문제 방지. 메뉴 선택은 탭(tap)으로만. */
+
 /* ── #48 Form autocomplete attributes ── */
 (function(){
  var map = {
@@ -6011,14 +5937,8 @@ crsInitQuiz();
 </div>
  
  
-<!-- #53 KakaoTalk floating button -->
-<a id="kakao-float" href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener noreferrer" aria-label="KakaoTalk 상담">
- <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
- <path d="M12 3C6.477 3 2 6.582 2 11c0 2.914 1.768 5.478 4.42 7.022L5.5 21l3.308-1.713A11.6 11.6 0 0012 19c5.523 0 10-3.582 10-8S17.523 3 12 3z" fill="#391b1b"/>
- </svg>
-</a>
-<div id="kakao-float-tip"><span class="ko">카카오톡 상담</span><span class="en">KakaoTalk Chat</span></div>
- 
- 
+<!-- #53 KakaoTalk floating button — 제거됨(2026-08) -->
+
+
 </body>
 </html>
