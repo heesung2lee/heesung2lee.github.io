@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://www.youtube.com/iframe_api" async></script>
+<!-- Tailwind CDN 제거 — 사이트는 Tailwind 유틸리티 클래스를 전혀 사용하지 않음(전부 인라인 style+커스텀 CSS).
+     CDN이 첫 화면을 막는 1MB+ 렌더차단 스크립트였으므로 제거해 FCP/LCP 개선 -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script>tailwind.config={theme:{extend:{colors:{navy:{50:"#eef2f6",100:"#d4dfeb",200:"#b3c5d7",300:"#85a5bf",400:"#5b84a3",500:"#41698a",600:"#355672",700:"#2e4760",800:"#264460",900:"#1a3450"},gold:{50:"#fdf8ed",100:"#f9edcc",200:"#f2d88f",300:"#ebc057",400:"#e5b030",500:"#d4951c",600:"#b87414",700:"#925413",800:"#794318",900:"#653617"}}}}}</script>
+<script src="https://www.youtube.com/iframe_api" async></script>
 <title>레조네이트 투어 · Resonate Tour — resonatetour.com</title>
  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="theme-color" content="#16213e">
  <meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,7 +24,6 @@
  <!-- Gallery & hero image preloads -->
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
  <!-- LCP(첫 화면) 이미지만 미리받기 — 코스 썸네일은 아래 스크롤에 있어 preload하면 첫 화면을 밀려 느려짐 -->
  <link rel="preload" href="golfpic2.jpg" as="image" fetchpriority="high">
  <link rel="dns-prefetch" href="//fonts.googleapis.com">
