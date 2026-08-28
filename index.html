@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script>tailwind.config={theme:{extend:{colors:{navy:{50:"#eef2f6",100:"#d4dfeb",200:"#b3c5d7",300:"#85a5bf",400:"#5b84a3",500:"#41698a",600:"#355672",700:"#2e4760",800:"#264460",900:"#1a3450"},gold:{50:"#fdf8ed",100:"#f9edcc",200:"#f2d88f",300:"#ebc057",400:"#e5b030",500:"#d4951c",600:"#b87414",700:"#925413",800:"#794318",900:"#653617"}}}}}</script>
@@ -35,7 +36,7 @@
  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px}
+html{font-size:16px;color-scheme:light}
 body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#1a1a2e;overflow-x:clip;-webkit-font-smoothing:antialiased}
 [data-lang="ko"] .en{display:none!important}
 [data-lang="en"] .ko{display:none!important}
@@ -653,7 +654,7 @@ footer{background:#f4f4f4!important}
 /* ── HAMBURGER MENU SHEET ── */
 #ham-sheet{
  position:fixed;top:0;right:0;bottom:0;
- width:min(296px,82vw);
+ width:min(272px,62vw);
  background:#fff;
  z-index:500;
  transform:translateX(110%);
@@ -675,7 +676,7 @@ footer{background:#f4f4f4!important}
 #ham-overlay.open{opacity:1;pointer-events:all}
 .ham-header{
  display:flex;align-items:center;justify-content:space-between;
- padding:20px 22px 16px;
+ padding:14px 18px 12px;
  border-bottom:1px solid #f0f0f0;
 }
 .ham-brand{font-size:16px;font-weight:700;color:#171a20;letter-spacing:-.01em}
@@ -691,7 +692,7 @@ footer{background:#f4f4f4!important}
 .ham-nav{display:flex;flex-direction:column;padding:12px 0;border-bottom:1px solid #f0f0f0}
 .ham-item{
  display:flex;align-items:center;gap:14px;
- padding:15px 22px;
+ padding:12px 18px;
  background:none;border:none;
  font-family:inherit;font-size:15px;font-weight:500;
  color:#171a20;text-align:left;cursor:pointer;
@@ -729,7 +730,7 @@ footer{background:#f4f4f4!important}
  letter-spacing:.02em;
 }
 .ham-cta:active{transform:scale(.96);background:#c9a63a}
-.ham-footer{padding:12px 22px 20px;margin-top:auto;flex-shrink:0}
+.ham-footer{padding:2px 18px 20px;flex-shrink:0}
 .ham-footer-txt{font-size:11px;color:#bbb;line-height:1.7}
  
  
@@ -4181,6 +4182,8 @@ function buildGalleryVideos() {
   setCinematicPlayer();
   updateJourneyCounter();
   player.src = embedUrl(HOME_VIDEOS[landingVideoIdx].id);
+  // 첫 로드 완료 후 이후 영상 전환은 postMessage 커맨드로 처리(재로딩 금지 → 연속 자동재생 유지)
+  player.dataset.api = '1';
   _armLandingWatchdog();
  }
  function setCinematicPlayer() {
@@ -4201,15 +4204,28 @@ function buildGalleryVideos() {
  }
  function playVideoById(id) {
   var player = document.getElementById('journeyPlayer');
-  if (player) player.src = embedUrl(id);
+  if (!player) return;
+  // 플레이어 인스턴스를 유지한 채 다음 영상 로드 — src를 통째로 바꾸면(재로딩)
+  // 모바일에서 두 번째 영상부터 자동재생이 차단된다. 같은 iframe에 postMessage
+  // 커맨드를 보내면 muted 자동재생 상태가 유지되어 영상이 연속 재생된다.
+  var w = player.contentWindow;
+  if (w && player.dataset.api === '1') {
+   try {
+    w.postMessage(JSON.stringify({event:'command', func:'mute', args:[]}), '*');
+    w.postMessage(JSON.stringify({event:'command', func:'loadVideoById', args:[id, 0, 'large']}), '*');
+    w.postMessage(JSON.stringify({event:'command', func:'playVideo', args:[]}), '*');
+   } catch(e){ player.src = embedUrl(id); }
+  } else {
+   player.src = embedUrl(id);
+  }
   _armLandingWatchdog(_landingDur);
  }
  function advanceLandingVideo() {
   if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
   _clearLandingTimer();
   var next;
-  if (HOME_VIDEOS.length === 1) { next = 0; }
-  else { do { next = Math.floor(Math.random() * HOME_VIDEOS.length); } while (next === landingVideoIdx); }
+  // 순차 재생 — 모든 영상이 빠짐없이 이어서 자동재생되도록 (1→2→…→n→1)
+  next = (landingVideoIdx + 1) % HOME_VIDEOS.length;
   landingVideoIdx = next;
   _landingDur = 0;
   playVideoById(HOME_VIDEOS[landingVideoIdx].id);
