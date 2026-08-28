@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://www.youtube.com/iframe_api" async></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script>tailwind.config={theme:{extend:{colors:{navy:{50:"#eef2f6",100:"#d4dfeb",200:"#b3c5d7",300:"#85a5bf",400:"#5b84a3",500:"#41698a",600:"#355672",700:"#2e4760",800:"#264460",900:"#1a3450"},gold:{50:"#fdf8ed",100:"#f9edcc",200:"#f2d88f",300:"#ebc057",400:"#e5b030",500:"#d4951c",600:"#b87414",700:"#925413",800:"#794318",900:"#653617"}}}}}</script>
 <title>레조네이트 투어 · Resonate Tour — resonatetour.com</title>
@@ -1365,6 +1366,9 @@ html {
 .nav-logo-svg{transition:transform.18s cubic-bezier(.34,1.56,.64,1),opacity.18s ease}
 .nav-logo-svg:hover{transform:scale(1.07)}
 .nav-logo-svg:active{transform:scale(.93)}
+/* 로고 카드(인라인 SVG)는 삼성 인터넷 강제 다크/forced-color에서 어두워지지 않도록
+   원작 색을 그대로 유지 — 사진은 그대로 두고 inline SVG만 어둡게 만드는 삼성 동작 차단 */
+svg[viewBox="0 0 420 420"],.nav-logo-svg{forced-color-adjust:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
  
  
 /* ── LOGO MAGNIFIER ── */
@@ -2445,12 +2449,10 @@ body {
  <h1 class="hero-h1" style="font-size:clamp(30px,5vw,52px);margin-bottom:10px"><span class="ko">여정의 순간을,<br>영상으로</span><span class="en">Journey moments,<br>in motion</span></h1>
  
  <div id="cinematic-player" style="max-width:920px;margin:0 auto;position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/9;background:#000;box-shadow:0 12px 44px rgba(0,0,0,.5);border:1px solid rgba(212,175,55,.28)">
- <iframe id="journeyPlayer" src="about:blank" title="Journey Film" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen style="width:100%;height:100%;border:0;display:block"></iframe>
- </div>
- <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;color:rgba(255,255,255,.6);font-size:13px;letter-spacing:.04em;flex-wrap:wrap">
- <button onclick="cineFullscreen()" style="background:rgba(212,175,55,.14);color:#d4af37;border:1px solid rgba(212,175,55,.5);border-radius:999px;padding:6px 16px;font-size:12px;cursor:pointer"><span class="ko">전체 화면</span><span class="en">Full screen</span></button>
+ <div id="journeyPlayer" style="width:100%;height:100%"></div>
  </div>
  </div>
+  
  
  <div style="padding:48px 0 0;background:#fff">
  <div style="text-align:center;padding:0 40px 28px;background:#fff">
@@ -4156,98 +4158,75 @@ function buildGalleryVideos() {
  }
 
  /* ── 홈 시네마틱 저니 영상 (연속 자동재생) ──
-   YouTube IFrame API(YT.Player)는 로드 타이밍에 따라 폴백과 경쟁해 화면이 비거나
-   이중 초기화로 멈추는 문제가 있었다. API 의존을 제거하고, mute+autoplay를 URL 파라미터로
-   직접 넘기는 임베드(가장 안정적 경로)로 전환한다. 다음 영상 진행은 아래 message 리스너의
-   infoDelivery(playerState===0)가 담당한다. */
- function embedUrl(id){
-  return 'https://www.youtube.com/embed/' + id +
-   '?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
- }
+    YouTube IFrame API(YT.Player)를 단일 인스턴스로만 사용해 영상을 연속 재생한다.
+    iframe의 src를 통째로 재로딩하거나 postMessage 커맨드에 의존하면 모바일에서
+    두 번째 영상부터 자동재생이 차단된다. 같은 플레이어를 유지한 채 loadVideoById로
+    전환하고 onStateChange(ENDED)가 다음 영상으로 진행시키므로, muted 자동재생이
+    계속 허용된다. 예비 타이머(watchdog)는 종료 신호 누락 환경의 백업이다. */
  var _landingTimer = null, _landingDur = 0;
  function _clearLandingTimer(){ if (_landingTimer){ clearTimeout(_landingTimer); _landingTimer = null; } }
- // 영상 종료 신호(infoDelivery)가 오지 않는 환경을 대비한 예비 자동진행 타이머 — duration을 초과하면 다음 영상으로
  function _armLandingWatchdog(sec){
   _clearLandingTimer();
-  if (!sec || sec <= 0) sec = 45; // 알 수 없으면 45초 후 전환 (shorts 평균)
+  if (!sec || sec <= 0) sec = 45; // 알 수 없으면 45초 후 전환
   _landingTimer = setTimeout(function(){ _landingTimer = null; advanceLandingVideo(); }, sec * 1000 + 1500);
  }
- function buildJourneyPlayer() {
-  var player = document.getElementById('journeyPlayer');
-  if (!player || player.dataset.built) return;
-  player.dataset.built = '1';
+ var ytPlayer = null, ytReady = false;
+ function initYTPlayer() {
+  var pod = document.getElementById('journeyPlayer');
+  if (!pod || ytPlayer) return;
   if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
   landingVideoIdx = 0;
-  _landingDur = 0;
-  setCinematicPlayer();
   updateJourneyCounter();
-  player.src = embedUrl(HOME_VIDEOS[landingVideoIdx].id);
-  // 첫 로드 완료 후 이후 영상 전환은 postMessage 커맨드로 처리(재로딩 금지 → 연속 자동재생 유지)
-  player.dataset.api = '1';
-  _armLandingWatchdog();
+  try {
+   ytPlayer = new YT.Player('journeyPlayer', {
+    width: '100%', height: '100%',
+    videoId: HOME_VIDEOS[landingVideoIdx].id,
+    playerVars: { autoplay:1, mute:1, controls:0, rel:0, modestbranding:1, iv_load_policy:3, playsinline:1, enablejsapi:1, origin: encodeURIComponent(location.origin) },
+    events: {
+     onReady: function(e){ ytReady = true; try{ e.target.mute(); e.target.playVideo(); }catch(_){} var d = e.target.getDuration && e.target.getDuration(); if (d > 0) _armLandingWatchdog(d); },
+     onStateChange: function(e){
+      if (typeof YT === 'undefined') return;
+      if (e.data === YT.PlayerState.ENDED){ advanceLandingVideo(); }
+      else if (e.data === YT.PlayerState.PLAYING){ var d = e.target.getDuration && e.target.getDuration(); if (d > 0) _armLandingWatchdog(d); }
+      else if (e.data === YT.PlayerState.UNSTARTED && e.target.playVideo){ try{ e.target.playVideo(); }catch(_){} }
+     }
+    }
+   });
+  } catch(e){}
  }
  function setCinematicPlayer() {
   var wrap = document.getElementById('cinematic-player');
   if (!wrap) return;
   var v = (typeof HOME_VIDEOS !== 'undefined') ? HOME_VIDEOS[landingVideoIdx] : null;
-  if (v && v.type === 'shorts') {
-   wrap.style.maxWidth = '380px';
-   wrap.style.aspectRatio = '9 / 16';
-  } else {
-   wrap.style.maxWidth = '920px';
-   wrap.style.aspectRatio = '16 / 9';
-  }
+  if (v && v.type === 'shorts') { wrap.style.maxWidth = '380px'; wrap.style.aspectRatio = '9 / 16'; }
+  else { wrap.style.maxWidth = '920px'; wrap.style.aspectRatio = '16 / 9'; }
  }
  function updateJourneyCounter() {
   var el = document.getElementById('journeyCounter');
   if (el && typeof HOME_VIDEOS !== 'undefined') el.textContent = 'Journey Film ' + (landingVideoIdx + 1) + ' / ' + HOME_VIDEOS.length;
  }
  function playVideoById(id) {
-  var player = document.getElementById('journeyPlayer');
-  if (!player) return;
-  // 플레이어 인스턴스를 유지한 채 다음 영상 로드 — src를 통째로 바꾸면(재로딩)
-  // 모바일에서 두 번째 영상부터 자동재생이 차단된다. 같은 iframe에 postMessage
-  // 커맨드를 보내면 muted 자동재생 상태가 유지되어 영상이 연속 재생된다.
-  var w = player.contentWindow;
-  if (w && player.dataset.api === '1') {
-   try {
-    w.postMessage(JSON.stringify({event:'command', func:'mute', args:[]}), '*');
-    w.postMessage(JSON.stringify({event:'command', func:'loadVideoById', args:[id, 0, 'large']}), '*');
-    w.postMessage(JSON.stringify({event:'command', func:'playVideo', args:[]}), '*');
-   } catch(e){ player.src = embedUrl(id); }
-  } else {
-   player.src = embedUrl(id);
+  if (ytReady && ytPlayer) {
+   try { ytPlayer.mute(); ytPlayer.loadVideoById(id); ytPlayer.playVideo(); } catch(e){}
+   _armLandingWatchdog(_landingDur);
+   setCinematicPlayer();
+   updateJourneyCounter();
   }
-  _armLandingWatchdog(_landingDur);
  }
  function advanceLandingVideo() {
   if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
   _clearLandingTimer();
-  var next;
   // 순차 재생 — 모든 영상이 빠짐없이 이어서 자동재생되도록 (1→2→…→n→1)
-  next = (landingVideoIdx + 1) % HOME_VIDEOS.length;
-  landingVideoIdx = next;
+  landingVideoIdx = (landingVideoIdx + 1) % HOME_VIDEOS.length;
   _landingDur = 0;
   playVideoById(HOME_VIDEOS[landingVideoIdx].id);
-  setCinematicPlayer();
-  updateJourneyCounter();
  }
  var landingVideoIdx = 0;
- setTimeout(buildJourneyPlayer, 250);
- /* 영상 종료(infoDelivery playerState===0) 시 다음 랜덤 영상으로 진행 — 고정 시간 아님 */
+ // IFrame API 로드 완료 시 초기화 (API가 먼저 로드되어 있었으면 즉시)
+ window.onYouTubeIframeAPIReady = function(){ initYTPlayer(); };
+ if (window.YT && window.YT.Player){ initYTPlayer(); }
 
- /* 전체 화면 — 시네마틱 플레이어 컨테이너를 브라우저 풀스크린으로 */
- function cineFullscreen(){
-  var el = document.getElementById('cinematic-player');
-  if (!el) return;
-  var fs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
-  if (fs) { try { fs.call(el); } catch(e){} }
-  else { // fallback: iOS Safari 등 풀스크린 미지원 → 라이트박스로 확대
-   openLightbox((typeof GAL_ITEMS!=='undefined'?GAL_ITEMS.length:0)+landingVideoIdx);
-  }
- }
- 
-function initGalHeroParallax() {
+ function initGalHeroParallax() {
  const bg = document.getElementById('gal-hero-bg');
  if (!bg) return;
  if (!bg) return;
@@ -4360,21 +4339,15 @@ window.addEventListener('message', function(e){
   try {
     var d = JSON.parse(e.data);
     if (d && d.event === 'infoDelivery' && d.info) {
-      // 실제 플레이어 duration 갱신 (타이머 예비 진행을 정확히 하도록)
-      if (d.info.videoData && d.info.videoData.duration && typeof _landingDur !== 'undefined') {
-        _landingDur = d.info.videoData.duration;
-      }
       if (d.info.playerState === 0) {
         var vid = d.info.videoData && d.info.videoData.video_id;
         var lb = document.getElementById('lightbox');
         var lbOpen = lb && lb.classList.contains('open');
         if (lbOpen && LB_POOL && LB_POOL[lbIndex] && LB_POOL[lbIndex].id === vid) {
           advanceJourneyVideo();
-        } else if (!lbOpen && typeof HOME_VIDEOS !== 'undefined' && HOME_VIDEOS[landingVideoIdx] && HOME_VIDEOS[landingVideoIdx].id === vid) {
-          // 정상 종료 신호 도착 → 예비 타이머 해제(불필요) 후 진행
-          _clearLandingTimer();
-          advanceLandingVideo();
         }
+        // 랜딩 시네마틱 영상은 YT.Player onStateChange(ENDED)가 진행을 담당 —
+        // 여기서 advanceLandingVideo를 또 부르면 이중 진행(영상 건너뜀)이 되므로 제외
       }
     }
   } catch(_){}
