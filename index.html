@@ -4162,9 +4162,23 @@ function buildGalleryVideos() {
   playVideoById(HOME_VIDEOS[landingVideoIdx].id);
  }
  var landingVideoIdx = 0;
- // IFrame API 로드 완료 시 초기화 (API가 먼저 로드되어 있었으면 즉시)
- window.onYouTubeIframeAPIReady = function(){ initYTPlayer(); };
- if (window.YT && window.YT.Player){ initYTPlayer(); }
+ // 유튜브 플레이어(~2.4MB)는 첫 화면에 큰 부담 → 시네마틱 영상이 뷰포트 가까이 올 때만 초기화.
+ // (이미 화면 근처면 즉시. 필요 시 되돌리기 가능: IntersectionObserver 부분만 제거하고
+ //   window.onYouTubeIframeAPIReady에서 곧바로 initYTPlayer() 호출하면 이전 동작으로 복귀)
+ var _ytViewObs = null;
+ function deferInitLandingVideo(){
+   var wrap = document.getElementById('cinematic-player');
+   if (!wrap) return;
+   var r = wrap.getBoundingClientRect();
+   if (r.top < (window.innerHeight || 900) * 1.2) { initYTPlayer(); return; }
+   if (_ytViewObs) return;
+   _ytViewObs = new IntersectionObserver(function(en){
+     en.forEach(function(e){ if (e.isIntersecting){ _ytViewObs.disconnect(); _ytViewObs = null; initYTPlayer(); } });
+   }, { rootMargin: '300px 0px' });
+   _ytViewObs.observe(wrap);
+ }
+ window.onYouTubeIframeAPIReady = function(){ deferInitLandingVideo(); };
+ if (window.YT && window.YT.Player){ deferInitLandingVideo(); }
 
  function initGalHeroParallax() {
  const bg = document.getElementById('gal-hero-bg');
