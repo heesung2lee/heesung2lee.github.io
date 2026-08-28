@@ -1366,9 +1366,9 @@ html {
 .nav-logo-svg{transition:transform.18s cubic-bezier(.34,1.56,.64,1),opacity.18s ease}
 .nav-logo-svg:hover{transform:scale(1.07)}
 .nav-logo-svg:active{transform:scale(.93)}
-/* 로고 카드(인라인 SVG)는 삼성 인터넷 강제 다크/forced-color에서 어두워지지 않도록
-   원작 색을 그대로 유지 — 사진은 그대로 두고 inline SVG만 어둡게 만드는 삼성 동작 차단 */
-svg[viewBox="0 0 420 420"],.nav-logo-svg{forced-color-adjust:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+/* 브랜드 카드는 래스터 <img>(logo-card.png)로 렌더 — 삼성 강제다크는 <img>는 건드리지
+   않으므로 원작 딥네이비+골드가 그대로 유지된다. 혹시 모를 변환에도 대비해 차단 속성 병행 */
+.nav-logo-svg,img[src*="logo-card"]{forced-color-adjust:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
  
  
 /* ── LOGO MAGNIFIER ── */
@@ -1392,7 +1392,7 @@ svg[viewBox="0 0 420 420"],.nav-logo-svg{forced-color-adjust:none;-webkit-print-
  opacity:1;
  transform:scale(1) translateY(0);
 }
-#logo-preview svg{
+#logo-preview svg,#logo-preview img{
  width:270px;
  height:270px;
  display:block;
@@ -2305,62 +2305,7 @@ body {
  <!-- LEFT: Logo -->
  <div style="flex-shrink:0;display:flex;align-items:center">
  <button class="nav-logo-btn nav-logo-svg" onclick="nav('home')" aria-label="메인으로" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;height:42px;-webkit-tap-highlight-color:transparent">
- <svg viewBox="0 0 420 420" height="42" width="42"
- xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:5px">
- <defs>
- <linearGradient id="nl-bg" x1="0" y1="0" x2="0.6" y2="1">
- <stop offset="0%" stop-color="#4a6680"/>
- <stop offset="35%" stop-color="#3a5570"/>
- <stop offset="70%" stop-color="#264460"/>
- <stop offset="100%" stop-color="#1a3450"/>
- </linearGradient>
- <linearGradient id="nl-gH" x1="0" y1="0" x2="1" y2="0">
- <stop offset="0%" stop-color="#9a7520"/>
- <stop offset="30%" stop-color="#d4aa55"/>
- <stop offset="55%" stop-color="#e8cc75"/>
- <stop offset="100%" stop-color="#9a7520"/>
- </linearGradient>
- <linearGradient id="nl-gD" x1="0" y1="0" x2="1" y2="1">
- <stop offset="0%" stop-color="#c8a840"/>
- <stop offset="100%" stop-color="#a07828"/>
- </linearGradient>
- <linearGradient id="nl-w1" x1="0" y1="0" x2="1" y2="0">
- <stop offset="0%" stop-color="#c8e8ff" stop-opacity="0"/>
- <stop offset="15%" stop-color="#c8e8ff" stop-opacity="1"/>
- <stop offset="85%" stop-color="#c8e8ff" stop-opacity="1"/>
- <stop offset="100%" stop-color="#c8e8ff" stop-opacity="0"/>
- </linearGradient>
- <linearGradient id="nl-w2" x1="0" y1="0" x2="1" y2="0">
- <stop offset="0%" stop-color="#a8d4f0" stop-opacity="0"/>
- <stop offset="12%" stop-color="#a8d4f0" stop-opacity="1"/>
- <stop offset="88%" stop-color="#a8d4f0" stop-opacity="1"/>
- <stop offset="100%" stop-color="#a8d4f0" stop-opacity="0"/>
- </linearGradient>
- <linearGradient id="nl-w3" x1="0" y1="0" x2="1" y2="0">
- <stop offset="0%" stop-color="#88c0e8" stop-opacity="0"/>
- <stop offset="10%" stop-color="#88c0e8" stop-opacity="1"/>
- <stop offset="90%" stop-color="#88c0e8" stop-opacity="1"/>
- <stop offset="100%" stop-color="#88c0e8" stop-opacity="0"/>
- </linearGradient>
- </defs>
- <rect width="420" height="420" rx="12" fill="url(#nl-bg)"/>
- <text x="210" y="165" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="9" fill="url(#nl-gH)">RESONATE</text>
- <text x="210" y="202" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" letter-spacing="15" fill="#c8a844" opacity="0.88">TOUR</text>
- <path d="M 0,285 C 42,265 78,305 120,285 C 162,265 198,305 240,285 C 282,265 318,305 360,285 C 385,275 400,279 420,277" fill="none" stroke="url(#nl-w1)" stroke-width="2.0" stroke-linecap="round" opacity="0.55"/>
- <path d="M 0,297 C 38,281 80,313 118,297 C 158,281 198,313 238,297 C 278,281 318,313 358,297 C 386,289 402,292 420,290" fill="none" stroke="url(#nl-w2)" stroke-width="1.4" stroke-linecap="round" opacity="0.38"/>
- <path d="M 0,307 C 42,297 82,317 122,307 C 162,297 202,317 242,307 C 282,297 322,317 362,307 C 388,302 404,304 420,303" fill="none" stroke="url(#nl-w3)" stroke-width="1.0" stroke-linecap="round" opacity="0.22"/>
- <line x1="100" y1="236" x2="320" y2="236" stroke="url(#nl-gH)" stroke-width="0.7" opacity="0.42"/>
- <polygon points="210,246 219,255 210,264 201,255" fill="url(#nl-gD)" opacity="0.92"/>
- <circle cx="178" cy="255" r="2.6" fill="url(#nl-gD)" opacity="0.60"/>
- <circle cx="165" cy="255" r="1.6" fill="url(#nl-gD)" opacity="0.36"/>
- <circle cx="242" cy="255" r="2.6" fill="url(#nl-gD)" opacity="0.60"/>
- <circle cx="255" cy="255" r="1.6" fill="url(#nl-gD)" opacity="0.36"/>
- <text x="210" y="371" text-anchor="middle" font-family="Georgia,serif" font-size="11" letter-spacing="4" fill="#c8a844" opacity="0.72">KOREA → USA</text>
- <line x1="55" y1="398" x2="365" y2="398" stroke="url(#nl-gH)" stroke-width="0.9" opacity="0.55"/>
- <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
- <polyline points="16,398 16,406 24,406"/><polyline points="404,398 404,406 396,406"/>
- </g>
- </svg>
+ <img src="images/logo-card.png" width="42" height="42" alt="Resonate Tour" style="display:block;border-radius:5px">
 </button>
  </div>
  
@@ -2460,10 +2405,10 @@ body {
  <p style="font-size:15px;color:#9e9e9e;font-weight:300"><span class="ko">한국에서 예약하고, 캘리포니아에서 전율합니다</span><span class="en">Book from Korea. Feel California</span></p>
  </div>
  <div class="why-grid" style="background:#fff">
- <div class="why-c"><div class="why-ico ico-usa"></div><div class="why-t"><span class="ko">현지 네트워크</span><span class="en">Local Network</span></div><div class="why-d"><span class="ko">캘리포니아 전역 현지 파트너. 관광객이 갈 수 없는 코스까지</span><span class="en">Local partners across California. Access no ordinary tourist gets</span></div></div>
+ <div class="why-c"><div class="why-ico ico-usa"></div><div class="why-t"><span class="ko">현지 네트워크</span><span class="en">Local Network</span></div><div class="why-d"><span class="ko">캘리포니아 전역 현지 파트너 네트워크 — 당신을 위한 최고의 코스로</span><span class="en">A California-wide local partner network — the best courses, for you</span></div></div>
  <div class="why-c"><div class="why-ico ico-target"></div><div class="why-t"><span class="ko">완전 맞춤 설계</span><span class="en">Fully Custom</span></div><div class="why-d"><span class="ko">처음부터 끝까지 당신만을 위해 설계합니다</span><span class="en">Designed from scratch, exclusively for you</span></div></div>
  <div class="why-c"><div class="why-ico ico-phone"></div><div class="why-t"><span class="ko">사전 오리엔테이션</span><span class="en">Pre-Departure Brief</span></div><div class="why-d"><span class="ko">출발 전 1:1 상담으로 일정·코스를 미리 확정. 첫 날부터 현지처럼 여유롭게</span><span class="en">A 1:1 call before departure finalizes your courses &amp; itinerary — relaxed from day one</span></div></div>
- <div class="why-c"><div class="why-ico ico-star"></div><div class="why-t"><span class="ko">프라이빗 액세스</span><span class="en">Private Access</span></div><div class="why-d"><span class="ko">현지 네트워크로 예약이 어려운 프라이빗 코스와 티타임을 확보합니다</span><span class="en">Our local network secures private courses and tee times others can't reach</span></div></div>
+ <div class="why-c"><div class="why-ico ico-star"></div><div class="why-t"><span class="ko">프라이빗 액세스</span><span class="en">Private Access</span></div><div class="why-d"><span class="ko">현지 네트워크가 프라이빗 코스와 최적의 티타임을 열어드립니다</span><span class="en">Our local network opens private courses and the prime tee times</span></div></div>
  </div>
  </div>
  
@@ -5867,62 +5812,7 @@ crsInitQuiz();
 </script>
  
 <div id="logo-preview">
- <svg viewBox="0 0 420 420" width="270" height="270" xmlns="http://www.w3.org/2000/svg">
- <defs>
- <linearGradient id="pl-bg" x1="0" y1="0" x2="0.6" y2="1">
- <stop offset="0%" stop-color="#4a6680"/><stop offset="35%" stop-color="#3a5570"/>
- <stop offset="70%" stop-color="#264460"/><stop offset="100%" stop-color="#1a3450"/>
- </linearGradient>
- <linearGradient id="pl-gH" x1="0" y1="0" x2="1" y2="0">
- <stop offset="0%" stop-color="#9a7520"/><stop offset="30%" stop-color="#d4aa55"/>
- <stop offset="55%" stop-color="#e8cc75"/><stop offset="100%" stop-color="#9a7520"/>
- </linearGradient>
- <linearGradient id="pl-gD" x1="0" y1="0" x2="1" y2="1">
- <stop offset="0%" stop-color="#c8a840"/><stop offset="100%" stop-color="#a07828"/>
- </linearGradient>
- <linearGradient id="pl-w1" x1="0" y1="0" x2="1" y2="0">
- <stop offset="0%" stop-color="#c8e8ff" stop-opacity="0"/>
- <stop offset="15%" stop-color="#c8e8ff" stop-opacity="1"/>
- <stop offset="85%" stop-color="#c8e8ff" stop-opacity="1"/>
- <stop offset="100%" stop-color="#c8e8ff" stop-opacity="0"/>
- </linearGradient>
- <linearGradient id="pl-w2" x1="0" y1="0" x2="1" y2="0">
- <stop offset="0%" stop-color="#a8d4f0" stop-opacity="0"/>
- <stop offset="12%" stop-color="#a8d4f0" stop-opacity="1"/>
- <stop offset="88%" stop-color="#a8d4f0" stop-opacity="1"/>
- <stop offset="100%" stop-color="#a8d4f0" stop-opacity="0"/>
- </linearGradient>
- <linearGradient id="pl-w3" x1="0" y1="0" x2="1" y2="0">
- <stop offset="0%" stop-color="#88c0e8" stop-opacity="0"/>
- <stop offset="10%" stop-color="#88c0e8" stop-opacity="1"/>
- <stop offset="90%" stop-color="#88c0e8" stop-opacity="1"/>
- <stop offset="100%" stop-color="#88c0e8" stop-opacity="0"/>
- </linearGradient>
- </defs>
- <rect width="420" height="420" rx="12" fill="url(#pl-bg)"/>
- <rect width="420" height="420" rx="12" fill="none" stroke="url(#pl-gH)" stroke-width="1.6"/>
- <rect x="10" y="10" width="400" height="400" rx="7" fill="none" stroke="url(#pl-gH)" stroke-width="0.5" opacity="0.38"/>
- <line x1="55" y1="22" x2="365" y2="22" stroke="url(#pl-gH)" stroke-width="0.9" opacity="0.55"/>
- <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
- <polyline points="16,22 16,14 24,14"/><polyline points="404,22 404,14 396,14"/>
- </g>
- <text x="210" y="190" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="9" fill="url(#pl-gH)">RESONATE</text>
- <text x="210" y="228" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" letter-spacing="15" fill="#c8a844" opacity="0.88">TOUR</text>
- <path d="M 0,258 C 42,238 78,278 120,258 C 162,238 198,278 240,258 C 282,238 318,278 360,258 C 385,248 400,252 420,250" fill="none" stroke="url(#pl-w1)" stroke-width="2.0" stroke-linecap="round" opacity="0.55"/>
- <path d="M 0,270 C 38,254 80,286 118,270 C 158,254 198,286 238,270 C 278,254 318,286 358,270 C 386,262 402,265 420,263" fill="none" stroke="url(#pl-w2)" stroke-width="1.4" stroke-linecap="round" opacity="0.38"/>
- <path d="M 0,280 C 42,270 82,290 122,280 C 162,270 202,290 242,280 C 282,270 322,290 362,280 C 388,275 404,277 420,276" fill="none" stroke="url(#pl-w3)" stroke-width="1.0" stroke-linecap="round" opacity="0.22"/>
- <line x1="100" y1="250" x2="320" y2="250" stroke="url(#pl-gH)" stroke-width="0.7" opacity="0.42"/>
- 
- 
- 
- 
- 
- 
- <line x1="55" y1="398" x2="365" y2="398" stroke="url(#pl-gH)" stroke-width="0.9" opacity="0.55"/>
- <g fill="none" stroke="#c8a844" stroke-width="1.1" opacity="0.42" stroke-linecap="round">
- <polyline points="16,398 16,406 24,406"/><polyline points="404,398 404,406 396,406"/>
- </g>
- </svg>
+ <img src="images/logo-card.png" width="270" height="270" alt="Resonate Tour">
 </div>
  
  
