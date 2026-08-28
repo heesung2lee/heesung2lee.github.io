@@ -24,14 +24,9 @@
  <!-- Gallery & hero image preloads -->
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link rel="preload" href="golfpic2.jpg" as="image">
- <link rel="preload" href="golfpic1.png" as="image">
- <!-- Course gallery preloads -->
- <link rel="preload" href="arr1.jpg" as="image">
- <link rel="preload" href="cc1.jpg" as="image">
- <link rel="preload" href="gcc1.jpg" as="image">
- <link rel="preload" href="sp1.jpg" as="image">
- <link rel="preload" href="tc1.jpg" as="image">
+ <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+ <!-- LCP(첫 화면) 이미지만 미리받기 — 코스 썸네일은 아래 스크롤에 있어 preload하면 첫 화면을 밀려 느려짐 -->
+ <link rel="preload" href="golfpic2.jpg" as="image" fetchpriority="high">
  <link rel="dns-prefetch" href="//fonts.googleapis.com">
  <link rel="dns-prefetch" href="//fonts.gstatic.com">
  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
