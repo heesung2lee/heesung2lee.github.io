@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /images/
+Disallow: /260801_courses-preview.html
+Disallow: /260816_courses-tab-legacy.html
+Disallow: /day-bracket-preview.html
+Disallow: /wc-bracket-preview.html
+Disallow: /googleb960adf11b21237c.html
+
+Sitemap: https://www.resonatetour.com/sitemap.xml
