@@ -2369,6 +2369,11 @@ body {
 <span class="en" style="display:block;font-size:clamp(15px,2.6vw,19px);font-weight:700;letter-spacing:-.02em;color:#1a3450;line-height:1.6">Designed around you — from itinerary to courses</span>
 </div>
 </div>
+<div style="width:100%;display:flex;justify-content:center;padding:0 24px">
+<div style="max-width:960px;width:100%;background:#faf7ee;border:1px solid #e6d9a8;border-left:4px solid #d4af37;padding:14px 20px;border-radius:8px;font-size:14.5px;line-height:1.65;color:#5c5e62;text-align:center">
+<span class="ko"><b>※ 본 상품은 예시(샘플) 일정입니다.</b> 모든 투어는 고객의 요청에 따라 1:1로 100% 개별 맞춤 수배되는 주문 알선 상품입니다.</span><span class="en" style="display:block;margin-top:6px;font-size:13.5px;color:#8a8574">* This is a sample itinerary. Every tour is a made-to-order arrangement, 100% customized 1:1 to each traveler's request.</span>
+</div>
+</div>
  
  <!-- GALLERY SHOWCASE v2 -->
  <div id="gallery-showcase" style="background:#f8f8f8;border-top:1px solid #e8e8e8;border-bottom:1px solid #e8e8e8">
@@ -2428,7 +2433,7 @@ body {
  <div class="inc-sec" style="display:none">
  <h3><span class="ko">포함 사항</span><span class="en">What's Included</span></h3>
  <div class="inc-grid">
- <div class="inc-item"><div class="inc-ico ico-plane"></div><div><div class="inc-t"><span class="ko">항공권 예약 대행</span><span class="en">Flight Booking Service</span></div><div class="inc-d"><span class="ko">ICN-USA 왕복 예약 지원. 좌석 등급 협의 가능</span><span class="en">ICN-USA round-trip booking support. Class upgrades available on request</span></div></div></div>
+ <div class="inc-item"><div class="inc-ico ico-plane"></div><div><div class="inc-t"><span class="ko">항공권 예약 지원</span><span class="en">Flight Booking Support</span></div><div class="inc-d"><span class="ko">ICN-USA 왕복 예약 지원. 좌석 등급 협의 가능</span><span class="en">ICN-USA round-trip booking support. Class upgrades available on request</span></div></div></div>
  <div class="inc-item"><div class="inc-ico ico-hotel"></div><div><div class="inc-t"><span class="ko">숙소</span><span class="en">Accommodations</span></div><div class="inc-d"><span class="ko">숙소</span><span class="en">Lodging</span></div></div></div>
  <div class="inc-item"><div class="inc-ico ico-golf"></div><div><div class="inc-t"><span class="ko">골프 전 라운드</span><span class="en">All Golf Rounds</span></div><div class="inc-d"><span class="ko">Sandpiper · Alisal Ranch · Glen Ivy · Golf Club of CA · The Crossings 외</span><span class="en">Sandpiper · Alisal Ranch · Glen Ivy · Golf Club of CA · The Crossings and more</span></div></div></div>
  <div class="inc-item"><div class="inc-ico ico-car"></div><div><div class="inc-t"><span class="ko">전용 차량 & 기사</span><span class="en">Private Vehicle & Driver</span></div><div class="inc-d"><span class="ko">전일 전용 차량. 원하는 곳 자유 정차</span><span class="en">Dedicated vehicle all day. Stop anywhere</span></div></div></div>
@@ -2823,7 +2828,7 @@ body {
  <button onclick="openModal('terms')"><span class="ko">이용약관</span><span class="en">Terms</span></button>
  <button onclick="openModal('privacy')"><span class="ko">개인정보처리방침</span><span class="en">Privacy</span></button>
  </div>
- <div class="footer-copy"><span class="ko">© 2026 레조네이트 투어. 종합여행업 등록 제 ○○○호</span><span class="en">© 2026 Resonate Tour · resonatetour.com · All rights reserved</span></div>
+ <div class="footer-copy"><span class="ko">© 2026 레조네이트 투어</span><span class="en">© 2026 Resonate Tour · resonatetour.com · All rights reserved</span></div>
 </footer>
  
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -2872,15 +2877,15 @@ const imgs = {
 const PLAN_DATA = [
  {usd:0, pp:0, pax:1,
  pax_ko:'1인 · 개별 여정', pax_en:'1 GUEST · SOLO JOURNEY', hot:false,
- items_ko:['항공권 (예약 대행)','숙박 전체 일정','골프 전 라운드','현지 인기 맛집 식사 큐레이션','전용 차량 (일부 구간)','한국어 가이드'],
+ items_ko:['항공권 (예약 지원)','숙박 전체 일정','골프 전 라운드','현지 인기 맛집 식사 큐레이션','전용 차량 (일부 구간)','한국어 가이드'],
  items_en:['Flight booking service','All accommodations','Golf rounds','Curated local restaurant dining','Transport (select legs)','Korean-speaking guide']},
  {usd:0, pp:0, pax:2,
  pax_ko:'2인 · 듀오 익스피리언스', pax_en:'2 GUESTS · DUO EXPERIENCE', hot:true,
- items_ko:['항공권 (예약 대행)','숙박 전체 일정 (2인)','골프 전 라운드 (2인)','차량 & 이동비 전체','한국어 가이드 & 오리엔테이션','현지 인기 맛집 식사 큐레이션'],
+ items_ko:['항공권 (예약 지원)','숙박 전체 일정 (2인)','골프 전 라운드 (2인)','차량 & 이동비 전체','한국어 가이드 & 오리엔테이션','현지 인기 맛집 식사 큐레이션'],
  items_en:['Flight booking service (2)','All accommodations (2)','Golf rounds (2 guests)','All transport & driving costs','Korean guide & pre-departure brief','Curated local restaurant dining']},
  {usd:0, pp:0, pax:4,
  pax_ko:'4인 · 그룹 이스케이프', pax_en:'4 GUESTS · GROUP ESCAPE', hot:false,
- items_ko:['항공권 (예약 대행)','숙박 전체 일정 (4인)','골프 전 라운드 (4인)','전용 밴 & 전 구간 이동비','한국어 전담 가이드','현지 맛집 & 스파 혜택'],
+ items_ko:['항공권 (예약 지원)','숙박 전체 일정 (4인)','골프 전 라운드 (4인)','전용 밴 & 전 구간 이동비','한국어 전담 가이드','현지 맛집 & 스파 혜택'],
  items_en:['Flight booking service (4)','All accommodations (4)','Golf rounds (4 guests)','Private van & all transport','Dedicated Korean guide','Local dining & spa perks']},
 ];;
  
