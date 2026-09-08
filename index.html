@@ -4311,7 +4311,7 @@ function actToggle(el){ el.classList.toggle('on'); actCount(); }
   var _tx=0,_ty=0,_drag=false;
   document.addEventListener('touchstart',function(e){var t=e.touches[0];if(t){_tx=t.clientX;_ty=t.clientY;}_drag=false;},{passive:true});
   document.addEventListener('touchmove',function(e){if(!_drag){var t=e.touches[0];if(t&&(Math.abs(t.clientX-_tx)>10||Math.abs(t.clientY-_ty)>10)){_drag=true;}}},{passive:true});
-  document.addEventListener('click',function(e){if(_drag){e.stopPropagation();e.preventDefault();_drag=false;}},true);
+  document.addEventListener('click',function(e){if(_drag){if(e.target.closest&&e.target.closest('#finderModal')){_drag=false;return;}e.stopPropagation();e.preventDefault();_drag=false;}},true);
 })();
 function actCount(){
  var n = document.querySelectorAll('.act-item.on').length;
