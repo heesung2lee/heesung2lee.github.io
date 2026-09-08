@@ -2454,7 +2454,7 @@ body {
  <div id="finderEntry" style="text-align:center;background:#f7f8fa;border:1.5px solid #e3e6ec;border-radius:18px;padding:34px 24px;margin:0 0 8px">
  <div style="font-size:15px;font-weight:800;color:#1a3450;margin-bottom:6px"><span class="ko">취향 테스트로 맞춤 일정 받기</span><span class="en">Get a matched itinerary</span></div>
  <p style="font-size:13px;color:#5c5e62;margin:0 0 18px;line-height:1.7"><span class="ko">골프 비중 · 일행 · 취향에 맞는 일정과 코스를 골라드립니다</span><span class="en">We match trips and courses to your golf mix, party and taste</span></p>
- <button onclick="finderOpen()" style="background:#1a3450;color:#fff;border:none;border-radius:100px;padding:15px 44px;font-size:15.5px;font-weight:700;font-family:inherit;cursor:pointer"><span class="ko">취향 테스트 시작하기 →</span><span class="en">Start the Taste Test →</span></button>
+ <button id="finderStartBtn" onclick="finderOpen()" ontouchend="event.preventDefault();finderOpen();" style="background:#1a3450;color:#fff;border:none;border-radius:100px;padding:15px 44px;font-size:15.5px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation"><span class="ko">취향 테스트 시작하기 →</span><span class="en">Start the Taste Test →</span></button>
  </div>
  <div id="finderModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,18,30,.6);overflow-y:auto;padding:20px 12px" onclick="if(event.target===this)finderClose()">
  <div style="max-width:720px;margin:0 auto;background:#f7f8fa;border-radius:18px;padding:20px 16px 90px;position:relative">
