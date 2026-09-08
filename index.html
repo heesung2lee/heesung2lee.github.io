@@ -2451,90 +2451,585 @@ body {
  </div>
 
  <div style="max-width:960px;margin:0 auto;padding:0 24px 40px">
- <div class="act-cat act-golf">
-<h3>⛳ <span class="ko">골프 코스</span><span class="en">Golf Courses</span></h3>
-<div class="act-subrow">
-<h4><span class="ko">코스 종류</span><span class="en">Course Style</span></h4>
-<div class="act-grid">
- <div class="act-item" data-ko="오션뷰 코스" data-en="Ocean-View Course" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">오션뷰 코스</span><span class="en">Ocean-View Course</span></span></div>
- <div class="act-item" data-ko="산악 코스" data-en="Mountain Course" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">산악 코스</span><span class="en">Mountain Course</span></span></div>
- <div class="act-item" data-ko="링크스 코스" data-en="Links Course" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">링크스 코스</span><span class="en">Links Course</span></span></div>
- <div class="act-item" data-ko="사막 코스" data-en="Desert Course" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">사막 코스</span><span class="en">Desert Course</span></span></div>
+ <div id="finderEntry" style="text-align:center;background:#f7f8fa;border:1.5px solid #e3e6ec;border-radius:18px;padding:34px 24px;margin:0 0 8px">
+ <div style="font-size:15px;font-weight:800;color:#1a3450;margin-bottom:6px"><span class="ko">30초 취향 테스트로 맞춤 일정 받기</span><span class="en">Get a matched itinerary in 30 seconds</span></div>
+ <p style="font-size:13px;color:#5c5e62;margin:0 0 18px;line-height:1.7"><span class="ko">골프 비중 · 일행 · 취향에 맞는 일정과 코스를 골라드립니다</span><span class="en">We match trips and courses to your golf mix, party and taste</span></p>
+ <button onclick="finderOpen()" style="background:#1a3450;color:#fff;border:none;border-radius:100px;padding:15px 44px;font-size:15.5px;font-weight:700;font-family:inherit;cursor:pointer"><span class="ko">취향 테스트 시작하기 →</span><span class="en">Start the Taste Test →</span></button>
+ </div>
+ <div id="finderModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,18,30,.6);overflow-y:auto;padding:20px 12px" onclick="if(event.target===this)finderClose()">
+ <div style="max-width:720px;margin:0 auto;background:#f7f8fa;border-radius:18px;padding:20px 16px 90px;position:relative">
+ <button onclick="finderClose()" style="position:absolute;top:12px;right:14px;background:#fff;border:1.5px solid #e3e6ec;border-radius:100px;width:36px;height:36px;font-size:16px;cursor:pointer;color:#1a3450" aria-label="close">✕</button>
+
+<div class="topbar"><span class="badge">TEST v2 · 여행 취향 테스트</span><button class="langbtn" onclick="F_toggleLang()">한/EN</button></div>
+
+<!-- STEP 0: mode select -->
+<div class="step act" id="s0">
+<h1><span class="ko">어떤 여행을 알아볼까요?</span><span class="en">What kind of trip?</span></h1>
+<p class="sub"><span class="ko">관심 있는 것을 <b>1개 이상</b> 고르고 시작하세요. 여러 개면 순서대로 이어집니다. 점수 매기는 시험이 아니라, 취향에 맞는 일정·코스·맛집을 골라드리는 용도입니다.</span><span class="en">Pick <b>at least 1</b>, then start. Multiple picks run in order. Not a scored test — it matches trips, courses and food to your taste.</span></p>
+<div class="modgrid" id="modes">
+<button class="mod" data-m="golf" onclick="F_modeToggle(this)"><span class="tick">✓</span><span class="ko"><b>⛳ 골프 파인더</b> (5문항)</span><span class="en"><b>⛳ Golf Finder</b> (5 Qs)</span><small><span class="ko">비중 · 실력 · 일행 · 그림 · 일정 → 일정 1개 + 코스 TOP5</span><span class="en">Mix · level · party · backdrop · length → 1 trip + TOP5 courses</span></small></button>
+<button class="mod" data-m="travel" onclick="F_modeToggle(this)"><span class="tick">✓</span><span class="ko"><b>🧭 여행성향 테스트</b> (8문항)</span><span class="en"><b>🧭 Travel Persona</b> (8 Qs)</span><small><span class="ko">아침 · 식당 · 일정 · 저녁 · 쇼핑 · 몸관리 · 사진 · 돌발 → 페르소나 + 액티비티 TOP5</span><span class="en">Mornings · food · pace · evenings · shopping · body · photos · changes → persona + TOP5</span></small></button>
+<button class="mod" data-m="food" onclick="F_modeToggle(this)"><span class="tick">✓</span><span class="ko"><b>🍷 미식 · 다이닝 취향</b> (8문항)</span><span class="en"><b>🍷 Food Taste</b> (8 Qs)</span><small><span class="ko">한식 · 아침 · 매운맛 · 도전도 · 고기/해산물 · 술 · 카페 · 분위기 → 맛집 TOP5</span><span class="en">Korean food need? · adventurous? · drinks · cafés → TOP5 spots</span></small></button>
 </div>
-</div>
-<div class="act-subrow">
-<h4><span class="ko">배경</span><span class="en">Backdrop</span></h4>
-<div class="act-grid">
- <div class="act-item" data-ko="해안 절벽" data-en="Coastal Cliffs" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">해안 절벽</span><span class="en">Coastal Cliffs</span></span></div>
- <div class="act-item" data-ko="산맥 파노라마" data-en="Mountain Panorama" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">산맥 파노라마</span><span class="en">Mountain Panorama</span></span></div>
- <div class="act-item" data-ko="도심 스카이라인" data-en="City Skyline" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">도심 스카이라인</span><span class="en">City Skyline</span></span></div>
- <div class="act-item" data-ko="계곡 &amp; 숲" data-en="Valley &amp; Forest" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">계곡 &amp; 숲</span><span class="en">Valley &amp; Forest</span></span></div>
-</div>
-</div>
-<div class="act-subrow">
-<h4><span class="ko">난이도</span><span class="en">Difficulty</span></h4>
-<div class="act-grid">
- <div class="act-item" data-ko="부담 없는 초보" data-en="Beginner Friendly" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">부담 없는 초보</span><span class="en">Beginner Friendly</span></span></div>
- <div class="act-item" data-ko="균형 잡힌 중급" data-en="Balanced Intermediate" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">균형 잡힌 중급</span><span class="en">Balanced Intermediate</span></span></div>
- <div class="act-item" data-ko="도전적인 상급" data-en="Challenging Advanced" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">도전적인 상급</span><span class="en">Challenging Advanced</span></span></div>
- <div class="act-item" data-ko="챔피언십 난코스" data-en="Championship Test" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">챔피언십 난코스</span><span class="en">Championship Test</span></span></div>
-</div>
-</div>
+<button class="startbtn" id="startBtn" onclick="F_startFlow()"><span class="ko">시작하기 →</span><span class="en">Start →</span></button>
 </div>
 
-<div class="act-cat">
- <h3>🍷 <span class="ko">와이너리 &amp; 다이닝</span><span class="en">Winery &amp; Dining</span></h3>
- <div class="act-grid">
-  <div class="act-item" data-ko="나파 밸리 와이너리 투어" data-en="Napa Valley Winery Tour" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">나파 밸리 와이너리 투어</span><span class="en">Napa Valley Winery Tour</span></span></div>
-  <div class="act-item" data-ko="파인다이닝 셰프 테이블" data-en="Fine Dining Chef Table" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">파인다이닝 셰프 테이블</span><span class="en">Fine Dining Chef Table</span></span></div>
-  <div class="act-item" data-ko="캘리포니아 해산물 레스토랑" data-en="California Seafood Dining" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">캘리포니아 해산물 레스토랑</span><span class="en">California Seafood Dining</span></span></div>
-  <div class="act-item" data-ko="정통 BBQ 스모크하우스" data-en="Authentic BBQ Smokehouse" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">정통 BBQ 스모크하우스</span><span class="en">Authentic BBQ Smokehouse</span></span></div>
-  <div class="act-item" data-ko="한인타운 &amp; 퓨전 다이닝" data-en="Koreatown &amp; Fusion Dining" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">한인타운 &amp; 퓨전 다이닝</span><span class="en">Koreatown &amp; Fusion Dining</span></span></div>
- </div>
- </div>
+<!-- STEP N: dynamic quiz host -->
+<div class="step" id="squiz">
+<div class="stepnav" id="stepnav"></div>
+<div class="prog" id="prog"></div>
+<div id="qhost"></div>
+</div>
 
- <div class="act-cat">
- <h3>🌉 <span class="ko">랜드마크 &amp; 관광</span><span class="en">Landmarks &amp; Sightseeing</span></h3>
- <div class="act-grid">
-  <div class="act-item" data-ko="골든게이트 브릿지" data-en="Golden Gate Bridge" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">골든게이트 브릿지</span><span class="en">Golden Gate Bridge</span></span></div>
-  <div class="act-item" data-ko="요세미티 국립공원" data-en="Yosemite National Park" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">요세미티 국립공원</span><span class="en">Yosemite National Park</span></span></div>
-  <div class="act-item" data-ko="PCH 해안 드라이브" data-en="Pacific Coast Highway Drive" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">PCH 해안 드라이브</span><span class="en">Pacific Coast Highway Drive</span></span></div>
-  <div class="act-item" data-ko="할리우드 · 비버리힐스" data-en="Hollywood &amp; Beverly Hills" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">할리우드 · 비버리힐스</span><span class="en">Hollywood &amp; Beverly Hills</span></span></div>
-  <div class="act-item" data-ko="그랜드 캐니언 (헬기 옵션)" data-en="Grand Canyon (helicopter option)" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">그랜드 캐니언 (헬기 옵션)</span><span class="en">Grand Canyon (helicopter option)</span></span></div>
- </div>
- </div>
+<!-- STEP Z: unified result -->
+<div class="step" id="sresult">
+<div id="resblocks"></div>
 
- <div class="act-cat">
- <h3>🎟️ <span class="ko">체험 &amp; 엔터테인먼트</span><span class="en">Experiences &amp; Entertainment</span></h3>
- <div class="act-grid">
-  <div class="act-item" data-ko="MLB · NBA 직관" data-en="MLB · NBA Live Game" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">MLB · NBA 직관</span><span class="en">MLB · NBA Live Game</span></span></div>
-  <div class="act-item" data-ko="라스베이거스 쇼" data-en="Las Vegas Show" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">라스베이거스 쇼</span><span class="en">Las Vegas Show</span></span></div>
-  <div class="act-item" data-ko="프리미엄 아울렛 쇼핑" data-en="Premium Outlet Shopping" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">프리미엄 아울렛 쇼핑</span><span class="en">Premium Outlet Shopping</span></span></div>
-  <div class="act-item" data-ko="스파 &amp; 웰니스" data-en="Spa &amp; Wellness" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">스파 &amp; 웰니스</span><span class="en">Spa &amp; Wellness</span></span></div>
-  <div class="act-item" data-ko="PGA 프로 레슨 클리닉" data-en="PGA Pro Lesson Clinic" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">PGA 프로 레슨 클리닉</span><span class="en">PGA Pro Lesson Clinic</span></span></div>
- </div>
- </div>
+<div class="actionzone az-ko" id="actionZone">
+<h3 class="sec"><span class="stepnum">1</span><span class="ko">테마로 고르기 (복수 선택 가능 — 견적에 반영)</span><span class="en">Pick themes (multiple ok — applies to quote)</span></h3>
+<div class="themecards" id="themes">
+<div class="theme" data-v="바다 링크스형" onclick="F_themePick(this)"><span class="em">🌊</span><div><b><span class="ko">바다 링크스</span><span class="en">Ocean Links</span></b><p><span class="ko">해안 절벽 코스 + PCH 드라이브 + 해산물 다이닝</span><span class="en">Cliff courses + PCH drive + seafood</span></p></div></div>
+<div class="theme" data-v="사막+쇼형" onclick="F_themePick(this)"><span class="em">🏜️</span><div><b><span class="ko">사막 + 쇼</span><span class="en">Desert + Shows</span></b><p><span class="ko">팜스프링스 리조트 + 라스베이거스 쇼 + BBQ</span><span class="en">Palm Springs + Vegas shows + BBQ</span></p></div></div>
+<div class="theme" data-v="프라이빗 섭외 지원형" onclick="F_themePick(this)"><span class="em">🔑</span><div><b><span class="ko">프라이빗 섭외 지원</span><span class="en">Private Club Sourcing</span></b><p><span class="ko">현지 네트워크 섭외 지원 + 프로 레슨 + 셰프 테이블 (별도 협의)</span><span class="en">Local-network sourcing + pro lesson + chef table (arranged separately)</span></p></div></div>
+</div>
 
- <div class="act-cat">
- <h3>🏘️ <span class="ko">로컬 라이프</span><span class="en">Local Life</span></h3>
- <div class="act-grid">
-  <div class="act-item" data-ko="현지인 추천 로컬 맛집" data-en="Locals Only Food Spots" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">현지인 추천 로컬 맛집</span><span class="en">Locals Only Food Spots</span></span></div>
-  <div class="act-item" data-ko="파머스 마켓 &amp; 아침 산책" data-en="Farmers Market &amp; Morning Walk" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">파머스 마켓 &amp; 아침 산책</span><span class="en">Farmers Market &amp; Morning Walk</span></span></div>
-  <div class="act-item" data-ko="헬리콥터 투어" data-en="Helicopter Tour" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">헬리콥터 투어</span><span class="en">Helicopter Tour</span></span></div>
-  <div class="act-item" data-ko="선셋 비치 피크닉" data-en="Sunset Beach Picnic" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">선셋 비치 피크닉</span><span class="en">Sunset Beach Picnic</span></span></div>
-  <div class="act-item" data-ko="로컬 브루어리 &amp; 와인바 투어" data-en="Local Brewery &amp; Wine Bar Tour" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">로컬 브루어리 &amp; 와인바 투어</span><span class="en">Local Brewery &amp; Wine Bar Tour</span></span></div>
-  <div class="act-item" data-ko="서핑 레슨" data-en="Surf Lesson" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">서핑 레슨</span><span class="en">Surf Lesson</span></span></div>
-  <div class="act-item" data-ko="산타모니카 비치 바이크" data-en="Santa Monica Beach Bike" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">산타모니카 비치 바이크</span><span class="en">Santa Monica Beach Bike</span></span></div>
-  <div class="act-item" data-ko="라이브 재즈 &amp; 디너" data-en="Live Jazz &amp; Dinner" onclick="actToggle(this)"><span class="act-ck">✓</span><span class="act-nm"><span class="ko">라이브 재즈 &amp; 디너</span><span class="en">Live Jazz &amp; Dinner</span></span></div>
- </div>
- </div>
+<h3 class="sec"><span class="stepnum">2</span><span class="ko">일정 · 항공 · 연락처 (견적용)</span><span class="en">Dates · flights · contact (for quote)</span></h3>
+<p class="secsub" id="quizEcho" style="font-size:12.5px;color:var(--mut);margin:0 0 10px;line-height:1.6"></p>
+<div class="opts2">
+<div id="dateBlock"><label class="lbl"><span class="ko">희망 시기 (복수 선택 가능)</span><span class="en">Preferred windows (multiple ok)</span></label>
+<div class="opts" id="dateOpts">
+<button class="opt" onclick="F_multiPick(this,'date')"><span class="ko">3~5월 (온화 · 성수기)</span><span class="en">Mar–May (peak)</span></button>
+<button class="opt" onclick="F_multiPick(this,'date')"><span class="ko">6~8월 (여름 · 가족시즌)</span><span class="en">Jun–Aug (summer)</span></button>
+<button class="opt" onclick="F_multiPick(this,'date')"><span class="ko">9~11월 (가을 · 추천)</span><span class="en">Sep–Nov (recommended)</span></button>
+<button class="opt" onclick="F_multiPick(this,'date')"><span class="ko">12~2월 (겨울 · 사막시즌)</span><span class="en">Dec–Feb (desert season)</span></button>
+</div></div>
+<div id="mixBlock"><label class="lbl"><span class="ko">골프 비중 <small style="font-weight:400">(테스트에서 이미 답변 — 바꾸려면 눌러주세요)</small></span><span class="en">Golf share <small style="font-weight:400">(answered in quiz — tap to change)</small></span></label>
+<div class="opts" id="mixOpts">
+<button class="opt" onclick="F_singlePick(this,'mix')"><span class="ko">골프만 집중</span><span class="en">Golf only</span></button>
+<button class="opt" onclick="F_singlePick(this,'mix')"><span class="ko">골프 70 + 관광 30</span><span class="en">Golf 70 / Tour 30</span></button>
+<button class="opt" onclick="F_singlePick(this,'mix')"><span class="ko">골프 + 관광 반반</span><span class="en">Half golf, half sights</span></button>
+<button class="opt" onclick="F_singlePick(this,'mix')"><span class="ko">골프 30 + 관광 70</span><span class="en">Golf 30 / Tour 70</span></button>
+<button class="opt" onclick="F_singlePick(this,'mix')"><span class="ko">관광 중심 (골프 없이)</span><span class="en">Sights only (no golf)</span></button>
+</div></div>
+<div><label class="lbl"><span class="ko">항공</span><span class="en">Flights</span></label>
+<div class="opts" id="airOpts">
+<button class="opt" onclick="F_airPick(this,'with')"><span class="ko">항공 포함으로 견적</span><span class="en">Include flights</span><small><span class="ko">별도 실비 · 발권 시점 운임 적용</span><span class="en">Billed separately · fare at ticketing</span></small></button>
+<button class="opt" onclick="F_airPick(this,'out')"><span class="ko">항공 제외 (지상비만)</span><span class="en">Ground only</span></button>
+</div>
+<div class="airdetail" id="airDetail" style="display:none">
+<div><label class="lbl"><span class="ko">좌석 등급</span><span class="en">Cabin class</span></label>
+<div class="opts" id="cabinOpts">
+<button class="opt" onclick="F_singlePick(this,'cabin')"><span class="ko">이코노미</span><span class="en">Economy</span></button>
+<button class="opt" onclick="F_singlePick(this,'cabin')"><span class="ko">프리미엄 이코노미</span><span class="en">Premium economy</span></button>
+<button class="opt" onclick="F_singlePick(this,'cabin')"><span class="ko">비즈니스</span><span class="en">Business</span></button>
+<button class="opt" onclick="F_singlePick(this,'cabin')"><span class="ko">일등석</span><span class="en">First</span></button>
+</div></div>
+<div><label class="lbl"><span class="ko">선호 항공사 (선택)</span><span class="en">Preferred airline (optional)</span></label>
+<div class="opts" id="airlineOpts">
+<button class="opt" onclick="F_singlePick(this,'airline')"><span class="ko">대한항공</span><span class="en">Korean Air</span></button>
+<button class="opt" onclick="F_singlePick(this,'airline')"><span class="ko">아시아나</span><span class="en">Asiana</span></button>
+<button class="opt" onclick="F_singlePick(this,'airline')"><span class="ko">델타 · 직항이면 어디든</span><span class="en">Delta · any direct</span></button>
+<button class="opt" onclick="F_singlePick(this,'airline')"><span class="ko">상관없음 (최저가)</span><span class="en">No preference (cheapest)</span></button>
+</div></div>
+<div><label class="lbl"><span class="ko">항공권 결제 방식</span><span class="en">How to pay for flights</span></label>
+<div class="opts" id="payOpts">
+<button class="opt" onclick="F_singlePick(this,'pay')"><span class="ko">내 카드로 직접 결제</span><span class="en">I pay with my card</span><small><span class="ko">발권 링크 안내 → 본인 결제 (권장)</span><span class="en">Ticketing link → you pay (recommended)</span></small></button>
+<button class="opt" onclick="F_singlePick(this,'pay')"><span class="ko">상담 후 결정 (발권 링크 또는 대행 안내)</span><span class="en">Decide later (link or assisted ticketing)</span></button>
+</div></div>
+<div class="disclaimer"><span class="ko">✈️ <b>항공 안내:</b> 운임은 실시간 변동이라 견적가와 발권가가 다를 수 있습니다. 확정 운임은 발권 시점 기준이며, 발권 전 재확인 후 진행합니다. 항공료는 별도 실비이고, 결제는 고객님 본인 카드로 항공사·발권처에 직접 하시게 안내합니다. <b>카드번호를 이 페이지에 입력하지 마세요.</b></span><span class="en">✈️ Fares change in real time. Final fare applies at ticketing; we reconfirm before issuing. Flights are billed separately — you pay the airline directly with your own card. <b>Never enter card numbers here.</b></span></div>
+</div></div>
+<div id="ageBlock"><label class="lbl"><span class="ko">동반자 (복수 선택 가능)</span><span class="en">Companions (multiple ok)</span></label>
+<div class="opts" id="ageOpts">
+<button class="opt" onclick="F_multiPick(this,'age')"><span class="ko">어르신 동반</span><span class="en">Senior companion</span></button>
+<button class="opt" onclick="F_multiPick(this,'age')"><span class="ko">아이 동반</span><span class="en">Child companion</span></button>
+<button class="opt" onclick="F_multiPick(this,'age')"><span class="ko">해당 없음 (성인만)</span><span class="en">Adults only</span></button>
+</div></div>
+<div id="partyBlock"><label class="lbl"><span class="ko">인원수 <small style="font-weight:400">(테스트에서 이미 답변 — 바꾸려면 눌러주세요)</small></span><span class="en">Party size <small style="font-weight:400">(answered in quiz — tap to change)</small></span></label>
+<div class="opts" id="partyOpts">
+<button class="opt" onclick="F_singlePick(this,'party')"><span class="ko">부부 · 2인</span><span class="en">Couple · 2</span></button>
+<button class="opt" onclick="F_singlePick(this,'party')"><span class="ko">친구 4인</span><span class="en">4 friends</span></button>
+<button class="opt" onclick="F_singlePick(this,'party')"><span class="ko">단체 8인 이상</span><span class="en">Group 8+</span></button>
+</div></div>
+<div id="assistWrap" style="display:none"><label class="lbl"><span class="ko">이동 지원 필요</span><span class="en">Mobility assistance</span></label>
+<div class="opts" id="assistOpts">
+<button class="opt" onclick="F_multiPick(this,'assist')"><span class="ko">휠체어 이동 지원</span><span class="en">Wheelchair assistance</span></button>
+<button class="opt" onclick="F_multiPick(this,'assist')"><span class="ko">유모차 동반</span><span class="en">Stroller</span></button>
+<button class="opt" onclick="F_multiPick(this,'assist')"><span class="ko">해당 없음</span><span class="en">None needed</span></button>
+</div></div>
+<div><label class="lbl"><span class="ko">이름 / 연락처</span><span class="en">Name / Contact</span></label>
+<input type="text" id="qName" placeholder="홍길동 / 010-0000-0000 · 카톡ID"></div>
+<div class="freebox"><label class="lbl"><span class="ko">추가 요청 (자유롭게 — 알레르기, 기념일, 꼭 가고 싶은 곳 등)</span><span class="en">Anything else (allergies, anniversaries, must-visits…)</span></label>
+<textarea id="qMsg" rows="3"></textarea></div>
+</div>
+<div class="cardsToggle" id="cardsToggle" onclick="F_cardsToggle()">
+<div><div style="font-size:14.5px;font-weight:800;color:var(--navy)"><span class="stepnum">3</span><span class="ko">세부 취향카드 확인 (결과에서 자동 선택됨 — 빼고 싶은 것만 해제)</span><span class="en">Review detail cards (pre-selected — uncheck to remove)</span></div>
+<div class="count" id="cardCount"></div></div>
+<span class="phint2" style="font-size:16px;color:var(--navy);font-weight:800">▾</span>
+</div>
+<div id="cardsWrap" style="display:none">
+<div id="cardGroups"></div>
+</div>
+<div class="sendrow" style="display:grid;gap:10px;margin-top:18px">
+<a class="cta kakao" id="kakaoBtn2" href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener" style="display:block;text-align:center;border-radius:100px;padding:15px;font-size:15px;font-weight:700;text-decoration:none;background:#fee500;color:#3c1e1e"><span class="ko">카톡으로 견적 요청 보내기</span><span class="en">Send quote request via KakaoTalk</span></a>
+<button class="cta ghost" onclick="F_backToStart()" style="background:#fff;border:1.5px solid var(--line);color:var(--navy);border-radius:100px;padding:13px;font-family:inherit;cursor:pointer">↺ <span class="ko">처음부터 다시</span><span class="en">Start over</span></button>
+</div>
+<p class="note" style="font-size:12px;color:var(--mut);line-height:1.7;margin-top:18px"><span class="ko">※ 테스트 페이지입니다. 금액은 표시하지 않습니다. 결과 + 선택 카드 + 일정이 카톡 메시지로 정리되어 전달됩니다.</span><span class="en">※ Test page. No prices shown. Results + cards + dates are composed into a KakaoTalk message.</span></p>
+</div><!-- /actionZone -->
+</div>
 
- <div style="text-align:center;margin-top:34px">
- <div id="act-count" style="font-size:13px;font-weight:700;color:#1a3450;margin-bottom:14px">0 <span class="ko">개 선택됨</span><span class="en">selected</span></div>
- <button class="act-send" onclick="actSend()"><span class="ko">선택 항목 문의하기 →</span><span class="en">Send My Selection →</span></button>
- <div style="margin-top:16px;font-size:12px;color:#6b7280;line-height:1.6"><span class="ko">이메일(info@resonatetour.com)로 선택 내용이 담긴 메일이 열립니다<br>카카오톡 @resonatetour로도 동일하게 문의하실 수 있어요</span><span class="en">Opens an email to info@resonatetour.com with your picks ready to send<br>You can also reach us on KakaoTalk @resonatetour</span></div>
  </div>
  </div>
+ <style>
+
+
+:root{--navy:#1a3450;--gold:#d4af37;--ink:#171a20;--mut:#5c5e62;--line:#e3e6ec;--bg:#f7f8fa;--sel:#1a3450;--selbg:#eaf0f7}
+#finderModal *{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)}
+#finderModal [data-lang="en"] .ko{display:none!important}[data-lang="ko"] .en{display:none!important}
+#finderModal .wrap{max-width:720px;margin:0 auto;padding:20px 16px 90px}
+#finderModal .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+#finderModal .badge{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--navy);border:1px solid var(--line);border-radius:100px;padding:5px 12px;background:#fff}
+#finderModal .langbtn{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:100px;padding:6px 14px;cursor:pointer}
+#finderModal h1{font-size:22px;margin:14px 0 6px;letter-spacing:-.02em}.sub{font-size:13.5px;color:var(--mut);line-height:1.7;margin:0 0 18px}
+#finderModal .prog{display:flex;gap:6px;margin:16px 0}.prog i{flex:1;height:4px;border-radius:4px;background:#e3e6ec}.prog i.done{background:var(--gold)}
+#finderModal .q{display:none}.q.act{display:block;animation:fade .25s}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+#finderModal .q h2{font-size:17px;margin:6px 0 14px}.opts{display:grid;gap:10px}.opt{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:15px 16px;font-size:14.5px;cursor:pointer;text-align:left;font-family:inherit;color:var(--ink)}.opt small{display:block;color:var(--mut);font-size:12px;margin-top:4px}.opt:hover{border-color:var(--navy)}.opt.sel{background:var(--selbg);border-color:var(--sel);box-shadow:inset 0 0 0 1px var(--sel)}.opt.sel::after{content:'✓';float:right;color:var(--sel);font-weight:800}
+#finderModal .back{background:none;border:none;color:var(--mut);font-size:13px;margin-top:14px;cursor:pointer}
+/* result */
+#finderModal .result{display:none}.result.act{display:block}
+#finderModal .rec{background:var(--navy);color:#fff;border-radius:18px;padding:22px 20px;margin:8px 0 16px}.rec h2{margin:0 0 4px;font-size:19px}.rec p{margin:6px 0 0;font-size:13.5px;line-height:1.7;color:#d7dee8}.rec .why{margin:12px 0 0;padding:0;list-style:none}.rec .why li{font-size:13px;margin:6px 0;color:#fff}.rec .why li b{color:var(--gold)}
+#finderModal .cta-row{display:grid;gap:10px;margin:16px 0}.cta{display:block;text-align:center;border-radius:100px;padding:15px;font-size:15px;font-weight:700;text-decoration:none}.cta.kakao{background:#fee500;color:#3c1e1e}.cta.ghost{background:#fff;border:1.5px solid var(--line);color:var(--navy)}
+#finderModal h3.sec{font-size:15px;color:var(--navy);margin:26px 0 10px}
+#finderModal .act-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#finderModal .act-item{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;font-size:13px;user-select:none}.act-item.on{background:var(--selbg);border-color:var(--sel)}.act-item.on .act-ck{background:var(--sel);border-color:var(--sel);color:#fff}
+#finderModal .act-ck{width:20px;height:20px;border-radius:6px;border:1.5px solid #c9d2dd;display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:transparent;flex-shrink:0}
+#finderModal .count{font-size:13px;font-weight:700;color:var(--navy);margin:14px 0}
+#finderModal .opts2{display:grid;gap:10px}.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:18px}
+/* option cards (report section 4, no prices) */
+#finderModal .themecards{display:grid;gap:12px}.theme{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start;cursor:pointer}.theme.sel{border-color:var(--sel);background:var(--selbg);box-shadow:inset 0 0 0 1px var(--sel)}.theme .em{font-size:26px}.theme b{font-size:14.5px}.theme p{margin:4px 0 0;font-size:12.5px;color:var(--mut);line-height:1.6}
+#finderModal textarea, #finderModal input[type=text]{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;font-family:inherit}label.lbl{font-size:12.5px;font-weight:700;color:var(--navy);display:block;margin:14px 0 6px}
+#finderModal .sendrow{display:grid;gap:10px;margin-top:18px}
+@media(max-width:480px){.act-grid{grid-template-columns:1fr}}
+#finderModal .tabs{display:flex;gap:8px;margin-bottom:4px}.tab{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:100px;padding:11px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--mut)}.tab.on{background:var(--navy);border-color:var(--navy);color:#fff}.tq{display:none}.tq.act{display:block;animation:fade .25s}.tresult{display:none}.tresult.act{display:block}
+#finderModal .step{display:none}.step.act{display:block;animation:fade .25s}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+#finderModal .modgrid{display:grid;gap:10px}.mod{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:15px 16px;cursor:pointer;font-family:inherit;text-align:left;color:var(--ink)}.mod small{display:block;color:var(--mut);font-size:12px;margin-top:4px}.mod.on{border-color:var(--sel);background:var(--selbg);box-shadow:inset 0 0 0 1px var(--sel)}
+#finderModal .mod .tick{float:right;width:22px;height:22px;border-radius:7px;border:1.5px solid #c9d2dd;display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:transparent}.mod.on .tick{background:var(--sel);border-color:var(--sel);color:#fff}
+#finderModal .startbtn{display:block;width:100%;background:var(--navy);color:#fff;border:none;border-radius:100px;padding:16px;font-size:15.5px;font-weight:700;margin-top:18px;cursor:pointer;font-family:inherit}.startbtn:disabled{opacity:.35}
+#finderModal .stepnav{display:flex;gap:8px;margin-top:6px}.chip{flex:1;text-align:center;font-size:11.5px;font-weight:700;color:var(--mut);background:#fff;border:1px solid var(--line);border-radius:100px;padding:8px 4px}.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}.chip.done{color:var(--navy);border-color:var(--gold)}
+#finderModal .freebox{margin-top:12px}textarea,input[type=text]{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;font-family:inherit}label.lbl{font-size:12.5px;font-weight:700;color:var(--navy);display:block;margin:14px 0 6px}
+#finderModal .top5{display:grid;gap:8px;margin-top:10px}.top5 .act-item{cursor:default}
+#finderModal .rec2{background:#fff;border:1.5px solid var(--gold);border-radius:16px;padding:16px;margin-top:12px}.rec2 b{font-size:14.5px}.rec2 p{font-size:13px;color:var(--mut);margin:6px 0 0;line-height:1.65}
+#finderModal .secttl{font-size:15px;color:var(--navy);margin:24px 0 4px;font-weight:800}.secsub{font-size:12.5px;color:var(--mut);margin:0 0 10px;line-height:1.6}
+/* v5: result flip-cards + action-zone divider */
+#finderModal .rescards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 4px}
+#finderModal .pcard{background:#fff;border:2px solid var(--line);border-radius:16px;padding:0;cursor:pointer;text-align:center;min-height:168px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;font-family:inherit;color:var(--ink);transition:border-color .15s,transform .15s}
+#finderModal .pcard:active{transform:scale(.97)}
+#finderModal .pcard.open{border-color:var(--sel);background:var(--selbg)}
+#finderModal .pcard .pem{font-size:34px}.pcard .pt{font-size:15px;font-weight:800}.pcard .ps{font-size:11.5px;color:var(--mut);padding:0 10px;line-height:1.5}
+#finderModal .pcard .phint{font-size:11px;color:var(--navy);font-weight:700}
+#finderModal .pdetail{display:none;grid-column:1/-1;background:#fff;border:2px solid var(--gold);border-radius:16px;padding:14px;margin:-2px 0 6px}
+#finderModal .pdetail.show{display:block;animation:fade .25s}
+#finderModal .pdetail .dt{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:8px}
+#finderModal .pdetail .top5{margin-top:0}
+#finderModal .actionzone{margin-top:22px;border-radius:18px;background:#fff;border:1.5px solid var(--line);padding:6px 16px 20px;position:relative}
+#finderModal .actionzone::before{content:'';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a3450;font-size:12px;font-weight:800;padding:4px 16px;border-radius:100px;white-space:nowrap}
+#finderModal .actionzone.az-ko::before{content:'▼ 아래에서 견적 완성하기 ▼'}
+#finderModal .actionzone.az-en::before{content:'▼ Complete your quote below ▼'}
+#finderModal .actionzone h3.sec{color:var(--navy)}.actionzone .secsub{color:var(--mut)}.actionzone label.lbl{color:var(--navy)}
+#finderModal .actionzone .theme{background:#fff}.actionzone .act-item{background:#fff}
+#finderModal .actionzone .count{color:var(--navy)}
+
+/* v3: senior-friendly + per-question free text + food banner + air detail */
+#finderModal body{font-size:16px}
+#finderModal .q h2, #finderModal .tq h2, #finderModal #qhost h2{font-size:19px;line-height:1.5}
+#finderModal .opt{font-size:16px;padding:17px 16px}
+#finderModal .opt small{font-size:13px}
+#finderModal .mod{font-size:15.5px}.mod small{font-size:13px}
+#finderModal .lbl{font-size:14px}
+#finderModal .qfree{margin-top:12px}.qfree textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;font-family:inherit;min-height:56px}
+#finderModal .qfree label{font-size:13px;font-weight:700;color:var(--navy);display:block;margin-bottom:6px}
+#finderModal .foodbanner{background:linear-gradient(135deg,#7b2d12,#b3541e);color:#fff;border-radius:16px;padding:20px 18px;margin:4px 0 14px}
+#finderModal .foodbanner h2{margin:0;font-size:21px}.foodbanner p{margin:6px 0 0;font-size:14px;line-height:1.65;color:#ffe9d6}
+#finderModal .foodtop{background:#fff;border:2px solid #b3541e;border-radius:14px;padding:14px;margin-top:10px}
+#finderModal .foodtop b{font-size:16px}.foodtop p{font-size:13.5px;color:var(--mut);margin:6px 0 0;line-height:1.65}
+#finderModal .airdetail{background:#f0f4f8;border-radius:12px;padding:14px;margin-top:12px;font-size:13.5px;line-height:1.7;color:#33414f}
+#finderModal .airdetail b{color:var(--navy)}
+#finderModal .disclaimer{background:#fff8e6;border:1px solid #e8c96a;border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.7;color:#6b5a1e;margin-top:12px}
+
+/* v7: submit/back buttons, static TOP5, gold-text fix, golf mix extended */
+#finderModal .qnav{display:flex;gap:10px;margin-top:18px}
+#finderModal .qnav .backbtn{flex:0 0 130px;background:#fff;border:1.5px solid var(--line);color:var(--navy);border-radius:100px;padding:15px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer}
+#finderModal .qnav .nextbtn{flex:1;background:var(--navy);color:#fff;border:none;border-radius:100px;padding:15px;font-size:15.5px;font-weight:700;font-family:inherit;cursor:pointer}
+#finderModal .qnav .nextbtn:disabled{opacity:.35}
+#finderModal .top5 .act-item{cursor:default}
+#finderModal .top5 .act-ck{display:none}
+#finderModal .top5 .act-item{border-style:dashed}
+#finderModal .phint, #finderModal .pcard .phint, #finderModal #cardsToggle .phint2{color:var(--navy)!important}
+/* v6: flip-cards + collapsible detail cards + numbered action zone */
+#finderModal .cardsToggle{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:15px 16px;margin-top:18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+#finderModal .cardsToggle .count{margin:4px 0 0}
+#finderModal #cardsWrap{display:none}#cardsWrap.show{display:block}
+#finderModal .stepnum{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--gold);color:#1a3450;font-size:13px;font-weight:800;align-items:center;justify-content:center;margin-right:6px;vertical-align:1px}
+
+ </style>
+ <script>
+
+var F_KAKAO='https://open.kakao.com/o/sresonatetour';
+var F_ITEMS=[{"cat": "golf", "ko": "오션뷰 코스", "en": "Ocean-View Course"}, {"cat": "golf", "ko": "산악 코스", "en": "Mountain Course"}, {"cat": "golf", "ko": "링크스 코스", "en": "Links Course"}, {"cat": "golf", "ko": "사막 코스", "en": "Desert Course"}, {"cat": "golf", "ko": "해안 절벽", "en": "Coastal Cliffs"}, {"cat": "golf", "ko": "산맥 파노라마", "en": "Mountain Panorama"}, {"cat": "golf", "ko": "도심 스카이라인", "en": "City Skyline"}, {"cat": "golf", "ko": "계곡 & 숲", "en": "Valley & Forest"}, {"cat": "golf", "ko": "부담 없는 초보", "en": "Beginner Friendly"}, {"cat": "golf", "ko": "균형 잡힌 중급", "en": "Balanced Intermediate"}, {"cat": "golf", "ko": "도전적인 상급", "en": "Challenging Advanced"}, {"cat": "golf", "ko": "챔피언십 난코스", "en": "Championship Test"}, {"cat": "dining", "ko": "나파 밸리 와이너리 투어", "en": "Napa Valley Winery Tour"}, {"cat": "dining", "ko": "파인다이닝 셰프 테이블", "en": "Fine Dining Chef Table"}, {"cat": "dining", "ko": "캘리포니아 해산물 레스토랑", "en": "California Seafood Dining"}, {"cat": "dining", "ko": "정통 BBQ 스모크하우스", "en": "Authentic BBQ Smokehouse"}, {"cat": "dining", "ko": "한인타운 & 퓨전 다이닝", "en": "Koreatown & Fusion Dining"}, {"cat": "landmark", "ko": "골든게이트 브릿지", "en": "Golden Gate Bridge"}, {"cat": "landmark", "ko": "요세미티 국립공원", "en": "Yosemite National Park"}, {"cat": "landmark", "ko": "PCH 해안 드라이브", "en": "Pacific Coast Highway Drive"}, {"cat": "landmark", "ko": "할리우드 · 비버리힐스", "en": "Hollywood & Beverly Hills"}, {"cat": "landmark", "ko": "그랜드 캐니언 (헬기 옵션)", "en": "Grand Canyon (helicopter option)"}, {"cat": "exp", "ko": "MLB · NBA 직관", "en": "MLB · NBA Live Game"}, {"cat": "exp", "ko": "MLS 직관 (LAFC · LA갤럭시)", "en": "MLS Live (LAFC · LA Galaxy)"}, {"cat": "exp", "ko": "라스베이거스 쇼", "en": "Las Vegas Show"}, {"cat": "exp", "ko": "프리미엄 아울렛 쇼핑", "en": "Premium Outlet Shopping"}, {"cat": "exp", "ko": "스파 & 웰니스", "en": "Spa & Wellness"}, {"cat": "exp", "ko": "PGA 프로 레슨 클리닉", "en": "PGA Pro Lesson Clinic"}, {"cat": "local", "ko": "현지인 추천 로컬 맛집", "en": "Locals Only Food Spots"}, {"cat": "local", "ko": "파머스 마켓 & 아침 산책", "en": "Farmers Market & Morning Walk"}, {"cat": "local", "ko": "헬리콥터 투어", "en": "Helicopter Tour"}, {"cat": "local", "ko": "선셋 비치 피크닉", "en": "Sunset Beach Picnic"}, {"cat": "local", "ko": "로컬 브루어리 & 와인바 투어", "en": "Local Brewery & Wine Bar Tour"}, {"cat": "local", "ko": "서핑 레슨", "en": "Surf Lesson"}, {"cat": "local", "ko": "산타모니카 비치 바이크", "en": "Santa Monica Beach Bike"}, {"cat": "local", "ko": "라이브 재즈 & 디너", "en": "Live Jazz & Dinner"}];
+var F_PERSONA_EN={'E-S-J-S':'☀️ Sun Conqueror','E-S-J-R':'🛋️ Easy Socialite','E-S-P-S':'🎉 Spontaneous Adventurer','E-S-P-R':'🍷 Easy Pleasure Seeker','E-N-J-S':'🗺️ Trailblazer','E-N-J-R':'📸 Memory Collector','E-N-P-S':'🌈 Free Spirit','E-N-P-R':'☁️ Daydreamer','I-S-J-S':'🏃 Routine Traveler','I-S-J-R':'📚 Quiet Perfectionist','I-S-P-S':'🚶 Small Discoverer','I-S-P-R':'🐢 Restful Traveler','I-N-J-S':'🔭 Meaning Seeker','I-N-J-R':'🌙 Night Thinker','I-N-P-S':'🍃 Wanderer','I-N-P-R':'🛋️ Cozy Dreamer'};
+var F_PERSONA={
+'E-S-J-S':['☀️ 태양의 정복자','일출 러닝·검증 맛집·분단위 일정. 아침부터 밤까지 꽉 찬 하루가 행복. 체력은 액티비티로.','Sunrise runs, trusted lists, packed days.'],
+'E-S-J-R':['🛋️ 여유로운 사교가','사람 만나는 건 좋아하지만 몸은 아끼기. 맛집·쇼핑·저녁 모임 중심, 낮엔 스파.','Social but rested. Food, shows, evenings.'],
+'E-S-P-S':['🎉 즉흥 모험가','계획 없이 골목으로. 현지 친구와 서핑·마켓·밤거리까지.','No plans, all discovery. Surf, markets, nights.'],
+'E-S-P-R':['🍷 노는 게 제일 쉬웠어요','먹고 마시고 쉬고. 검증된 곳 위주로 편하게, 무리 없이.','Eat, drink, rest. Trusted spots, zero strain.'],
+'E-N-J-S':['🗺️ 탐험대장','새 골목·새 풍경 정복. 일정은 짜되 발견은 놓치지 않기. 인생샷 필수.','New alleys, new views. Planned but curious.'],
+'E-N-J-R':['📸 추억 수집가','사진·기록·사람. 알차게 다니고 밤엔 정리하며 쉬기.','Photos, people, stories. Busy days, calm nights.'],
+'E-N-P-S':['🌈 자유로운 영혼','바람 가는 대로. 하이킹·비치·로컬바, 내일이 없어도 오늘 즐기기.','Wherever the wind goes. Hike, beach, local bars.'],
+'E-N-P-R':['☁️ 몽상가','골목 산책·카페·전망대. 뛰지 않고 느끼는 여행.','Wander, cafés, viewpoints. Feel, don\'t rush.'],
+'I-S-J-S':['🏃 루틴 여행자','아침 운동·조식·일정대로. 흔들림 없는 나만의 리듬.','Morning workout, set routine, steady rhythm.'],
+'I-S-J-R':['📚 조용한 완벽주의자','검증된 곳만, 조용히, 내 속도로. 스파·독서·룸서비스가 낙.','Only trusted spots, quietly, at my pace.'],
+'I-S-P-S':['🚶 소소한 발견자','큰 틀만 잡고 산책하듯. 파머스 마켓·동네 빵집이 보물.','Loose plans, sidewalk discoveries.'],
+'I-S-P-R':['🐢 쉼표 여행자','아무것도 안 하는 게 일정. 낮잠·전망·맛있는 거.','Doing nothing is the plan. Naps, views, food.'],
+'I-N-J-S':['🔭 의미 탐구자','박물관·역사·풍경의 이유. 알고 보면 두 배로 보임.','Museums, history, why things look this way.'],
+'I-N-J-R':['🌙 밤의 사색가','낮엔 조용히 충전, 해 질 녘부터 감성 산책·재즈바.','Quiet days, soulful evenings. Walks, jazz.'],
+'I-N-P-S':['🍃 바람 같은旅人','발길 닿는 대로 자연 속으로. 요세미티·해안 트레일이 집.','Wherever feet wander. Trails feel like home.'],
+'I-N-P-R':['🛋️ 포근한 몽상가','창밖 풍경·향긋한 커피·푹신한 침대. 숙소에서 행복 찾기.','Window views, good coffee, soft beds.']};
+var F_CATS=[['golf','⛳ 골프 코스','Golf Courses'],['dining','🍷 와이너리 & 다이닝','Winery & Dining'],['landmark','🌉 랜드마크 & 관광','Landmarks & Sightseeing'],['exp','🎟️ 체험 & 엔터테인먼트','Experiences & Entertainment'],['local','🏘️ 로컬 라이프','Local Life']];
+
+/* question banks: each {t:[ko,en], o:[[ko,en,free?],...]} free=true shows text input */
+function F_el(id){var m=document.getElementById('finderModal');var e=m?m.querySelector('#'+id):null;return e||document.getElementById(id);}
+var F_QBANK={
+golf:[
+ {t:['이번 여행, 골프 비중은?','How much golf?'],o:[['골프만 집중','Golf only'],['골프 70 + 관광 30','Golf 70 / Tour 30'],['골프 + 관광 반반','Half golf, half sights'],['골프 30 + 관광 70','Golf 30 / Tour 70'],['관광 중심 (골프 없이)','Sights only (no golf)']]},
+ {t:['스코어 감각은?','Your scoring range?'],o:[['120대 — 즐기는 게 최고','120s — fun first'],['100대 — 무난하게','100s — steady'],['90대 — 코스 공략 재미','90s — strategy fun'],['80대 — 제대로 도전','80s — championship test']]},
+ {t:['누구와 가세요?','Who\'s coming?'],o:[['부부 · 2인','Couple · 2'],['친구 4인','4 friends'],['단체 8인 이상','Group 8+']]},
+ {t:['꼭 쳐보고 싶은 그림은?','Must-play backdrop?'],o:[['🌊 바다 옆 링크스','🌊 Ocean links'],['🏜️ 사막 리조트','🏜️ Desert resort'],['🔑 프라이빗 클럽 (섭외 지원)','🔑 Private club (sourcing help)'],['🤷 잘 모르겠어요 — 추천받기','🤷 Surprise me']]},
+ {t:['일정 감각은?','Trip length?'],o:[['5박 — 핵심만','5 nights — essentials'],['7박 — 여유 있게','7 nights — relaxed'],['10박 — 제대로','10 nights — full']]},
+ {t:['마지막으로, 골프에서 꼭 챙기고 싶은 게 있다면?','Any must-haves for golf?'],o:[['PGA 레슨 받고 싶어요','Want a PGA lesson'],['특정 코스 지정 (아래에 적어주세요)','Specific course (write below)'],['없어요 — 결과 보기','Nothing — see results']],free:true}],
+travel:[
+ {t:['아침에 눈 뜨면 제일 먼저?','First thing in the morning?'],o:[['🌅 일출 러닝 나가기|E','🌅 Sunrise run|E'],['🥐 여유롭게 조식 즐기기|I','🥐 Slow breakfast|I']]},
+ {t:['식당 고를 때 나는?','Picking a restaurant?'],o:[['⭐ 검증된 맛집 리스트대로|S','⭐ Trusted list|S'],['🗺️ 골목길 우연한 발견|N','🗺️ Wander & discover|N']]},
+ {t:['일정은 어떻게?','How to plan days?'],o:[['📋 분 단위로 짜놓기|J','📋 Minute-by-minute|J'],['🎈 큰 틀만, 나머진 그때그때|P','🎈 Loose frame|P']]},
+ {t:['저녁은 누구와?','Evenings with whom?'],o:[['🍻 현지에서 새 친구 만들기|E','🍻 Meet new people|E'],['🕯️ 일행끼리 조용히|I','🕯️ Quiet with my group|I']]},
+ {t:['쇼핑 스타일은?','Shopping style?'],o:[['🛍️ 아울렛 정복형|S','🛍️ Outlet conqueror|S'],['🧺 로컬 마켓 구경형|N','🧺 Local market browser|N']]},
+ {t:['몸 상태 관리는?','Body care?'],o:[['🏄 액티비티로 충전|PHY-S','🏄 Recharge active|PHY-S'],['💆 휴식으로 충전 (스파·낮잠)|PHY-R','💆 Recharge resting|PHY-R']]},
+ {t:['사진 vs 눈?','Photos vs eyes?'],o:[['📸 인생샷은 건져야지|N','📸 Must get the shot|N'],['👀 눈에 담는 게 먼저|S','👀 Eyes first|S']]},
+ {t:['예상치 못한 변경엔?','When plans change?'],o:[['😆 오히려 좋아, 가자|P','😆 Even better|P'],['😌 플랜B 있으니 괜찮아|J','😌 Plan B|J']]},
+ {t:['마지막으로, 이번 여행에서 꼭 챙기고 싶은 게 있다면?','Any must-haves for this trip?'],o:[['기념일·이벤트 있어요 (아래에 적어주세요)','Anniversary/event (write below)'],['꼭 가고 싶은 곳 있어요 (아래에 적어주세요)','Must-visit place (write below)'],['없어요 — 결과 보기','Nothing — see results']],free:true}],
+food:[
+ {t:['해외에서 한식, 얼마나 필요해?','How much Korean food?'],o:[['매끼 필요해요','Every meal'],['2~3일에 한 번이면 돼요','Every few days'],['현지식만으로 좋아요','Local food only']]},
+ {t:['아침은 어떻게 드세요?','Breakfast style?'],o:[['든든한 아침 필수','Big breakfast must'],['가볍게 (커피·빵)','Light (coffee & bread)'],['안 먹는 편','Usually skip']]},
+ {t:['매운맛·향신료는?','Spicy food?'],o:[['매운 거 좋아함','Love spicy'],['조금만','Mild only'],['전혀 못 먹음','Cannot eat']]},
+ {t:['새 음식 도전도는?','Adventurous eating?'],o:[['뭐든 먹어봐요','Eat anything'],['익숙한 것 위주','Familiar first'],['알레르기·못 먹는 것 있어요','Restrictions']]},
+ {t:['고기 vs 해산물?','Meat vs seafood?'],o:[['고기파 (스테이크·BBQ)','Meat lover'],['해산물파','Seafood lover'],['둘 다 좋아요','Both']]},
+ {t:['술은?','Drinks?'],o:[['와이너리·바 좋아함','Love wineries & bars'],['가볍게만','Light only'],['안 마셔요','No alcohol']]},
+ {t:['카페·디저트파?','Café person?'],o:[['하루 1카페 필수','Daily café must'],['그때그때','Sometimes'],['관심 없어요','Not interested']]},
+ {t:['식사 분위기는?','Dining mood?'],o:[['조용한 파인다이닝','Quiet fine dining'],['활기찬 로컬 맛집','Lively local spots'],['편한 캐주얼','Casual & easy']]}
+]};
+
+var F_flow=[],F_fi=0,F_qi=0,F_answers={theme:null,date:null,mix:null,air:null};
+function F_toggleLang(){curLang=curLang==='ko'?'en':'ko';document.documentElement.dataset.lang=curLang;var az=document.getElementById('actionZone');if(az)az.className='actionzone '+(curLang==='ko'?'az-ko':'az-en');if(F_el('sresult').classList.contains('act'))F_renderAll();}
+function F_modeToggle(el){el.classList.toggle('on');var n=document.querySelectorAll('#finderModal #modes .mod.on').length;F_el('startBtn').disabled=!n;}
+function F_startFlow(){
+ F_flow=[].slice.call(document.querySelectorAll('#finderModal #modes .mod.on')).map(function(e){return e.dataset.m});
+ if(!F_flow.length)return;
+ F_answers={theme:null,date:null,mix:null,air:null};
+ F_fi=0;F_qi=0;
+ F_show('squiz');F_renderNav();F_renderQ();
+}
+function F_show(id){document.querySelectorAll('#finderModal .step').forEach(function(e){e.classList.remove('act')});document.getElementById(id).classList.add('act');}
+function F_modeName(m){return m==='golf'?(curLang==='ko'?'⛳ 골프':'⛳ Golf'):m==='travel'?(curLang==='ko'?'🧭 여행성향':'🧭 Persona'):(curLang==='ko'?'🍷 미식':'🍷 Food');}
+function F_renderNav(){var n=F_el('stepnav');n.innerHTML='';F_flow.forEach(function(m,i){var d=document.createElement('div');d.className='chip'+(i===F_fi?' on':'');d.textContent=F_modeName(m);n.appendChild(d);});}
+function F_curQ(){return F_QBANK[F_flow[F_fi]][F_qi];}
+var qsel=null;
+function F_renderQ(){
+ F_renderNav();
+ qsel=null;
+ var host=F_el('qhost');host.innerHTML='';
+ var bank=F_QBANK[F_flow[F_fi]];
+ var bar=F_el('prog');bar.innerHTML='';
+ bank.forEach(function(_,i){var b=document.createElement('i');if(i<F_qi)b.className='done';bar.appendChild(b);});
+ var q=F_curQ();
+ var h=document.createElement('h2');h.style.cssText='font-size:17px;margin:6px 0 14px';
+ h.innerHTML='<span class="ko">'+q.t[0]+'</span><span class="en">'+q.t[1]+'</span>';host.appendChild(h);
+ var box=document.createElement('div');box.className='opts';
+ q.o.forEach(function(o){
+  var b=document.createElement('button');b.className='opt';
+  b.innerHTML='<span class="ko">'+o[0].split('|')[0]+'</span><span class="en">'+o[1].split('|')[0]+'</span>';
+  b.onclick=function(){box.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');qsel=o;F_el('qnext').disabled=false;};box.appendChild(b);
+ });
+ host.appendChild(box);
+ {var f=document.createElement('div');f.className='qfree';
+  var ex=F_freeExample();
+  f.innerHTML='<label><span class="ko">✏️ 덧붙일 말 (선택 — '+ex[0]+')</span><span class="en">✏️ Add a note (optional — '+ex[1]+')</span></label><textarea id="qfree" rows="2" placeholder="없으면 비워두세요"></textarea>';
+  host.appendChild(f);}
+ var nav=document.createElement('div');nav.className='qnav';
+ var bk=document.createElement('button');bk.className='backbtn';bk.textContent=curLang==='ko'?'← 돌아가기':'← Back';bk.disabled=!(F_qi>0||F_fi>0);bk.style.opacity=(F_qi>0||F_fi>0)?'1':'.4';bk.onclick=F_qback;nav.appendChild(bk);
+ var nx=document.createElement('button');nx.className='nextbtn';nx.id='qnext';nx.textContent=curLang==='ko'?'제출 →':'Submit →';nx.disabled=true;nx.onclick=function(){if(qsel)F_qpick(qsel);};nav.appendChild(nx);
+ host.appendChild(nav);
+}
+function F_freeExample(){
+ var m=F_flow[F_fi];
+ if(m==='golf')return ['예: 특정 코스명, 레슨 희망, 싫은 잔디·코스 타입','e.g. course name, lesson request'];
+ if(m==='food')return ['예: 알레르기, 특정 식당, 싫은 음식','e.g. allergies, restaurant, dislikes'];
+ return ['예: 기념일, 꼭 가고 싶은 곳, 싫은 일정','e.g. anniversary, must-visit, dislikes'];
+}
+function F_ansKey(){return F_flow[F_fi]+'_'+F_qi;}
+function F_qpick(o){
+ var fr=F_el('qfree');
+ F_answers[F_ansKey()]={ko:o[0],en:o[1],free:fr?fr.value.trim():''};
+ var bank=F_QBANK[F_flow[F_fi]];
+ if(F_qi<bank.length-1){F_qi++;F_renderQ();}
+ else if(F_fi<F_flow.length-1){F_fi++;F_qi=0;F_renderQ();}
+ else{F_showResult();}
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function F_qback(){if(F_qi>0){F_qi--;}else if(F_fi>0){F_fi--;F_qi=F_QBANK[F_flow[F_fi]].length-1;}F_renderQ();}
+/* ---- results ---- */
+function F_gVal(m,i){var a=F_answers[m+'_'+i];return a?a.ko.split('|')[0]:'';}
+function F_showResult(){F_renderAll();F_prefillFromQuiz();F_show('sresult');}
+function F_selOpt(id,koFrag){var box=document.getElementById(id);if(!box)return;var btns=box.querySelectorAll('.opt');for(var i=0;i<btns.length;i++){var t=btns[i].textContent;if(koFrag&&t.indexOf(koFrag)>=0){btns[i].classList.add('sel');return btns[i].textContent.trim();}}return null;}
+function F_prefillFromQuiz(){
+ var L=curLang==='ko';
+ var echo=[];
+ if(F_flow.indexOf('golf')>=0){
+  var qmix=F_gVal('golf',0),qparty=F_gVal('golf',2);
+  var map={'골프만 집중':'골프만 집중','골프 70':'골프 70','반반':'반반','골프 30':'골프 30','관광 중심':'관광 중심'};
+  var mk=null;for(var k in map){if(qmix.indexOf(k)>=0){mk=map[k];break;}}
+  if(mk){var v=F_selOpt('mixOpts',mk);if(v)F_answers.mix=v;}
+  var pm=null;
+  if(qparty.indexOf('2인')>=0||qparty.indexOf('부부')>=0)pm='2인';
+  else if(qparty.indexOf('4인')>=0||qparty.indexOf('친구')>=0)pm='4인';
+  else if(qparty.indexOf('8인')>=0||qparty.indexOf('단체')>=0)pm='8인';
+  if(pm){var pv=F_selOpt('partyOpts',pm);if(pv)F_answers.party=pv;}
+  echo.push((L?'⛳ 골프 비중: ':'⛳ Golf mix: ')+qmix+' / '+(L?'일행: ':'Party: ')+qparty);
+ }
+ if(F_flow.indexOf('travel')>=0){var tr=F_travelTop5();echo.push((L?'🧭 성향: ':'🧭 Persona: ')+tr.code);}
+ if(F_flow.indexOf('food')>=0){echo.push((L?'🍷 미식: ':'🍷 Food: ')+F_gVal('food',0)+' / '+F_gVal('food',4));}
+ var e=F_el('quizEcho');
+ if(e)e.innerHTML=echo.length?((L?'위 테스트에서 이미 답한 내용: ':'Already answered in quiz: ')+echo.join(' · ')) : '';
+ F_updateKakao();
+}
+function F_backToStart(){F_show('s0');}
+function F_themePick(el){el.classList.toggle('sel');var vals=[].slice.call(document.querySelectorAll('#finderModal #themes .theme.sel')).map(function(o){return o.dataset.v;});F_answers.theme=vals.join(', ');F_updateKakao();}
+function F_airPick(el,v){var p=el.parentElement;p.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');F_answers.air=v==='with'?'항공 포함':'항공 제외';F_el('airDetail').style.display=v==='with'?'':'none';F_updateKakaoSafe();}
+function F_singlePick(el,grp){var p=el.parentElement;p.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');F_answers[grp]=el.textContent.trim();F_updateKakao();}
+function F_multiPick(el,grp){var p=el.parentElement;var t=el.textContent;var isNone=t.indexOf('해당 없음')>=0||t.indexOf('None')>=0;if(isNone){var was=el.classList.contains('sel');p.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});if(!was)el.classList.add('sel');}else{el.classList.toggle('sel');p.querySelectorAll('.opt').forEach(function(o){var ot=o.textContent;if(ot.indexOf('해당 없음')>=0||ot.indexOf('None')>=0)o.classList.remove('sel');});}var vals=[].slice.call(p.querySelectorAll('.opt.sel')).map(function(o){return o.textContent.trim();});F_answers[grp]=vals.join(', ');if(grp==='date')F_toggleAssist();F_updateKakao();}
+function F_toggleAssist(){var w=F_el('assistWrap');if(!w)return;var txt=F_answers.date||'';var fam=txt.indexOf('6~8')>=0||txt.indexOf('Jun')>=0||txt.indexOf('여름')>=0||txt.indexOf('summer')>=0;w.style.display=fam?'':'none';if(!fam){F_answers.assist=null;var ao=F_el('assistOpts');if(ao)ao.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});}}
+function F_actToggle(el){el.classList.toggle('on');var n=document.querySelectorAll('#finderModal .act-item.on').length;var e=F_el('cardCount');if(e)e.textContent=curLang==='ko'?n+'개 선택됨':n+' selected';F_updateKakao();}
+function F_picks(){return [].slice.call(document.querySelectorAll('#finderModal .act-item.on')).map(function(el){return curLang==='ko'?el.dataset.ko:el.dataset.en;});}
+
+var F_CARDKEY={ocean:['오션뷰','해안 절벽','PCH','해산물'],desert:['사막','라스베이거스','BBQ','쇼'],private:['프라이빗','챔피언십','레슨','셰프 테이블'],champ:['챔피언십','도전적인'],begin:['부담 없는 초보'],mid:['균형 잡힌 중급'],veg:['채소','샐러드'],meat:['BBQ','스모크하우스','고기'],wine:['와이너리','와인바'],cafe:['카페','커피'],seafood:['해산물'],market:['파머스 마켓','마켓']};
+
+function topN(pool,n){return pool.slice(0,n);}
+function F_golfTop5(){
+ var pic=F_gVal('golf',3),lvl=F_gVal('golf',1),mix=F_gVal('golf',0);
+ var keys=[].concat(F_CARDKEY[{ '🌊 바다 옆 링크스':'ocean','🏜️ 사막 리조트':'desert','🔑 프라이빗 클럽 (섭외 지원)':'private'}[pic]||'']||[]);
+ if(lvl.indexOf('120대')>=0)keys=keys.concat(F_CARDKEY.begin);
+ if(lvl.indexOf('100대')>=0)keys=keys.concat(F_CARDKEY.mid);
+ if(lvl.indexOf('80대')>=0||lvl.indexOf('90대')>=0)keys=keys.concat(F_CARDKEY.champ);
+ var scored=F_ITEMS.map(function(it){var s=0;keys.forEach(function(k){if(k&&(it.ko.indexOf(k)>=0))s+=2;});if(it.cat==='golf')s+=1;if(mix.indexOf('관광')>=0&&it.cat!=='golf')s+=1;return {it:it,s:s};});
+ scored.sort(function(a,b){return b.s-a.s;});
+ return scored.slice(0,5).map(function(x){return x.it;});
+}
+function F_travelTop5(){
+ var code=(F_answers.travel_0&&F_answers.travel_0.ko.indexOf('|E')>=0?'E':'I')+(F_answers.travel_1&&F_answers.travel_1.ko.indexOf('|N')>=0?'N':'S')+(F_answers.travel_2&&F_answers.travel_2.ko.indexOf('|P')>=0?'P':'J');
+ var keys=[];
+ if(code[0]==='E')keys.push('재즈','브루어리','마켓');else keys.push('스파','피크닉','선셋');
+ if(code[1]==='N')keys.push('헬리콥터','요세미티','그랜드 캐니언');else keys.push('아울렛','맛집','와이너리');
+ if(code[2]==='P')keys.push('서핑','바이크');else keys.push('박물관','랜드마크');
+ var scored=F_ITEMS.filter(function(it){return it.cat!=='golf';}).map(function(it){var s=0;keys.forEach(function(k){if(it.ko.indexOf(k)>=0)s+=2;});return {it:it,s:s};});
+ scored.sort(function(a,b){return b.s-a.s;});
+ return {code:code,items:scored.slice(0,5).map(function(x){return x.it;})};
+}
+function F_foodProfileEn(){
+ var parts=[];
+ var a=F_enVal('food',0);if(a)parts.push(a);
+ var b=F_enVal('food',3);if(b)parts.push(/Anything|Eat anything/i.test(b)?'adventurous taste':'careful taste');
+ var c=F_enVal('food',4);if(c)parts.push(/Meat lover/i.test(c)?'meat lover':/Seafood/i.test(c)?'seafood lover':'meat & seafood');
+ var d=F_enVal('food',5);if(d)parts.push(/wineries/i.test(d)?'likes wine':/No alcohol/i.test(d)?'no alcohol':'light drinks');
+ return parts.length?parts.join(' · '):'Picked from your F_answers.';
+}
+function F_foodProfileKo(){
+ var parts=[];
+ var a=F_gVal('food',0);if(a)parts.push(a);
+ var b=F_gVal('food',3);if(b)parts.push(b.indexOf('뭐든')>=0?'도전형 입맛':'신중형 입맛');
+ var c=F_gVal('food',4);if(c)parts.push(c.indexOf('고기파')>=0?'고기파':c.indexOf('해산물')>=0?'해산물파':'고기·해산물 다 좋아');
+ var d=F_gVal('food',5);if(d)parts.push(d.indexOf('와이너리')>=0?'와인 좋아함':d.indexOf('안 마셔')>=0?'술 안 마심':'가벼운 술');
+ return parts.length?parts.join(' · '):'답을 바탕으로 뽑았습니다.';
+}
+function F_foodTop5(){
+ var k1=F_gVal('food',0),k2=F_gVal('food',1),k3=F_gVal('food',2),k4=F_gVal('food',3);
+ var keys=[];
+ if(k1.indexOf('매끼')>=0)keys.push('한인타운');if(k2.indexOf('뭐든')>=0)keys.push('BBQ','해산물');else keys.push('퓨전');
+ if(k3.indexOf('와이너리')>=0)keys.push('와이너리','와인바');if(k4.indexOf('카페')>=0||k4.indexOf('Daily')>=0)keys.push('카페');
+ keys.push('맛집','셰프 테이블');
+ var pool=F_ITEMS.filter(function(it){return it.cat==='dining'||it.cat==='local';});
+ var scored=pool.map(function(it){var s=0;keys.forEach(function(k){if(it.ko.indexOf(k)>=0)s+=2;});return {it:it,s:s};});
+ scored.sort(function(a,b){return b.s-a.s;});
+ return scored.slice(0,5).map(function(x){return x.it;});
+}
+function F_golfSummaryEn(){
+ var parts=[];
+ var a=F_enVal('golf',0);if(a)parts.push(a);
+ var b=F_enVal('golf',1);if(b)parts.push(b);
+ var c=F_enVal('golf',2);if(c)parts.push(c);
+ return parts.length?parts.join(' · '):'Your matched trip.';
+}
+function F_enVal(m,i){var a=F_answers[m+'_'+i];return a?a.en.split('|')[0]:'';}
+function F_golfTitle(){
+ return F_golfTitleLang(curLang==='ko');
+}
+function F_golfTitleLang(ko){
+ var pic=ko?F_gVal('golf',3):F_enVal('golf',3),len=ko?F_gVal('golf',4):F_enVal('golf',4);
+ if(ko){
+  var base={'🌊 바다 옆 링크스':'바다 링크스형','🏜️ 사막 리조트':'사막 + 쇼형','🔑 프라이빗 클럽 (섭외 지원)':'프라이빗 섭외 지원형'}[pic]||'밸런스 추천형';
+  var ln=len.indexOf('5박')>=0?' 5박':len.indexOf('10박')>=0?' 10박':' 7박';
+  return base+ln;
+ }
+ var base={'🌊 Ocean links':'Ocean Links','🏜️ Desert resort':'Desert + Shows','🔑 Private club (sourcing help)':'Private Sourcing'}[pic]||'Balanced Pick';
+ var ln=/5 nights/.test(len)?' 5N':/10 nights/.test(len)?' 10N':' 7N';
+ return base+ln;
+}
+function F_pcard(id,em,t,s,hint){
+ var b=document.createElement('button');b.className='F_pcard';b.id='pc-'+id;
+ var e1=document.createElement('span');e1.className='pem';e1.textContent=em;b.appendChild(e1);
+ var e2=document.createElement('span');e2.className='pt';e2.textContent=t;b.appendChild(e2);
+ var e3=document.createElement('span');e3.className='ps';e3.textContent=s;b.appendChild(e3);
+ var e4=document.createElement('span');e4.className='phint';e4.textContent=hint;b.appendChild(e4);
+ b.onclick=function(){F_pcardToggle(id);};
+ return b;
+}
+function F_pcardToggle(id){
+ var card=document.getElementById('pc-'+id);
+ var det=document.getElementById('pd-'+id);
+ if(!card||!det)return;
+ var was=card.classList.contains('open');
+ [].forEach.call(document.querySelectorAll('#resblocks .pdetail'),function(e){e.classList.remove('show');});
+ [].forEach.call(document.querySelectorAll('#resblocks .F_pcard'),function(e){e.classList.remove('open');var h=e.querySelector('.phint');if(h)h.textContent=h.textContent.replace('\u25B4','\u25BE');});
+ if(!was){card.classList.add('open');det.classList.add('show');var h2=card.querySelector('.phint');if(h2)h2.textContent=h2.textContent.replace('\u25BE','\u25B4');}
+}
+function F_cardsToggle(){
+ var w=F_el('cardsWrap');if(!w)return;
+ var open=w.style.display==='none'||w.style.display===''&&!w.classList.contains('show');
+ open=w.style.display==='none';w.style.display=open?'':'none';w.classList.toggle('show',open);
+ var h=document.querySelector('#F_cardsToggle .phint2');if(h)h.textContent=open?'\u25B4':'\u25BE';
+ if(open)F_renderCards();
+}
+function F_renderAll(){
+ var host=F_el('resblocks');host.innerHTML='';
+ var L=curLang==='ko';
+ /* result cards (playing-card grid + expandable details) */
+ var sec=document.createElement('div');
+ sec.innerHTML='<div class="secttl" style="margin-top:4px">'+(L?'\uD83D\uDCCB 결과 카드 — 눌러서 펼치기':'\uD83D\uDCCB Results — tap to expand')+'</div><p class="secsub">'+(L?'각 카드를 누르면 추천 목록이 펼쳐집니다.':'Tap each card for its F_picks.')+'</p>';
+ host.appendChild(sec);
+ var grid=document.createElement('div');grid.className='rescards';host.appendChild(grid);
+ var ncards=0;
+ if(F_flow.indexOf('golf')>=0){
+  ncards++;
+  var gt=F_golfTitle();
+  var gd=L?(F_gVal('golf',0)+' · '+F_gVal('golf',1)+' · '+F_gVal('golf',2)):F_golfSummaryEn();
+  grid.appendChild(F_pcard('g','\uD83C\uDFCC\uFE0F',gt,gd,L?'일정 + 코스 TOP5 보기 \u25BE':'Itinerary + TOP5 \u25BE'));
+  var dg=document.createElement('div');dg.className='pdetail';dg.id='pd-g';
+  dg.innerHTML='<div class="dt">'+(L?'⛳ 추천 일정':'⛳ Itinerary')+'</div>';
+  var gp=document.createElement('p');gp.style.cssText='font-size:13.5px;color:var(--mut);margin:0 0 6px;line-height:1.6';gp.textContent=gd;dg.appendChild(gp);
+  var dh=document.createElement('div');dh.className='dt';dh.textContent=L?'성향 맞춤 코스 TOP5':'TOP5 courses';dg.appendChild(dh);
+  var gg=document.createElement('div');gg.className='top5';
+  F_golfTop5().forEach(function(it){gg.appendChild(F_cardEl(it,true));});
+  dg.appendChild(gg);host.appendChild(dg);
+ }
+ if(F_flow.indexOf('travel')>=0){
+  ncards++;
+  var tr=F_travelTop5();
+  var pp=F_PERSONA[tr.code[0]+'-'+tr.code[1]+'-'+tr.code[2]+'-R']||F_PERSONA['I-S-P-R'];
+  var tcode=tr.code[0]+'-'+tr.code[1]+'-'+tr.code[2]+'-R';
+  var pTitle=L?pp[0]:(F_PERSONA_EN[tcode]||'🧭 Travel Persona');
+  var pEm=(pTitle.match(/^[\u2600-\u27BF\uD800-\uDBFF\uDC00-\uDFFF\uFE0F]+/)||['🧭'])[0];
+  grid.appendChild(F_pcard('t',pEm,pTitle,L?pp[1]:pp[2],L?'액티비티 TOP5 보기 \u25BE':'TOP5 activities \u25BE'));
+  var dt=document.createElement('div');dt.className='pdetail';dt.id='pd-t';
+  dt.innerHTML='<div class="dt">'+(L?'✨ 성향 맞춤 액티비티 TOP5':'✨ TOP5 activities')+'</div>';
+  var gg2=document.createElement('div');gg2.className='top5';
+  tr.items.forEach(function(it){gg2.appendChild(F_cardEl(it,true));});
+  dt.appendChild(gg2);host.appendChild(dt);
+ }
+ if(F_flow.indexOf('food')>=0){
+  ncards++;
+  var fitems=F_foodTop5();
+  grid.appendChild(F_pcard('f','\uD83C\uDF77',L?'당신의 입맛 결과':'Your food profile',L?F_foodProfileKo():F_foodProfileEn(),L?'맛집 TOP5 보기 \u25BE':'TOP5 spots \u25BE'));
+  var df=document.createElement('div');df.className='pdetail';df.id='pd-f';
+  df.innerHTML='<div class="dt">'+(L?'\uD83C\uDF7D️ 입맛 맞춤 맛집 TOP5':'\uD83C\uDF7D️ TOP5 food spots')+'</div>';
+  var gg3=document.createElement('div');gg3.className='top5';
+  fitems.forEach(function(it){var c=F_cardEl(it,true);c.style.borderWidth='2px';gg3.appendChild(c);});
+  df.appendChild(gg3);host.appendChild(df);
+ }
+ if(ncards===1)grid.style.gridTemplateColumns='1fr';
+ var first=grid.querySelector('.F_pcard');
+ if(first)F_pcardToggle(first.id.replace('pc-',''));
+ F_renderCards();
+ F_updateKakao();
+}
+function F_cardEl(it,staticMode){
+ var d=document.createElement('div');d.className='act-item';d.dataset.ko=it.ko;d.dataset.en=it.en;
+ if(staticMode){d.style.cursor='default';d.innerHTML='<span class="act-nm"><span class="ko">'+it.ko+'</span><span class="en">'+it.en+'</span></span>';}
+ else d.innerHTML='<span class="act-ck">✓</span><span class="act-nm"><span class="ko">'+it.ko+'</span><span class="en">'+it.en+'</span></span>';
+ return d;
+}
+/* detail cards with presets from all results */
+function F_renderCards(){
+ var g=F_el('cardGroups');if(!g)return;g.innerHTML='';
+ var keys=[];
+ var pic=F_gVal('golf',3);
+ if(pic.indexOf('바다')>=0)keys=keys.concat(F_CARDKEY.ocean);
+ if(pic.indexOf('사막')>=0)keys=keys.concat(F_CARDKEY.desert);
+ if(pic.indexOf('프라이빗')>=0)keys=keys.concat(F_CARDKEY.private);
+ var lvl=F_gVal('golf',1);
+ if(lvl.indexOf('120대')>=0)keys=keys.concat(F_CARDKEY.begin);
+ if(lvl.indexOf('80대')>=0||lvl.indexOf('90대')>=0)keys=keys.concat(F_CARDKEY.champ);
+ F_CATS.forEach(function(c){
+  var h=document.createElement('h3');h.className='sec';h.style.cssText='font-size:15px;color:var(--navy);margin:26px 0 10px';
+  h.innerHTML='<span class="ko">'+c[1]+'</span><span class="en">'+c[2]+'</span>';g.appendChild(h);
+  var grid=document.createElement('div');grid.className='act-grid';grid.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px';
+  F_ITEMS.filter(function(it){return it.cat===c[0]}).forEach(function(it){
+   var pre=keys.some(function(k){return it.ko.indexOf(k)>=0;});
+   var d=F_cardEl(it);if(pre)d.classList.add('on');d.onclick=function(){F_actToggle(d);};grid.appendChild(d);
+  });
+  g.appendChild(grid);
+ });
+ var n=document.querySelectorAll('#finderModal .act-item.on').length;var e=F_el('cardCount');
+ if(e)e.textContent=curLang==='ko'?n+'개 선택됨':n+' selected';
+}
+function F_composeMsg(){
+ var L=curLang==='ko';
+ var lines=[L?'[여행 취향 테스트 견적 요청]':'[Taste Test Quote Request]'];
+ if(F_flow.indexOf('golf')>=0)lines.push((L?'⛳ 골프: ':'⛳ Golf: ')+F_golfTitle()+' / '+F_gVal('golf',0)+' / '+F_gVal('golf',2));
+ if(F_flow.indexOf('travel')>=0){var tr=F_travelTop5();lines.push((L?'🧭 성향: ':'🧭 Persona: ')+tr.code);}
+ if(F_flow.indexOf('food')>=0)lines.push((L?'🍷 미식: ':'🍷 Food: ')+F_gVal('food',0)+' / '+F_gVal('food',2));
+ if(F_answers.theme)lines.push((L?'테마: ':'Theme: ')+F_answers.theme);
+ var pk=F_picks();lines.push((L?'선택 카드('+pk.length+'):':'Cards('+pk.length+'):'));pk.forEach(function(p){lines.push('- '+p);});
+ if(F_answers.date)lines.push((L?'시기: ':'Dates: ')+F_answers.date);
+ if(F_answers.mix)lines.push((L?'비중: ':'Mix: ')+F_answers.mix);
+ if(F_answers.air)lines.push((L?'항공: ':'Flights: ')+F_answers.air);
+ if(F_answers.cabin)lines.push((L?'등급: ':'Cabin: ')+F_answers.cabin);
+ if(F_answers.airline)lines.push((L?'항공사: ':'Airline: ')+F_answers.airline);
+ if(F_answers.pay)lines.push((L?'항공결제: ':'Flight pay: ')+F_answers.pay);
+ if(F_answers.party)lines.push((L?'인원: ':'Party: ')+F_answers.party);
+ if(F_answers.age)lines.push((L?'동반자: ':'Companions: ')+F_answers.age);
+ if(F_answers.assist)lines.push((L?'이동지원: ':'Mobility: ')+F_answers.assist);
+ var nm=F_el('qName').value.trim();if(nm)lines.push((L?'이름/연락: ':'Name: ')+nm);
+ var ms=F_el('qMsg').value.trim();if(ms)lines.push((L?'요청: ':'Note: ')+ms);
+ /* free texts from quiz */
+ Object.keys(F_answers).forEach(function(k){var a=F_answers[k];if(a&&a.free)lines.push((L?'메모: ':'Note: ')+a.free);});
+ return lines.join('\n');
+}
+function F_updateKakao(){F_updateKakaoSafe();}
+function F_updateKakaoSafe(){try{var b=F_el('kakaoBtn2');if(b)b.href=F_KAKAO;}catch(e){}}
+document.addEventListener('input',function(){F_updateKakaoSafe();});
+
+
+ </script>
+ <script>
+ function finderOpen(){var m=document.getElementById('finderModal');if(m){m.style.display='block';document.body.style.overflow='hidden';}var k=document.getElementById('kakaoBtn2');if(k)k.href='https://open.kakao.com/o/sresonatetour';}
+ function finderClose(){var m=document.getElementById('finderModal');if(m){m.style.display='none';document.body.style.overflow='';}}
+ </script> </div>
 
 
 <div style="margin-top:32px;padding-top:28px;border-top:1px solid #e2e2e2">
