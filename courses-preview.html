@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resonate Tour — Golf Courses</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  :root {
+    --bg: #0b1420;
+    --card: #101c30;
+    --line: #1e3050;
+    --txt: #e8e6e1;
+    --dim: #8899b4;
+    --gold: #d4af37;
+    --navy: #1a3450;
+    --navy-light: #264460;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--txt);
+    font-family: -apple-system, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    padding: 20px 16px 60px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  header { margin-bottom: 16px; text-align: center; }
+  .logo { font-family: 'Playfair Display', Georgia, serif; font-size: 13px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
+  h1 { font-size: 26px; font-weight: 700; line-height: 1.25; }
+  .sub { color: var(--dim); font-size: 13px; margin-top: 6px; }
+
+  /* Country Tabs — sticky */
+  .country-tabs {
+    display: flex; gap: 0; justify-content: center; margin: 16px 0 0;
+    border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+    width: fit-content; margin-left: auto; margin-right: auto;
+    position: sticky; top: 8px; z-index: 20;
+    background: var(--bg);
+  }
+  .country-tab {
+    padding: 8px 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    background: transparent; color: var(--dim); border: none;
+    transition: all .2s; letter-spacing: .5px;
+  }
+  .country-tab.act { background: var(--gold); color: var(--navy); }
+  .country-tab:hover:not(.act) { color: var(--txt); }
+
+  /* Scroll-to-top */
+  #scrollTop {
+    position: fixed; bottom: 24px; right: 20px; z-index: 30;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--gold); color: var(--navy);
+    border: none; font-size: 18px; font-weight: 700;
+    cursor: pointer; opacity: 0; pointer-events: none;
+    transition: opacity .3s; box-shadow: 0 2px 12px rgba(0,0,0,.4);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #scrollTop.show { opacity: 1; pointer-events: auto; }
+
+  /* Map */
+  .map-wrap {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 12px; margin: 16px 0 24px;
+    text-align: center;
+  }
+  .map-label { font-size: 11px; color: var(--dim); letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+  .map-container { 
+    width: 100%; height: 380px; border-radius: 8px; 
+    background: #0b1420;
+  }
+  @media (min-width: 640px) { .map-container { height: 440px; } }
+
+  /* Leaflet overrides for dark theme */
+  .leaflet-container { background: #0b1420; font-family: -apple-system, sans-serif; }
+  .leaflet-control-zoom a { background: #101c30 !important; color: #e8e6e1 !important; border-color: #1e3050 !important; }
+  .leaflet-control-zoom a:hover { background: #1a3450 !important; }
+  .leaflet-control-attribution { background: rgba(11,20,32,.8) !important; color: #5a7a9a !important; font-size: 9px !important; }
+  .leaflet-control-attribution a { color: #8899b4 !important; }
+  .leaflet-popup-content-wrapper { background: #101c30 !important; color: #e8e6e1 !important; border-radius: 10px !important; border: 1px solid #1e3050 !important; }
+  .leaflet-popup-tip { background: #101c30 !important; }
+  .leaflet-popup-content { margin: 10px 14px !important; font-size: 13px !important; line-height: 1.5 !important; }
+  .leaflet-popup-content b { color: #d4af37; }
+
+  /* Custom marker */
+  .course-marker {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #d4af37; border: 3px solid #0b1420;
+    color: #0b1420; font-weight: 700; font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 10px rgba(212,175,55,.4);
+    cursor: pointer;
+  }
+
+  /* Course card */
+  .course-card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 16px; overflow: hidden; margin-bottom: 28px;
+    transition: border-color .2s;
+    padding: 28px 28px 32px;
+    opacity: 0; transform: translateY(30px);
+    outline: none; -webkit-tap-highlight-color: transparent;
+  }
+  .course-card.revealed {
+    opacity: 1; transform: translateY(0);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .course-card:hover { border-color: var(--gold); }
+  .course-card:focus, .course-card:focus-visible { outline: none; }
+  .course-card.hidden { display: none; }
+
+  .course-head {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 0 0 4px;
+  }
+  .course-num { 
+    color: var(--gold); font-size: 24px; font-weight: 900; 
+    flex-shrink: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    letter-spacing: -1px; min-width: 32px; line-height: 1.1;
+  }
+  .course-title { font-size: 19px; font-weight: 700; line-height: 1.3; }
+
+  .course-body { padding: 0; }
+
+  .stats { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 14px; }
+  .stat .k { color: var(--dim); font-size: 11px; text-transform: uppercase; letter-spacing: .5px; }
+  .stat .v { font-size: 14px; font-weight: 500; }
+
+  .why { font-size: 14.5px; color: var(--txt); margin: 18px 0 18px; line-height: 1.75; }
+
+  .sig {
+    border-left: 3px solid var(--gold); padding: 14px 16px;
+    background: rgba(212,175,55,.08); border-radius: 0 8px 8px 0;
+    font-size: 14px; margin-bottom: 16px; line-height: 1.65;
+  }
+  .sig b { color: var(--gold); }
+
+  .tip { color: var(--dim); font-size: 13.5px; line-height: 1.6; margin-top: 16px; }
+  .tip b { color: var(--txt); font-weight: 600; }
+
+  .loc-bar {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11.5px; color: var(--dim); margin: 8px 0 2px;
+    padding: 7px 14px; background: rgba(212,175,55,.07);
+    border-radius: 6px; letter-spacing: .5px;
+  }
+  .loc-dot { color: var(--gold); }
+
+  /* Quiz */
+  #quiz-section {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 28px 24px; margin-top: 28px;
+  }
+  #quiz-section h2 { margin-top: 0; }
+  .quiz-progress { display: flex; gap: 4px; margin-bottom: 20px; }
+  .quiz-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); transition: .3s; }
+  .quiz-dot.done { background: var(--gold); }
+  .quiz-dot.cur { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+  .quiz-q { font-size: 17px; font-weight: 600; margin-bottom: 18px; line-height: 1.5; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    padding: 14px 18px; font-size: 14px; text-align: left;
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: 8px; color: var(--txt); cursor: pointer; transition: .15s;
+  }
+  .quiz-opt:hover { border-color: var(--gold); background: rgba(212,175,55,.06); }
+  .quiz-result { display: none; }
+  .quiz-result.show { display: block; }
+  .quiz-result h3 { font-size: 20px; color: var(--gold); margin-bottom: 12px; }
+  .quiz-result p { font-size: 14px; line-height: 1.7; color: var(--dim); }
+  .quiz-result .rec-courses { margin-top: 16px; }
+  .quiz-result .rec-courses span {
+    display: inline-block; padding: 6px 14px; margin: 4px 6px 4px 0;
+    background: rgba(212,175,55,.12); border: 1px solid var(--gold);
+    border-radius: 20px; font-size: 13px; color: var(--txt);
+  }
+
+  footer { margin-top: 36px; color: var(--dim); font-size: 11.5px; text-align: center; }
+
+  .cta-bar {
+    text-align: center; margin-top: 32px;
+    padding: 24px; background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    border-radius: 14px;
+  }
+  .cta-bar p { font-size: 14px; opacity: .8; margin-bottom: 16px; }
+  .cta-btn {
+    display: inline-block; padding: 14px 32px;
+    background: var(--gold); color: var(--navy);
+    font-size: 14px; font-weight: 700; text-decoration: none;
+    border-radius: 6px; letter-spacing: .5px; transition: .2s;
+  }
+  .cta-btn:hover { background: #e5c050; }
+  
+
+
+  /* Lightbox */
+  
+  
+  
+  #lightbox {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,.92); z-index: 9999;
+    align-items: center; justify-content: center; cursor: pointer;
+  }
+  #lightbox.show { display: flex; }
+  #lightbox img { 
+    max-width: 92vw; max-height: 90vh; 
+    border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,.5);
+  }
+
+
+  /* Region Headers — sticky stacking */
+  .region-group { margin-bottom: 22px; }
+  .region-header {
+    position: sticky; top: 46px; z-index: 10;
+    background: var(--bg);
+    padding: 10px 0 6px; margin: -1px 0 8px;
+    border-top: 1px solid var(--bg);
+  }
+  .region-label { 
+    font-size: 8px; color: var(--gold); letter-spacing: 2px; 
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .region-title { 
+    font-size: 14px; font-weight: 700; color: var(--txt); 
+    margin: 0; padding-bottom: 6px;
+    border-bottom: 2px solid rgba(212,175,55,.3);
+  }
+  .region-group.hidden, .region-header.hidden { display: none; }
+
+  /* Image Carousel */
+  .course-carousel {
+    position: relative; width: 100%; height: 280px;
+    overflow: hidden; border-radius: 10px;
+    border: 1px solid var(--line); cursor: pointer;
+    margin: 14px 0 16px;
+  }
+  .carousel-track { display: flex; height: 100%; transition: transform 0.4s ease; }
+  .carousel-slide { min-width: 100%; height: 100%; flex-shrink: 0; }
+  .carousel-slide img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+  .carousel-dots {
+    position: absolute; bottom: 10px; left: 50%;
+    transform: translateX(-50%); display: flex; gap: 6px; z-index: 2;
+  }
+  .carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,.4); transition: .3s;
+  }
+  .carousel-dot.act { background: var(--gold); }
+  .carousel-counter {
+    position: absolute; top: 10px; right: 12px;
+    font-size: 11px; color: rgba(255,255,255,.7);
+    background: rgba(0,0,0,.5); padding: 3px 8px;
+    border-radius: 10px; z-index: 2;
+  }
+  @media (max-width: 640px) { .course-carousel { height: 220px; } }
+
+  /* Lightbox */
+  #lightbox {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,.95); z-index: 9999;
+    align-items: center; justify-content: center;
+    touch-action: pan-y pinch-zoom;
+  }
+  #lightbox.show { display: flex; }
+  #lightbox img { 
+    max-width: 95vw; max-height: 90vh; 
+    border-radius: 6px; box-shadow: 0 0 80px rgba(0,0,0,.6);
+    transition: opacity .3s; user-select: none; pointer-events: none;
+  }
+  .lb-close { position: absolute; top: 20px; right: 24px; font-size: 32px; color: rgba(255,255,255,.7); cursor: pointer; z-index: 10; }
+  .lb-arrow { position: absolute; top: 50%; transform: translateY(-50%); font-size: 40px; color: rgba(255,255,255,.5); cursor: pointer; z-index: 10; padding: 20px; user-select: none; }
+  .lb-arrow:hover { color: #fff; }
+  .lb-prev { left: 10px; }
+  .lb-next { right: 10px; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Resonate Tour</div>
+  <h1>골프 코스 가이드</h1>
+  <div class="sub">한국 → 북미 프리미엄 골프 투어 · 직접 엄선한 코스</div>
+</header>
+
+<!-- Country Tabs -->
+<div class="country-tabs" id="countryTabs">
+  <button class="country-tab act" onclick="switchCountry('usa')" id="tab-usa">🇺🇸 California & Nevada</button>
+  <button class="country-tab" onclick="switchCountry('canada')" id="tab-canada">🇨🇦 Canadian Rockies</button>
+</div>
+
+<!-- ═══════════ USA MAP ═══════════ -->
+<div class="map-wrap" id="map-usa">
+  <div class="map-label">📍 Coast to Desert</div>
+  <div class="map-container" id="mapUsaContainer"></div>
+</div>
+
+<!-- ═══════════ CANADA MAP ═══════════ -->
+<div class="map-wrap" id="map-canada" style="display:none">
+  <div class="map-label">📍 Canmore · Banff · Kananaskis</div>
+  <div class="map-container" id="mapCanContainer"></div>
+</div>
+
+<!-- ═══════════ COURSE CARDS ═══════════ -->
+
+<!-- ═══ Los Angeles County ═══ -->
+<div class="region-header" data-country="usa"><h2 class="region-title">Los Angeles County</h2></div>
+<div class="region-group" data-country="usa">
+<div class="course-card" data-country="usa" data-course="1"><div class="course-head"><span class="course-num">1</span><span class="course-title">Trump National Golf Club LA</span></div><div class="loc-bar"><span class="loc-dot">●</span> Rancho Palos Verdes, CA — Los Angeles
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_c1aeb53c3e.jpg', 'images/img_6fe5796cbe.jpg', 'images/img_09e619b861.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_c1aeb53c3e.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_6fe5796cbe.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_09e619b861.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">팔로스버디스 반도 절벽, 2006년 오픈. 모든 홀 태평양+카탈리나섬. PGA 챔피언십 개최. 피트 다이 깊은 벙커·심한 경사 — 전략 없이 스코어 불가.</p><div class="sig"><b>시그니처</b> — 18번 (파3, 203yd) 절벽→바다. 바람 따라 5I~3W. 석양 피날레.</div><p class="tip"><b>팁:</b> 그린 매우 빠름. 성수기 주말 최우선 예약.</p></div>
+<div class="course-card" data-country="usa" data-course="2"><div class="course-head"><span class="course-num">2</span><span class="course-title">Friendly Hills Country Club</span></div><div class="loc-bar"><span class="loc-dot">●</span> Whittier, CA — Los Angeles County
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_fh1.aspx', 'images/img_fh2.aspx', 'images/img_fh3.aspx'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_fh1.aspx" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_fh2.aspx" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_fh3.aspx" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">LA 카운티 최고의 <b>프라이빗 클럽</b> 중 하나. US Open·US Amateur 예선 개최 이력이 말해주는 챔피언십 코스. <b>567야드 오르막 파5</b> 오프닝 홀이 상징적 — 첫 홀부터 실력 테스트. 1988년 US Amateur 챔피언 Eric Meeks의 홈코스.</p><div class="sig"><b>누구에게</b> — 프라이빗 클럽 경험을 원하는 골퍼. 전통 있는 LA 골프 씬의 숨은 보석.</div><p class="tip"><b>팁:</b> 프라이빗 클럽 — 사전 예약 필수. 567yd 파5 오프닝은 장타자도 벅찬 시작.</p></div>
+<div class="course-card" data-country="usa" data-course="3"><div class="course-head"><span class="course-num">3</span><span class="course-title">Hacienda Golf Club</span></div><div class="loc-bar"><span class="loc-dot">●</span> La Habra Heights, CA — Los Angeles County
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_93e882b669.jpg', 'images/img_d1f39271eb.jpg', 'images/img_3d87216432.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_93e882b669.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_d1f39271eb.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_3d87216432.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">100년 역사의 프라이빗 챔피언십. <b>Olympic Club·Harding Park를 설계한 William Watson</b>의 작품으로, 바랑카(협곡)를 따라 굽이치는 캐니언 라우팅이 압권. 2005년 리스토어로 현대적 감각까지 갖춘, 74.1/137의 도전적인 코스. 1967년 US Girls' Junior 개최.</p><div class="sig"><b>누구에게</b> — 100년 전통의 명문 프라이빗. Watson의 올림픽 클럽 DNA를 LA에서 경험.</div><p class="tip"><b>팁:</b> 74.1/137 — LA에서 가장 도전적인 레이팅 중 하나. 협곡 바람 읽기가 핵심.</p></div>
+<div class="course-card" data-country="usa" data-course="4"><div class="course-head"><span class="course-num">4</span><span class="course-title">Industry Hills — Ike Course</span></div><div class="loc-bar"><span class="loc-dot">●</span> City of Industry, CA — Los Angeles County
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_83fa67805c.jpg', 'images/img_d72dd34e0a.jpg', 'images/img_967496aa34.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_83fa67805c.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_d72dd34e0a.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_967496aa34.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">옛 쓰레기 매립지 위 <b>W.F. Bell의 챔피언십</b>. 처칠 장례 열차 보관됐던 푸니큘러로 진입. US Open 예선 등 수많은 대회 개최.</p><div class="sig"><b>누구에게</b> — LA에서 가장 도전적인 퍼블릭 코스. 역사+난이도.</div><p class="tip"><b>팁:</b> 74.9/141 — Ike는 형, Babe는 동생.</p></div>
+<div class="course-card" data-country="usa" data-course="5"><div class="course-head"><span class="course-num">5</span><span class="course-title">Industry Hills — Babe Course</span></div><div class="loc-bar"><span class="loc-dot">●</span> City of Industry, CA — Los Angeles County
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_07f338042c.jpg', 'images/img_6ce2448525.jpg', 'images/img_d429d2cb5b.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_07f338042c.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_6ce2448525.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_d429d2cb5b.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why"><b>Babe Didrikson Zaharias</b>의 이름을 딴 코스. Ike보다 짧지만 52개 벙커와 좁은 페어웨이로 정교함 요구.</p><div class="sig"><b>누구에게</b> — 정교한 샷 메이킹. Ike와 세트로.</div><p class="tip"><b>팁:</b> 짧다고 만만히 보면 52개 벙커가 기다림.</p></div>
+</div>
+
+
+<!-- ═══ Inland Empire ═══ -->
+<div class="region-header" data-country="usa"><h2 class="region-title">Inland Empire</h2></div>
+<div class="region-group" data-country="usa">
+<div class="course-card" data-country="usa" data-course="6"><div class="course-head"><span class="course-num">6</span><span class="course-title">Hidden Valley Golf Club</span></div><div class="loc-bar"><span class="loc-dot">●</span> Norco, CA — Inland Empire
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_1cb23a6054.webp', 'images/img_669f66fe10.webp', 'images/img_c4f10e4632.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_1cb23a6054.webp" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_669f66fe10.webp" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_c4f10e4632.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">Norco 언퍕 위, <b>사막 캐니언 지형</b> 퍼블릭 챔피언십. 74.0/140 — Inland Empire 최고 도전.</p><div class="sig"><b>누구에게</b> — 사막 + 산악의 조화. 인랜드 엠파이어 파노라마.</div><p class="tip"><b>팁:</b> 74.0/140 — 정확한 티샷 필수.</p></div>
+</div>
+
+
+<!-- ═══ San Diego North County ═══ -->
+<div class="region-header" data-country="usa"><h2 class="region-title">San Diego North County</h2></div>
+<div class="region-group" data-country="usa">
+<div class="course-card" data-country="usa" data-course="7"><div class="course-head"><span class="course-num">7</span><span class="course-title">The Crossings at Carlsbad</span></div><div class="loc-bar"><span class="loc-dot">●</span> Carlsbad, CA — Coastal San Diego
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_c04094b802.jpg', 'images/img_8b003aaf91.jpg', 'images/img_4b710038dd.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_c04094b802.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_8b003aaf91.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_4b710038dd.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">칼스배드 <b>Greg Nash</b> 모던 챔피언십. 습지·야생화 보존. 5개 티 박스로 전 레벨 OK. 해안 생태계를 골프로 만나는 경험.</p><div class="sig"><b>장점</b> — 5개 티로 실력 맞춤. 초보부터 상급까지.</div><p class="tip"><b>팁:</b> 전략적 매니지먼트. 파3가 최종 스코어 좌우.</p></div>
+<div class="course-card" data-country="usa" data-course="8"><div class="course-head"><span class="course-num">8</span><span class="course-title">Aviara Golf Club</span></div><div class="loc-bar"><span class="loc-dot">●</span> Carlsbad, CA — Park Hyatt Aviara
+</div>
+<div class="course-carousel" data-rotate="true" data-start="2" onclick="openLightbox(event, ['images/img_9bf165021c.jpg', 'images/img_6fe3513ca5.jpg', 'images/img_9e2e4dfd5e.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_9bf165021c.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_6fe3513ca5.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_9e2e4dfd5e.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot"></div><div class="carousel-dot"></div><div class="carousel-dot act"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div><p class="why"><b>Arnold Palmer</b>의 최고 걸작. Batiquitos Lagoon 위 구릉 해안 절벽. LPGA JTBC Classic 개최. 매끄러운 벙커 라인과 태평양 전망.</p><div class="sig"><b>누구에게</b> — Palmer 디자인 + 리조트 럭셔리 동시에.</div><p class="tip"><b>팁:</b> Park Hyatt 투숙 시 우선 예약 가능.</p></div>
+<div class="course-card" data-country="usa" data-course="9"><div class="course-head"><span class="course-num">9</span><span class="course-title">The Golf Club of California</span></div><div class="loc-bar"><span class="loc-dot">●</span> Fallbrook, CA — North San Diego
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_072c4d5650.png', 'images/img_a0f2f5dd2b.jpg', 'images/img_6709c56e0c.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_072c4d5650.png" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_a0f2f5dd2b.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_6709c56e0c.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">폴브룩 구릉 <b>히든 젬</b>. 현지인 보물. 언덕 위 계곡 전망, 떡갈나무 숲 페어웨이. 관광객 없는 진짜 캘리포니아 골프. 실력 편차 큰 그룹에 최적.</p><div class="sig"><b>누구에게</b> — 조용히 집중 라운딩. 그룹 모두 만족 균형 난이도.</div><p class="tip"><b>팁:</b> 언덕 라이 적응. 클럽 선택이 스코어 결정.</p></div>
+</div>
+
+
+<!-- ═══ Temecula Valley Wine Country ═══ -->
+<div class="region-header" data-country="usa"><h2 class="region-title">Temecula Valley Wine Country</h2></div>
+<div class="region-group" data-country="usa">
+<div class="course-card" data-country="usa" data-course="10"><div class="course-head"><span class="course-num">10</span><span class="course-title">Cross Creek Golf Club</span></div><div class="loc-bar"><span class="loc-dot">●</span> Temecula, CA — Wine Country
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_6f969e6d32.jpg', 'images/img_1a8f9097a6.jpg', 'images/img_47a928dff6.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_6f969e6d32.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_1a8f9097a6.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_47a928dff6.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">테메큘라 와인 컨트리, <b>Arthur Hills</b>. 포도밭 사이 페어웨이, 고도 변화 다이내믹 샷. 라운드 후 10분 40+ 와이너리. 골프+와인 완벽 조합.</p><div class="sig"><b>누구에게</b> — 골프+와인 동시에. 합리적 그린피 최고 가성비.</div><p class="tip"><b>팁:</b> 그린 매우 빠름. 와이너리 투어는 필수.</p></div>
+<div class="course-card" data-country="usa" data-course="11"><div class="course-head"><span class="course-num">11</span><span class="course-title">Journey at Pechanga</span></div><div class="loc-bar"><span class="loc-dot">●</span> Temecula, CA — Temecula Valley
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_ee7c5a5971.webp', 'images/img_8f64577a1e.jpg', 'images/img_8a3bcc41ec.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_ee7c5a5971.webp" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_8f64577a1e.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_8a3bcc41ec.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div><p class="why">테메큘라 계곡 정상 <b>Arthur Hills의 드라마틱 걸작</b>. 캐니언 강제 캐리, 급격한 고도 하강, 360도 파노라마. 남캘리포니아 가장 시각적인 퍼블릭 코스.</p><div class="sig"><b>누구에게</b> — 뷰 + 도전 동시에. Pechanga 리조트 연계 가능.</div><p class="tip"><b>팁:</b> 고도 변화 극심 — 평소보다 1~2클럽 차이.</p></div>
+</div>
+
+
+<!-- ═══ Coachella Valley ═══ -->
+<div class="region-header" data-country="usa"><h2 class="region-title">Coachella Valley</h2></div>
+<div class="region-group" data-country="usa">
+<div class="course-card" data-country="usa" data-course="12"><div class="course-head"><span class="course-num">12</span><span class="course-title">PGA West Stadium — "Alcatraz"</span></div><div class="loc-bar"><span class="loc-dot">●</span> La Quinta, CA — Coachella Valley
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_4759acfe47.jpg', 'images/img_60dfa08eaa.jpg', 'images/img_c978a6f005.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_4759acfe47.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_60dfa08eaa.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_c978a6f005.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why"><b>TPC Stadium Course</b> — "프로들에게 너무 어렵다"며 1987년 PGA 투어 선수들이 기피 신청한 전설의 코스. 17번 "Alcatraz" 아일랜드 그린 파3. 2016년부터 The American Express 공동 개최.</p><div class="sig"><b>누구에게</b> — 76.1/150. 진짜 도전. Pete Dye의 악명 높은 딥 벙커.</div><p class="tip"><b>팁:</b> 17번 Alcatraz — 바람 읽기 실패하면 물 속으로.</p></div>
+<div class="course-card" data-country="usa" data-course="13"><div class="course-head"><span class="course-num">13</span><span class="course-title">PGA West Mountain Course</span></div><div class="loc-bar"><span class="loc-dot">●</span> La Quinta, CA — Santa Rosa Mountains
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_2910da4f5a.jpg', 'images/img_95a65e6820.jpg', 'images/img_27d5ab4591.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_2910da4f5a.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_95a65e6820.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_27d5ab4591.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">Santa Rosa 산맥 배경 <b>Pete Dye의 경치 좋은 대안</b>. Stadium보다 짧고 관대하지만 Dye의 전략은 그대로. Stadium에서 얻어맞은 다음날 최적.</p><div class="sig"><b>누구에게</b> — Stadium은 부담스럽지만 Pete Dye는 경험하고 싶은 골퍼.</div><p class="tip"><b>팁:</b> Stadium 다음날 라운딩으로 최적의 밸런스.</p></div>
+<div class="course-card" data-country="usa" data-course="14"><div class="course-head"><span class="course-num">14</span><span class="course-title">PGA West Nicklaus Tournament</span></div><div class="loc-bar"><span class="loc-dot">●</span> La Quinta, CA — Coachella Valley
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_c11711e7e9.jpg', 'images/img_65b117d994.png', 'images/img_c866b9d79e.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_c11711e7e9.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_65b117d994.png" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_c866b9d79e.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why"><b>The American Express</b> 공동 개최 코스. Nicklaus 특유의 티어드 그린과 리스크-리워드 파5. Stadium과 함께 PGA WEST 양대 산맥.</p><div class="sig"><b>누구에게</b> — Nicklaus 팬 + PGA 투어 컨디션 경험.</div><p class="tip"><b>팁:</b> 그린 경사 읽기가 Nicklaus 코스의 핵심.</p></div>
+<div class="course-card" data-country="usa" data-course="15"><div class="course-head"><span class="course-num">15</span><span class="course-title">Rams Hill Golf Club</span></div><div class="loc-bar"><span class="loc-dot">●</span> Borrego Springs, CA — Anza-Borrego Desert
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_ram1_new.jpg', 'images/img_ram2_new.jpg', 'images/img_ram3_new.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_ram1_new.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_ram2_new.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_ram3_new.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why"><b>Tom Fazio</b>가 완전 재설계한 사막 오아시스. 자연 샘물이 흐르는 물 특징. 여름엔 문 닫고 겨울 시즌 한정 — 진정한 시즌 보석.</p><div class="sig"><b>누구에게</b> — 겨울 사막 골프의 정수. 조용하고 고급스러운 라운딩.</div><p class="tip"><b>팁:</b> 여름 휴장 — 10월~5월 시즌 확인 필수.</p></div>
+</div>
+
+
+<!-- ═══ Santa Barbara & Central Coast ═══ -->
+<div class="region-header" data-country="usa"><h2 class="region-title">Santa Barbara & Central Coast</h2></div>
+<div class="region-group" data-country="usa">
+<div class="course-card" data-country="usa" data-course="16"><div class="course-head"><span class="course-num">16</span><span class="course-title">Sandpiper Golf Club</span></div><div class="loc-bar"><span class="loc-dot">●</span> Santa Barbara, CA — American Riviera
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_b15bb67b83.jpg', 'images/img_0597e65b08.jpg', 'images/img_e30380d01a.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_b15bb67b83.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_0597e65b08.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_e30380d01a.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div><p class="why">산타바바라 해안 절벽. 티박스에서 태평양 정면. 해질녘 캘리포니아 골프의 백미. 바람이 모든 걸 바꾸는 링크스 — 자연과의 전략적 대결.</p><div class="sig"><b>시그니처</b> — 10번 (파4, 390yd) 절벽 도그레그. 석양 속 퍼팅.</div><p class="tip"><b>팁:</b> 바람 +1~2클럽. 해질녘 티타임 최고.</p></div>
+<div class="course-card" data-country="usa" data-course="17"><div class="course-head"><span class="course-num">17</span><span class="course-title">La Purisima — "La Piranha"</span></div><div class="loc-bar"><span class="loc-dot">●</span> Lompoc, CA — Central Coast
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_86e582e15e.jpg', 'images/img_aa94317d68.jpg', 'images/img_6f5d8fa74a.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_86e582e15e.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_aa94317d68.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_6f5d8fa74a.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div><p class="why">309에이커에 주택 하나 없이 오직 골프만. <b>"La Piranha"</b> — 1996 PGA Tour Final Stage Qualifying 개최. 현재도 USGA·SCGA 예선 정기 개최.</p><div class="sig"><b>누구에게</b> — 진짜 실력 테스트. 방해물 없는 자연 속 자신과의 싸움.</div><p class="tip"><b>팁:</b> 아침이 바람 적음. 늦은 오후는 태평양 석양.</p></div>
+<div class="course-card" data-country="usa" data-course="18"><div class="course-head"><span class="course-num">18</span><span class="course-title">Alisal Ranch River Course</span></div><div class="loc-bar"><span class="loc-dot">●</span> Solvang, CA — Santa Ynez Valley
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_8669c7a2e0.jpg', 'images/img_20500a28f9.jpg', 'images/img_c3a10bb1c5.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_8669c7a2e0.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_20500a28f9.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_c3a10bb1c5.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">솔뱅 와인 컨트리, 1956년 오픈. 바랑카(협곡) 관통 레이아웃이지만 난이도보다 풍경. Ranch Course 멤버 전용, River Course 대중 공개. 솔뱅 와인 시음 + 덴마크 마을 연계 최적.</p><div class="sig"><b>누구에게</b> — 챔피언십 사이 힐링. 비골퍼 동행자도 만족.</div><p class="tip"><b>팁:</b> 오전 라운드 + 오후 와이너리. 덴마크 페이스트리 필수.</p></div>
+<div class="course-card" data-country="usa" data-course="19"><div class="course-head"><span class="course-num">19</span><span class="course-title">Rustic Canyon Golf Course</span></div><div class="loc-bar"><span class="loc-dot">●</span> Moorpark, CA — Ventura County
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_393534e839.jpg', 'images/img_78483cbacb.jpg', 'images/img_2ee1bb6393.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_393534e839.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_78483cbacb.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_2ee1bb6393.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why"><b>미니멀리즘의 교과서</b> — 단 2만 입방야드의 흙만 옮겨 자연 지형을 살린 Gil Hanse 걸작. Hanse 스스로 "가장 lay-of-the-land한 코스".</p><div class="sig"><b>누구에게</b> — 디자인 철학을 이해하는 골퍼. 전략적 사고 중시.</div><p class="tip"><b>팁:</b> 겉보기보다 훨씬 전략적. 그린 주변 바랑카 조심.</p></div>
+</div>
+
+
+<!-- ═══ San Diego Coastal ═══ -->
+<div class="region-header" data-country="usa"><h2 class="region-title">San Diego Coastal</h2></div>
+<div class="region-group" data-country="usa">
+<div class="course-card" data-country="usa" data-course="20"><div class="course-head"><span class="course-num">20</span><span class="course-title">Torrey Pines — South Course</span></div><div class="loc-bar"><span class="loc-dot">●</span> La Jolla, CA — San Diego
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_672efb2678.jpg', 'images/img_2d6f2b25ea.jpg', 'images/img_daeb32bbff.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_672efb2678.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_2d6f2b25ea.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_daeb32bbff.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why"><b>PGA 투어 최장 코스</b>. 2008 & 2021 US Open 개최 (Tiger Woods 전설적 플레이오프). Farmers Insurance Open 홈. 78.8/148.</p><div class="sig"><b>누구에게</b> — US Open을 경험하고 싶은 모든 골퍼. Tiger가 걸었던 페어웨이.</div><p class="tip"><b>팁:</b> 7,802yd — 적절한 티 선택이 핵심.</p></div>
+<div class="course-card" data-country="usa" data-course="21"><div class="course-head"><span class="course-num">21</span><span class="course-title">Torrey Pines — North Course</span></div><div class="loc-bar"><span class="loc-dot">●</span> La Jolla, CA — San Diego
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_c0919e83ac.jpg', 'images/img_266a96c5b7.jpg', 'images/img_b540a53537.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_c0919e83ac.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_266a96c5b7.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_b540a53537.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div><p class="why">South보다 관대한 형제. <b>Tom Weiskopf 2016 리노베이션</b>으로 벙커↓ 접근성↑. 태평양 파노라마는 South 못지않게 압도적.</p><div class="sig"><b>누구에게</b> — South는 부담스럽지만 Torrey Pines 절경은 원하는 분.</div><p class="tip"><b>팁:</b> Weiskopf 리노베이션으로 즐기기 좋아짐.</p></div>
+</div>
+
+
+<!-- ═══ Las Vegas ═══ -->
+<div class="region-header" data-country="usa"><h2 class="region-title">Las Vegas</h2></div>
+<div class="region-group" data-country="usa">
+<div class="course-card" data-country="usa" data-course="22"><div class="course-head"><span class="course-num">22</span><span class="course-title">Wynn Golf Club</span></div><div class="loc-bar"><span class="loc-dot">●</span> Las Vegas, NV — The Strip
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_d4d52b2192.jpg', 'images/img_39c7ec3d15.jpg', 'images/img_c3f500c718.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_d4d52b2192.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_39c7ec3d15.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_c3f500c718.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why"><b>Las Vegas Strip 유일의 골프 코스</b>. 2019년 Tom Fazio 완전 재설계. 폭포·시내·8,000그루 나무 — 스트립 한복판이라 믿기지 않는 자연.</p><div class="sig"><b>누구에게</b> — 라스베이거스에서 럭셔리 골프+쇼핑+쇼를 하루에.</div><p class="tip"><b>팁:</b> 그린피 $600+. Wynn 투숙객 우선.</p></div>
+<div class="course-card" data-country="usa" data-course="23"><div class="course-head"><span class="course-num">23</span><span class="course-title">Paiute — Sun Mountain</span></div><div class="loc-bar"><span class="loc-dot">●</span> Las Vegas, NV — Northwest Valley
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_00bbc1b177.jpg', 'images/img_8b8f79c32d.jpg', 'images/img_d737fcde63.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_00bbc1b177.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_8b8f79c32d.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_d737fcde63.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why"><b>Pete Dye의 사막 3부작</b> 중 가장 클래식한 레이아웃. 광활한 모하비 사막 배경. 스트립에서 30분.</p><div class="sig"><b>누구에게</b> — 진짜 사막 골프. 3개 코스 36홀 데이 최적.</div><p class="tip"><b>팁:</b> 아침 티타임 — 오후 바람 강해짐.</p></div>
+<div class="course-card" data-country="usa" data-course="24"><div class="course-head"><span class="course-num">24</span><span class="course-title">Paiute — Snow Mountain</span></div><div class="loc-bar"><span class="loc-dot">●</span> Las Vegas, NV — Northwest Valley
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_6f96948b82.jpg', 'images/img_febe080517.jpg', 'images/img_1f3a6b6b83.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_6f96948b82.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_febe080517.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_1f3a6b6b83.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">겨울철 눈 덮인 Charleston 산맥 배경 <b>Dye의 전략적 워터 해저드</b>. 마지막 4홀 워터 캐리 백미.</p><div class="sig"><b>누구에게</b> — 겨울철 산맥 뷰 + Pete Dye 챌린지.</div><p class="tip"><b>팁:</b> 겨울철 눈 덮인 산 배경 환상적.</p></div>
+<div class="course-card" data-country="usa" data-course="25"><div class="course-head"><span class="course-num">25</span><span class="course-title">Paiute — Wolf Course</span></div><div class="loc-bar"><span class="loc-dot">●</span> Las Vegas, NV — Northwest Valley
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_e1bdfcf90e.jpg', 'images/img_d737fcde63.jpg', 'images/img_1f3a6b6b83.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_e1bdfcf90e.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_d737fcde63.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_1f3a6b6b83.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">Paiute 3부작의 <b>괴물</b>. 7,604야드 — 네바다주 최장. Dye의 가장 공격적인 디자인. 길고 넓지만 착시.</p><div class="sig"><b>누구에게</b> — 장타자 + Dye 마니아.</div><p class="tip"><b>팁:</b> 7,604yd — 적절한 티 선택이 생존의 핵심.</p></div>
+</div>
+
+
+<!-- ═══ Canadian Rockies ═══ -->
+<div class="region-header" data-country="canada"><h2 class="region-title">Canadian Rockies</h2></div>
+<div class="region-group" data-country="canada">
+<div class="course-card" data-country="canada" data-course="1"><div class="course-head"><span class="course-num">1</span><span class="course-title">Canmore Golf & Curling Club</span></div><div class="loc-bar"><span class="loc-dot">●</span> Canmore, AB — Bow Valley
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_536d6a9b10.webp', 'images/img_54de6a074f.jpg', 'images/img_ceef54d034.webp'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_536d6a9b10.webp" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_54de6a074f.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_ceef54d034.webp" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">Bow River 따라 평평하게 깔린 1926년 코스. 페어웨이 어디서든 <b>Ha Ling Peak + Three Sisters</b> 정면. Canmore 최저가·최평탄 — 장거리 비행 후 몸 풀기 최적.</p><div class="sig"><b>누구에게</b> — 도착 첫날 시차 적응 겸 여유 라운딩.</div><p class="tip"><b>팁:</b> 늦은 오후 티타임 빛 최고. 해가 Three Sisters 뒤로.</p></div>
+<div class="course-card" data-country="canada" data-course="2"><div class="course-head"><span class="course-num">2</span><span class="course-title">Silvertip Resort</span></div><div class="loc-bar"><span class="loc-dot">●</span> Canmore, AB — Canadian Rockies
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_33433821f3.webp', 'images/img_dcbb809c20.webp', 'images/img_960f67e165.webp'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_33433821f3.webp" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_dcbb809c20.webp" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_960f67e165.webp" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">Canmore 남쪽 언덕, 모든 홀 <b>Bow Valley 파노라마</b>. 경사·벙커 극심 "Alberta 최고 호불호". 경치만은 이견 없음. 부담되면 블루(6,166yd) 티.</p><div class="sig"><b>시그니처</b> — 13번 100피트 낙하. Three Sisters 배경. 캐나다 최고 티샷.</div><p class="tip"><b>볼거리:</b> 터키석 연못 18번 피날레. Stoney's Grill.</p></div>
+<div class="course-card" data-country="canada" data-course="3"><div class="course-head"><span class="course-num">3</span><span class="course-title">Stewart Creek G&CC</span></div><div class="loc-bar"><span class="loc-dot">●</span> Canmore, AB — Three Sisters Mountain Village
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/img_0d09b1782a.jpg', 'images/img_3c97920397.jpg', 'images/img_cfb8ad28a8.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/img_0d09b1782a.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_3c97920397.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/img_cfb8ad28a8.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div>
+<p class="why">Silvertip보다 넓고 관대해 <b>실력 편차 큰 그룹</b> 최적. 전반 산 파노라마 강점. Canmore에서 가장 균형 잡힌 코스.</p><div class="sig"><b>누구에게</b> — 초보+상급 섞인 그룹. Kananaskis 대신 18홀 선택지.</div><p class="tip"><b>팁:</b> 토·일 오전 10:30까지 멤버 전용.</p></div>
+<div class="course-card" data-country="canada" data-course="4"><div class="course-head"><span class="course-num">4</span><span class="course-title">Fairmont Banff Springs</span></div><div class="loc-bar"><span class="loc-dot">●</span> Banff, AB — UNESCO World Heritage
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/banff_new1.jpg', 'images/banff_new2.jpg', 'images/banff_new3.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/banff_new1.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/banff_new2.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/banff_new3.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div><p class="why">캐나다 최고·최고의 골프. 성 같은 Fairmont 호텔, 에메랄드빛 Bow River, 그림자 드리울 산들. 체크아웃 후 25분, 끝나면 Calgary — 여행 피날레 최적.</p><div class="sig"><b>Devil's Cauldron</b> — 4번 (파3, 192yd) 산 정상이 그린보다 1,000피트 위. 세계 최고의 파3.</div><p class="tip"><b>볼거리:</b> 15번 파4 끝없는 내리막 티샷. 성수기 최우선 예약.</p></div>
+<div class="course-card" data-country="canada" data-course="5"><div class="course-head"><span class="course-num">5</span><span class="course-title">Kananaskis Country</span></div><div class="loc-bar"><span class="loc-dot">●</span> Kananaskis Valley, AB — Wild Rose Country
+</div>
+<div class="course-carousel" onclick="openLightbox(event, ['images/kan_new1.jpg', 'images/kan_new2.jpg', 'images/kan_new3.jpg'])">
+  <div class="carousel-track"><div class="carousel-slide"><img src="images/kan_new1.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/kan_new2.jpg" alt="course photo" loading="lazy"></div><div class="carousel-slide"><img src="images/kan_new3.jpg" alt="course photo" loading="lazy"></div></div>
+  <div class="carousel-dots"><div class="carousel-dot act"></div><div class="carousel-dot"></div><div class="carousel-dot"></div></div>
+  <div class="carousel-counter">1 / 3</div>
+</div><p class="why">계곡 깊숙이 — 빙하 시내, 120+ 흰 벙커, 페어웨이 위 엘크. 북미 최고 평가에 가격 가장 착함. 2013년 홍수→2018년 재건.</p><div class="sig"><b>추천</b> — 오전 Mt Kidd(장타자) + 오후 Lorette(강변). 36홀 정복.</div><p class="tip"><b>팁:</b> 진짜 산악 골프. 체력 안배 필수.</p></div>
+</div>
+
+<!-- ═══════════ QUIZ ═══════════ -->
+<div id="quiz-section">
+  <h2>🎯 나에게 맞는 코스 찾기</h2>
+  <div class="quiz-progress" id="quizProgress"></div>
+  <div class="quiz-q" id="quizQ"></div>
+  <div class="quiz-opts" id="quizOpts"></div>
+  <div class="quiz-result" id="quizResult"></div>
+</div>
+
+<div class="cta-bar">
+  <p>원하시는 코스 구성으로 맞춤 일정을 만들어 드립니다</p>
+  <a href="#" class="cta-btn">맞춤 견적 요청하기</a>
+</div>
+
+<footer>
+  Resonate Tour — 한국 → 북미 프리미엄 골프 투어<br>
+  그린피는 시즌·시간대에 따라 변동될 수 있습니다。<br>
+  <span style="font-size:11px">레조네이트투어 · 대표: LEE HEE SUNG (이희성) · 부산광역시 해운대구 세실로 79, 9층 23호<br>사업자등록번호: 496-16-02952 · 관광사업등록증: 국내외여행업 제 2026-000003호 · 영업보증보험 3,000만원<br>resonatetourclub@gmail.com · 0507-1457-9633</span>
+</footer>
+
+
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+  <span class="lb-close" onclick="closeLightbox()">✕</span>
+  <span class="lb-arrow lb-prev" onclick="event.stopPropagation();lbPrev()">‹</span>
+  <img id="lightbox-img" src="" alt="">
+  <span class="lb-arrow lb-next" onclick="event.stopPropagation();lbNext()">›</span>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top">↑</button>
+
+<script>
+// ── Course data with coordinates ──
+var USA_COURSES = [
+  {num:1,country:'usa',name:"Trump National LA",loc:"Rancho Palos Verdes, CA",info:"",lat:33.73,lng:-118.35},
+  {num:2,country:'usa',name:"Friendly Hills CC",loc:"Whittier, CA",info:"",lat:33.98,lng:-117.97},
+  {num:3,country:'usa',name:"Hacienda GC",loc:"La Habra Heights, CA",info:"",lat:33.96,lng:-117.94},
+  {num:4,country:'usa',name:"Industry Hills Ike",loc:"City of Industry, CA",info:"",lat:34.01,lng:-117.92},
+  {num:5,country:'usa',name:"Industry Hills Babe",loc:"City of Industry, CA",info:"",lat:34.01,lng:-117.92},
+  {num:6,country:'usa',name:"Hidden Valley GC",loc:"Norco, CA",info:"",lat:33.93,lng:-117.55},
+  {num:7,country:'usa',name:"The Crossings",loc:"Carlsbad, CA",info:"",lat:33.11,lng:-117.28},
+  {num:8,country:'usa',name:"Aviara GC",loc:"Carlsbad, CA",info:"",lat:33.1,lng:-117.27},
+  {num:9,country:'usa',name:"Golf Club of CA",loc:"Fallbrook, CA",info:"",lat:33.385,lng:-117.2},
+  {num:10,country:'usa',name:"Cross Creek GC",loc:"Temecula, CA",info:"",lat:33.5,lng:-117.1},
+  {num:11,country:'usa',name:"Journey at Pechanga",loc:"Temecula, CA",info:"",lat:33.45,lng:-117.08},
+  {num:12,country:'usa',name:"PGA West Stadium",loc:"La Quinta, CA",info:"",lat:33.66,lng:-116.3},
+  {num:13,country:'usa',name:"PGA West Mountain",loc:"La Quinta, CA",info:"",lat:33.662,lng:-116.305},
+  {num:14,country:'usa',name:"PGA West Nicklaus",loc:"La Quinta, CA",info:"",lat:33.664,lng:-116.295},
+  {num:15,country:'usa',name:"Rams Hill GC",loc:"Borrego Springs, CA",info:"",lat:33.21,lng:-116.35},
+  {num:16,country:'usa',name:"Sandpiper GC",loc:"Santa Barbara, CA",info:"",lat:34.43,lng:-119.898},
+  {num:17,country:'usa',name:"La Purisima",loc:"Lompoc, CA",info:"",lat:34.665,lng:-120.428},
+  {num:18,country:'usa',name:"Alisal Ranch River",loc:"Solvang, CA",info:"",lat:34.595,lng:-120.14},
+  {num:19,country:'usa',name:"Rustic Canyon",loc:"Moorpark, CA",info:"",lat:34.3,lng:-118.9},
+  {num:20,country:'usa',name:"Torrey Pines South",loc:"La Jolla, CA",info:"",lat:32.905,lng:-117.25},
+  {num:21,country:'usa',name:"Torrey Pines North",loc:"La Jolla, CA",info:"",lat:32.905,lng:-117.25},
+  {num:22,country:'usa',name:"Wynn Golf Club",loc:"Las Vegas, NV",info:"",lat:36.125,lng:-115.165},
+  {num:23,country:'usa',name:"Paiute Sun Mountain",loc:"Las Vegas, NV",info:"",lat:36.38,lng:-115.32},
+  {num:24,country:'usa',name:"Paiute Snow Mountain",loc:"Las Vegas, NV",info:"",lat:36.382,lng:-115.322},
+  {num:25,country:'usa',name:"Paiute Wolf",loc:"Las Vegas, NV",info:"",lat:36.384,lng:-115.324}
+];
+
+var CAN_COURSES = [
+  {num:1,country:'canada',name:"Canmore G&CC",loc:"Canmore, AB",info:"",lat:51.09,lng:-115.35},
+  {num:2,country:'canada',name:"Silvertip Resort",loc:"Canmore, AB",info:"",lat:51.07,lng:-115.355},
+  {num:3,country:'canada',name:"Stewart Creek G&CC",loc:"Canmore, AB",info:"",lat:51.08,lng:-115.33},
+  {num:4,country:'canada',name:"Banff Springs",loc:"Banff, AB",info:"",lat:51.17,lng:-115.55},
+  {num:5,country:'canada',name:"Kananaskis Country",loc:"Kananaskis Valley, AB",info:"",lat:50.9,lng:-115.15}
+];
+
+var usaMap, canMap, usaBounds, canBounds;
+var mapInitialized = false;
+
+function createMap(containerId, courses, center, zoom) {
+  var map = L.map(containerId, {
+    center: center, zoom: zoom,
+    zoomControl: false,
+    scrollWheelZoom: false,
+    touchZoom: true,
+    doubleClickZoom: true,
+    dragging: true,
+    attributionControl: true
+  });
+  
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+    subdomains: 'abcd', maxZoom: 19
+  }).addTo(map);
+
+  courses.forEach(function(c) {
+    var icon = L.divIcon({
+      className: 'course-marker-icon',
+      html: '<div class="course-marker">'+c.num+'</div>',
+      iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -16]
+    });
+    var m = L.marker([c.lat, c.lng], {icon: icon}).addTo(map)
+      .bindPopup('<b>'+c.name+'</b><br>'+c.loc+'<br><span style="font-size:11px;color:#8899b4">'+c.info+'</span>');
+    m.bindPopup('<b>'+c.name+'</b><br>'+c.loc+'<br><span style="font-size:11px;color:#8899b4">'+c.info+'</span><br><a href="javascript:void(0)" onclick="scrollToCourse(\'' + c.country + '\', ' + c.num + ')" style="color:#d4af37;font-size:11px;text-decoration:underline">코스 상세 보기 →</a>');
+  });
+
+  L.control.scale({position:'bottomright', imperial:true, metric:true}).addTo(map);
+
+  var bounds = L.latLngBounds(courses.map(function(c) { return [c.lat, c.lng]; }));
+  map.fitBounds(bounds, {padding: [40, 40]});
+  
+  return {map: map, bounds: bounds};
+}
+
+function initMaps() {
+  if (mapInitialized) return;
+  var usa = createMap('mapUsaContainer', USA_COURSES, [34.0, -118.5], 8);
+  usaMap = usa.map; usaBounds = usa.bounds;
+  var can = createMap('mapCanContainer', CAN_COURSES, [51.1, -115.35], 10);
+  canMap = can.map; canBounds = can.bounds;
+  mapInitialized = true;
+}
+
+var scrollPositions = { usa: 0, canada: 0 };
+var currentCountry = 'usa';
+
+function switchCountry(c) {
+  // Save current scroll position
+  scrollPositions[currentCountry] = window.scrollY;
+  
+  document.getElementById('tab-usa').classList.toggle('act', c==='usa');
+  document.getElementById('tab-canada').classList.toggle('act', c==='canada');
+  document.getElementById('map-usa').style.display = c==='usa'?'':'none';
+  document.getElementById('map-canada').style.display = c==='canada'?'':'none';
+  document.querySelectorAll('.region-header').forEach(function(hdr){
+    hdr.classList.toggle('hidden', hdr.dataset.country !== c);
+  });
+  document.querySelectorAll('.region-group').forEach(function(group){
+    group.classList.toggle('hidden', group.dataset.country !== c);
+  });
+  
+  currentCountry = c;
+  
+  initMaps();
+  setTimeout(function() {
+    if (c==='usa' && usaMap) { usaMap.invalidateSize(); usaMap.fitBounds(usaBounds, {padding: [40,40]}); }
+    if (c==='canada' && canMap) { canMap.invalidateSize(); canMap.fitBounds(canBounds, {padding: [40,40]}); }
+    // Restore scroll position
+    window.scrollTo(0, scrollPositions[c] || 0);
+  }, 150);
+}
+
+// Init USA map on load
+window.addEventListener('load', function() {
+  initMaps();
+  switchCountry('usa');
+});
+
+// Scroll-to-top toggle
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('scrollTop');
+  if (window.scrollY > 400) btn.classList.add('show');
+  else btn.classList.remove('show');
+});
+
+
+
+
+
+// ── Carousel (static by default, rotate if data-rotate="true") ──
+var carouselTimers = {};
+function startCarousel(el) {
+  var track = el.querySelector('.carousel-track');
+  var slides = el.querySelectorAll('.carousel-slide');
+  if (!track || slides.length < 2) return;
+  var dots = el.querySelectorAll('.carousel-dot');
+  var counter = el.querySelector('.carousel-counter');
+  var rotate = el.dataset.rotate === 'true';
+  var startIdx = parseInt(el.dataset.start) || 0;
+  var idx = startIdx;
+  
+  function goTo(i) {
+    idx = i;
+    track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+    dots.forEach(function(d, di) { d.classList.toggle('act', di === idx); });
+    if (counter) counter.textContent = (idx + 1) + ' / ' + slides.length;
+  }
+  
+  // Set initial position
+  goTo(startIdx);
+  
+  if (rotate) {
+    var id = setInterval(function() { goTo((idx + 1) % slides.length); }, 4000);
+    carouselTimers[el.dataset.carouselId] = { interval: id, getIndex: function() { return idx; }, goTo: goTo };
+    el.addEventListener('mouseenter', function() { clearInterval(id); });
+    el.addEventListener('mouseleave', function() {
+      id = setInterval(function() { goTo((idx + 1) % slides.length); }, 4000);
+      carouselTimers[el.dataset.carouselId].interval = id;
+    });
+  } else {
+    carouselTimers[el.dataset.carouselId] = { getIndex: function() { return idx; } };
+  }
+}
+
+// ── Lightbox with swipe ──
+var lbImages = [];
+var lbIndex = 0;
+function openLightbox(e, urls) {
+  e.stopPropagation();
+  var urlList = Array.isArray(urls) ? urls : [urls];
+  lbImages = urlList;
+  lbIndex = 0;
+  document.getElementById('lightbox-img').src = lbImages[lbIndex];
+  document.getElementById('lightbox').classList.add('show');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('show'); lbImages = []; }
+function lbPrev() {
+  if (lbImages.length < 2) return;
+  lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
+  document.getElementById('lightbox-img').style.opacity = '0';
+  setTimeout(function() { document.getElementById('lightbox-img').src = lbImages[lbIndex]; document.getElementById('lightbox-img').style.opacity = '1'; }, 150);
+}
+function lbNext() {
+  if (lbImages.length < 2) return;
+  lbIndex = (lbIndex + 1) % lbImages.length;
+  document.getElementById('lightbox-img').style.opacity = '0';
+  setTimeout(function() { document.getElementById('lightbox-img').src = lbImages[lbIndex]; document.getElementById('lightbox-img').style.opacity = '1'; }, 150);
+}
+
+
+
+
+// ── Init carousels + lightbox ──
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.course-carousel').forEach(function(el, i) {
+    el.dataset.carouselId = 'c' + i;
+    startCarousel(el);
+  });
+  
+  // ── Staggered card reveal on scroll ──
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var card = entry.target;
+        if (!card.dataset.revealed) {
+          card.dataset.revealed = '1';
+          var group = card.closest('.region-group');
+          var idx = group ? Array.from(group.querySelectorAll('.course-card')).indexOf(card) : 0;
+          var delay = (idx % 5) * 80;
+          setTimeout(function() { card.classList.add('revealed'); }, delay);
+        }
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  
+  document.querySelectorAll('.course-card').forEach(function(card) {
+    observer.observe(card);
+    // Reveal cards already in viewport on load
+    var r = card.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) {
+      card.dataset.revealed = '1';
+      card.classList.add('revealed');
+    }
+  });
+  
+  // ── Lightbox ──
+  var lb = document.getElementById('lightbox');
+  var lbTouchStart = 0;
+  lb.addEventListener('touchstart', function(e) { lbTouchStart = e.touches[0].clientX; });
+  lb.addEventListener('touchend', function(e) {
+    var diff = lbTouchStart - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { e.stopPropagation(); if (diff > 0) lbNext(); else lbPrev(); }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (!lb.classList.contains('show')) return;
+    if (e.key === 'ArrowLeft') lbPrev();
+    if (e.key === 'ArrowRight') lbNext();
+    if (e.key === 'Escape') closeLightbox();
+  });
+});
+
+// ── Quiz Engine ──
+var QUIZ=[
+  {q:"라운딩에서 가장 중요하게 생각하는 것은?",opts:["⛰️ 경치","🏆 스코어","😄 분위기","💪 도전"]},
+  {q:"자신의 실력 수준은?",opts:["초보","중급 80~90대","상급 70대","프로급"]},
+  {q:"선호하는 코스 스타일?",opts:["🌊 오션뷰","🏔️ 산악","🌿 자연·숲","🏛️ 클래식"]},
+  {q:"라운딩 중 가장 싫은 것은?",opts:["🐢 느린 플레이","💨 강풍","🏠 주택가 뷰","👥 붐비는 코스"]},
+  {q:"동반자 구성은?",opts:["혼자·2인","4인 비슷한 실력","실력 편차 큼","가족·비골퍼"]},
+  {q:"라운드 후 원하는 것?",opts:["🍷 와인·미식","🌅 경치 감상","📊 스코어 복기","😴 휴식"]},
+  {q:"여행 스타일은?",opts:["🏃 액티브 36홀","⚖️ 밸런스","🛌 릴랙스 여유"]}
+];
+var qi=0, qs={views:0,skill:0,vibe:0,challenge:0,comfort:0};
+var OM=[['views','skill','vibe','challenge'],['comfort','skill','skill','skill'],['views','challenge','comfort','comfort'],['comfort','views','views','comfort'],['comfort','skill','comfort','comfort'],['vibe','views','skill','comfort'],['challenge','skill','comfort',null]];
+
+function initQuiz(){qi=0;qs={views:0,skill:0,vibe:0,challenge:0,comfort:0};showQuiz();}
+function rp(){var h='';for(var i=0;i<QUIZ.length;i++)h+='<div class="quiz-dot '+(i<qi?'done':(i===qi?'cur':''))+'"></div>';document.getElementById('quizProgress').innerHTML=h;}
+function showQuiz(){
+  if(qi>=QUIZ.length){showResult();return;}
+  rp();var q=QUIZ[qi];
+  document.getElementById('quizQ').textContent='Q'+(qi+1)+'. '+q.q;
+  var h='';q.opts.forEach(function(o,i){h+='<button class="quiz-opt" onclick="pickAnswer('+i+')">'+o+'</button>';});
+  document.getElementById('quizOpts').innerHTML=h;
+  document.getElementById('quizOpts').style.display='flex';
+  document.getElementById('quizResult').classList.remove('show');
+}
+function pickAnswer(idx){
+  var m=OM[qi];if(m&&m[idx])qs[m[idx]]+=2;
+  if(qi===1&&(idx===2||idx===3))qs.challenge++;
+  qi++;showQuiz();
+}
+function showResult(){
+  rp();
+  document.getElementById('quizOpts').style.display='none';
+  document.getElementById('quizQ').textContent='';
+  var res=document.getElementById('quizResult');res.classList.add('show');
+  var top=Object.entries(qs).sort(function(a,b){return b[1]-a[1];});
+  var p=top[0][0],desc='',recs=[];
+  if(p==='views'){desc='<b>경치형 골퍼</b> — 스코어보다 풍경! 티샷보다 배경부터 찾는 타입.';recs=['Sandpiper','Trump National','Silvertip','Banff Springs'];}
+  else if(p==='challenge'){desc='<b>도전형 골퍼</b> — 쉬우면 심심, 어려울수록 🔥.';recs=['La Purisima','Trump National','Hacienda','Silvertip','Kananaskis'];}
+  else if(p==='skill'){desc='<b>실력파 골퍼</b> — 한 타 한 타 진지하게.';recs=['La Purisima','Friendly Hills','Golf Club of CA','Cross Creek','Kananaskis'];}
+  else if(p==='vibe'){desc='<b>분위기형 골퍼</b> — 웃고 떠들고 와인 한 잔!';recs=['Alisal Ranch','Cross Creek','Stewart Creek','Canmore G&CC'];}
+  else if(p==='comfort'){desc='<b>힐링형 골퍼</b> — 골프는 휴식. 여유롭게 자연을.';recs=['Alisal Ranch','The Crossings','Stewart Creek','Canmore G&CC'];}
+  else{desc='<b>밸런스형 골퍼</b> — 경치·도전·분위기 두루!';recs=['Sandpiper','Hacienda','Golf Club of CA','The Crossings','Stewart Creek'];}
+  res.innerHTML='<h3>🎯 당신의 골퍼 유형</h3><p>'+desc+'</p><div class="rec-courses"><b>추천 코스:</b> '+recs.map(function(r){return '<span>'+r+'</span>';}).join('')+'</div><button class="quiz-opt" style="margin-top:16px;text-align:center;width:100%" onclick="initQuiz()">🔄 다시 테스트하기</button>';
+}
+initQuiz();
+
+
+// ── Map marker click → scroll to course ──
+function scrollToCourse(country, num) {
+  var cards = document.querySelectorAll('.course-card');
+  var targetId = String(num);
+  for (var i = 0; i < cards.length; i++) {
+    if (cards[i].getAttribute('data-course') === targetId && cards[i].getAttribute('data-country') === country) {
+      cards[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      cards[i].style.boxShadow = '0 0 40px rgba(212,175,55,.6)';
+      cards[i].style.borderColor = '#d4af37';
+      cards[i].style.transition = 'all 0.3s ease';
+      setTimeout(function() { cards[i].style.boxShadow = ''; cards[i].style.borderColor = ''; }, 2500);
+      break;
+    }
+  }
+}
+
+</script>
+
+</body>
+</html>
