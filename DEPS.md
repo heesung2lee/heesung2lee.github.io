@@ -29,3 +29,12 @@ crsLbOpen(42) nav(24) F_singlePick(18) crsRegion(12) toggleFaq(12)
 - courses 모듈 옆에 `booking/` 신설 예정: 견적→예약→결제
 - 입력: courses의 CRS_* 데이터 + finder의 F_picks 결과
 - 전역 curLang/curPage는 shell에 유지, booking은 read-only 참조
+
+## 적용 완료 (2026-09-27, PR #4~#9 머지)
+- ② SITE single-source (#5): mailto 9곳→SITE.email
+- ③ quiz.js (#6): 11 funcs (6K)
+- ④ cards.js (#7): 16 funcs (9K)
+- ⑤ maps.js (#8): 22 funcs (40K)
+- ⑥ CI tour-verify.yml + tools/ (#9): syntax+dup+CJK+SITE 게이트
+- index.html: 449K→395K (-12%)
+- booking 자리: courses CRS_* + finder F_picks → booking/ 신설 예정
