@@ -1,0 +1,29 @@
+name: tour-verify
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      # pinned: checkout v4.4.0, setup-node v4.4.0
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - name: JS syntax (all modules + inline blocks)
+        run: |
+          for f in quiz.js cards.js maps.js; do
+            [ -f "$f" ] && node --check "$f" && echo "$f OK"
+          done
+          python3 tools/extract_inline.py index.html /tmp/inline
+          for f in /tmp/inline/*.js; do node --check "$f" && echo "$f OK"; done
+      - name: No duplicate function definitions
+        run: python3 tools/dup_check.py index.html quiz.js cards.js maps.js
+      - name: SITE single-source (no hardcoded contact)
+        run: |
+          ! grep -q "mailto:info@" index.html \
+            && echo "no hardcoded mailto"
+          grep -q "var SITE" index.html && echo "SITE present"
+      - name: No non-KR CJK residue
+        run: python3 tools/cjk_scan.py index.html
