@@ -5324,7 +5324,7 @@ document.addEventListener('keydown', e => {
  
 /* ═══ iOS TOUCH RIPPLE SPAWNER ═══ */
 (function(){
- function spawnRipple(x, y, size, light) {
+ function spawnTouchRipple(x, y, size, light) {
  var r = document.createElement('div');
  r.className = 'ios-ripple' + (light ? ' light' : '');
  var s = size || 52;
@@ -5347,20 +5347,20 @@ document.addEventListener('keydown', e => {
  
  // Day tabs
  if (el.classList && el.classList.contains('dtab')) {
- spawnRipple(x, y, 48, false);
+ spawnTouchRipple(x, y, 48, false);
  break;
  }
  
  // Ham menu items
  if (el.classList && el.classList.contains('ham-item') &&
  !el.classList.contains('ham-item-disabled')) {
- spawnRipple(x, y, 56, false);
+ spawnTouchRipple(x, y, 56, false);
  break;
  }
  
  // Nav tabs
  if (el.classList && el.classList.contains('nav-tab')) {
- spawnRipple(x, y, 44, true);
+ spawnTouchRipple(x, y, 44, true);
  break;
  }
  
@@ -5373,7 +5373,7 @@ document.addEventListener('keydown', e => {
  el.classList.contains('f-submit') ||
  el.classList.contains('ham-cta')
  )) {
- spawnRipple(x, y, 60, false);
+ spawnTouchRipple(x, y, 60, false);
  break;
  }
  }
