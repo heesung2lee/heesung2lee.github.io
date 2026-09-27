@@ -100,10 +100,14 @@ var qHref = 'mailto:' + SITE.email + '?subject=' + encodeURIComponent('Resonate 
 res.innerHTML = '<h3><span class="ko">🎯 당신의 골퍼 유형</span><span class="en">🎯 Your Golfer Profile</span></h3><p><span class="ko">' + r.d_ko + '</span><span class="en">' + r.d_en + '</span></p><div class="rec-courses"><b><span class="ko">추천 코스:</span><span class="en">Recommended courses:</span></b> ' + recs + '</div><button class="quiz-opt" style="margin-top:16px;text-align:center;width:100%" onclick="crsInitQuiz()"><span class="ko">🔄 다시 테스트하기</span><span class="en">🔄 Retake the test</span></button><a class="quiz-opt" href="' + qHref + '" style="margin-top:10px;text-align:center;width:100%;display:block;text-decoration:none;color:inherit"><span class="ko">💬 이 결과로 맞춤 견적 요청</span><span class="en">💬 Request a quote with this result</span></a>';
 }
 
-/* ── Init carousels + reveal ── */
-(function(){
+/* ── Init carousels + reveal + quiz ──
+   Runs on DOMContentLoaded (not immediately): quiz.js loads BEFORE
+   index inline globals (curLang/SITE), so immediate crsShowQuiz would
+   render into an unready host. Retry guard covers slow DOM. */
+function crsBootQuiz() {
 var cards = document.querySelectorAll('#pg-courses .course-card');
-document.querySelectorAll('#pg-courses .course-carousel').forEach(function(el, i) { crsStartCarousel(el); });
+document.querySelectorAll('#pg-courses .course-carousel').forEach(function(el, i) { try { crsStartCarousel(el); } catch (e) {} });
+try {
 var obs = new IntersectionObserver(function(entries) {
 entries.forEach(function(entry) {
 if (entry.isIntersecting) {
@@ -113,5 +117,13 @@ obs.unobserve(entry.target);
 });
 }, {threshold:0.06, rootMargin:'0px 0px -40px 0px'});
 cards.forEach(function(card) { obs.observe(card); });
-crsInitQuiz();
+} catch (e) {}
+var tries = 0;
+(function tryQuiz() {
+var qEl = document.getElementById('quizQ');
+if (qEl && typeof CRS_QUIZ !== 'undefined' && CRS_QUIZ.length) { crsInitQuiz(); return; }
+if (++tries < 20) setTimeout(tryQuiz, 250);
 })();
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', crsBootQuiz);
+else crsBootQuiz();

@@ -439,17 +439,21 @@ else map.setZoom(Math.max(z - 1, map.getMinZoom()));
 })();
 }
 var crsRegionCur = 'usa1';
+var crsCur = 'usa';
+/* true while programmatic smooth-scroll runs — spy must not hijack act tab */
+var crsProgScroll = false;
 function crsRegion(r, skipScroll) {
 var t = document.querySelector('#pg-courses .region-tab[data-region="'+r+'"]');
 var c = t ? t.getAttribute('data-country') : null;
 if (c && c !== crsCur) crsSwitch(c, true);
 crsRegionCur = r;
 document.querySelectorAll('#pg-courses .region-tab').forEach(function(x) { x.classList.toggle('act', x.dataset.region === r); });
-if (!skipScroll) { var hdr = document.querySelector('#pg-courses .region-header[data-region="'+r+'"]:not(.hidden)'); if (hdr) { var y = hdr.getBoundingClientRect().top + window.scrollY - 178; window.scrollTo({top: Math.max(0, y), behavior: 'smooth'}); } }
+if (!skipScroll) { var hdr = document.querySelector('#pg-courses .region-header[data-region="'+r+'"]:not(.hidden)'); if (hdr) { var y = hdr.getBoundingClientRect().top + window.scrollY - 178; crsProgScroll = true; window.scrollTo({top: Math.max(0, y), behavior: 'smooth'}); setTimeout(function() { crsProgScroll = false; }, 900); } }
 }
 var crsSpyTimer = null;
 function crsSpyTick() {
 if (curPage !== 'courses') return;
+if (crsProgScroll) return;
 var line = 180, best = null, bestTop = -1e9;
 document.querySelectorAll('#pg-courses .region-header:not(.hidden)').forEach(function(g) {
 var b = g.getBoundingClientRect();
@@ -612,4 +616,8 @@ document.addEventListener('touchend', function(e) {
 }, {passive:true});
 
 /* Quiz data → quiz.js로 이동 */
+/* Cross-file API contract (index onclick + quiz.js call these):
+   crsScrollToCourse, crsStartCarousel, COURSE_INFO, crsLbOpen,
+   crsSwitch, crsRegion, crsInitMaps, crsInitKrMap, crsOnShow */
+window.__crsApi = { crsScrollToCourse: crsScrollToCourse, crsStartCarousel: crsStartCarousel, crsLbOpen: crsLbOpen, crsSwitch: crsSwitch, crsRegion: crsRegion };
 
