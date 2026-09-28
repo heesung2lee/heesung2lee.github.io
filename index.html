@@ -2466,7 +2466,7 @@ body {
  <div style="max-width:720px;margin:0 auto;background:#f7f8fa;border-radius:18px;padding:20px 16px 90px;position:relative">
  <button onclick="finderClose()" style="position:absolute;top:12px;right:14px;background:#fff;border:1.5px solid #e3e6ec;border-radius:100px;width:36px;height:36px;font-size:16px;cursor:pointer;color:#1a3450" aria-label="close">✕</button>
 
-<div class="topbar"><span class="badge">TEST v2 · 여행 취향 테스트</span><button class="langbtn" onclick="F_toggleLang()">한/EN</button></div>
+<div class="topbar"><span class="badge">여행 취향 테스트</span></div>
 
 <!-- STEP 0: mode select -->
 <div class="step act" id="s0">
@@ -2592,9 +2592,8 @@ body {
 #finderModal *{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)}
 #finderModal [data-lang="en"] .ko{display:none!important}[data-lang="ko"] .en{display:none!important}
 #finderModal .wrap{max-width:720px;margin:0 auto;padding:20px 16px 90px}
-#finderModal .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+#finderModal .topbar{display:flex;justify-content:flex-start;align-items:center;margin-bottom:6px}
 #finderModal .badge{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--navy);border:1px solid var(--line);border-radius:100px;padding:5px 12px;background:#fff}
-#finderModal .langbtn{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:100px;padding:6px 14px;cursor:pointer}
 #finderModal h1{font-size:22px;margin:14px 0 6px;letter-spacing:-.02em}.sub{font-size:13.5px;color:var(--mut);line-height:1.7;margin:0 0 18px}
 #finderModal .prog{display:flex;gap:6px;margin:16px 0}.prog i{flex:1;height:4px;border-radius:4px;background:#e3e6ec}.prog i.done{background:var(--gold)}
 #finderModal .q{display:none}.q.act{display:block;animation:fade .25s}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
@@ -2736,7 +2735,6 @@ food:[
 ]};
 
 var F_flow=[],F_fi=0,F_qi=0,F_answers={theme:null,date:null,mix:null,air:null};
-function F_toggleLang(){curLang=curLang==='ko'?'en':'ko';document.documentElement.dataset.lang=curLang;var az=document.getElementById('actionZone');if(az)az.className='actionzone '+(curLang==='ko'?'az-ko':'az-en');if(F_el('sresult').classList.contains('act'))F_renderAll();}
 function F_modeToggle(el){el.classList.toggle('on');var n=document.querySelectorAll('#finderModal #modes .mod.on').length;F_el('startBtn').disabled=!n;}
 function F_startFlow(){
  F_flow=[].slice.call(document.querySelectorAll('#finderModal #modes .mod.on')).map(function(e){return e.dataset.m});
