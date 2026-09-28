@@ -921,11 +921,18 @@ function scrollToCourse(country, num) {
   var targetId = String(num);
   for (var i = 0; i < cards.length; i++) {
     if (cards[i].getAttribute('data-course') === targetId && cards[i].getAttribute('data-country') === country) {
-      cards[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-      cards[i].style.boxShadow = '0 0 40px rgba(212,175,55,.6)';
-      cards[i].style.borderColor = '#d4af37';
-      cards[i].style.transition = 'all 0.3s ease';
-      setTimeout(function() { cards[i].style.boxShadow = ''; cards[i].style.borderColor = ''; }, 2500);
+      (function(card) {
+        // switch country tab first so the card is visible;
+        // switchCountry restores saved scroll at ~150ms, so scroll after it
+        if (typeof switchCountry === 'function') switchCountry(country);
+        setTimeout(function() {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.style.boxShadow = '0 0 40px rgba(212,175,55,.6)';
+          card.style.borderColor = '#d4af37';
+          card.style.transition = 'all 0.3s ease';
+          setTimeout(function() { card.style.boxShadow = ''; card.style.borderColor = ''; }, 2500);
+        }, 350);
+      })(cards[i]);
       break;
     }
   }
