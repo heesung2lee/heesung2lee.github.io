@@ -355,7 +355,7 @@ function initScheduleSearch() {
 var _dropTimer = null;
 function crsCreateMap(containerId, courses) {
 var map = L.map(containerId, {zoomControl:true, scrollWheelZoom:false, touchZoom:true, doubleClickZoom:true, dragging:true, attributionControl:true});
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>', subdomains:'abcd', maxZoom:19}).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom:19}).addTo(map);
 courses.forEach(function(c) {
 var icon = L.divIcon({className:'course-marker-icon', html:'<div class="course-marker">'+c.num+'</div>', iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-16]});
 L.marker([c.lat, c.lng], {icon:icon}).addTo(map)
@@ -404,7 +404,7 @@ if (r.top < window.innerHeight && r.bottom > 0) card.classList.add('revealed');
 function crsInitKrMap() {
 if (!document.getElementById('crsMapKr') || typeof L === 'undefined' || crsMapKr) return;
 var map = L.map('crsMapKr', {zoomControl:true, scrollWheelZoom:false, touchZoom:true, attributionControl:true});
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>', subdomains:'abcd', maxZoom:18}).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom:18}).addTo(map);
 var KR_MARKERS = [
 {num:1,name:'La Vie Belle CC',loc:'Chuncheon, Gangwon-do',lat:37.92,lng:127.67},
 {num:2,name:'Bear Creek GC',loc:'Chuncheon, Gangwon-do',lat:37.82,lng:127.72},
