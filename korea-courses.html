@@ -270,7 +270,7 @@ var allMarkers=[
 ];
 
 var mapKorea=L.map('mapKorea',{zoomControl:true,attributionControl:false});
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(mapKorea);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',maxZoom:18}).addTo(mapKorea);
 var krBounds=[];
 allMarkers.forEach(function(c){
   krBounds.push([c.lat,c.lng]);
