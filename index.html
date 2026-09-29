@@ -4403,8 +4403,17 @@ function buildGalleryVideos() {
  function advanceLandingVideo() {
   if (typeof HOME_VIDEOS === 'undefined' || !HOME_VIDEOS.length) return;
   _clearLandingTimer();
-  // 순차 재생 — 모든 영상이 빠짐없이 이어서 자동재생되도록 (1→2→…→n→1)
-  landingVideoIdx = (landingVideoIdx + 1) % HOME_VIDEOS.length;
+  // 랜덤 재생 — 방문마다 다른 순서 (Fisher-Yates 초기 셔플 + 소진 시 재셔플)
+  if (typeof _landingOrder === 'undefined' || typeof _landingPos === 'undefined') { _landingOrder = []; _landingPos = 0; }
+  if (!_landingOrder.length || _landingPos >= _landingOrder.length) {
+    _landingOrder = HOME_VIDEOS.map(function(_, i){ return i; });
+    for (var si = _landingOrder.length - 1; si > 0; si--) {
+      var sj = Math.floor(Math.random() * (si + 1));
+      var st = _landingOrder[si]; _landingOrder[si] = _landingOrder[sj]; _landingOrder[sj] = st;
+    }
+    _landingPos = 0;
+  }
+  landingVideoIdx = _landingOrder[_landingPos++];
   _landingDur = 0;
   playVideoById(HOME_VIDEOS[landingVideoIdx].id);
  }
@@ -4467,7 +4476,7 @@ const LB_POOL = (function(){
  });
  return photos.concat(vids);
 })();
-function ytEmbed(id){ return 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&enablejsapi=1'; }
+function ytEmbed(id){ return 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&enablejsapi=1&loop=1&playlist=' + id; }
 
 function openLightbox(idx) {
  lbIndex = idx;
