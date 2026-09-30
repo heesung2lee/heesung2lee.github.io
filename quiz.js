@@ -42,7 +42,7 @@ function F_qpick(o){
  var bank=F_QBANK[F_flow[F_fi]];
  if(F_qi<bank.length-1){F_qi++;F_renderQ();}
  else if(F_fi<F_flow.length-1){F_fi++;F_qi=0;F_renderQ();}
- else{F_showResult();}
+ else{TourState.set('F_answers', Object.assign({}, F_answers)); TourState.set('quizDone', {flow:F_flow.slice(), at:Date.now()}); if (typeof F_showResult === 'function') F_showResult(); else document.dispatchEvent(new CustomEvent('tour:quiz-done', {detail:{flow:F_flow.slice()}}));}
  window.scrollTo({top:0,behavior:'smooth'});
 }
 function F_qback(){if(F_qi>0){F_qi--;}else if(F_fi>0){F_fi--;F_qi=F_QBANK[F_flow[F_fi]].length-1;}F_renderQ();}
