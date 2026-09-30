@@ -3946,8 +3946,7 @@ function openHam() {
  document.querySelectorAll('#ham-sheet button:not(.ham-item-disabled)').forEach(function(btn) {
  btn.ontouchend = function(e) {
  e.stopPropagation();
- var fn = btn.getAttribute('onclick');
- if (fn) { try { eval(fn); } catch(err) {} }
+ try { btn.click(); } catch(err) {}
  };
  });
 }
@@ -4122,7 +4121,7 @@ function ytPoster(v) { return 'https://i.ytimg.com/vi/' + v.id + (v.type === 'sh
  if (slotEl.getAttribute('data-type') === 'video' && slotEl.getAttribute('data-url')) {
  var vurl = slotEl.getAttribute('data-url');
  var m2 = vurl.match(/(?:shorts\/|watch\?v=)([A-Za-z0-9_-]{6,})/);
- if (m2) { showDirectVideo(m2[1]); } else { window.open(vurl, '_blank'); }
+ if (m2) { showDirectVideo(m2[1]); } else if (/^https:\/\/(www\.)?(youtube\.com|youtu\.be)\//.test(vurl)) { window.open(vurl, '_blank'); }
  return;
  }
  var img = document.getElementById('gal-img-'+slot);
@@ -4185,10 +4184,11 @@ function ytPoster(v) { return 'https://i.ytimg.com/vi/' + v.id + (v.type === 'sh
 /* ── 홈 시네마틱 필름 (HOME_FILM_URL 지정 시 고정 영상, 아니면 여정 영상 중 랜덤 재생) ── */
 var HOME_FILM_URL = ''; // 예: 'https://www.youtube.com/watch?v=XXXX'
 function playFilm() {
- if (HOME_FILM_URL) { window.open(HOME_FILM_URL, '_blank'); return; }
+ if (HOME_FILM_URL && /^https:\/\/(www\.)?(youtube\.com|youtu\.be)\//.test(HOME_FILM_URL)) { window.open(HOME_FILM_URL, '_blank'); return; }
  if (HOME_VIDEOS.length) {
  var v = HOME_VIDEOS[Math.floor(Math.random() * HOME_VIDEOS.length)];
- window.open(ytUrl(v), '_blank');
+ var filmUrl = ytUrl(v);
+ if (/^https:\/\/(www\.)?(youtube\.com|youtu\.be)\//.test(filmUrl)) window.open(filmUrl, '_blank');
  return;
  }
  nav('gallery');
@@ -5332,13 +5332,8 @@ document.addEventListener('keydown', e => {
  var landed = getHamItem(t.clientX, t.clientY);
  clearHamHighlight();
  if (landed && landed === item) {
- // Fire the onclick
- var fn = landed.getAttribute('onclick');
- if (fn) {
- try { eval(fn); } catch(err) {}
- } else {
- landed.click();
- }
+ // Fire the onclick (direct click — no eval)
+ try { landed.click(); } catch(err) {}
  }
  }, { passive: true });
  
