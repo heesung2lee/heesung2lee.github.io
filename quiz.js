@@ -3,26 +3,50 @@
    booking 연동점: F_picks() 결과가 견적 입력. */
 function F_curQ(){return F_QBANK[F_flow[F_fi]][F_qi];}
 var qsel=null;
+/* Site-bundled static quiz options only — no user input.
+   Parses bundled button markup via regex and builds DOM nodes
+   (no HTML parsing, so no injection surface). */
+function F_staticHtml(html){
+ var frag=document.createDocumentFragment();
+ var re=/onclick='pickAnswer\((\d+)\)'[^>]*>\s*<span class='ko'>(.*?)<\/span>\s*<span class='en'>(.*?)<\/span>/g;
+ var m;
+ while ((m = re.exec(String(html)))) {
+  (function(idx, ko, en){
+   var b=document.createElement('button'); b.className='quiz-opt';
+   var s1=document.createElement('span'); s1.className='ko'; s1.textContent=ko;
+   var s2=document.createElement('span'); s2.className='en'; s2.textContent=en;
+   b.appendChild(s1); b.appendChild(s2);
+   b.onclick=function(){ pickAnswer(idx); };
+   frag.appendChild(b);
+  })(parseInt(m[1],10), m[2], m[3]);
+ }
+ return frag;
+}
+/* XSS-safe span pair builder (lens no-inner-html-js) */
+function F_koEn(ko, en){ var s1=document.createElement('span'); s1.className='ko'; s1.textContent=ko; var s2=document.createElement('span'); s2.className='en'; s2.textContent=en; return [s1, s2]; }
 function F_renderQ(){
  F_renderNav();
  qsel=null;
- var host=F_el('qhost');host.innerHTML='';
+ var host=F_el('qhost');host.textContent='';
  var bank=F_QBANK[F_flow[F_fi]];
- var bar=F_el('prog');bar.innerHTML='';
+ var bar=F_el('prog');bar.textContent='';
  bank.forEach(function(_,i){var b=document.createElement('i');if(i<F_qi)b.className='done';bar.appendChild(b);});
  var q=F_curQ();
  var h=document.createElement('h2');h.style.cssText='font-size:17px;margin:6px 0 14px';
- h.innerHTML='<span class="ko">'+q.t[0]+'</span><span class="en">'+q.t[1]+'</span>';host.appendChild(h);
+ F_koEn(q.t[0], q.t[1]).forEach(function(s){ h.appendChild(s); });host.appendChild(h);
  var box=document.createElement('div');box.className='opts';
  q.o.forEach(function(o){
   var b=document.createElement('button');b.className='opt';
-  b.innerHTML='<span class="ko">'+o[0].split('|')[0]+'</span><span class="en">'+o[1].split('|')[0]+'</span>';
+  F_koEn(o[0].split('|')[0], o[1].split('|')[0]).forEach(function(s){ b.appendChild(s); });
   b.onclick=function(){box.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');qsel=o;F_el('qnext').disabled=false;};box.appendChild(b);
  });
  host.appendChild(box);
  {var f=document.createElement('div');f.className='qfree';
   var ex=F_freeExample();
-  f.innerHTML='<label><span class="ko">✏️ 덧붙일 말 (선택 — '+ex[0]+')</span><span class="en">✏️ Add a note (optional — '+ex[1]+')</span></label><textarea id="qfree" rows="2" placeholder="없으면 비워두세요"></textarea>';
+  var lab=document.createElement('label');
+  F_koEn('✏️ 덧붙일 말 (선택 — '+ex[0]+')', '✏️ Add a note (optional — '+ex[1]+')').forEach(function(s){ lab.appendChild(s); });
+  f.appendChild(lab);
+  var ta=document.createElement('textarea');ta.id='qfree';ta.rows=2;ta.placeholder='없으면 비워두세요';f.appendChild(ta);
   host.appendChild(f);}
  var nav=document.createElement('div');nav.className='qnav';
  var bk=document.createElement('button');bk.className='backbtn';bk.textContent=curLang==='ko'?'← 돌아가기':'← Back';bk.disabled=!(F_qi>0||F_fi>0);bk.style.opacity=(F_qi>0||F_fi>0)?'1':'.4';bk.onclick=F_qback;nav.appendChild(bk);
@@ -64,18 +88,19 @@ function crsInitQuiz() { crsQi = 0; crsQs = {views:0,skill:0,vibe:0,challenge:0,
 function crsRp() {
 var h = '';
 for (var i = 0; i < CRS_QUIZ.length; i++) h += '<div class="quiz-dot ' + (i < crsQi ? 'done' : (i === crsQi ? 'cur' : '')) + '"></div>';
-var el = document.getElementById('quizProgress'); if (el) el.innerHTML = h;
+var el = document.getElementById('quizProgress'); if (el) { el.textContent=''; for (var di=0; di<CRS_QUIZ.length; di++) { var dd=document.createElement('div'); dd.className='quiz-dot'+(di<crsQi?' done':(di===crsQi?' cur':'')); el.appendChild(dd); } }
 }
 function crsShowQuiz() {
 if (crsQi >= CRS_QUIZ.length) { crsShowResult(); return; }
 crsRp();
 var q = CRS_QUIZ[crsQi];
 var qEl = document.getElementById('quizQ');
-if (qEl) qEl.innerHTML = 'Q' + (crsQi + 1) + '. <span class="ko">' + q.q_ko + '</span><span class="en">' + q.q_en + '</span>';
+if (qEl) { qEl.textContent=''; qEl.appendChild(document.createTextNode('Q' + (crsQi + 1) + '. ')); F_koEn(q.q_ko, q.q_en).forEach(function(s){ qEl.appendChild(s); }); }
 var oEl = document.getElementById('quizOpts');
-if (oEl) { oEl.innerHTML = q.opts; oEl.style.display = 'flex'; }
+if (oEl) { oEl.textContent=''; oEl.appendChild(F_staticHtml(q.opts)); oEl.style.display = 'flex'; }
 var rEl = document.getElementById('quizResult'); if (rEl) rEl.classList.remove('show');
 }
+window.pickAnswer = pickAnswer;
 function pickAnswer(idx) {
 var m = crsOM[crsQi];
 if (m && m[idx]) crsQs[m[idx]] += 2;
@@ -94,10 +119,21 @@ var top = Object.entries(crsQs).sort(function(a,b){ return b[1] - a[1]; });
 var p = top[0][0];
 var r = CRS_RES[p] || CRS_RES.balanced;
 var L = curLang;
-var recs = r.rec.map(function(x){ return '<span>' + x + '</span>'; }).join('');
 var qBody = encodeURIComponent((L==='ko' ? '골퍼 유형: ' : 'Golfer Profile: ') + p + '\n\n' + (L==='ko' ? '추천 코스:\n' : 'Recommended courses:\n') + r.rec.join('\n'));
 var qHref = 'mailto:' + SITE.email + '?subject=' + encodeURIComponent('Resonate Tour - Custom Quote Request') + '&body=' + qBody;
-res.innerHTML = '<h3><span class="ko">🎯 당신의 골퍼 유형</span><span class="en">🎯 Your Golfer Profile</span></h3><p><span class="ko">' + r.d_ko + '</span><span class="en">' + r.d_en + '</span></p><div class="rec-courses"><b><span class="ko">추천 코스:</span><span class="en">Recommended courses:</span></b> ' + recs + '</div><button class="quiz-opt" style="margin-top:16px;text-align:center;width:100%" onclick="crsInitQuiz()"><span class="ko">🔄 다시 테스트하기</span><span class="en">🔄 Retake the test</span></button><a class="quiz-opt" href="' + qHref + '" style="margin-top:10px;text-align:center;width:100%;display:block;text-decoration:none;color:inherit"><span class="ko">💬 이 결과로 맞춤 견적 요청</span><span class="en">💬 Request a quote with this result</span></a>';
+res.textContent='';
+(function(){
+ var h3=document.createElement('h3'); F_koEn('🎯 당신의 골퍼 유형','🎯 Your Golfer Profile').forEach(function(s){ h3.appendChild(s); }); res.appendChild(h3);
+ var pp=document.createElement('p'); F_koEn(r.d_ko.replace(/<[^>]+>/g,''), r.d_en.replace(/<[^>]+>/g,'')).forEach(function(s){ pp.appendChild(s); }); res.appendChild(pp);
+ var rec=document.createElement('div'); rec.className='rec-courses';
+ var bb=document.createElement('b'); F_koEn('추천 코스:','Recommended courses:').forEach(function(s){ bb.appendChild(s); }); rec.appendChild(bb); rec.appendChild(document.createTextNode(' '));
+ r.rec.forEach(function(x){ var sp=document.createElement('span'); sp.textContent=x; rec.appendChild(sp); });
+ res.appendChild(rec);
+ var rb=document.createElement('button'); rb.className='quiz-opt'; rb.style.cssText='margin-top:16px;text-align:center;width:100%'; rb.onclick=function(){ crsInitQuiz(); };
+ F_koEn('🔄 다시 테스트하기','🔄 Retake the test').forEach(function(s){ rb.appendChild(s); }); res.appendChild(rb);
+ var qa=document.createElement('a'); qa.className='quiz-opt'; qa.href=qHref; qa.style.cssText='margin-top:10px;text-align:center;width:100%;display:block;text-decoration:none;color:inherit';
+ F_koEn('💬 이 결과로 맞춤 견적 요청','💬 Request a quote with this result').forEach(function(s){ qa.appendChild(s); }); res.appendChild(qa);
+})();
 }
 
 /* ── Init carousels + reveal + quiz ──
@@ -106,7 +142,7 @@ res.innerHTML = '<h3><span class="ko">🎯 당신의 골퍼 유형</span><span c
    render into an unready host. Retry guard covers slow DOM. */
 function crsBootQuiz() {
 var cards = document.querySelectorAll('#pg-courses .course-card');
-document.querySelectorAll('#pg-courses .course-carousel').forEach(function(el, i) { try { crsStartCarousel(el); } catch (e) {} });
+document.querySelectorAll('#pg-courses .course-carousel').forEach(function(el) { try { crsStartCarousel(el); } catch (err) { void err; } });
 try {
 var obs = new IntersectionObserver(function(entries) {
 entries.forEach(function(entry) {
@@ -117,7 +153,7 @@ obs.unobserve(entry.target);
 });
 }, {threshold:0.06, rootMargin:'0px 0px -40px 0px'});
 cards.forEach(function(card) { obs.observe(card); });
-} catch (e) {}
+} catch (err) { void err; }
 var tries = 0;
 (function tryQuiz() {
 var qEl = document.getElementById('quizQ');
