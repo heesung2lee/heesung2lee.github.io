@@ -2735,7 +2735,12 @@ food:[
  {t:['식사 분위기는?','Dining mood?'],o:[['조용한 파인다이닝','Quiet fine dining'],['활기찬 로컬 맛집','Lively local spots'],['편한 캐주얼','Casual & easy']]}
 ]};
 
-var F_flow=[],F_fi=0,F_qi=0,F_answers={theme:null,date:null,mix:null,air:null};
+var F_flow=[],F_answers={theme:null,date:null,mix:null,air:null};
+/* Strangler 3단계: F_fi/F_qi는 TourState 프록시 (직접 쓰기 금지, set 경유) */
+Object.defineProperties(window, {
+ F_fi: { get: function(){ return TourState.get('F_fi'); }, set: function(v){ TourState.set('F_fi', v); }, configurable: true },
+ F_qi: { get: function(){ return TourState.get('F_qi'); }, set: function(v){ TourState.set('F_qi', v); }, configurable: true }
+});
 function F_modeToggle(el){el.classList.toggle('on');var n=document.querySelectorAll('#finderModal #modes .mod.on').length;F_el('startBtn').disabled=!n;}
 function F_startFlow(){
  F_flow=[].slice.call(document.querySelectorAll('#finderModal #modes .mod.on')).map(function(e){return e.dataset.m});
