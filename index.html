@@ -4430,7 +4430,7 @@ function buildGalleryVideos() {
   _landingDur = 0;
   playVideoById(HOME_VIDEOS[landingVideoIdx].id);
  }
- var landingVideoIdx = 0;
+ var landingVideoIdx = Math.floor(Math.random() * (typeof HOME_VIDEOS !== 'undefined' ? HOME_VIDEOS.length : 1));
  // 유튜브 플레이어(~2.4MB)는 첫 화면에 큰 부담 → 시네마틱 영상이 뷰포트 가까이 올 때만 초기화.
  // (이미 화면 근처면 즉시. 필요 시 되돌리기 가능: IntersectionObserver 부분만 제거하고
  //   window.onYouTubeIframeAPIReady에서 곧바로 initYTPlayer() 호출하면 이전 동작으로 복귀)
