@@ -1163,8 +1163,11 @@ html {
  box-shadow:0 24px 80px rgba(0,0,0,.6);
 }
 #lb-img{width:100%;max-height:80svh;object-fit:contain;display:block;background:#111}
-.lb-vid{display:none;width:100%;max-width:1000px}
-.lb-vid iframe{width:100%;aspect-ratio:16/9;max-height:80svh;border:0;background:#000;display:block}
+.lb-vid{display:none;width:100%;max-width:min(1100px,94vw)}
+.lb-vid iframe{width:100%;aspect-ratio:16/9;max-height:86svh;border:0;background:#000;display:block}
+/* 세로(shorts) 영상은 창 기준 세로형으로 크게 */
+.lb-vid.tall iframe{aspect-ratio:9/16;max-height:86svh;max-width:min(480px,86vw);margin:0 auto}
+#lb-inner{max-width:min(1100px,94vw)}
 /* 랜딩 시네마틱 영상 — 유튜브 UI(제목/채널 오버레이·하단 로고·shorts)가 보이지 않도록
    iframe을 컨테이너보다 키워 overflow:hidden으로 크롭해 순수 비디오만 노출 */
 #cinematic-player{position:relative;overflow:hidden}
@@ -4297,8 +4300,10 @@ let lbIndex = 0;
  
 function buildGallery() {
  const grid = document.getElementById('galGrid');
- if (!grid || grid.dataset.built) return;
- grid.dataset.built = '1';
+ if (!grid) return;
+ var gver = (typeof GAL_ITEMS !== 'undefined' ? GAL_ITEMS.length : 0);
+ if (grid.dataset.built === String(gver)) return;
+ grid.dataset.built = String(gver);
  const L = curLang;
 
  
@@ -4331,8 +4336,10 @@ function buildGallery() {
 
 function buildGalleryVideos() {
  var rail = document.getElementById('galVideoRail');
- if (!rail || rail.dataset.built) return;
- rail.dataset.built = '1';
+ if (!rail) return;
+ var ver = (typeof HOME_VIDEOS !== 'undefined' ? HOME_VIDEOS.length : 0) + ':' + (typeof GAL_ITEMS !== 'undefined' ? GAL_ITEMS.length : 0);
+ if (rail.dataset.built === ver) return;
+ rail.dataset.built = ver;
  if (!HOME_VIDEOS.length) return;
  var L = curLang;
  var cards = HOME_VIDEOS.map(function(v, i) {
@@ -4482,7 +4489,7 @@ const LB_POOL = (function(){
  });
  return photos.concat(vids);
 })();
-function ytEmbed(id){ return 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&enablejsapi=1&loop=1&playlist=' + id; }
+function ytEmbed(id){ return 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&enablejsapi=1&loop=1&playlist=' + id + '&controls=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0'; }
 
 function openLightbox(idx) {
  lbIndex = idx;
@@ -4519,6 +4526,8 @@ function updateLightbox() {
  if (!item) return;
  if (item.type === 'video') {
   if (vid) vid.style.display = 'block';
+  var isShort = (function(){ try { for (var k=0;k<HOME_VIDEOS.length;k++){ if (HOME_VIDEOS[k].id === item.id) return HOME_VIDEOS[k].type !== 'video'; } } catch(e){} return false; })();
+  if (vid) { if (isShort) vid.classList.add('tall'); else vid.classList.remove('tall'); }
   if (frame) frame.src = ytEmbed(item.id);
   if (img) img.style.display = 'none';
   if (name) name.textContent = L === 'ko' ? item.name_ko : item.name_en;
@@ -4528,7 +4537,7 @@ function updateLightbox() {
   var prog = document.getElementById('lb-progress');
   if (prog) prog.textContent = (vi >= 0) ? ((L==='ko' ? '여정 영상 ' : 'Journey Film ') + (vi+1) + ' / ' + HOME_VIDEOS.length) : '';
  } else {
-  if (vid) vid.style.display = 'none';
+  if (vid) { vid.style.display = 'none'; vid.classList.remove('tall'); }
   if (frame) frame.src = 'about:blank';
   if (img) {
    img.style.display = '';
