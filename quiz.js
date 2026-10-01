@@ -41,7 +41,8 @@ function F_renderQ(){
   b.onclick=function(){box.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');qsel=o;F_el('qnext').disabled=false;};box.appendChild(b);
  });
  host.appendChild(box);
- {var f=document.createElement('div');f.className='qfree';
+ var _isLastQ=(F_qi===bank.length-1&&F_fi===F_flow.length-1);
+ if(_isLastQ){var f=document.createElement('div');f.className='qfree';
   var ex=F_freeExample();
   var lab=document.createElement('label');
   F_koEn('✏️ 덧붙일 말 (선택 — '+ex[0]+')', '✏️ Add a note (optional — '+ex[1]+')').forEach(function(s){ lab.appendChild(s); });
