@@ -116,13 +116,14 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
  
 /* ── HOME ── */
 .hero-slide{position:relative;height:100svh;min-height:580px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center}
-/* Spotlight sweep (hero h1): dark overlay + light circle reveals each char (2026-09-30). Overlay sits above hero text, removed after sweep. */
-#pg-home .hero-slide{--spot-x:-15%}
-#pg-home .spot-veil{position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(circle 260px at var(--spot-x) 46%,transparent 0%,rgba(0,0,0,.78) 72%);transition:opacity .9s ease}
-#pg-home .spot-veil.off{opacity:0}
-#pg-home .hero-cnt{position:relative;z-index:3}
-#pg-home .sp-ch{display:inline-block;color:rgba(212,175,55,.22);transition:color .35s ease,text-shadow .35s ease}
-#pg-home .sp-ch.lit{color:#d4af37;text-shadow:0 1px 3px rgba(0,0,0,.8),0 3px 14px rgba(0,0,0,.7),0 0 26px rgba(212,175,55,.65)}
+/* Hero fly-in (2026-10-01 site-refresh): h1 lines fly from L/R, no JS. */
+#pg-home .hero-h1{overflow:hidden}
+#pg-home .fly{opacity:0;animation:flyIn .9s cubic-bezier(.2,.7,.2,1) forwards}
+#pg-home .fly-l{transform:translateX(-60px)}
+#pg-home .fly-r{transform:translateX(60px);animation-delay:.18s}
+@keyframes flyIn{to{opacity:1;transform:none}}
+#pg-home .hero-eye,#pg-home .hero-p{opacity:0;animation:fadeUp .8s ease .5s forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes filmPulse{0%{box-shadow:0 0 0 0 rgba(212,175,55,.45)}70%{box-shadow:0 0 0 22px rgba(212,175,55,0)}100%{box-shadow:0 0 0 0 rgba(212,175,55,0)}}
 .hero-eye{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#f5d76e;margin-bottom:14px;text-shadow:0 1px 4px #000,0 2px 12px rgba(0,0,0,.9),0 0 20px rgba(0,0,0,.8);background:rgba(0,0,0,.35);display:inline-block;padding:6px 14px;border-radius:8px}
 .hero-h1{font-size:clamp(38px,7vw,70px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:12px;color:#d4af37;text-shadow:0 1px 3px rgba(0,0,0,.8),0 3px 14px rgba(0,0,0,.7),0 8px 40px rgba(0,0,0,.55),0 0 22px rgba(212,175,55,.28)}
@@ -337,7 +338,7 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 .phil-blk cite{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#d4af37}
 .pillars{display:flex;flex-direction:column;gap:0;margin-bottom:36px;padding:0 2px}
 .pillar{
- display:grid;grid-template-columns:58px 1fr;gap:24px;align-items:start;
+ display:grid;grid-template-columns:1fr;gap:8px;align-items:start;
  padding:24px 4px;margin:0;
  border:0;border-bottom:1px solid #eaeaea;border-radius:0;
  background:transparent;
@@ -345,14 +346,9 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 }
 .pillar:first-child{border-top:1px solid #eaeaea}
 .pillar:hover{border-bottom-color:rgba(212,175,55,.55)}
-.pillar-n{
- font-family:Georgia,serif;
- font-size:15px;font-weight:400;letter-spacing:.06em;
- color:#d4af37;padding-top:3px;
- grid-column:1;grid-row:1 / span 2;
-}
-.pillar-t{font-size:16px;font-weight:700;color:#1a3450;margin-bottom:8px;line-height:1.35;letter-spacing:-.01em;grid-column:2;grid-row:1}
-.pillar-d{font-size:14px;font-weight:300;color:#5c5e62;line-height:1.9;grid-column:2;grid-row:2}
+
+.pillar-t{font-size:16px;font-weight:700;color:#1a3450;margin-bottom:8px;line-height:1.35;letter-spacing:-.01em;}
+.pillar-d{font-size:14px;font-weight:300;color:#5c5e62;line-height:1.9;}
 .about-cta{text-align:center}
 .about-cta .btn-book{font-size:14px;padding:14px 38px}
 .testi-sec h2{font-size:20px;font-weight:700;letter-spacing:-.01em;margin-bottom:18px;color:#1a3450}
@@ -390,15 +386,15 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 .c-info-ico{font-size:18px;width:28px;text-align:center;flex-shrink:0}
 .c-info-lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9e9e9e;margin-bottom:1px}
 .c-info-val{font-size:13px;font-weight:500;color:#171a20}
-.soc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.soc-grid{display:grid;grid-template-columns:1fr;gap:8px;max-width:280px;margin:0 auto}
 .soc-btn{display:flex;flex-direction:column;align-items:center;gap:5px;padding:13px 6px;border-radius:10px;text-decoration:none;color:#fff;font-size:10px;font-weight:600;letter-spacing:.04em;transition:border-color .2s,background-color .2s,color .2s,box-shadow .2s}
 .soc-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15)}
 .soc-btn svg{width:22px;height:22px}
 .soc-kakao{background:#fee500;color:#391b1b}
-.soc-naver{background:#03c75a}
-.soc-x{background:#000}
-.soc-fb{background:#1877f2}
-.soc-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+
+
+
+
 .contact-right{background:#fff;padding:64px 52px;display:flex;flex-direction:column;justify-content:center}
 .contact-right h2{font-size:20px;font-weight:700;letter-spacing:-.01em;margin-bottom:22px}
 .f-group{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
@@ -1245,14 +1241,7 @@ html {
 }
  
  
-/* ═══ NATURE CANVAS ═══ */
-#nature-canvas{
- position:fixed;
- top:0;left:0;
- width:100%;height:100%;
- pointer-events:none;
- z-index:2;
-}
+/* NATURE CANVAS removed 2026-10-01 */
  
  
 /* ── HERO BG ── */
@@ -2297,11 +2286,7 @@ body {
  <span class="ham-item-label"><span class="ko">골프코스</span><span class="en">Golf Courses</span></span>
  <span class="ham-item-arrow">›</span>
  </button>
- <button class="ham-item" onclick="nav('faq');closeHam()">
- <span class="ham-item-ico ico-help"></span>
- <span class="ham-item-label"><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span></span>
- <span class="ham-item-arrow">›</span>
- </button>
+ 
  </div>
 
  <button class="ham-cta" onclick="nav('contact');closeHam()">
@@ -2354,7 +2339,7 @@ body {
  <button class="pd-item" onclick="nav('pricing')"><span class="pd-ico ico-money"></span><span class="ko">구성</span><span class="en">Plan &amp; Schedule</span></button>
  <button class="pd-item" onclick="nav('gallery')"><span class="pd-ico ico-gallery"></span><span class="ko"> 갤러리</span><span class="en"> Gallery</span></button>
  <button class="pd-item" onclick="nav('courses')"><span class="pd-ico ico-golf"></span><span class="ko">골프코스</span><span class="en">Courses</span></button>
- <button class="pd-item" onclick="nav('faq')"><span class="pd-ico">❓</span><span class="ko">FAQ</span><span class="en">FAQ</span></button>
+ <button class="pd-item" onclick="nav('contact')"><span class="pd-ico">❓</span><span class="ko">FAQ</span><span class="en">FAQ</span></button>
  <div class="pd-sep"></div>
  <button class="pd-item pd-cta" onclick="nav('contact')"><span class="ko"><span class="ico-chat" style="display:inline-flex;margin-right:3px"></span>상담 문의</span><span class="en"><span class="ico-chat" style="display:inline-flex;margin-right:3px"></span>Contact Us</span></button>
  </div>
@@ -2374,7 +2359,7 @@ body {
  <div class="hero-grad"></div>
  <div class="hero-cnt">
  <div class="hero-eye"><span class="ko">레조네이트투어 · Korea → USA · 2026</span><span class="en">Resonate Tour · Korea → USA · 2026</span></div>
- <h1 class="hero-h1"><span class="ko">캘리포니아 골프<br>& 문화 투어</span><span class="en">California Golf<br>& Culture Tour</span></h1>
+ <h1 class="hero-h1"><span class="ko"><span class="fly fly-l" style="display:block">캘리포니아 골프</span><span class="fly fly-r" style="display:block">& 문화 투어</span></span><span class="en"><span class="fly fly-l" style="display:block">California Golf</span><span class="fly fly-r" style="display:block">& Culture Tour</span></span></h1>
  <p class="hero-p"><span class="ko">삶의 결을 따라, 당신만의 여정으로</span><span class="en">Your Life's Texture, Our Signature Touch</span></p>
  </div>
  </div>
@@ -2915,10 +2900,10 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
  <cite>레조네이트투어 · Korea → USA</cite>
  </div>
  <div class="pillars">
- <div class="pillar"><div class="pillar-n">01</div><div class="pillar-t"><span class="ko">All-In 프리미엄</span><span class="en">Premium All-In</span></div><div class="pillar-d"><span class="ko">숙소, 골프, 식사, 이동이 하나의 가격에 모두 포함되어 예산 관리가 간편합니다. 숨겨진 비용 없이, 온전히 경험에만 집중하세요</span><span class="en">Lodging, golf, dining, and transport included in one transparent price. No hidden costs. Pure focus on the experience</span></div></div>
- <div class="pillar"><div class="pillar-n">02</div><div class="pillar-t"><span class="ko">5★ 프리미엄 케어</span><span class="en">5★ Premium Care</span></div><div class="pillar-d"><span class="ko">출발 전 1:1 오리엔테이션부터 여정 내내 동행하는 전담 한국어 가이드까지. 5성급 서비스가 여정 전체를 감쌉니다</span><span class="en">From a pre-departure 1:1 briefing to a dedicated Korean-speaking guide throughout — 5-star service wraps your entire journey</span></div></div>
- <div class="pillar"><div class="pillar-n">03</div><div class="pillar-t"><span class="ko">공명하는 루트</span><span class="en">Routes That Resonate</span></div><div class="pillar-d"><span class="ko">현지 골퍼들이 즐겨 찾는 인기 코스, 예약이 어려운 코스까지 — 현지 네트워크로 안내합니다. 관광객 루트가 아닌, 현지인의 눈으로 고른 진짜 미국 골프</span><span class="en">In-demand courses locals love — including hard-to-book clubs — arranged through our local network. Not a tourist route, but real American golf, chosen with a local's eye</span></div></div>
- <div class="pillar"><div class="pillar-n">04</div><div class="pillar-t"><span class="ko">귀국 후에도 울립니다</span><span class="en">It Resonates After You Return</span></div><div class="pillar-d"><span class="ko">여정은 끝나도 케어는 이어집니다. 현지의 새로운 코스와 티타임 소식을 전하고, 다음 시즌의 당신만의 여정을 함께 설계해드립니다</span><span class="en">Our care continues long after you return — sharing new local courses and tee times, and designing your next season's journey together</span></div></div>
+ <div class="pillar"><div class="pillar-t"><span class="ko">All-In 프리미엄</span><span class="en">Premium All-In</span></div><div class="pillar-d"><span class="ko">숙소, 골프, 식사, 이동이 하나의 가격에 모두 포함되어 예산 관리가 간편합니다. 숨겨진 비용 없이, 온전히 경험에만 집중하세요</span><span class="en">Lodging, golf, dining, and transport included in one transparent price. No hidden costs. Pure focus on the experience</span></div></div>
+ <div class="pillar"><div class="pillar-t"><span class="ko">5★ 프리미엄 케어</span><span class="en">5★ Premium Care</span></div><div class="pillar-d"><span class="ko">출발 전 1:1 오리엔테이션부터 여정 내내 동행하는 전담 한국어 가이드까지. 5성급 서비스가 여정 전체를 감쌉니다</span><span class="en">From a pre-departure 1:1 briefing to a dedicated Korean-speaking guide throughout — 5-star service wraps your entire journey</span></div></div>
+ <div class="pillar"><div class="pillar-t"><span class="ko">공명하는 루트</span><span class="en">Routes That Resonate</span></div><div class="pillar-d"><span class="ko">현지 골퍼들이 즐겨 찾는 인기 코스, 예약이 어려운 코스까지 — 현지 네트워크로 안내합니다. 관광객 루트가 아닌, 현지인의 눈으로 고른 진짜 미국 골프</span><span class="en">In-demand courses locals love — including hard-to-book clubs — arranged through our local network. Not a tourist route, but real American golf, chosen with a local's eye</span></div></div>
+ <div class="pillar"><div class="pillar-t"><span class="ko">귀국 후에도 울립니다</span><span class="en">It Resonates After You Return</span></div><div class="pillar-d"><span class="ko">여정은 끝나도 케어는 이어집니다. 현지의 새로운 코스와 티타임 소식을 전하고, 다음 시즌의 당신만의 여정을 함께 설계해드립니다</span><span class="en">Our care continues long after you return — sharing new local courses and tee times, and designing your next season's journey together</span></div></div>
  </div>
 
  </div>
@@ -2933,20 +2918,55 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
  <p><span class="ko">인원, 날짜, 예산을 알려주시면 맞춤 제안서를 보내드립니다</span><span class="en">Share group size, dates & budget — a custom proposal will follow</span></p>
  <div class="c-info-block">
  <a href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico ico-chat"></div><div><div class="c-info-lbl">KakaoTalk</div><div class="c-info-val">@resonatetour</div></div></a>
- <a href="https://instagram.com/resonatetour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico ico-camera"></div><div><div class="c-info-lbl">Instagram</div><div class="c-info-val">@resonatetour</div></div></a>
+ 
  <a class="c-info-row" data-site-email><div class="c-info-ico">✉️</div><div><div class="c-info-lbl">Email</div><div class="c-info-val" data-site-email-val>resonatetourclub@gmail.com</div></div></a>
  </div>
  <div class="soc-grid">
  <a href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener" class="soc-btn soc-kakao"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.582 2 11.027c0 2.9 1.878 5.45 4.707 6.94l-1.197 4.447a.25.25 0 0 0.377.276L11.03 19.7A11.6 11.6 0 0 0 12 19.054c5.523 0 10-3.582 10-8.027S17.523 3 12 3z"/></svg>Kakao</a>
- <a href="https://blog.naver.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-naver"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>Naver</a>
- <a href="https://twitter.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-x"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a>
- <a href="https://facebook.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-fb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.254h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>Facebook</a>
- <a href="https://instagram.com/resonatetour" target="_blank" rel="noopener" class="soc-btn soc-ig"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>Instagram</a>
+ 
+ 
+ 
+ 
  </div>
  </div>
  <div class="contact-right">
  <h2><span class="ko">상담 신청</span><span class="en">Book a Consultation</span></h2>
  <div style="background:#f7f8fa;border:1px solid #e8e8e8;border-radius:12px;padding:40px 24px;text-align:center"><div style="font-size:15px;font-weight:700;color:#1a3450;letter-spacing:.15em"><span class="ko">COMING SOON</span><span class="en">COMING SOON</span></div><div style="font-size:12px;color:#9e9e9e;margin-top:8px"><span class="ko">온라인 상담 신청 준비 중입니다.<br>카카오톡 @resonatetour로 문의해 주세요.</span><span class="en">Online booking coming soon.<br>Please contact us via KakaoTalk @resonatetour.</span></div></div>
+ </div>
+ </div>
+
+ <div class="contact-faq">
+ <h2 style="font-size:20px;font-weight:700;letter-spacing:-.01em;margin:40px 0 8px"><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span></h2>
+ <div class="faq-wrap">
+
+ <div class="faq-cats">
+ <button class="faq-cat act" onclick="filterFaq('all')"><span class="ko">전체</span><span class="en">All</span></button>
+ <button class="faq-cat" onclick="filterFaq('golf')"><span class="ko">골프</span><span class="en">Golf</span></button>
+ <button class="faq-cat" onclick="filterFaq('travel')"><span class="ko">여행/비자</span><span class="en">Travel</span></button>
+ <button class="faq-cat" onclick="filterFaq('price')"><span class="ko">비용/예약</span><span class="en">Cost</span></button>
+ <button class="faq-cat" onclick="filterFaq('prep')"><span class="ko">준비사항</span><span class="en">Prep</span></button>
+ </div>
+ <div id="faq-list">
+ <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">골프 초보자도 참가할 수 있나요?</span><span class="en">Can beginners join?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">네. 핸디캡 수준에 맞게 그룹을 편성하므로 초보자도 편안하게 즐기실 수 있습니다. 출발 전 연습 라운딩 1~2회를 권해드립니다</span><span class="en">Yes. We group players by skill level so beginners can enjoy the round comfortably. 1-2 practice rounds before departure are suggested</span></div></div>
+ <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">골프 클럽은 직접 가져가야 하나요?</span><span class="en">Do I need to bring my own clubs?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">본인 클럽을 권장합니다. 현지 렌탈도 가능합니다(요청 시 사전 예약). 렌탈 희망 시 사전에 알려주세요</span><span class="en">Bringing your own clubs is recommended. Local rentals are available (by request). Let us know in advance if you need rentals</span></div></div>
+ <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">캐디가 동반되나요?</span><span class="en">Are caddies included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">대부분 카트 라운딩입니다. 일부 프리미엄 코스는 캐디 서비스 예약 가능합니다</span><span class="en">Most courses are cart rounds. Some premium courses offer caddie service upon request</span></div></div>
+ <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">미국 비자가 필요한가요?</span><span class="en">Do I need a US visa?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">한국 국적자는 ESTA(출발 72시간 전까지 신청) 승인을 신청할 수 있습니다. 단, 승인은 보장되지 않으며, 거부 시 별도 비자 신청이 필요합니다</span><span class="en">Korean passport holders may apply for ESTA (at least 72 hours before departure). Approval is not guaranteed; if denied, a separate visa application is required</span></div></div>
+ <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">인천-LA 비행시간은?</span><span class="en">How long is the flight?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">직항 기준 약 11시간 30분~12시간입니다. 첫날은 완전 휴식일로 시차 적응 시간을 드립니다</span><span class="en">Approximately 11.5-12 hours nonstop. Day 1 is a full rest day for jet lag recovery</span></div></div>
+ <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">여행자 보험은 포함인가요?</span><span class="en">Is travel insurance included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">포함되어 있지 않으나 강력히 권장합니다. 미국 의료비는 매우 높으므로 충분한 보장 범위의 보험 가입을 권해드립니다</span><span class="en">Not included but strongly recommended. US medical costs are very high — comprehensive coverage is strongly advised</span></div></div>
+ <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">취향 테스트는 어떻게 이용하나요?</span><span class="en">How do I use the taste test?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">구성 탭 상단의 취향 테스트에서 골프 비중·일행·관심사를 고르면 맞춤 일정과 코스를 추천해 드립니다. 결과는 그대로 카톡으로 견적 요청하실 수 있습니다</span><span class="en">Take the taste test at the top of the Plan tab — pick your golf mix, party and interests for a matched itinerary and courses. Send the result straight to us via KakaoTalk for a quote</span></div></div>
+ <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">투어 비용에 무엇이 포함되나요?</span><span class="en">What is included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">공항 픽업/샌딩, 전일정 차량 이동, 그린피 및 카트피, 숙박(2인 1실), 가이드 서비스, 일부 식사 포함. 항공권·보험·개인비용 불포함</span><span class="en">Includes: airport transfers, all transportation, greens fees, accommodation (double), guide service, select meals. Excludes: airfare, insurance, personal expenses</span></div></div>
+ <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">취소 환불 정책은?</span><span class="en">What is the cancellation policy?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">취소 및 환불은 관광진흥법 기준을 따릅니다. 상담 시 상세히 안내드리며, 계약서에 명시됩니다</span><span class="en">Cancellation and refunds follow the Korean Tourism Promotion Act. Full details are provided during consultation and specified in your service agreement</span></div></div>
+ <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">분할 납부 가능한가요?</span><span class="en">Is installment payment available?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">네, 분할 납부 가능합니다. 계약 시 20%, 중간 40%, 출발 전 잔금 40%로 나누어 결제하실 수 있습니다</span><span class="en">Yes, installment payment available: 20% at booking, 40% mid-term, 40% balance before departure</span></div></div>
+ <div class="faq-item" data-cat="prep"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">어떤 준비가 필요한가요?</span><span class="en">How should I prepare?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">① ESTA 신청(72시간 전) ② 여행자보험 가입 ③ 환전/해외카드 준비 ④ 골프용품 챙기기 ⑤ 5월 캘리포니아 날씨(15~23°C) 의류 준비 ⑥ 연습 라운딩 1~2회 권장</span><span class="en">① Apply ESTA ② Purchase travel insurance ③ Prepare USD/international card ④ Pack golf gear ⑤ Pack for 60-73°F weather ⑥ 1-2 practice rounds recommended</span></div></div>
+ <div class="faq-item" data-cat="prep"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">혼자 참가해도 괜찮나요?</span><span class="en">Can I join alone?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">1인 참가도 가능하며 그룹 편성도 도와드립니다. 출발 전 카카오 오픈채팅을 통해 함께 하시는 분들과 미리 인사할 수 있습니다</span><span class="en">Solo travelers are welcome, and we can help coordinate with a compatible group. A pre-departure KakaoTalk group lets everyone connect before the trip</span></div></div>
+ </div>
+ <div style="text-align:center;margin-top:48px;padding:36px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;color:#fff">
+ <h3 style="font-size:20px;font-weight:700;margin-bottom:8px"><span class="ko">더 궁금한 점이 있으신가요?</span><span class="en">Still have questions?</span></h3>
+ <p style="font-size:14px;opacity:.8;margin-bottom:20px"><span class="ko">카카오톡 또는 이메일로 연락주세요</span><span class="en">Reach out via KakaoTalk or email</span></p>
+ <button class="btn-book" style="font-size:14px;padding:14px 32px;border-radius:100px" onclick="nav('contact')"><span class="ko">상담 신청하기</span><span class="en">Contact Us</span></button>
+ </div>
+ </div>
+
  </div>
  </div>
 </div>
@@ -3098,37 +3118,7 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
 <img id="crsLbImg" src="" alt="" decoding="async" fetchpriority="high">
 <button class="lb-arrow lb-next" onclick="event.stopPropagation();crsLbNext()">›</button>
 </div>
-<!-- FAQ PAGE -->
-<div id="pg-faq" class="page">
- <div class="faq-wrap">
- <div class="faq-cats">
- <button class="faq-cat act" onclick="filterFaq('all')"><span class="ko">전체</span><span class="en">All</span></button>
- <button class="faq-cat" onclick="filterFaq('golf')"><span class="ko">골프</span><span class="en">Golf</span></button>
- <button class="faq-cat" onclick="filterFaq('travel')"><span class="ko">여행/비자</span><span class="en">Travel</span></button>
- <button class="faq-cat" onclick="filterFaq('price')"><span class="ko">비용/예약</span><span class="en">Cost</span></button>
- <button class="faq-cat" onclick="filterFaq('prep')"><span class="ko">준비사항</span><span class="en">Prep</span></button>
- </div>
- <div id="faq-list">
- <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">골프 초보자도 참가할 수 있나요?</span><span class="en">Can beginners join?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">네. 핸디캡 수준에 맞게 그룹을 편성하므로 초보자도 편안하게 즐기실 수 있습니다. 출발 전 연습 라운딩 1~2회를 권해드립니다</span><span class="en">Yes. We group players by skill level so beginners can enjoy the round comfortably. 1-2 practice rounds before departure are suggested</span></div></div>
- <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">골프 클럽은 직접 가져가야 하나요?</span><span class="en">Do I need to bring my own clubs?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">본인 클럽을 권장합니다. 현지 렌탈도 가능합니다(요청 시 사전 예약). 렌탈 희망 시 사전에 알려주세요</span><span class="en">Bringing your own clubs is recommended. Local rentals are available (by request). Let us know in advance if you need rentals</span></div></div>
- <div class="faq-item" data-cat="golf"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">캐디가 동반되나요?</span><span class="en">Are caddies included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">대부분 카트 라운딩입니다. 일부 프리미엄 코스는 캐디 서비스 예약 가능합니다</span><span class="en">Most courses are cart rounds. Some premium courses offer caddie service upon request</span></div></div>
- <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">미국 비자가 필요한가요?</span><span class="en">Do I need a US visa?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">한국 국적자는 ESTA(출발 72시간 전까지 신청) 승인을 신청할 수 있습니다. 단, 승인은 보장되지 않으며, 거부 시 별도 비자 신청이 필요합니다</span><span class="en">Korean passport holders may apply for ESTA (at least 72 hours before departure). Approval is not guaranteed; if denied, a separate visa application is required</span></div></div>
- <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">인천-LA 비행시간은?</span><span class="en">How long is the flight?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">직항 기준 약 11시간 30분~12시간입니다. 첫날은 완전 휴식일로 시차 적응 시간을 드립니다</span><span class="en">Approximately 11.5-12 hours nonstop. Day 1 is a full rest day for jet lag recovery</span></div></div>
- <div class="faq-item" data-cat="travel"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">여행자 보험은 포함인가요?</span><span class="en">Is travel insurance included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">포함되어 있지 않으나 강력히 권장합니다. 미국 의료비는 매우 높으므로 충분한 보장 범위의 보험 가입을 권해드립니다</span><span class="en">Not included but strongly recommended. US medical costs are very high — comprehensive coverage is strongly advised</span></div></div>
- <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">취향 테스트는 어떻게 이용하나요?</span><span class="en">How do I use the taste test?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">구성 탭 상단의 취향 테스트에서 골프 비중·일행·관심사를 고르면 맞춤 일정과 코스를 추천해 드립니다. 결과는 그대로 카톡으로 견적 요청하실 수 있습니다</span><span class="en">Take the taste test at the top of the Plan tab — pick your golf mix, party and interests for a matched itinerary and courses. Send the result straight to us via KakaoTalk for a quote</span></div></div>
- <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">투어 비용에 무엇이 포함되나요?</span><span class="en">What is included?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">공항 픽업/샌딩, 전일정 차량 이동, 그린피 및 카트피, 숙박(2인 1실), 가이드 서비스, 일부 식사 포함. 항공권·보험·개인비용 불포함</span><span class="en">Includes: airport transfers, all transportation, greens fees, accommodation (double), guide service, select meals. Excludes: airfare, insurance, personal expenses</span></div></div>
- <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">취소 환불 정책은?</span><span class="en">What is the cancellation policy?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">취소 및 환불은 관광진흥법 기준을 따릅니다. 상담 시 상세히 안내드리며, 계약서에 명시됩니다</span><span class="en">Cancellation and refunds follow the Korean Tourism Promotion Act. Full details are provided during consultation and specified in your service agreement</span></div></div>
- <div class="faq-item" data-cat="price"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">분할 납부 가능한가요?</span><span class="en">Is installment payment available?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">네, 분할 납부 가능합니다. 계약 시 20%, 중간 40%, 출발 전 잔금 40%로 나누어 결제하실 수 있습니다</span><span class="en">Yes, installment payment available: 20% at booking, 40% mid-term, 40% balance before departure</span></div></div>
- <div class="faq-item" data-cat="prep"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">어떤 준비가 필요한가요?</span><span class="en">How should I prepare?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">① ESTA 신청(72시간 전) ② 여행자보험 가입 ③ 환전/해외카드 준비 ④ 골프용품 챙기기 ⑤ 5월 캘리포니아 날씨(15~23°C) 의류 준비 ⑥ 연습 라운딩 1~2회 권장</span><span class="en">① Apply ESTA ② Purchase travel insurance ③ Prepare USD/international card ④ Pack golf gear ⑤ Pack for 60-73°F weather ⑥ 1-2 practice rounds recommended</span></div></div>
- <div class="faq-item" data-cat="prep"><button class="faq-q" onclick="toggleFaq(this)"><span><span class="ko">혼자 참가해도 괜찮나요?</span><span class="en">Can I join alone?</span></span><span class="faq-chevron">▼</span></button><div class="faq-a"><span class="ko">1인 참가도 가능하며 그룹 편성도 도와드립니다. 출발 전 카카오 오픈채팅을 통해 함께 하시는 분들과 미리 인사할 수 있습니다</span><span class="en">Solo travelers are welcome, and we can help coordinate with a compatible group. A pre-departure KakaoTalk group lets everyone connect before the trip</span></div></div>
- </div>
- <div style="text-align:center;margin-top:48px;padding:36px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;color:#fff">
- <h3 style="font-size:20px;font-weight:700;margin-bottom:8px"><span class="ko">더 궁금한 점이 있으신가요?</span><span class="en">Still have questions?</span></h3>
- <p style="font-size:14px;opacity:.8;margin-bottom:20px"><span class="ko">카카오톡 또는 이메일로 연락주세요</span><span class="en">Reach out via KakaoTalk or email</span></p>
- <button class="btn-book" style="font-size:14px;padding:14px 32px;border-radius:100px" onclick="nav('contact')"><span class="ko">상담 신청하기</span><span class="en">Contact Us</span></button>
- </div>
- </div>
-</div>
+
  
 <!-- ══════ MODAL ══════ -->
 <div id="modal">
@@ -3525,7 +3515,7 @@ function nav(page, dayIdx) {
  if (page === 'courses') { setTimeout(function(){ crsOnShow(); }, 50); }
  
  // Scroll reveal for new pages
- if (['faq'].indexOf(page) > -1) {
+ if (['contact'].indexOf(page) > -1) {
  setTimeout(function(){
  var obs2 = new IntersectionObserver(function(entries){
  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('revealed'); obs2.unobserve(e.target); }});
@@ -4677,420 +4667,7 @@ document.addEventListener('keydown', e => {
  
  
  
-/* ═══════════════════════════════════════════════
- NATURE CANVAS
- 1 sunbeam · 4 birds · 2 wind gusts · 3 leaves
-═══════════════════════════════════════════════ */
-(function(){
- var cv = document.createElement('canvas');
- cv.id = 'nature-canvas';
- document.body.appendChild(cv);
- var ctx = cv.getContext('2d');
- var W, H, frame = 0;
- 
- function resize(){ W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
- resize();
- window.addEventListener('resize', resize, { passive:true });
- 
- /* ════════════════════
- 1. SUNBEAM (1 beam)
- ════════════════════ */
- /* ── Sun position (off top-right corner) ── */
- var SUN = { x: W * 0.78, y: -H * 0.08 };
- 
- var RAYS = [];
- var RAY_COUNT = 9;
- for (var ri = 0; ri < RAY_COUNT; ri++) {
- RAYS.push({
- angle: 0.55 + ri * 0.13 + (Math.random()-0.5)*0.08, // radians downward spread
- width: 18 + Math.random() * 38,
- alpha: 0.06 + Math.random() * 0.10,
- phase: Math.random() * Math.PI * 2,
- pulseF: 0.0002 + Math.random() * 0.0003,
- len: Math.max(W, H) * (1.6 + Math.random() * 0.8),
- });
- }
- 
- function drawBeam() {
- SUN.x = W * 0.78;
- SUN.y = -H * 0.08;
- 
- ctx.save();
- ctx.globalCompositeOperation = 'screen';
- 
- RAYS.forEach(function(r) {
- r.phase += r.pulseF;
- var pulse = 0.78 + 0.22 * Math.sin(r.phase);
- var alpha = r.alpha * pulse;
- 
- // Ray tip at sun, fans outward at angle
- var ex = SUN.x + Math.cos(r.angle) * r.len;
- var ey = SUN.y + Math.sin(r.angle) * r.len;
- 
- // Perpendicular vector for ray width
- var dx = ex - SUN.x, dy = ey - SUN.y;
- var dist = Math.sqrt(dx*dx+dy*dy);
- var nx = -dy/dist, ny = dx/dist;
- var hw = r.width * 0.5;
- 
- // Half-width at end fans out
- var hwEnd = r.width * 1.9;
- 
- var grad = ctx.createLinearGradient(SUN.x, SUN.y, ex, ey);
- grad.addColorStop(0, 'rgba(255,238,160,'+alpha+')');
- grad.addColorStop(0.12, 'rgba(255,232,140,'+(alpha*0.88)+')');
- grad.addColorStop(0.45, 'rgba(255,220,120,'+(alpha*0.42)+')');
- grad.addColorStop(0.78, 'rgba(255,210,100,'+(alpha*0.14)+')');
- grad.addColorStop(1, 'rgba(255,200,80,0)');
- 
- ctx.beginPath();
- ctx.moveTo(SUN.x + nx*hw*0.1, SUN.y + ny*hw*0.1);
- ctx.lineTo(SUN.x - nx*hw*0.1, SUN.y - ny*hw*0.1);
- ctx.lineTo(ex - nx*hwEnd, ey - ny*hwEnd);
- ctx.lineTo(ex + nx*hwEnd, ey + ny*hwEnd);
- ctx.closePath();
- ctx.fillStyle = grad;
- ctx.fill();
- });
- 
- ctx.restore();
- }
- 
- 
- 
- /* ════════════════════
- 2. BIRDS (4 birds)
- ════════════════════ */
- function makeB(i) {
- var side = i % 2 === 0 ? 'left' : 'right';
- return {
- x: side==='left' ? -80-Math.random()*120 : W+80+Math.random()*120,
- y: H*(0.08+Math.random()*0.45),
- dir: side==='left' ? 1 : -1,
- speed: 0.33+Math.random()*0.54,
- size: 5+Math.random()*8,
- wing: Math.random()*Math.PI*2,
- wingSpd: 0.033+Math.random()*0.03,
- op: 0.22+Math.random()*0.32,
- vy: 0,
- waveA: 5+Math.random()*12,
- waveF: 0.006+Math.random()*0.005,
- waveO: Math.random()*Math.PI*2,
- tick: 0,
- delay: i*110
- };
- }
- var birds = [0,1,2,3].map(makeB);
- 
- function drawBird(b) {
- if (b.delay>0){b.delay--;return;}
- b.tick++;
- b.x += b.dir*(b.speed);
- b.vy += (H*(0.1+Math.sin(b.tick*b.waveF+b.waveO)*0.2)-b.y)*0.012;
- b.vy *= 0.88;
- b.y += b.vy;
- b.y = Math.max(8,Math.min(H-8,b.y));
- b.wing += b.wingSpd;
- 
- if ((b.dir===1&&b.x>W+130)||(b.dir===-1&&b.x<-130)){
- var nb=makeB(Math.floor(Math.random()*4));
- nb.dir=-b.dir; nb.x=nb.dir===1?-30:W+30; nb.delay=0;
- Object.assign(b,nb);
- }
- 
- var fade=Math.min(Math.min(b.x+80,W-b.x+80)/80,1);
- var op=b.op*Math.max(0,fade);
- var flap=Math.sin(b.wing)*b.size*0.55;
- 
- ctx.save();
- ctx.globalAlpha=op;
- ctx.strokeStyle='#1a1a2e';
- ctx.lineWidth=Math.max(1,b.size*0.18);
- ctx.lineCap='round';
- ctx.beginPath();
- ctx.moveTo(b.x,b.y);
- ctx.quadraticCurveTo(b.x-b.size*.55,b.y-flap,b.x-b.size*1.1,b.y-b.size*.1);
- ctx.moveTo(b.x,b.y);
- ctx.quadraticCurveTo(b.x+b.size*.55,b.y-flap,b.x+b.size*1.1,b.y-b.size*.1);
- ctx.stroke();
- ctx.restore();
- }
- 
- /* ════════════════════
- 3. WIND GUSTS (2)
- ════════════════════ */
- function makeWind(i) {
- var fromLeft = Math.random()<0.6; // 60% left→right, 40% right→left
- return {
- x: fromLeft ? -220 : W+220,
- dir: fromLeft ? 1 : -1,
- y: H*(0.1+Math.random()*0.7), // anywhere on screen vertically
- speed: (2.0+Math.random()*2.0) * (fromLeft?1:-1),
- alpha: 0,
- width: 200+Math.random()*260,
- height: 14+Math.random()*20,
- active: false,
- timer: i*310+Math.floor(Math.random()*280),
- phase: Math.random()*Math.PI*2,
- curve: (Math.random()-0.5)*0.4, // random curve/arc direction
- fadeDir: fromLeft ? 1 : -1
- };
- }
- var winds = [0,1].map(makeWind);
- 
- function drawWind(w) {
- if (w.timer>0){w.timer--;return;}
- 
- if (!w.active){
- w.active=true;
- var fromLeft=Math.random()<0.6;
- w.dir=fromLeft?1:-1;
- w.x=fromLeft?-220:W+220;
- w.y=H*(0.08+Math.random()*0.75);
- w.speed=(2.0+Math.random()*2.0)*w.dir;
- w.alpha=0;
- w.width=200+Math.random()*260;
- w.height=14+Math.random()*20;
- w.curve=(Math.random()-0.5)*0.5;
- w.phase=Math.random()*Math.PI*2;
- }
- 
- w.x+=w.speed;
- w.y+=w.curve; // slight vertical drift
- w.phase+=0.048;
- 
- // Fade in/out based on direction
- var progress = w.dir===1 ? w.x/W : (W-w.x)/W;
- if(progress<0.18) w.alpha=Math.min(0.18, w.alpha+0.008);
- else if(progress>0.72) w.alpha=Math.max(0, w.alpha-0.012);
- 
- var gone = w.dir===1 ? w.x>W+270 : w.x<-270;
- if(gone){ w.active=false; w.timer=400+Math.floor(Math.random()*450); return; }
- 
- var len = w.width * w.dir; // positive or negative based on direction
- 
- for(var li=0;li<3;li++){
- var yo = (li-1)*w.height*0.55;
- var wave = Math.sin(w.phase+li*0.9)*5;
- var lineAlpha = w.alpha*(1-Math.abs(li-1)*0.38);
- 
- var grd=ctx.createLinearGradient(w.x,0,w.x+len,0);
- grd.addColorStop(0,'rgba(255,255,255,0)');
- grd.addColorStop(w.dir===1?0.18:0.82,'rgba(255,255,255,'+lineAlpha+')');
- grd.addColorStop(w.dir===1?0.72:0.28,'rgba(255,255,255,'+(lineAlpha*0.55)+')');
- grd.addColorStop(1,'rgba(255,255,255,0)');
- 
- ctx.save();
- ctx.strokeStyle=grd;
- ctx.lineWidth=2+li*0.9;
- ctx.lineCap='round';
- ctx.globalAlpha=1;
- ctx.beginPath();
- ctx.moveTo(w.x, w.y+yo+wave);
- ctx.bezierCurveTo(
- w.x+len*0.28, w.y+yo+wave*1.5+w.curve*8,
- w.x+len*0.65, w.y+yo-wave*0.9+w.curve*4,
- w.x+len, w.y+yo+wave*0.4
- );
- ctx.stroke();
- ctx.restore();
- }
- }
- 
- /* ════════════════════
- 4. LEAVES (3 leaves)
- ════════════════════ */
- var LEAF_COLORS = ['#c8602a','#d4882a','#8b4f1a','#b85c2a','#a0522d','#cd853f','#e07b39'];
- 
- function makeLeaf(i) {
- // Random spawn edge: top, left, or right
- var edge = Math.floor(Math.random()*3); // 0=top, 1=left, 2=right
- var sx, sy, svx, svy;
- if (edge===0) {
- sx=Math.random()*W; sy=-25-Math.random()*40;
- svx=(Math.random()-0.35)*0.7; svy=0.3+Math.random()*0.55;
- } else if (edge===1) {
- sx=-20; sy=Math.random()*H*0.7;
- svx=0.25+Math.random()*0.45; svy=(Math.random()-0.3)*0.5;
- } else {
- sx=W+20; sy=Math.random()*H*0.7;
- svx=-(0.25+Math.random()*0.45); svy=(Math.random()-0.3)*0.5;
- }
- return {
- x: sx, y: sy,
- vx: svx, vy: svy,
- rot: Math.random()*Math.PI*2,
- rotSpd: (Math.random()-0.5)*0.05, // some spin clockwise, some counter
- rotDir: Math.random()<0.5?1:-1, // random spin direction
- swing: Math.random()*Math.PI*2,
- swingF: 0.008+Math.random()*0.018, // wider range of oscillation speed
- swingA: 10+Math.random()*45, // wider range of swing amplitude
- driftChange: 120+Math.floor(Math.random()*200), // ticks before drift changes
- driftTick: 0,
- targetVx: (Math.random()-0.5)*0.9,
- size: 12+Math.random()*10,
- color: LEAF_COLORS[Math.floor(Math.random()*LEAF_COLORS.length)],
- op: 0.5+Math.random()*0.4,
- delay: i*200+Math.floor(Math.random()*150),
- tumble: Math.random()<0.3, // some leaves tumble faster
- pause: 0, // occasional pause/hover
- };
- }
- var leaves = [0,1,2].map(makeLeaf);
- 
- function drawLeaf(lf) {
- if(lf.delay>0){lf.delay--;return;}
- 
- // Wind influence — affects direction AND spin
- var windPush=0, windY=0;
- winds.forEach(function(w){
- if(w.active && Math.abs(w.y-lf.y)<100){
- var strength=(1-Math.abs(w.y-lf.y)/100);
- windPush+=w.speed*0.16*strength;
- windY+=Math.sin(w.phase)*0.3*strength;
- }
- });
- 
- // Random drift change — leaf changes direction occasionally
- lf.driftTick++;
- if(lf.driftTick>lf.driftChange){
- lf.driftTick=0;
- lf.driftChange=100+Math.floor(Math.random()*220);
- lf.targetVx=(Math.random()-0.45)*0.85;
- // Occasional pause/hover
- if(Math.random()<0.2) lf.pause=40+Math.floor(Math.random()*60);
- }
- // Smooth drift toward target
- lf.vx+=(lf.targetVx-lf.vx)*0.018;
- 
- // Pause — leaf hovers briefly
- if(lf.pause>0){ lf.pause--; lf.vy*=0.88; }
- 
- lf.swing+=lf.swingF;
- var swingX=Math.sin(lf.swing)*lf.swingA*0.045;
- var swingY=Math.cos(lf.swing*0.7)*lf.swingA*0.018; // slight vertical oscillation too
- 
- lf.x += lf.vx + swingX + windPush;
- lf.vy += lf.pause>0 ? -0.004 : 0.007; // gravity (reduced when pausing)
- lf.vy = Math.max(-0.5, Math.min(lf.vy, 1.8));
- lf.y += lf.vy + swingY + windY;
- 
- // Spin — tumbling leaves spin faster, wind adds spin
- var spin = lf.rotSpd * (lf.tumble?2.2:1) + windPush*0.05;
- lf.rot += spin * lf.rotDir;
- 
- // Respawn from any edge
- if(lf.y>H+50 || lf.x>W+50 || lf.x<-50){
- var nl=makeLeaf(Math.floor(Math.random()*3));
- nl.delay=Math.floor(Math.random()*80);
- Object.assign(lf,nl);
- }
- 
- ctx.save();
- ctx.globalAlpha=lf.op;
- ctx.translate(lf.x,lf.y);
- ctx.rotate(lf.rot);
- 
- var s=lf.size;
- ctx.fillStyle=lf.color;
- 
- // 5-pointed maple leaf shape
- // Built from 5 lobes radiating from center + stem
- function lobe(cx,cy,r,a){
- var pts=[];
- for(var p=0;p<6;p++){
- var ang=a+(p/5)*Math.PI*2;
- pts.push([cx+Math.cos(ang)*r, cy+Math.sin(ang)*r]);
- }
- return pts;
- }
- 
- ctx.beginPath();
- // Center body
- ctx.arc(0,0,s*0.38,0,Math.PI*2);
- ctx.fill();
- 
- // 5 lobes: top, top-left, top-right, bottom-left, bottom-right
- var lobeAngles=[-Math.PI/2, -Math.PI/2-1.2, -Math.PI/2+1.2, -Math.PI/2-2.2, -Math.PI/2+2.2];
- var lobeDist =[s*0.52, s*0.45, s*0.45, s*0.32, s*0.32];
- var lobeR =[s*0.36, s*0.28, s*0.28, s*0.22, s*0.22];
- for(var li2=0;li2<5;li2++){
- var lx=Math.cos(lobeAngles[li2])*lobeDist[li2];
- var ly=Math.sin(lobeAngles[li2])*lobeDist[li2];
- // Pointed lobe tip
- ctx.beginPath();
- ctx.save();
- ctx.translate(lx,ly);
- ctx.rotate(lobeAngles[li2]+Math.PI/2);
- ctx.moveTo(0,-lobeR[li2]*1.35);
- ctx.bezierCurveTo(lobeR[li2]*0.9,-lobeR[li2]*0.5, lobeR[li2]*0.9,lobeR[li2]*0.5, 0,lobeR[li2]*0.9);
- ctx.bezierCurveTo(-lobeR[li2]*0.9,lobeR[li2]*0.5, -lobeR[li2]*0.9,-lobeR[li2]*0.5, 0,-lobeR[li2]*1.35);
- ctx.fill();
- ctx.restore();
- }
- 
- // Stem
- ctx.strokeStyle='rgba(0,0,0,0.3)';
- ctx.lineWidth=s*0.1;
- ctx.lineCap='round';
- ctx.beginPath();
- ctx.moveTo(0,s*0.35);
- ctx.lineTo(0,s*0.85);
- ctx.stroke();
- 
- // Center veins
- ctx.strokeStyle='rgba(0,0,0,0.18)';
- ctx.lineWidth=0.7;
- ctx.beginPath();
- ctx.moveTo(0,s*0.35);
- ctx.lineTo(0,-s*0.65);
- ctx.moveTo(0,0);
- ctx.lineTo(Math.cos(lobeAngles[1])*s*0.55, Math.sin(lobeAngles[1])*s*0.55);
- ctx.moveTo(0,0);
- ctx.lineTo(Math.cos(lobeAngles[2])*s*0.55, Math.sin(lobeAngles[2])*s*0.55);
- ctx.moveTo(0,-s*0.1);
- ctx.lineTo(Math.cos(lobeAngles[3])*s*0.42, Math.sin(lobeAngles[3])*s*0.42);
- ctx.moveTo(0,-s*0.1);
- ctx.lineTo(Math.cos(lobeAngles[4])*s*0.42, Math.sin(lobeAngles[4])*s*0.42);
- ctx.stroke();
- 
- ctx.restore();
- }
- 
- /* ════ MAIN LOOP ════ */
- var scrollBoost=0, lastSY=0;
- window.addEventListener('scroll',function(){
- var dy=window.scrollY-lastSY; lastSY=window.scrollY;
- scrollBoost=Math.min(Math.abs(dy)*0.15,2.5);
- },{passive:true});
- 
- var REDUCED_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- var IS_MOBILE = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
- var drawCount = 0;
- function tick(){
-  requestAnimationFrame(tick);
-  // 자연 효과(갈매기·햇살·잎)는 랜딩(home)·소개(about)·문의(contact)에서만 표시
-  var NATURE = (curPage === 'home' || curPage === 'about' || curPage === 'contact');
-  cv.style.display = NATURE ? 'block' : 'none';
-  if (!NATURE || document.hidden || REDUCED_MOTION) return;
-  // 성능: 모바일은 ~4프레임마다(~15fps), 데스크톱은 ~2프레임마다(~30fps)만 그림 — choppy 방지
-  if ((++drawCount % (IS_MOBILE ? 4 : 2)) !== 0) return;
-  ctx.clearRect(0,0,W,H);
-  frame++;
-  scrollBoost*=0.92;
-  
-  drawBeam();
-  birds.forEach(function(b){
-   b.speed=b.speed+(scrollBoost*0.08);
-   b.speed=Math.max(0.24,Math.min(b.speed,2.1));
-   drawBird(b);
-  });
-  winds.forEach(drawWind);
-  leaves.forEach(drawLeaf);
- }
- 
- setTimeout(tick, 400);
-})();
+/* NATURE CANVAS JS removed 2026-10-01 */
  
  
 /* ── LOGO MAGNIFIER ── */
@@ -5568,35 +5145,7 @@ function renderAllCourseInfo() {
  
  
 <!-- #53 KakaoTalk floating button — 제거됨(2026-08) -->
-<!-- Hero spotlight sweep (2026-09-30): lights h1 chars L→R once per load. -->
-<script>
-(function(){var slide=document.querySelector('#pg-home .hero-slide');if(!slide)return;
-var h1=slide.querySelector('.hero-h1');if(!h1)return;
-var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-var spans=h1.querySelectorAll('.ko,.en');
-var chars=[];
-spans.forEach(function(sp){var vis=sp.style.display!=='none'&&getComputedStyle(sp).display!=='none';
- var nodes=Array.prototype.slice.call(sp.childNodes);
- nodes.forEach(function(nd){
-  if(nd.nodeType===3){var frag=document.createDocumentFragment();
-   nd.textContent.split('').forEach(function(c){
-    if(c==='\n'){return;}
-    if(c===' '||c==='\u00a0'){frag.appendChild(document.createTextNode('\u00a0'));return;}
-    var s=document.createElement('span');s.className='sp-ch';s.textContent=c;frag.appendChild(s);chars.push(s);});
-   sp.replaceChild(frag,nd);}
-  else if(nd.nodeName==='BR'){var mk=document.createElement('span');mk.className='sp-ch sp-br';mk.textContent='\u200b';sp.replaceChild(mk,nd);chars.push(mk);}});});
-if(reduce){chars.forEach(function(s){s.classList.add('lit');});return;}
-chars.forEach(function(s){if(s.classList.contains('sp-br'))s.style.display='block';});
-var veil=document.createElement('div');veil.className='spot-veil';slide.appendChild(veil);
-var DUR=4800,t0=null;
-function frame(t){if(!t0)t0=t;var k=Math.min((t-t0)/DUR,1);
- var x=k<0.5?(-15+k*2*130):(115-(k-0.5)*2*130);
- slide.style.setProperty('--spot-x',x.toFixed(1)+'%');
- var frac=k<0.5?(k*2*1.08):1.08;
- chars.forEach(function(s,i){if(!s.classList.contains('lit')&&frac>=(i+1)/chars.length)s.classList.add('lit');});
- if(k<1){requestAnimationFrame(frame);}else{setTimeout(function(){veil.classList.add('off');setTimeout(function(){if(veil.parentNode)veil.parentNode.removeChild(veil);},1000);},350);}}
-requestAnimationFrame(frame);})();
-</script>
+<!-- Hero fly-in: CSS only, spotlight removed 2026-10-01 -->
 
 </body>
 </html>
