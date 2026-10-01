@@ -2360,7 +2360,7 @@ body {
  <div class="hero-cnt">
  <div class="hero-eye"><span class="ko">레조네이트투어 · Korea → USA · 2026</span><span class="en">Resonate Tour · Korea → USA · 2026</span></div>
  <h1 class="hero-h1"><span class="ko"><span class="fly fly-l" style="display:block">캘리포니아 골프</span><span class="fly fly-r" style="display:block">& 문화 투어</span></span><span class="en"><span class="fly fly-l" style="display:block">California Golf</span><span class="fly fly-r" style="display:block">& Culture Tour</span></span></h1>
- <p class="hero-p"><span class="ko">삶의 결을 따라, 당신만의 여정으로</span><span class="en">Your Life's Texture, Our Signature Touch</span></p>
+ <p class="hero-p"><span class="ko">삶의 결을 따라, 당신만의 여정으로</span><span class="en">Your Life's Texture, Our Signature Touch</span></p> <div class="hero-btns"> <button class="btn-w" onclick="nav('pricing');setTimeout(finderOpen,400)"><span class="ko">취향 테스트로 맞춤 일정 받기</span><span class="en">Get My Matched Itinerary</span></button> <button class="btn-d" onclick="nav('contact')"><span class="ko">카톡으로 바로 문의</span><span class="en">Chat on KakaoTalk</span></button> </div>
  </div>
  </div>
  
@@ -2621,11 +2621,14 @@ body {
 #finderModal .secttl{font-size:15px;color:var(--navy);margin:24px 0 4px;font-weight:800}.secsub{font-size:12.5px;color:var(--mut);margin:0 0 10px;line-height:1.6}
 /* v5: result flip-cards + action-zone divider */
 #finderModal .rescards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 4px}
-#finderModal .pcard{background:#fff;border:2px solid var(--line);border-radius:16px;padding:0;cursor:pointer;text-align:center;min-height:168px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;font-family:inherit;color:var(--ink);transition:border-color .15s,transform .15s}
-#finderModal .pcard:active{transform:scale(.97)}
-#finderModal .pcard.open{border-color:var(--sel);background:var(--selbg)}
-#finderModal .pcard .pem{font-size:34px}.pcard .pt{font-size:15px;font-weight:800}.pcard .ps{font-size:11.5px;color:var(--mut);padding:0 10px;line-height:1.5}
-#finderModal .pcard .phint{font-size:11px;color:var(--navy);font-weight:700}
+#finderModal .F_pcard,#finderModal .pcard{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 10px;cursor:pointer;text-align:center;min-height:168px;max-width:100%;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;font-family:inherit;color:var(--ink);transition:border-color .15s,transform .15s;word-break:keep-all;overflow-wrap:anywhere}
+#finderModal .F_pcard:active,#finderModal .pcard:active{transform:scale(.97)}
+#finderModal .F_pcard.open,#finderModal .pcard.open{border-color:var(--sel);background:var(--selbg)}
+#finderModal .F_pcard .pem,#finderModal .pcard .pem{font-size:34px}
+#finderModal .F_pcard .pt,#finderModal .pcard .pt{font-size:15px;font-weight:800;line-height:1.4}
+#finderModal .F_pcard .ps,#finderModal .pcard .ps{font-size:11.5px;color:var(--mut);padding:0 6px;line-height:1.5;max-width:100%}
+#finderModal .F_pcard .phint,#finderModal .pcard .phint{font-size:11px;color:var(--navy);font-weight:700}
+@media(max-width:560px){#finderModal .rescards{grid-template-columns:1fr}}
 #finderModal .pdetail{display:none;grid-column:1/-1;background:#fff;border:2px solid var(--gold);border-radius:16px;padding:14px;margin:-2px 0 6px}
 #finderModal .pdetail.show{display:block;animation:fade .25s}
 #finderModal .pdetail .dt{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:8px}
