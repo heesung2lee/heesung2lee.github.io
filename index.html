@@ -2821,7 +2821,7 @@ function F_renderAll(){
  F_renderItinPreview(host,L);
  F_updateKakao();
 }
- function F_renderItinPreview(host,L){var old=document.getElementById('pd-itin');if(old)old.remove();var mix=F_answers.mix||'';var party=F_answers.party||'';var themes=[];try{document.querySelectorAll('#themes .theme.on').forEach(function(t){themes.push(t.dataset.v||t.textContent.trim());});}catch(e){}var golfDays=3,tourDays=2;if(mix.indexOf('골프만')>=0){golfDays=5;tourDays=0;}else if(mix.indexOf('골프 70')>=0){golfDays=4;tourDays=1;}else if(mix.indexOf('반반')>=0){golfDays=3;tourDays=2;}else if(mix.indexOf('골프 30')>=0){golfDays=2;tourDays=3;}else if(mix.indexOf('관광 중심')>=0||mix.indexOf('Sights only')>=0){golfDays=0;tourDays=4;}var rows=[];var d=1;rows.push(['Day '+d,L?'인천 출발 → LA 도착 · 시차 적응 휴식':'ICN → LAX · rest day']);d++;for(var g=0;g<golfDays;g++){rows.push(['Day '+d,L?'골프 라운드 '+(g+1)+(party?' · '+party:''):'Golf round '+(g+1)]);d++;}for(var t=0;t<tourDays;t++){rows.push(['Day '+d,L?'맞춤 관광'+(themes.length&&t<themes.length?' · '+themes[t]:''):'Custom touring']);d++;}rows.push(['Day '+d,L?'LA 출발 → 인천 도착':'LAX → ICN']);var dv=document.createElement('div');dv.className='pdetail';dv.id='pd-itin';var h=document.createElement('div');h.className='dt';h.textContent=L?'🧭 맞춤 일정 미리보기':'🧭 Your itinerary preview';dv.appendChild(h);var note=document.createElement('p');note.style.cssText='font-size:13px;color:#5c5e62;margin:0 0 10px;line-height:1.6';note.textContent=L?'취향 테스트 답변으로 자동 생성된 뼈대입니다. 아래 구성 탭의 전체 일정과 대조해 보세요. 확정 일정은 상담 후 제안서로 보내드립니다.':'Auto-generated from your answers. Compare with the full schedule in the Plan tab. Final itinerary comes with your proposal.';dv.appendChild(note);rows.forEach(function(r){var line=document.createElement('div');line.style.cssText='display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13.5px';var dd=document.createElement('b');dd.style.cssText='min-width:52px;color:#1a3450';dd.textContent=r[0];var tx=document.createElement('span');tx.style.color='#393c41';tx.textContent=r[1];line.appendChild(dd);line.appendChild(tx);dv.appendChild(line);});host.appendChild(dv);}
+ function F_renderItinPreview(host,L){var old=document.getElementById('pd-itin');if(old)old.remove();var mix=F_answers.mix||'';var party=F_answers.party||'';var themes=[];try{document.querySelectorAll('#themes .theme.on').forEach(function(t){themes.push(t.dataset.v||t.textContent.trim());});}catch(e){}var golfDays=3,tourDays=2;if(mix.indexOf('골프만')>=0){golfDays=5;tourDays=0;}else if(mix.indexOf('골프 70')>=0){golfDays=4;tourDays=1;}else if(mix.indexOf('반반')>=0){golfDays=3;tourDays=2;}else if(mix.indexOf('골프 30')>=0){golfDays=2;tourDays=3;}else if(mix.indexOf('관광 중심')>=0||mix.indexOf('Sights only')>=0){golfDays=0;tourDays=4;}var rows=[];var d=1;rows.push(['Day '+d,L?'인천 출발 → LA 도착 · 시차 적응 휴식':'ICN → LAX · rest day']);d++;for(var g=0;g<golfDays;g++){rows.push(['Day '+d,L?'골프 라운드 '+(g+1)+(party?' · '+party:''):'Golf round '+(g+1)]);d++;}for(var t=0;t<tourDays;t++){rows.push(['Day '+d,L?'맞춤 관광'+(themes.length&&t<themes.length?' · '+themes[t]:''):'Custom touring']);d++;}rows.push(['Day '+d,L?'LA 출발 → 인천 도착':'LAX → ICN']);var dv=document.createElement('div');dv.className='pdetail';dv.id='pd-itin';var h=document.createElement('div');h.className='dt';h.textContent=L?'🧭 맞춤 일정 미리보기':'🧭 Your itinerary preview';dv.appendChild(h);var note=document.createElement('p');note.style.cssText='font-size:13px;color:#5c5e62;margin:0 0 10px;line-height:1.6';note.textContent=L?'취향 테스트 답변으로 자동 생성된 뼈대입니다. 확정 일정은 상담 후 제안서로 보내드립니다.':'Auto-generated from your answers. Compare with the full schedule in the Plan tab. Final itinerary comes with your proposal.';dv.appendChild(note);rows.forEach(function(r){var line=document.createElement('div');line.style.cssText='display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13.5px';var dd=document.createElement('b');dd.style.cssText='min-width:52px;color:#1a3450';dd.textContent=r[0];var tx=document.createElement('span');tx.style.color='#393c41';tx.textContent=r[1];line.appendChild(dd);line.appendChild(tx);dv.appendChild(line);});host.appendChild(dv);}
 
 function F_composeMsg(){
  var L=curLang==='ko';
@@ -2859,18 +2859,6 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
  </script> </div>
 
 
-<div style="margin-top:8px;padding-top:8px;border-top:1px solid #e2e2e2">
- <div class="sched-sticky-header">
- <div class="page-hdr" style="display:flex;align-items:center;justify-content:center;gap:0;padding:10px 24px 8px;position:relative">
- <h2 style="font-size:16px;font-weight:700;margin:0;text-align:center"><span class="ko">전체 일정 예시 (13일 — 상담 후 확정)</span><span class="en">Full sample itinerary (13 days — finalized after consultation)</span></h2>
- <p style="position:absolute;right:16px;font-size:10px;color:#bbb;font-weight:300;margin:0;white-space:nowrap"><span class="ko">날짜 탭을 눌러 확인하세요</span><span class="en">Tap a day to view</span></p>
- </div>
- <div class="jphase-band" id="jPhaseBand"></div>
- <div class="day-tab-bar jrail-mode" id="dayTabBar"></div>
- <div class="jprog"><span class="jptxt" id="jProgTxt"></span><span class="jbar"><i id="jProgBar"></i></span></div>
- </div>
- <div class="day-panels" id="dayPanels"></div>
-</div>
 </div>
  
 <!-- ══════ PAGE: ABOUT ══════ -->
@@ -3203,132 +3191,19 @@ const imgs = {
 const PLAN_DATA = [
  {usd:0, pp:0, pax:1,
  pax_ko:'1인 · 개별 여정', pax_en:'1 GUEST · SOLO JOURNEY', hot:false,
- items_ko:['항공권 (예약 지원)','숙박 전체 일정','골프 전 라운드','현지 인기 맛집 식사 큐레이션','전용 차량 (일부 구간)','한국어 가이드'],
- items_en:['Flight booking service','All accommodations','Golf rounds','Curated local restaurant dining','Transport (select legs)','Korean-speaking guide']},
+ items_ko:['항공권 (예약 지원)','숙박 (맞춤 일정)','골프 전 라운드','현지 인기 맛집 식사 큐레이션','전용 차량 (일부 구간)','한국어 가이드'],
+ items_en:['Flight booking service','Custom lodging','Golf rounds','Curated local restaurant dining','Transport (select legs)','Korean-speaking guide']},
  {usd:0, pp:0, pax:2,
  pax_ko:'2인 · 듀오 익스피리언스', pax_en:'2 GUESTS · DUO EXPERIENCE', hot:true,
- items_ko:['항공권 (예약 지원)','숙박 전체 일정 (2인)','골프 전 라운드 (2인)','차량 & 이동비 전체','한국어 가이드 & 오리엔테이션','현지 인기 맛집 식사 큐레이션'],
- items_en:['Flight booking service (2)','All accommodations (2)','Golf rounds (2 guests)','All transport & driving costs','Korean guide & pre-departure brief','Curated local restaurant dining']},
+ items_ko:['항공권 (예약 지원)','숙박 (맞춤 일정, 2인)','골프 전 라운드 (2인)','차량 & 이동비 전체','한국어 가이드 & 오리엔테이션','현지 인기 맛집 식사 큐레이션'],
+ items_en:['Flight booking service (2)','Custom lodging (2)','Golf rounds (2 guests)','All transport & driving costs','Korean guide & pre-departure brief','Curated local restaurant dining']},
  {usd:0, pp:0, pax:4,
  pax_ko:'4인 · 그룹 이스케이프', pax_en:'4 GUESTS · GROUP ESCAPE', hot:false,
- items_ko:['항공권 (예약 지원)','숙박 전체 일정 (4인)','골프 전 라운드 (4인)','전용 밴 & 전 구간 이동비','한국어 전담 가이드','현지 맛집 & 스파 혜택'],
- items_en:['Flight booking service (4)','All accommodations (4)','Golf rounds (4 guests)','Private van & all transport','Dedicated Korean guide','Local dining & spa perks']},
+ items_ko:['항공권 (예약 지원)','숙박 (맞춤 일정, 4인)','골프 전 라운드 (4인)','전용 밴 & 전 구간 이동비','한국어 전담 가이드','현지 맛집 & 스파 혜택'],
+ items_en:['Flight booking service (4)','Custom lodging (4)','Golf rounds (4 guests)','Private van & all transport','Dedicated Korean guide','Local dining & spa perks']},
 ];;
  
-const DAYS = [
- {n:"DAY 1",date:"DATE",ko:"도착 · 시차 적응",en:"Arrival · Jet Lag Recovery",
- costs:[],
- rows:[
- {time:"오전",ko:"도착 · 공항 이동",en:"Arrival · Airport Transfer",spot:"국제공항",note_ko:"출발지에서 공항 도착. 공항 픽업 후 숙소로 이동.",note_en:"Land at the airport. Pickup and transfer to lodging.",badge:""},
- {time:"오전",ko:"숙소 · 짐 정리",en:"Lodging · Unpack",spot:"숙소",note_ko:"장거리 비행 후 숙소로. 짐 풀고 간단히 정리.",note_en:"After a long flight. Unpack and settle in.",badge:""},
- {time:"낮~저녁",ko:"시차 적응 · 완전 휴식",en:"Jet Lag Recovery · Full Rest",spot:"숙소",note_ko:"시차 적응. 무리하지 않고 완전 휴식. 가벼운 산책 가능.",note_en:"Recover from jet lag. Full rest — light walk OK.",badge:""},
- {time:"저녁",ko:"일찍 취침",en:"Early Night",spot:"",note_ko:"시차 적응을 위해 일찍 취침. 다음 날을 위한 충분한 수면.",note_en:"Early bedtime for jet lag recovery. Get plenty of sleep for tomorrow.",badge:"stay"}
- ]},
- {n:"DAY 2",date:"DATE",ko:"주변 관광",en:"Neighborhood Tour",
- costs:[],
- rows:[
- {time:"오전",ko:"느긋한 아침",en:"Slow Morning",spot:"숙소",note_ko:"어제 피로 회복 후 여유로운 아침.",note_en:"Recovery morning after arrival.",badge:""},
- {time:"오전~오후",ko:"주변 관광",en:"Neighborhood Tour",spot:"현지 동네",note_ko:"일행과 함께 동네 산책 및 관광. 마트, 공원, 인근 명소 방문. 무리 없이 가볍게.",note_en:"Casual neighborhood tour. Market, local park, familiar spots. Easy pace.",badge:""},
- {time:"점심",ko:"현지 식당 점심",en:"Local Restaurant Lunch",spot:"현지 식당",note_ko:"일행과 함께 현지 식당에서 점심 식사.",note_en:"Lunch with your group at a local restaurant.",badge:""},
- {time:"오후",ko:"휴식 · 골프 준비",en:"Rest · Golf Prep",spot:"숙소",note_ko:"오후에는 충분히 쉬기. 내일부터 시작되는 골프 일정 준비 및 장비 점검.",note_en:"Afternoon rest. Prep for golf starting tomorrow — check gear.",badge:""},
- {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
- ]},
- {n:"DAY 3",date:"DATE",ko:"골프 워밍업",en:"Golf Warm-up",
- costs:[],
- rows:[
- {time:"아침",ko:"연습 라운딩 (아침)",en:"Practice Round (AM)",spot:"골프 연습장",note_ko:"연습 라운딩. 몸 풀기.",note_en:"Practice round. Warm-up.",badge:""},
- {time:"오후",ko:"골프 — 시립 코스 라운드",en:"Golf — Municipal Course Round",spot:"시립 골프장",note_ko:"오후 라운드. 시립 골프장. 숙소에서 차로 약 20분.",note_en:"Afternoon round. Municipal course. ~20 min drive from lodging.",badge:""},
- {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"라운드 후 숙소에서 휴식.",note_en:"Rest at the lodging after the round.",badge:"stay"}
- ]},
- {n:"DAY 4",date:"DATE",ko:"골프 라운드 + 로컬 디너",en:"Golf Round + Local Dinner",
- costs:[],
- rows:[
- {time:"아침",ko:"골프 — 시립 코스 라운드",en:"Golf — Municipal Course Round",spot:"시립 골프장",note_ko:"아침 라운드. 시립 코스. 숙소에서 차로 약 25분.",note_en:"Morning round at municipal courses. ~25 min drive.",badge:""},
- {time:"점심",ko:"점심 식사",en:"Lunch",spot:"현지 카페",note_ko:"현지 카페에서 점심 식사.",note_en:"Lunch at a local cafe.",badge:""},
- {time:"오후",ko:"골프 연습",en:"Golf Practice",spot:"골프 연습장",note_ko:"오후 추가 연습 라운딩.",note_en:"Additional afternoon practice.",badge:""},
- {time:"저녁",ko:"로컬 디너",en:"Local Dinner",spot:"로컬 레스토랑",note_ko:"현지인과의 저녁 식사.",note_en:"Dinner with local contacts.",badge:""},
- {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
- ]},
- {n:"DAY 5",date:"DATE",ko:"자유 시간",en:"Free Day",
- costs:[],
- weekend:true,
- rows:[
- {time:"하루",ko:"자유 시간 · 자유 일정",en:"Free Time · Free Day",spot:"",note_ko:"자유 시간. 별도 골프 일정 없음.",note_en:"Free day. No golf scheduled.",badge:""},
- {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
- ]},
- {n:"DAY 6",date:"DATE",ko:"오션뷰 코스 골프 × 2",en:"Ocean-View Double Round",
- costs:[],
- weekend:true,
- rows:[
- {time:"이동",ko:"해안 코스 이동 (약 1시간 50분)",en:"Drive to Coastal Course (~1h 50min)",spot:"해안 도로 · 약 100마일",note_ko:"출발. 해안 도로 북상. 약 100마일, 1시간 50분 소요.",note_en:"Drive north along the coast. ~100 miles, ~1h 50min.",badge:""},
- {time:"오전",ko:"골프 라운드 1",en:"Golf Round 1",spot:"해안 골프장",note_ko:"오전 티오프. 오션뷰 챔피언십 코스.",note_en:"AM tee time. Ocean-view championship course.",badge:""},
- {time:"오후",ko:"골프 라운드 2",en:"Golf Round 2",spot:"해안 골프장",note_ko:"오후 티오프. 오션뷰 챔피언십 코스.",note_en:"PM tee time. Ocean-view championship course.",badge:""},
- {time:"저녁",ko:"해변 노을 감상",en:"Sunset at the Beach",spot:"해변",note_ko:"해변에서 석양 감상. 골프장에서 차로 5분.",note_en:"Sunset at the beach. 5 min drive from the course.",badge:""},
- {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
- ]},
- {n:"DAY 7",date:"DATE",ko:"밸리 코스 골프",en:"Valley Course Golf",
- costs:[],
- rows:[
- {time:"이동",ko:"밸리 코스 이동 (약 1시간 50분)",en:"Drive to Valley Course (~1h 50min)",spot:"밸리 지역 · 약 100마일",note_ko:"밸리 코스까지 차로 약 1시간 50분.",note_en:"Drive to the valley course. ~100 miles, ~1h 50min.",badge:""},
- {time:"AM",ko:"골프 라운드",en:"Golf Round",spot:"밸리 골프장",note_ko:"퍼블릭 코스. 산악 뷰.",note_en:"Public course. Mountain views.",badge:""},
- {time:"점심",ko:"덴마크풍 마을 관광 & 식사",en:"Danish Village Lunch & Stroll",spot:"덴마크풍 마을",note_ko:"덴마크풍 마을 구경. 데니쉬 페이스트리 유명.",note_en:"Danish-style village stroll. Famous for Danish pastries.",badge:""},
- {time:"저녁",ko:"미정",en:"TBD",spot:"",note_ko:"저녁 미정.",note_en:"Dinner TBD.",badge:"tbd"},
- {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
- ]},
- {n:"DAY 8",date:"DATE",ko:"골프 라운드 × 2",en:"Double Golf Round",
- costs:[],
- rows:[
- {time:"이동",ko:"내륙 코스 이동 (약 1시간 15분)",en:"Drive to Inland Course (~1h 15min)",spot:"내륙 도로 · 약 65마일",note_ko:"내륙 방면 이동. 약 65마일, 1시간 15분.",note_en:"Drive inland. ~65 miles, 1h 15min.",badge:""},
- {time:"AM",ko:"골프 라운드 1",en:"Golf Round 1",spot:"골프장",note_ko:"오전 라운드.",note_en:"Morning round.",badge:""},
- {time:"점심",ko:"현지 와이너리 런치",en:"Local Winery Lunch",spot:"현지 와이너리",note_ko:"현지인들이 즐겨 찾는 와이너리 런치. 야외 테이블, 캘리포니아 와인.",note_en:"Winery lunch — beloved by locals. Outdoor tables, California wine.",badge:""},
- {time:"PM",ko:"골프 라운드 2",en:"Golf Round 2",spot:"골프장",note_ko:"오후 라운드.",note_en:"Afternoon round.",badge:""},
- {time:"저녁",ko:"미정",en:"TBD",spot:"",note_ko:"저녁 미정.",note_en:"Dinner TBD.",badge:"tbd"},
- {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
- ]},
- {n:"DAY 9",date:"DATE",ko:"골프 + 온천 스파",en:"Golf + Hot Springs",
- costs:[],
- rows:[
- {time:"AM",ko:"골프 라운드",en:"Golf Round",spot:"골프장",note_ko:"오전 라운드.",note_en:"Morning round.",badge:""},
- {time:"이동",ko:"온천 스파 이동 (약 1시간)",en:"Drive to Hot Springs (~1hr)",spot:"내륙 도로 · 약 45마일",note_ko:"내륙 방향 이동. 약 45마일, 1시간.",note_en:"Drive inland. ~45 miles, 1 hour.",badge:""},
- {time:"PM",ko:"온천 스파",en:"Hot Springs Spa",spot:"온천 리조트",note_ko:"천연 온천 스파. 라운드 후 피로 회복. 온천 입욕 및 휴식.",note_en:"Natural hot springs spa. Perfect recovery after golf round.",badge:""},
- {time:"저녁",ko:"미정",en:"TBD",spot:"",note_ko:"저녁 미정.",note_en:"Dinner TBD.",badge:"tbd"},
- {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
- ]},
- {n:"DAY 10",date:"DATE",ko:"해안 코스 + 선셋 드라이브",en:"Coastal Course + Sunset Drive",
- costs:[],
- rows:[
- {time:"이동",ko:"해안 이동 (약 1시간 20분)",en:"Drive to the Coast (~1h 20min)",spot:"해안 방면 도로 · 약 65마일",note_ko:"해안 방면 이동. 약 65마일, 1시간 20분.",note_en:"Drive toward the coast. ~65 miles, 1h 20min.",badge:""},
- {time:"아침",ko:"클럽하우스 조식",en:"Breakfast at the Clubhouse",spot:"골프장 클럽하우스",note_ko:"클럽하우스 레스토랑. 바다 뷰 야외 테라스. 현지인 추천 오션뷰 조식.",note_en:"Clubhouse restaurant. Outdoor ocean-view terrace. Highly rated by locals.",badge:""},
- {time:"AM",ko:"골프 라운드",en:"Golf Round",spot:"해안 골프장",note_ko:"카트 포함. 챔피언십 18홀.",note_en:"Cart included. Championship 18-hole design.",badge:""},
- {time:"점심",ko:"해안 뷔페 점심",en:"Ocean Buffet Lunch",spot:"해안",note_ko:"해안 오션 뷔페 점심.",note_en:"Ocean buffet lunch on the coast.",badge:""},
- {time:"PM",ko:"해안 도로 선셋 드라이브",en:"Coastal Sunset Drive",spot:"해안 도로",note_ko:"해안 도로 선셋 드라이브.",note_en:"Coastal sunset scenic drive.",badge:""},
- {time:"저녁",ko:"미정",en:"TBD",spot:"",note_ko:"저녁 미정.",note_en:"Dinner TBD.",badge:"tbd"},
- {time:"저녁",ko:"숙소 복귀",en:"Return to Lodging",spot:"",note_ko:"드라이브 후 숙소로 복귀.",note_en:"Back to the lodging after the drive.",badge:"stay"}
- ]},
- {n:"DAY 11",date:"DATE",ko:"마무리 골프",en:"Final Golf",
- costs:[],
- rows:[
- {time:"AM",ko:"골프 라운드",en:"Golf Round",spot:"시립 골프장",note_ko:"시립 코스.",note_en:"Municipal course.",badge:""},
- {time:"점심",ko:"캠퍼스 카페 점심",en:"Lunch at Campus Cafe",spot:"대학 캠퍼스 카페",note_ko:"대학 캠퍼스 카페. 점심.",note_en:"Campus cafeteria. Lunch.",badge:""},
- {time:"PM",ko:"연습 라운딩",en:"Practice Round",spot:"골프 연습장",note_ko:"마무리 연습.",note_en:"Final practice round.",badge:""},
- {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
- ]},
- {n:"DAY 12",date:"DATE",ko:"자유 시간",en:"Free Day",
- costs:[],
- weekend:true,
- rows:[
- {time:"하루",ko:"자유 시간 · 자유 일정",en:"Free Time · Free Day",spot:"",note_ko:"마지막 주말 자유 시간.",note_en:"Last weekend free day.",badge:""},
- {time:"저녁",ko:"휴식",en:"Rest",spot:"",note_ko:"숙소에서 휴식.",note_en:"Rest at the lodging.",badge:"stay"}
- ]},
- {n:"DAY 13",date:"DATE",ko:"귀국 출발",en:"Departure Day",
- costs:[],
- weekend:true,
- rows:[
- {time:"새벽",ko:"출발 준비 · 짐 챙기기",en:"Early Morning · Pack & Prep",spot:"숙소",note_ko:"공항 도착 기준 새벽 출발 준비.",note_en:"Early morning departure prep for airport.",badge:""},
- {time:"오전",ko:"공항 도착 마감",en:"Airport Deadline",spot:"국제공항",note_ko:"국제선 3시간 전 체크인 권장. 오전 공항 도착.",note_en:"International check-in 3 hours before. Arrive at airport in the morning.",badge:""},
- {time:"오전",ko:"출발 → 귀국",en:"Depart for Korea",spot:"공항 → 인천",note_ko:"오전 출발. 장거리 비행. 안전한 귀국!",note_en:"Depart AM. Long flight. Safe travels!",badge:""}
- ]}
-];;
+const DAYS = [];
  
 let curLang = 'ko';
 let curPage = 'home';
@@ -3473,10 +3348,6 @@ function nav(page, dayIdx) {
  var sh = document.querySelector('.sched-sticky-header');
  if (sh) {
   sh.classList.toggle('visible', page === 'pricing');
-  if (page === 'pricing') requestAnimationFrame(function(){
-  var panels = document.getElementById('dayPanels');
-  if (panels) panels.style.paddingTop = '0px';
-  });
  }
  // Bookmarks
  if (page === 'pricing') setTimeout(function(){ if(typeof addHearts==='function') addHearts(); }, 150);
