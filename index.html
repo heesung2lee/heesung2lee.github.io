@@ -2746,12 +2746,12 @@ function F_prefillFromQuiz(){
   var qmix=F_gVal('golf',0),qparty=F_gVal('golf',2);
   var map={'골프만 집중':'골프만 집중','골프 70':'골프 70','반반':'반반','골프 30':'골프 30','관광 중심':'관광 중심'};
   var mk=null;for(var k in map){if(qmix.indexOf(k)>=0){mk=map[k];break;}}
-  if(mk){var v=F_selOpt('mixOpts',mk);if(v)F_answers.mix=v;}
+  if(mk){var v=F_selOpt('mixOpts',mk);if(v){F_answers.mix=v;var mb=document.getElementById('mixBlock');if(mb)mb.style.display='none';}}
   var pm=null;
   if(qparty.indexOf('2인')>=0||qparty.indexOf('부부')>=0)pm='2인';
   else if(qparty.indexOf('4인')>=0||qparty.indexOf('친구')>=0)pm='4인';
   else if(qparty.indexOf('8인')>=0||qparty.indexOf('단체')>=0)pm='8인';
-  if(pm){var pv=F_selOpt('partyOpts',pm);if(pv)F_answers.party=pv;}
+  if(pm){var pv=F_selOpt('partyOpts',pm);if(pv){F_answers.party=pv;var pb2=document.getElementById('partyBlock');if(pb2)pb2.style.display='none';}}
   echo.push((L?'⛳ 골프 비중: ':'⛳ Golf mix: ')+qmix+' / '+(L?'일행: ':'Party: ')+qparty);
  }
  if(F_flow.indexOf('travel')>=0){var tr=F_travelTop5();echo.push((L?'🧭 성향: ':'🧭 Persona: ')+tr.code);}
@@ -2760,7 +2760,7 @@ function F_prefillFromQuiz(){
  if(e)e.innerHTML=echo.length?((L?'위 테스트에서 이미 답한 내용: ':'Already answered in quiz: ')+echo.join(' · ')) : '';
  F_updateKakao();
 }
-function F_backToStart(){F_show('s0');}
+function F_backToStart(){var mb=document.getElementById('mixBlock');if(mb)mb.style.display='';var pb2=document.getElementById('partyBlock');if(pb2)pb2.style.display='';F_show('s0');}
 function F_themePick(el){el.classList.toggle('sel');var vals=[].slice.call(document.querySelectorAll('#finderModal #themes .theme.sel')).map(function(o){return o.dataset.v;});F_answers.theme=vals.join(', ');F_updateKakao();}
 function F_airPick(el,v){var p=el.parentElement;p.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');F_answers.air=v==='with'?'항공 포함':'항공 제외';F_el('airDetail').style.display=v==='with'?'':'none';F_updateKakaoSafe();}
 function F_singlePick(el,grp){var p=el.parentElement;p.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');F_answers[grp]=el.textContent.trim();F_updateKakao();}
