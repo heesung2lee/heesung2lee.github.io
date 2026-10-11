@@ -5,9 +5,10 @@
 function buildSchedule() {
  if (schedBuilt) return;
  schedBuilt = true;
- const L = curLang;
  const tabBar = document.getElementById('dayTabBar');
  const panels = document.getElementById('dayPanels');
+ if (!tabBar || !panels || !DAYS.length) return;
+ const L = curLang;
  if (curDay < 0 || curDay >= DAYS.length) curDay = 0;
 
  // Phase band (bracket "rounds")
