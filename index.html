@@ -375,7 +375,8 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 .testi-by{font-size:12px;color:#9e9e9e;letter-spacing:.05em}
  
 /* ── CONTACT ── */
-.contact-page{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100svh - 52px)}
+.contact-page{display:grid;grid-template-columns:1fr;min-height:auto}
+.contact-page.single{max-width:640px;margin:0 auto}
 .contact-left{background:#f4f4f4;padding:64px 52px;display:flex;flex-direction:column;justify-content:center}
 .contact-left h1{font-size:clamp(24px,4vw,38px);font-weight:700;letter-spacing:-.02em;margin-bottom:14px;line-height:1.15}
 .contact-left p{font-size:14px;font-weight:300;color:#5c5e62;line-height:1.85;margin-bottom:28px;max-width:340px}
@@ -2877,11 +2878,6 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
  
  <a class="c-info-row" data-site-email><div class="c-info-ico">✉️</div><div><div class="c-info-lbl">Email</div><div class="c-info-val" data-site-email-val>resonatetourclub@gmail.com</div></div></a>
  </div>
- </div>
- <div class="contact-right">
- <h2><span class="ko">상담 신청</span><span class="en">Request a Quote</span></h2>
- <a href="http://pf.kakao.com/_xkpxjmX/chat" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#fee500;color:#3c1e1e;border-radius:12px;padding:18px;font-size:16px;font-weight:700;text-decoration:none"><span class="ko">카톡으로 상담 시작하기</span><span class="en">Start Chat on KakaoTalk</span></a>
- <p style="font-size:13px;color:#9e9e9e;margin-top:12px;line-height:1.7"><span class="ko">인원·날짜·예산을 보내주시면 맞춤 제안서를 보내드립니다.</span><span class="en">Send your party size, dates & budget — we will reply with a custom proposal.</span></p>
  </div>
  </div>
 
