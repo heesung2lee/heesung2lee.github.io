@@ -375,7 +375,9 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 .testi-by{font-size:12px;color:#9e9e9e;letter-spacing:.05em}
  
 /* ── CONTACT ── */
-.contact-page{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100svh - 52px)}
+.contact-page{display:grid;grid-template-columns:1fr;min-height:auto}
+.contact-page.single{max-width:720px;margin:0 auto}
+#pg-contact .contact-page{max-width:720px;margin:0 auto}
 .contact-left{background:#f4f4f4;padding:64px 52px;display:flex;flex-direction:column;justify-content:center}
 .contact-left h1{font-size:clamp(24px,4vw,38px);font-weight:700;letter-spacing:-.02em;margin-bottom:14px;line-height:1.15}
 .contact-left p{font-size:14px;font-weight:300;color:#5c5e62;line-height:1.85;margin-bottom:28px;max-width:340px}
@@ -2525,12 +2527,8 @@ body {
 <button class="opt" onclick="F_multiPick(this,'age')"><span class="ko">아이 동반</span><span class="en">Child companion</span></button>
 <button class="opt" onclick="F_multiPick(this,'age')"><span class="ko">해당 없음 (성인만)</span><span class="en">Adults only</span></button>
 </div></div>
-<div id="partyBlock"><label class="lbl"><span class="ko">인원수 <small style="font-weight:400">(테스트에서 이미 답변 — 바꾸려면 눌러주세요)</small></span><span class="en">Party size <small style="font-weight:400">(answered in quiz — tap to change)</small></span></label>
-<div class="opts" id="partyOpts">
-<button class="opt" onclick="F_singlePick(this,'party')"><span class="ko">부부 · 2인</span><span class="en">Couple · 2</span></button>
-<button class="opt" onclick="F_singlePick(this,'party')"><span class="ko">친구 4인</span><span class="en">4 friends</span></button>
-<button class="opt" onclick="F_singlePick(this,'party')"><span class="ko">단체 8인 이상</span><span class="en">Group 8+</span></button>
-</div></div>
+<div id="partyBlock"><label class="lbl"><span class="ko">인원수 (직접 입력)</span><span class="en">Party size (enter directly)</span></label>
+<div id="partyOpts" style="display:block"><input type="text" id="partyNum" min="1" max="99" inputmode="numeric" pattern="[0-9]*" placeholder="2" oninput="F_partyInput(this)" style="display:block;width:100%;padding:13px 14px;font-size:15px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;box-sizing:border-box;background:#fff;color:var(--ink)"></div></div>
 <div id="assistWrap" style="display:none"><label class="lbl"><span class="ko">이동 지원 필요</span><span class="en">Mobility assistance</span></label>
 <div class="opts" id="assistOpts">
 <button class="opt" onclick="F_multiPick(this,'assist')"><span class="ko">휠체어 이동 지원</span><span class="en">Wheelchair assistance</span></button>
@@ -2542,19 +2540,11 @@ body {
 <div class="freebox"><label class="lbl"><span class="ko">추가 요청 (자유롭게 — 알레르기, 기념일, 꼭 가고 싶은 곳 등)</span><span class="en">Anything else (allergies, anniversaries, must-sees…)</span></label>
 <textarea id="qMsg" rows="3"></textarea></div>
 </div>
-<div class="cardsToggle" id="cardsToggle" role="button" tabindex="0" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();this.click()}" onclick="F_cardsToggle()">
-<div><div style="font-size:14.5px;font-weight:800;color:var(--navy)"><span class="stepnum">3</span><span class="ko">세부 취향카드 확인 (결과에서 자동 선택됨 — 빼고 싶은 것만 해제)</span><span class="en">Review detail cards (pre-selected — uncheck to remove)</span></div>
-<div class="count" id="cardCount"></div></div>
-<span class="phint2" style="font-size:16px;color:var(--navy);font-weight:800">▾</span>
-</div>
-<div id="cardsWrap" style="display:none">
-<div id="cardGroups"></div>
-</div>
 <div class="sendrow" style="display:grid;gap:10px;margin-top:18px">
-<a class="cta kakao" id="kakaoBtn2" href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener" style="display:block;text-align:center;border-radius:10px;padding:15px;font-size:15px;font-weight:700;text-decoration:none;background:#fee500;color:#3c1e1e"><span class="ko">카톡으로 견적 요청 보내기</span><span class="en">Send quote request via KakaoTalk</span></a>
+<a class="cta kakao" id="kakaoBtn2" href="http://pf.kakao.com/_xkpxjmX/chat" target="_blank" rel="noopener" style="display:block;text-align:center;border-radius:10px;padding:15px;font-size:15px;font-weight:700;text-decoration:none;background:#fee500;color:#3c1e1e"><span class="ko">카톡으로 견적 요청 보내기</span><span class="en">Send quote request via KakaoTalk</span></a>
 <button class="cta ghost" onclick="F_backToStart()" style="background:#fff;border:1.5px solid var(--line);color:var(--navy);border-radius:100px;padding:13px;font-family:inherit;cursor:pointer">↺ <span class="ko">처음부터 다시</span><span class="en">Start over</span></button>
 </div>
-<p class="note" style="font-size:12px;color:var(--mut);line-height:1.7;margin-top:18px"><span class="ko">※ 테스트 페이지입니다. 금액은 표시하지 않습니다. 결과 + 선택 카드 + 일정이 카톡 메시지로 정리되어 전달됩니다.</span><span class="en">※ Test page. No prices shown. Results + cards + dates are composed into a KakaoTalk message.</span></p>
+<p class="note" style="font-size:12px;color:var(--mut);line-height:1.7;margin-top:18px"><span class="ko">※ 테스트 페이지입니다. 금액은 표시하지 않습니다. 결과 + 일정이 카톡 메시지로 정리되어 전달됩니다.</span><span class="en">※ Test page. No prices shown. Results + dates are composed into a KakaoTalk message.</span></p>
 </div><!-- /actionZone -->
 </div>
 
@@ -2660,7 +2650,7 @@ body {
 <script src="quiz.js"></script>
 <script>
 
-var F_KAKAO='https://open.kakao.com/o/sresonatetour';
+var F_KAKAO='http://pf.kakao.com/_xkpxjmX/chat';
 var F_ITEMS=[{"cat": "golf", "ko": "오션뷰 코스", "en": "Ocean-View Course"}, {"cat": "golf", "ko": "산악 코스", "en": "Mountain Course"}, {"cat": "golf", "ko": "링크스 코스", "en": "Links Course"}, {"cat": "golf", "ko": "사막 코스", "en": "Desert Course"}, {"cat": "golf", "ko": "해안 절벽", "en": "Coastal Cliffs"}, {"cat": "golf", "ko": "산맥 파노라마", "en": "Mountain Panorama"}, {"cat": "golf", "ko": "도심 스카이라인", "en": "City Skyline"}, {"cat": "golf", "ko": "계곡 & 숲", "en": "Valley & Forest"}, {"cat": "golf", "ko": "부담 없는 초보", "en": "Beginner Friendly"}, {"cat": "golf", "ko": "균형 잡힌 중급", "en": "Balanced Intermediate"}, {"cat": "golf", "ko": "도전적인 상급", "en": "Challenging Advanced"}, {"cat": "golf", "ko": "챔피언십 난코스", "en": "Championship Test"}, {"cat": "dining", "ko": "나파 밸리 와이너리 투어", "en": "Napa Valley Winery Tour"}, {"cat": "dining", "ko": "파인다이닝 셰프 테이블", "en": "Fine Dining Chef Table"}, {"cat": "dining", "ko": "캘리포니아 해산물 레스토랑", "en": "California Seafood Dining"}, {"cat": "dining", "ko": "정통 BBQ 스모크하우스", "en": "Authentic BBQ Smokehouse"}, {"cat": "dining", "ko": "한인타운 & 퓨전 다이닝", "en": "Koreatown & Fusion Dining"}, {"cat": "landmark", "ko": "골든게이트 브릿지", "en": "Golden Gate Bridge"}, {"cat": "landmark", "ko": "요세미티 국립공원", "en": "Yosemite National Park"}, {"cat": "landmark", "ko": "PCH 해안 드라이브", "en": "Pacific Coast Highway Drive"}, {"cat": "landmark", "ko": "할리우드 · 비버리힐스", "en": "Hollywood & Beverly Hills"}, {"cat": "landmark", "ko": "그랜드 캐니언 (헬기 옵션)", "en": "Grand Canyon (helicopter option)"}, {"cat": "exp", "ko": "MLB · NBA 직관", "en": "MLB · NBA Live Game"}, {"cat": "exp", "ko": "MLS 직관 (LAFC · LA갤럭시)", "en": "MLS Live (LAFC · LA Galaxy)"}, {"cat": "exp", "ko": "라스베이거스 쇼", "en": "Las Vegas Show"}, {"cat": "exp", "ko": "프리미엄 아울렛 쇼핑", "en": "Premium Outlet Shopping"}, {"cat": "exp", "ko": "스파 & 웰니스", "en": "Spa & Wellness"}, {"cat": "exp", "ko": "PGA 프로 레슨 클리닉", "en": "PGA Pro Lesson Clinic"}, {"cat": "local", "ko": "현지인 추천 로컬 맛집", "en": "Locals Only Food Spots"}, {"cat": "local", "ko": "파머스 마켓 & 아침 산책", "en": "Farmers Market & Morning Walk"}, {"cat": "local", "ko": "헬리콥터 투어", "en": "Helicopter Tour"}, {"cat": "local", "ko": "선셋 비치 피크닉", "en": "Sunset Beach Picnic"}, {"cat": "local", "ko": "로컬 브루어리 & 와인바 투어", "en": "Local Brewery & Wine Bar Tour"}, {"cat": "local", "ko": "서핑 레슨", "en": "Surf Lesson"}, {"cat": "local", "ko": "산타모니카 비치 바이크", "en": "Santa Monica Beach Bike"}, {"cat": "local", "ko": "라이브 재즈 & 디너", "en": "Live Jazz & Dinner"}];
 var F_PERSONA_EN={'E-S-J-S':'☀️ Sun Conqueror','E-S-J-R':'🛋️ Easy Socialite','E-S-P-S':'🎉 Spontaneous Adventurer','E-S-P-R':'🍷 Easy Pleasure Seeker','E-N-J-S':'🗺️ Trailblazer','E-N-J-R':'📸 Memory Collector','E-N-P-S':'🌈 Free Spirit','E-N-P-R':'☁️ Daydreamer','I-S-J-S':'🏃 Routine Traveler','I-S-J-R':'📚 Quiet Perfectionist','I-S-P-S':'🚶 Small Discoverer','I-S-P-R':'🐢 Restful Traveler','I-N-J-S':'🔭 Meaning Seeker','I-N-J-R':'🌙 Night Thinker','I-N-P-S':'🍃 Wanderer','I-N-P-R':'🛋️ Cozy Dreamer'};
 var F_PERSONA={
@@ -2688,7 +2678,6 @@ var F_QBANK={
 golf:[
  {t:['이번 여행, 골프 비중은?','How much golf?'],o:[['골프만 집중','Golf only'],['골프 70 + 관광 30','Golf 70 / Tour 30'],['골프 + 관광 반반','Half golf, half sights'],['골프 30 + 관광 70','Golf 30 / Tour 70'],['관광 중심 (골프 없이)','Sights only (no golf)']]},
  {t:['스코어 감각은?','Your scoring range?'],o:[['120대 — 즐기는 게 최고','120s — fun first'],['100대 — 무난하게','100s — steady'],['90대 — 코스 공략 재미','90s — strategy fun'],['80대 — 제대로 도전','80s — championship test']]},
- {t:['누구와 가세요?','Who\'s coming?'],o:[['부부 · 2인','Couple · 2'],['친구 4인','4 friends'],['단체 8인 이상','Group 8+']]},
  {t:['꼭 쳐보고 싶은 그림은?','Must-play backdrop?'],o:[['🌊 바다 옆 링크스','🌊 Ocean links'],['🏜️ 사막 리조트','🏜️ Desert resort'],['🔑 프라이빗 클럽 (섭외 지원)','🔑 Private club (sourcing help)'],['🤷 잘 모르겠어요 — 추천받기','🤷 Surprise me']]},
  {t:['일정 감각은?','Trip length?'],o:[['5박 — 핵심만','5 nights — essentials'],['7박 — 여유 있게','7 nights — relaxed'],['10박 — 제대로','10 nights — full']]},
  {t:['마지막으로, 골프에서 꼭 챙기고 싶은 게 있다면?','Any must-haves for golf?'],o:[['PGA 레슨 받고 싶어요','Want a PGA lesson'],['특정 코스 지정 (아래에 적어주세요)','Specific course (write below)'],['없어요 — 결과 보기','Nothing — see results']],free:true}],
@@ -2743,16 +2732,11 @@ function F_prefillFromQuiz(){
  var L=curLang==='ko';
  var echo=[];
  if(F_flow.indexOf('golf')>=0){
-  var qmix=F_gVal('golf',0),qparty=F_gVal('golf',2);
+  var qmix=F_gVal('golf',0);
   var map={'골프만 집중':'골프만 집중','골프 70':'골프 70','반반':'반반','골프 30':'골프 30','관광 중심':'관광 중심'};
   var mk=null;for(var k in map){if(qmix.indexOf(k)>=0){mk=map[k];break;}}
   if(mk){var v=F_selOpt('mixOpts',mk);if(v){F_answers.mix=v;var mb=document.getElementById('mixBlock');if(mb)mb.style.display='none';}}
-  var pm=null;
-  if(qparty.indexOf('2인')>=0||qparty.indexOf('부부')>=0)pm='2인';
-  else if(qparty.indexOf('4인')>=0||qparty.indexOf('친구')>=0)pm='4인';
-  else if(qparty.indexOf('8인')>=0||qparty.indexOf('단체')>=0)pm='8인';
-  if(pm){var pv=F_selOpt('partyOpts',pm);if(pv){F_answers.party=pv;var pb2=document.getElementById('partyBlock');if(pb2)pb2.style.display='none';}}
-  echo.push((L?'⛳ 골프 비중: ':'⛳ Golf mix: ')+qmix+' / '+(L?'일행: ':'Party: ')+qparty);
+  echo.push((L?'⛳ 골프 비중: ':'⛳ Golf mix: ')+qmix);
  }
  if(F_flow.indexOf('travel')>=0){var tr=F_travelTop5();echo.push((L?'🧭 성향: ':'🧭 Persona: ')+tr.code);}
  if(F_flow.indexOf('food')>=0){echo.push((L?'🍷 미식: ':'🍷 Food: ')+F_gVal('food',0)+' / '+F_gVal('food',4));}
@@ -2760,7 +2744,8 @@ function F_prefillFromQuiz(){
  if(e)e.innerHTML=echo.length?((L?'위 테스트에서 이미 답한 내용: ':'Already answered in quiz: ')+echo.join(' · ')) : '';
  F_updateKakao();
 }
-function F_backToStart(){var mb=document.getElementById('mixBlock');if(mb)mb.style.display='';var pb2=document.getElementById('partyBlock');if(pb2)pb2.style.display='';F_show('s0');}
+function F_partyInput(el){var n=parseInt(el.value,10);if(n>=1&&n<=99){F_answers.party=(curLang==='ko'?n+'명':n+' guests');}else{F_answers.party=null;}F_updateKakao();}
+function F_backToStart(){var mb=document.getElementById('mixBlock');if(mb)mb.style.display='';F_show('s0');}
 function F_themePick(el){el.classList.toggle('sel');var vals=[].slice.call(document.querySelectorAll('#finderModal #themes .theme.sel')).map(function(o){return o.dataset.v;});F_answers.theme=vals.join(', ');F_updateKakao();}
 function F_airPick(el,v){var p=el.parentElement;p.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');F_answers.air=v==='with'?'항공 포함':'항공 제외';F_el('airDetail').style.display=v==='with'?'':'none';F_updateKakaoSafe();}
 function F_singlePick(el,grp){var p=el.parentElement;p.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');F_answers[grp]=el.textContent.trim();F_updateKakao();}
@@ -2830,7 +2815,6 @@ function F_composeMsg(){
  if(F_flow.indexOf('travel')>=0){var tr=F_travelTop5();lines.push((L?'🧭 성향: ':'🧭 Persona: ')+tr.code);}
  if(F_flow.indexOf('food')>=0)lines.push((L?'🍷 미식: ':'🍷 Food: ')+F_gVal('food',0)+' / '+F_gVal('food',2));
  if(F_answers.theme)lines.push((L?'테마: ':'Theme: ')+F_answers.theme);
- var pk=F_picks();lines.push((L?'선택 카드('+pk.length+'):':'Cards('+pk.length+'):'));pk.forEach(function(p){lines.push('- '+p);});
  if(F_answers.date)lines.push((L?'시기: ':'Dates: ')+F_answers.date);
  if(F_answers.mix)lines.push((L?'비중: ':'Mix: ')+F_answers.mix);
  if(F_answers.air)lines.push((L?'항공: ':'Flights: ')+F_answers.air);
@@ -2853,7 +2837,7 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
 
  </script>
  <script>
- function finderOpen(){var m=document.getElementById('finderModal');if(m){m.style.display='block';document.body.style.overflow='hidden';}var k=document.getElementById('kakaoBtn2');if(k)k.href='https://open.kakao.com/o/sresonatetour';}
+ function finderOpen(){var m=document.getElementById('finderModal');if(m){m.style.display='block';document.body.style.overflow='hidden';}var k=document.getElementById('kakaoBtn2');if(k)k.href=F_KAKAO;}
  function finderClose(){var m=document.getElementById('finderModal');if(m){m.style.display='none';document.body.style.overflow='';}}
  document.addEventListener('touchend',function(e){var t=e.target.closest?e.target.closest('#finderModal .mod,#finderModal .opt,#finderModal .theme,#finderModal #startBtn,#finderModal .qnext,#finderModal .backbtn'):null;if(!t)return;e.preventDefault();t.click();},{passive:false});
  </script> </div>
@@ -2888,29 +2872,18 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
 <div id="pg-contact" class="page">
  <div class="contact-page">
  <div class="contact-left">
- <h2><span class="ko">당신의 여정을<br>지금 시작하세요</span><span class="en">Let's Make It<br>Resonate</span></h2>
+ <h2><span class="ko">당신의 여정을 지금 시작하세요</span><span class="en">Let's Make It Resonate</span></h2>
  <p><span class="ko">인원·날짜·예산 — 알려주시면 맞춤 제안서를 보내드립니다</span><span class="en">Share group size, dates & budget — a custom proposal will follow</span></p>
  <div class="c-info-block">
- <a href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico ico-chat"></div><div><div class="c-info-lbl">KakaoTalk</div><div class="c-info-val">@resonatetour</div></div></a>
+ <a href="http://pf.kakao.com/_xkpxjmX/chat" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico ico-chat"></div><div><div class="c-info-lbl">KakaoTalk</div><div class="c-info-val">레조네이트투어 ResonateTour</div></div></a>
  
  <a class="c-info-row" data-site-email><div class="c-info-ico">✉️</div><div><div class="c-info-lbl">Email</div><div class="c-info-val" data-site-email-val>resonatetourclub@gmail.com</div></div></a>
  </div>
- <div class="soc-grid">
- <a href="https://open.kakao.com/o/sresonatetour" target="_blank" rel="noopener" class="soc-btn soc-kakao"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.582 2 11.027c0 2.9 1.878 5.45 4.707 6.94l-1.197 4.447a.25.25 0 0 0.377.276L11.03 19.7A11.6 11.6 0 0 0 12 19.054c5.523 0 10-3.582 10-8.027S17.523 3 12 3z"/></svg>Kakao</a>
- 
- 
- 
- 
- </div>
- </div>
- <div class="contact-right">
- <h2><span class="ko">상담 신청</span><span class="en">Request a Quote</span></h2>
- <div style="background:#f7f8fa;border:1px solid #e8e8e8;border-radius:12px;padding:40px 24px;text-align:center"><div style="font-size:15px;font-weight:700;color:#1a3450;letter-spacing:.15em"><span class="ko">COMING SOON</span><span class="en">COMING SOON</span></div><div style="font-size:12px;color:#9e9e9e;margin-top:8px"><span class="ko">온라인 상담 신청 준비 중입니다.<br>카카오톡 @resonatetour로 문의해 주세요.</span><span class="en">Online booking coming soon.<br>Please contact us via KakaoTalk @resonatetour.</span></div></div>
  </div>
  </div>
 
- <div class="contact-faq">
- <h2 style="font-size:20px;font-weight:700;letter-spacing:-.01em;margin:40px 0 8px"><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span></h2>
+ <div class="contact-faq" style="padding:0 52px;margin-top:-20px">
+ <h2 style="font-size:20px;font-weight:700;letter-spacing:-.01em;margin:16px 0 8px"><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span></h2>
  <div class="faq-wrap">
 
  <div class="faq-cats">
