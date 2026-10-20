@@ -544,7 +544,7 @@ var COURSE_INFO = {
 "usa-6":{par:72,yards:6721,slope:140,rating:74.0,diff:{ko:"챔피언십",en:"Championship"}},
 "usa-7":{par:72,yards:6835,designer:{ko:"그렉 내시",en:"Greg Nash"},diff:{ko:"퍼블릭",en:"Public"}},
 "usa-8":{par:72,yards:7038,designer:{ko:"아널드 파머",en:"Arnold Palmer"},diff:{ko:"리조트",en:"Resort"}},
-"usa-9":{par:72,yards:6850,designer:{ko:"웨이드 케이블 & 조니 포츠",en:"Wade Cable & Johnny Potts"},diff:{ko:"프라이빗",en:"Private"}},
+"usa-9":{par:72,yards:6925,slope:139,designer:{ko:"웨이드 케이블 & 조니 포츠",en:"Wade Cable & Johnny Potts"},diff:{ko:"퍼블릭",en:"Public"}},
 "usa-10":{par:71,yards:6780,designer:{ko:"아서 힐스",en:"Arthur Hills"},diff:{ko:"퍼블릭",en:"Public"}},
 "usa-11":{par:72,yards:7093,designer:{ko:"아서 힐스",en:"Arthur Hills"},diff:{ko:"챔피언십",en:"Championship"}},
 "usa-12":{par:72,yards:7300,slope:150,rating:76.1,designer:{ko:"피트 다이",en:"Pete Dye"},diff:{ko:"챔피언십",en:"Championship"}},
