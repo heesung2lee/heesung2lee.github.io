@@ -1,3 +1,8 @@
+function setHTML(el, html){
+ if(!el) return;
+ var d=new DOMParser().parseFromString(String(html), 'text/html');
+ el.replaceChildren.apply(el, Array.prototype.slice.call(d.body.childNodes));
+}
 /* maps.js — ⑤ 지도/코스 모듈 (tour-base-maps)
    지도/코스/일정 22 funcs. 외부의존은 호스트 제공: syncDayVisuals countUp runTyping step type addHearts curLang + Leaflet L
    전역: CRS_USA CRS_CAN crsMapUsa crsMapKr map bounds curDay schedBuilt DAY_META DAYS PLAN_DATA
@@ -13,7 +18,7 @@ function buildSchedule() {
 
  // Phase band (bracket "rounds")
  const pb = document.getElementById('jPhaseBand');
- if (pb) pb.innerHTML = JPHASES.map((p, pi) => '<div class="jphase" id="jph' + pi + '">' + (L === 'ko' ? p.ko : p.en) + '</div>').join('');
+ if (pb) setHTML(pb, JPHASES.map((p, pi) => '<div class="jphase" id="jph' + pi + '">' + (L === 'ko' ? p.ko : p.en) + '</div>').join(''));
 
  // Connected day nodes + connector links
  let railHTML = '';
@@ -29,15 +34,14 @@ function buildSchedule() {
  + '<div class="jn-tag' + (wk ? ' wk' : '') + '">' + (wk ? (L === 'ko' ? '주말 · ' : 'WEEKEND · ') : '') + type + '</div>'
  + '</div>';
  });
- tabBar.innerHTML = railHTML;
-
+ setHTML(tabBar, railHTML);
  // Panels
- panels.innerHTML = '';
+ panels.replaceChildren();
  DAYS.forEach((day, i) => {
  const panel = document.createElement('div');
  panel.className = 'dpanel' + (i === curDay ? ' act' : '');
  panel.id = 'dp' + i;
- panel.innerHTML = buildPanel(day, i);
+ setHTML(panel, buildPanel(day, i));
  panels.appendChild(panel);
  });
 
@@ -125,7 +129,7 @@ function renderPlans() {
  if (!grid || grid.dataset.lang === curLang) return;
  grid.dataset.lang = curLang;
  const L = curLang;
- grid.innerHTML = `<div style="max-width:680px;margin:0 auto;padding:12px 16px 0"> <div class="plan" style="border:2px solid var(--gold);border-radius:18px;padding:20px 18px;background:#fff"> <div style="font-size:12px;font-weight:800;letter-spacing:.12em;color:#9e9e9e;margin-bottom:8px"><span class="ko">대표 일정 (예시)</span><span class="en">SIGNATURE SAMPLE</span></div> <h3 style="font-size:22px;font-weight:800;margin:0 0 4px"><span class="ko">트럼프 내셔널 + 명문 코스 5일</span><span class="en">Trump National + Signature Courses · 5 Days</span></h3> <p style="font-size:14px;color:#5c5e62;line-height:1.7;margin:0 0 10px"><span class="ko">트럼프 내셔널 LA 포함 명문 3곳 + 원하시는 코스 선택 + 와이너리·쇼핑·관광 + 코스 근처 숙소. 아래 취향 테스트에서 코스와 활동을 고르면 이 일정이 맞춤 견적으로 바뀝니다.</span><span class="en">Trump National LA + 3 signature courses of your choice + winery, shopping & sights + stay near the courses. Pick courses and activities in the taste test below and this becomes your custom quote.</span></p> <div style="font-size:26px;font-weight:800;margin-bottom:2px">1인 $4,350<span style="font-size:13px;font-weight:400;color:#9e9e9e">부터 (2인 비수기 기준 · 항공 별도 · 환율 변동 시 재견적)</span></div> <details style="font-size:12.5px;color:#5c5e62;line-height:1.8;margin-bottom:12px"><summary style="cursor:pointer;font-weight:700"><span class="ko">금액 근거 보기 (실비 합산)</span><span class="en">See price basis</span></summary><span class="ko">골프 3R 약 $800 (트럼프 평일가·Journey·Cross Creek 기준) + 숙소 4박 1인 약 $600 (총 $1,200 ÷2인) + 차량·가이드 3일 1인 약 $750 (총 $1,500 ÷2인) + 와이너리·관광 약 $200 + 알선 수수료 (항공 제외 예약원가의 40%, 부가세 포함) + 기타·예비비 약 $1,500 = 약 $4,350. 성수기·주말·업그레이드 시 상승하며, 최종 금액은 상담 후 개별 견적서로 확정됩니다. 항공 별도.</span><span class="en">3 rounds ~$800 + 4 nights ~$600 ($1,200 ÷2) + van/guide 3 days ~$750 ($1,500 ÷2) + activities ~$200 + fee 40% of booking cost ex-flights (VAT incl.) + contingency ~$1,500 ≈ $4,350 pp. Rises in peak season/weekends/upgrades; final price by individual quote. Flights excluded.</span></details> <div style="font-size:12px;color:#9e9e9e;margin-bottom:12px"><span class="ko">모집·출발확정·잔여석 판매가 아닌 1:1 맞춤여행 알선입니다.</span><span class="en">1:1 custom travel arrangement, not open recruitment.</span></div> <details style="font-size:12.5px;color:#5c5e62;line-height:1.8;margin-bottom:12px"><summary style="cursor:pointer;font-weight:700"><span class="ko">예약금·잔금 안내</span><span class="en">Deposit & balance</span></summary><span class="ko">계약 체결 시 예약금 200,000원을 납부하시면 계약이 성립되고 예약이 시작됩니다. 잔금은 출발 1일 전까지 납부합니다 (계좌이체 또는 카드 결제 — 카드 정보는 결제 화면에서 본인이 직접 입력하며, 당사는 수집·보관하지 않습니다). 출발 1일 이내 계약 시 계약과 동시에 전액 납부합니다. 취소 시 사유별 실비 정산이 적용됩니다: 선불 골프 티타임·선결제 액티비티는 이용일 기준 3일 전까지 취소 시 100% 환급, 3일 이내 취소 시 환급 불가 (현지 직불분은 해당 업체 규정 적용). 숙소·항공은 해당 업체의 자체 취소·환불 약관을 따릅니다.</span><span class="en">A KRW 200,000 deposit is due at signing — booking starts upon payment. Balance is due 1 day before departure (transfer or card — you enter card details on the payment screen; we never collect or store them). For bookings within 1 day of departure, full payment is due at signing. Actual-cost settlement applies on cancellation: prepaid golf tee times and activities are fully refundable until 3 days before use, non-refundable within 3 days (local direct charges follow vendor rules). Lodging and flights follow each vendor's own policy.</span></details> <button class="btn-book" style="font-size:14px;padding:14px 40px;border-radius:100px" onclick="finderOpen()"><span class="ko">취향 테스트로 맞춤 견적 받기</span><span class="en">Get My Custom Quote</span></button> </div></div>`;
+ setHTML(grid, `<div style="max-width:680px;margin:0 auto;padding:12px 16px 0"> <div class="plan" style="border:2px solid var(--gold);border-radius:18px;padding:20px 18px;background:#fff"> <div style="font-size:12px;font-weight:800;letter-spacing:.12em;color:#9e9e9e;margin-bottom:8px"><span class="ko">대표 일정 (예시)</span><span class="en">SIGNATURE SAMPLE</span></div> <h3 style="font-size:22px;font-weight:800;margin:0 0 4px"><span class="ko">트럼프 내셔널 + 명문 코스 5일</span><span class="en">Trump National + Signature Courses · 5 Days</span></h3> <p style="font-size:14px;color:#5c5e62;line-height:1.7;margin:0 0 10px"><span class="ko">트럼프 내셔널 LA 포함 명문 3곳 + 원하시는 코스 선택 + 와이너리·쇼핑·관광 + 코스 근처 숙소. 아래 취향 테스트에서 코스와 활동을 고르면 이 일정이 맞춤 견적으로 바뀝니다.</span><span class="en">Trump National LA + 3 signature courses of your choice + winery, shopping & sights + stay near the courses. Pick courses and activities in the taste test below and this becomes your custom quote.</span></p> <div style="font-size:26px;font-weight:800;margin-bottom:2px">1인 $4,350<span style="font-size:13px;font-weight:400;color:#9e9e9e">부터 (2인 비수기 기준 · 항공 별도 · 환율 변동 시 재견적)</span></div> <details style="font-size:12.5px;color:#5c5e62;line-height:1.8;margin-bottom:12px"><summary style="cursor:pointer;font-weight:700"><span class="ko">금액 근거 보기 (실비 합산)</span><span class="en">See price basis</span></summary><span class="ko">골프 3R 약 $800 (트럼프 평일가·Journey·Cross Creek 기준) + 숙소 4박 1인 약 $600 (총 $1,200 ÷2인) + 차량·가이드 3일 1인 약 $750 (총 $1,500 ÷2인) + 와이너리·관광 약 $200 + 알선 수수료 (항공 제외 예약원가의 40%, 부가세 포함) + 기타·예비비 약 $1,500 = 약 $4,350. 성수기·주말·업그레이드 시 상승하며, 최종 금액은 상담 후 개별 견적서로 확정됩니다. 항공 별도.</span><span class="en">3 rounds ~$800 + 4 nights ~$600 ($1,200 ÷2) + van/guide 3 days ~$750 ($1,500 ÷2) + activities ~$200 + fee 40% of booking cost ex-flights (VAT incl.) + contingency ~$1,500 ≈ $4,350 pp. Rises in peak season/weekends/upgrades; final price by individual quote. Flights excluded.</span></details> <div style="font-size:12px;color:#9e9e9e;margin-bottom:12px"><span class="ko">모집·출발확정·잔여석 판매가 아닌 1:1 맞춤여행 알선입니다.</span><span class="en">1:1 custom travel arrangement, not open recruitment.</span></div> <details style="font-size:12.5px;color:#5c5e62;line-height:1.8;margin-bottom:12px"><summary style="cursor:pointer;font-weight:700"><span class="ko">예약금·잔금 안내</span><span class="en">Deposit & balance</span></summary><span class="ko">계약 체결 시 예약금 200,000원을 납부하시면 계약이 성립되고 예약이 시작됩니다. 잔금은 출발 7일 전까지 납부합니다 (계좌이체 또는 카드 결제 — 카드 정보는 결제 화면에서 본인이 직접 입력하며, 당사는 수집·보관하지 않습니다). 출발 7일 이내 계약 시 계약과 동시에 전액 납부합니다. 취소 시 사유별 실비 정산이 적용됩니다: 선불 골프 티타임·선결제 액티비티는 이용일 기준 3일 전까지 취소 시 100% 환급, 3일 이내 취소 시 환급 불가 (현지 직불분은 해당 업체 규정 적용). 숙소·항공은 해당 업체의 자체 취소·환불 약관을 따릅니다.</span><span class="en">A KRW 200,000 deposit is due at signing — booking starts upon payment. Balance is due 1 day before departure (transfer or card — you enter card details on the payment screen; we never collect or store them). For bookings within 1 day of departure, full payment is due at signing. Actual-cost settlement applies on cancellation: prepaid golf tee times and activities are fully refundable until 3 days before use, non-refundable within 3 days (local direct charges follow vendor rules). Lodging and flights follow each vendor's own policy.</span></details> <button class="btn-book" style="font-size:14px;padding:14px 40px;border-radius:100px" onclick="finderOpen()"><span class="ko">취향 테스트로 맞춤 견적 받기</span><span class="en">Get My Custom Quote</span></button> </div></div>`);
 }
  
  
@@ -160,7 +164,7 @@ function addMapLinks() {
  a.target = '_blank';
  a.rel = 'noopener noreferrer';
  a.style.cssText = 'font-size:9px;color:#aaa;margin-left:6px;text-decoration:none;vertical-align:middle';
- a.innerHTML = '<span class="ico-pin" style="display:inline-block;color:#aaa;font-size:16px"></span>';
+ setHTML(a, '<span class="ico-pin" style="display:inline-block;color:#aaa;font-size:16px"></span>');
  el.appendChild(a);
  break;
  }
@@ -173,9 +177,10 @@ function addMapLinks() {
 function showScheduleSkeleton() {
  var panels = document.getElementById('dayPanels');
  if (!panels) return;
- panels.innerHTML = Array(3).fill(0).map(function() {
+ var skel = Array(3).fill(0).map(function() {
  return '<div style="padding:28px 24px"><div class="skeleton skeleton-line w60"></div><div class="skeleton skeleton-line w80"></div><div class="skeleton skeleton-block"></div></div>';
  }).join('');
+ setHTML(panels, skel);
 }
  
 /* ── #47 Swipe to close ham menu — 제거됨: 슬라이드로 인해 시트가 오른쪽으로 밀린 채 stuck되는 문제 방지. 메뉴 선택은 탭(tap)으로만. */
@@ -299,7 +304,7 @@ function initScheduleSearch() {
  if (!header || header.querySelector('#sched-search')) return;
  var wrap = document.createElement('div');
  wrap.style.cssText = 'padding:6px 16px 8px;';
- wrap.innerHTML = '<input id="sched-search" type="search" placeholder="일정 검색 (Search schedule)." autocomplete="off" style="width:100%;padding:8px 14px;border:1.5px solid #e0e0e0;border-radius:100px;font-size:13px;font-family:inherit;outline:none;background:#f8f8f8;box-sizing:border-box">';
+ setHTML(wrap, '<input id="sched-search" type="search" placeholder="일정 검색 (Search schedule)." autocomplete="off" style="width:100%;padding:8px 14px;border:1.5px solid #e0e0e0;border-radius:100px;font-size:13px;font-family:inherit;outline:none;background:#f8f8f8;box-sizing:border-box">');
  header.appendChild(wrap);
  var input = wrap.querySelector('#sched-search');
  input.addEventListener('input', function() {
@@ -327,13 +332,13 @@ function initScheduleSearch() {
  if (p.querySelector('.bookmark-btn')) return;
  var btn = document.createElement('button');
  btn.className = 'bookmark-btn' + (saved['day'+i] ? ' saved' : '');
- btn.innerHTML = saved['day'+i] ? '♥' : '♡';
+ setHTML(btn, saved['day'+i] ? '♥' : '♡');
  btn.title = '즐겨찾기';
  btn.onclick = function(e) {
  e.stopPropagation();
  saved['day'+i] = !saved['day'+i];
  btn.className = 'bookmark-btn' + (saved['day'+i] ? ' saved' : '');
- btn.innerHTML = saved['day'+i] ? '♥' : '♡';
+ setHTML(btn, saved['day'+i] ? '♥' : '♡');
  btn.style.transform = 'scale(1.4)';
  setTimeout(function(){ btn.style.transform = ''; }, 200);
  localStorage.setItem('resonate-bookmarks', JSON.stringify(saved));
