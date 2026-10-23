@@ -2536,7 +2536,7 @@ body {
 <textarea id="qMsg" rows="3"></textarea></div>
 </div>
 <div class="sendrow" style="display:grid;gap:10px;margin-top:18px">
-<a class="cta kakao" id="kakaoBtn2" href="https://pf.kakao.com/_xkpxjmX/chat" target="_blank" rel="noopener" style="display:block;text-align:center;border-radius:10px;padding:15px;font-size:15px;font-weight:700;text-decoration:none;background:#fee500;color:#3c1e1e"><span class="ko">카톡으로 견적 요청 보내기</span><span class="en">Send quote request via KakaoTalk</span></a>
+<a class="cta kakao" id="kakaoBtn2" href="https://pf.kakao.com/_xkpxjmX/chat" target="_blank" rel="noopener" onclick="F_kakaoSend(event)" style="display:block;text-align:center;border-radius:10px;padding:15px;font-size:15px;font-weight:700;text-decoration:none;background:#fee500;color:#3c1e1e"><span class="ko">카톡으로 견적 요청 보내기</span><span class="en">Send quote request via KakaoTalk</span></a>
 </div>
 </div><!-- /actionZone -->
 </div>
@@ -2822,6 +2822,26 @@ function F_composeMsg(){
  /* free texts from quiz */
  Object.keys(F_answers).forEach(function(k){var a=F_answers[k];if(a&&a.free)lines.push((L?'메모: ':'Note: ')+a.free);});
  return lines.join('\n');
+}
+/* 카톡 전송: 설문 요약을 클립보드에 복사한 뒤 채널 채팅을 연다 */
+function F_kakaoSend(ev){
+ try{
+  var txt='';
+  try{ if(typeof F_composeMsg==='function') txt=F_composeMsg(); }catch(_e){}
+  if(!txt) return;
+  var done=function(){ try{ showToast(curLang==='ko'?'설문 요약이 복사됐어요 — 채팅창에 붙여넣어 주세요':'Survey copied — paste it into the chat'); }catch(_e){} };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+   navigator.clipboard.writeText(txt).then(done).catch(function(){ F_legacyCopy(txt,done); });
+  } else { F_legacyCopy(txt,done); }
+ }catch(_e){}
+}
+function F_legacyCopy(txt,cb){
+ try{
+  var ta=document.createElement('textarea'); ta.value=txt; ta.setAttribute('readonly','');
+  ta.style.cssText='position:fixed;top:0;left:0;opacity:0';
+  document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, txt.length);
+  document.execCommand('copy'); document.body.removeChild(ta); if(cb) cb();
+ }catch(_e){}
 }
 function F_updateKakao(){F_updateKakaoSafe();}
 function F_updateKakaoSafe(){try{var b=F_el('kakaoBtn2');if(b)b.href=F_KAKAO;}catch(e){}}
