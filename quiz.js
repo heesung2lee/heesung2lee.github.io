@@ -35,23 +35,28 @@ function F_renderQ(){
  var h=document.createElement('h2');h.style.cssText='font-size:17px;margin:6px 0 14px';
  F_koEn(q.t[0], q.t[1]).forEach(function(s){ h.appendChild(s); });host.appendChild(h);
  var box=document.createElement('div');box.className='opts';
+ var prevAns=F_answers[F_ansKey()];
  q.o.forEach(function(o){
   var b=document.createElement('button');b.className='opt';
   F_koEn(o[0].split('|')[0], o[1].split('|')[0]).forEach(function(s){ b.appendChild(s); });
+  if(prevAns && prevAns.ko===o[0]){b.classList.add('sel');qsel=o;}
   b.onclick=function(){box.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');qsel=o;F_el('qnext').disabled=false;};box.appendChild(b);
  });
  host.appendChild(box);
  var _isLastQ=(F_qi===bank.length-1&&F_fi===F_flow.length-1);
- if(_isLastQ){var f=document.createElement('div');f.className='qfree';
+ /* 옵션 문구에 '(아래에 적어주세요)'가 있거나 free:true 인 문항은 입력란을 반드시 노출 */
+ var _needFree=!!q.free||_isLastQ;
+ if(!_needFree){_needFree=q.o.some(function(o){return /적어\s*주세요|write below|enter below/i.test(o[0]+' '+o[1]);});}
+ if(_needFree){var f=document.createElement('div');f.className='qfree';
   var ex=F_freeExample();
   var lab=document.createElement('label');
   F_koEn('✏️ 덧붙일 말 (선택 — '+ex[0]+')', '✏️ Add a note (optional — '+ex[1]+')').forEach(function(s){ lab.appendChild(s); });
   f.appendChild(lab);
-  var ta=document.createElement('textarea');ta.id='qfree';ta.rows=2;ta.placeholder='없으면 비워두세요';f.appendChild(ta);
+  var ta=document.createElement('textarea');ta.id='qfree';ta.rows=2;ta.placeholder='없으면 비워두세요';ta.value=(prevAns&&prevAns.free)||'';ta.setAttribute('aria-label',curLang==='ko'?'추가 입력':'Additional note');f.appendChild(ta);
   host.appendChild(f);}
  var nav=document.createElement('div');nav.className='qnav';
  var bk=document.createElement('button');bk.className='backbtn';bk.textContent=curLang==='ko'?'← 돌아가기':'← Back';bk.disabled=!(F_qi>0||F_fi>0);bk.style.opacity=(F_qi>0||F_fi>0)?'1':'.4';bk.onclick=F_qback;nav.appendChild(bk);
- var nx=document.createElement('button');nx.className='nextbtn';nx.id='qnext';nx.textContent=curLang==='ko'?'제출 →':'Submit →';nx.disabled=true;nx.onclick=function(){if(qsel)F_qpick(qsel);};nav.appendChild(nx);
+ var nx=document.createElement('button');nx.className='nextbtn';nx.id='qnext';nx.textContent=curLang==='ko'?'제출 →':'Submit →';nx.disabled=!qsel;nx.onclick=function(){if(qsel)F_qpick(qsel);};nav.appendChild(nx);
  host.appendChild(nav);
 }
 function F_freeExample(){
