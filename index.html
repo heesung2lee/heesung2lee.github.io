@@ -2826,6 +2826,8 @@ function F_composeMsg(){
  return lines.join('\n');
 }
 var QUOTE_API='https://soccer-answering-charlotte-expansys.trycloudflare.com';
+/* 서버 주소는 quote-api.json에서 갱신 (터널 재시작 대응) */
+try{fetch('/quote-api.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){if(j&&j.api)QUOTE_API=j.api;}).catch(function(){});}catch(e){}
 function F_quoteDetails(){
  var L=curLang==='ko', d=[];
  if(F_answers.theme)d.push([L?'테마':'Theme',F_answers.theme]);
