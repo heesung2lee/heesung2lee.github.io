@@ -2536,6 +2536,8 @@ body {
 <textarea id="qMsg" rows="3"></textarea></div>
 </div>
 <div class="sendrow" style="display:grid;gap:10px;margin-top:18px">
+<button class="cta" id="quoteBtn" onclick="F_submitQuote()" style="display:block;width:100%;border:none;border-radius:10px;padding:15px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;background:#16213e;color:#fff"><span class="ko">견적 요청 접수 (PDF 발급)</span><span class="en">Submit quote request (PDF)</span></button>
+<div id="quoteDone" style="display:none;border:1.5px solid #16213e;border-radius:12px;padding:16px;background:#f7f8fb;font-size:13.5px;line-height:1.7"></div>
 <a class="cta kakao" id="kakaoBtn2" href="https://pf.kakao.com/_xkpxjmX/chat" target="_blank" rel="noopener" onclick="F_kakaoSend(event)" style="display:block;text-align:center;border-radius:10px;padding:15px;font-size:15px;font-weight:700;text-decoration:none;background:#fee500;color:#3c1e1e"><span class="ko">카톡으로 견적 요청 보내기</span><span class="en">Send quote request via KakaoTalk</span></a>
 </div>
 </div><!-- /actionZone -->
@@ -2822,6 +2824,65 @@ function F_composeMsg(){
  /* free texts from quiz */
  Object.keys(F_answers).forEach(function(k){var a=F_answers[k];if(a&&a.free)lines.push((L?'메모: ':'Note: ')+a.free);});
  return lines.join('\n');
+}
+var QUOTE_API='https://soccer-answering-charlotte-expansys.trycloudflare.com';
+function F_quoteDetails(){
+ var L=curLang==='ko', d=[];
+ if(F_answers.theme)d.push([L?'테마':'Theme',F_answers.theme]);
+ if(F_answers.date)d.push([L?'시기':'Dates',F_answers.date]);
+ if(F_answers.mix)d.push([L?'골프 비중':'Golf mix',F_answers.mix]);
+ if(F_answers.air)d.push([L?'항공':'Flights',F_answers.air]);
+ if(F_answers.cabin)d.push([L?'좌석':'Cabin',F_answers.cabin]);
+ if(F_answers.airline)d.push([L?'항공사':'Airline',F_answers.airline]);
+ if(F_answers.party)d.push([L?'인원':'Party',F_answers.party]);
+ if(F_answers.age)d.push([L?'동반자':'Companions',F_answers.age]);
+ if(F_answers.assist)d.push([L?'이동지원':'Mobility',F_answers.assist]);
+ return d;
+}
+function F_submitQuote(){
+ var btn=F_el('quoteBtn');
+ var nameEl=F_el('qName');
+ var raw=(nameEl&&nameEl.value||'').trim();
+ if(!raw){ try{showToast(curLang==='ko'?'이름 / 연락처를 입력해 주세요':'Please enter name / contact');}catch(e){} if(nameEl)nameEl.focus(); return; }
+ var parts=raw.split('/');
+ var name=(parts[0]||'').trim();
+ var contact=(parts.slice(1).join('/')||'').trim();
+ if(!contact){ contact=raw; name=raw; }
+ var payload={name:name,contact:contact,lines:(typeof F_composeMsg==='function'?F_composeMsg().split('\n'):[]),
+  details:F_quoteDetails(),message:(F_el('qMsg')&&F_el('qMsg').value||'').trim()};
+ if(btn){btn.disabled=true;btn.style.opacity='.6';}
+ fetch(QUOTE_API+'/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+  .then(function(r){return r.json();})
+  .then(function(j){
+   if(!j||!j.ok)throw new Error('fail');
+   var box=F_el('quoteDone');
+   if(box){
+    box.style.display='block';
+    box.textContent='';
+    var t=document.createElement('div');
+    var b=document.createElement('b');
+    b.textContent=curLang==='ko'?'접수 완료':'Request received';
+    t.appendChild(b);
+    var p1=document.createElement('div');p1.textContent=(curLang==='ko'?'접수번호 ':'No. ')+j.id;p1.style.marginTop='4px';t.appendChild(p1);
+    box.appendChild(t);
+    if(j.pdf){
+     var a=document.createElement('a');a.href=QUOTE_API+j.pdf;a.target='_blank';a.rel='noopener';
+     a.textContent=curLang==='ko'?'PDF 열기 / 저장':'Open / save PDF';
+     a.style.cssText='display:inline-block;margin-top:10px;padding:10px 14px;border-radius:8px;background:#16213e;color:#fff;text-decoration:none;font-weight:700';
+     box.appendChild(a);
+     var sh=document.createElement('button');
+     sh.textContent=curLang==='ko'?'공유 (카톡·문자·메일)':'Share';
+     sh.style.cssText='display:inline-block;margin:10px 0 0 8px;padding:10px 14px;border-radius:8px;background:#fff;color:#16213e;border:1.5px solid #16213e;font-weight:700;font-family:inherit;cursor:pointer';
+     sh.onclick=function(){ try{ navigator.share?navigator.share({title:'견적 요청서',url:QUOTE_API+j.pdf}):window.open(QUOTE_API+j.pdf,'_blank'); }catch(e){} };
+     box.appendChild(sh);
+    }
+    if(btn){btn.style.display='none';}
+   }
+  })
+  .catch(function(){
+   if(btn){btn.disabled=false;btn.style.opacity='1';}
+   try{showToast(curLang==='ko'?'접수 실패 — 카톡 버튼을 이용해 주세요':'Submission failed — please use the Kakao button');}catch(e){}
+  });
 }
 /* 카톡 전송: 설문 요약을 클립보드에 복사한 뒤 채널 채팅을 연다 */
 function F_kakaoSend(ev){
