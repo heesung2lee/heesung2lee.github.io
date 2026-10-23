@@ -2671,9 +2671,9 @@ var F_QBANK={
 golf:[
  {t:['이번 여행, 골프 비중은?','How much golf?'],o:[['골프만 집중','Golf only'],['골프 70 + 관광 30','Golf 70 / Tour 30'],['골프 + 관광 반반','Half golf, half sights'],['골프 30 + 관광 70','Golf 30 / Tour 70'],['관광 중심 (골프 없이)','Sights only (no golf)']]},
  {t:['스코어 감각은?','Your scoring range?'],o:[['120대','120s'],['100대','100s'],['90대','90s'],['80대','80s'],['70대 이하','70s or better']],personaLabel:['플레이 성향 (복수 선택)','Play style (multi-select)'],persona:[['즐기는 게 최고','Fun first'],['스코어는 상관없어요','Don’t care about score'],['무난하게','Steady'],['코스 공략이 재미','Course strategy'],['제대로 도전','Championship test'],['동반자와의 시간이 중요','Time with companions']]},
- {t:['꼭 쳐보고 싶은 그림은?','Must-play backdrop?'],o:[['🌊 바다 옆 링크스','🌊 Ocean links'],['🏜️ 사막 리조트','🏜️ Desert resort'],['🔑 프라이빗 클럽 (섭외 지원)','🔑 Private club (sourcing help)'],['🤷 잘 모르겠어요 — 추천받기','🤷 Surprise me']]},
+ {t:['꼭 쳐보고 싶은 그림은? (복수 선택)','Must-play backdrops (multi)'],multi:true,o:[['🌊 바다 옆 링크스','🌊 Ocean links'],['🏜️ 사막 리조트','🏜️ Desert resort'],['🔑 프라이빗 클럽 (섭외 지원)','🔑 Private club (sourcing help)'],['🤷 잘 모르겠어요 — 추천받기','🤷 Surprise me']]},
  {t:['일정 감각은?','Trip length?'],o:[['5박 — 핵심만','5 nights — essentials'],['7박 — 여유 있게','7 nights — relaxed'],['10박 — 제대로','10 nights — full']]},
- {t:['마지막으로, 골프에서 꼭 챙기고 싶은 게 있다면?','Any must-haves for golf?'],o:[['PGA 레슨 받고 싶어요','Want a PGA lesson'],['특정 코스 지정 (아래에 적어주세요)','Specific course (write below)'],['없어요 — 결과 보기','Nothing — see results']],free:true}],
+ {t:['마지막으로, 골프에서 꼭 챙기고 싶은 게 있다면? (복수 선택)','Any must-haves for golf? (multi)'],multi:true,o:[['PGA 레슨 받고 싶어요','Want a PGA lesson'],['특정 코스 지정 (아래에 적어주세요)','Specific course (write below)'],['없어요 — 결과 보기','Nothing — see results']],free:true}],
 travel:[
  {t:['아침에 눈 뜨면 제일 먼저?','First thing in the morning?'],o:[['🌅 일출 러닝 나가기|E','🌅 Sunrise run|E'],['🥐 여유롭게 조식 즐기기|I','🥐 Slow breakfast|I']]},
  {t:['식당 고를 때 나는?','Picking a restaurant?'],o:[['⭐ 검증된 맛집 리스트대로|S','⭐ Trusted list|S'],['🗺️ 골목길 우연한 발견|N','🗺️ Wander & discover|N']]},
@@ -2683,16 +2683,16 @@ travel:[
  {t:['몸 상태 관리는?','Body care?'],o:[['🏄 액티비티로 충전|PHY-S','🏄 Recharge active|PHY-S'],['💆 휴식으로 충전 (스파·낮잠)|PHY-R','💆 Recharge resting|PHY-R']]},
  {t:['사진 vs 눈?','Photos vs eyes?'],o:[['📸 인생샷은 건져야지|N','📸 Must get the shot|N'],['👀 눈에 담는 게 먼저|S','👀 Eyes first|S']]},
  {t:['예상치 못한 변경엔?','When plans change?'],o:[['😆 오히려 좋아, 가자|P','😆 Even better|P'],['😌 플랜B 있으니 괜찮아|J','😌 Plan B|J']]},
- {t:['마지막으로, 이번 여행에서 꼭 챙기고 싶은 게 있다면?','Any must-haves for this trip?'],o:[['기념일·이벤트 있어요 (아래에 적어주세요)','Anniversary/event (write below)'],['꼭 가고 싶은 곳 있어요 (아래에 적어주세요)','Must-visit place (write below)'],['없어요 — 결과 보기','Nothing — see results']],free:true}],
+ {t:['마지막으로, 이번 여행에서 꼭 챙기고 싶은 게 있다면? (복수 선택)','Any must-haves for this trip? (multi)'],multi:true,o:[['기념일·이벤트 있어요 (아래에 적어주세요)','Anniversary/event (write below)'],['꼭 가고 싶은 곳 있어요 (아래에 적어주세요)','Must-visit place (write below)'],['없어요 — 결과 보기','Nothing — see results']],free:true}],
 food:[
  {t:['해외에서 한식, 얼마나 필요해?','How much Korean food?'],o:[['매끼 필요해요','Every meal'],['2~3일에 한 번이면 돼요','Every few days'],['현지식만으로 좋아요','Local food only']]},
  {t:['아침은 어떻게 드세요?','Breakfast style?'],o:[['든든한 아침 필수','Big breakfast must'],['가볍게 (커피·빵)','Light (coffee & bread)'],['안 먹는 편','Usually skip']]},
  {t:['매운맛·향신료는?','Spicy food?'],o:[['매운 거 좋아함','Love spicy'],['조금만','Mild only'],['전혀 못 먹음','Cannot eat']]},
- {t:['새 음식 도전도는?','Adventurous eating?'],o:[['뭐든 먹어봐요','Eat anything'],['익숙한 것 위주','Familiar first'],['알레르기·못 먹는 것 있어요','Restrictions']]},
+ {t:['새 음식 도전도는? (복수 선택)','Adventurous eating? (multi)'],multi:true,o:[['뭐든 먹어봐요','Eat anything'],['익숙한 것 위주','Familiar first'],['알레르기·못 먹는 것 있어요','Restrictions']]},
  {t:['고기 vs 해산물?','Meat vs seafood?'],o:[['고기파 (스테이크·BBQ)','Meat lover'],['해산물파','Seafood lover'],['둘 다 좋아요','Both']]},
  {t:['술은?','Drinks?'],o:[['와이너리·바 좋아함','Love wineries & bars'],['가볍게만','Light only'],['안 마셔요','No alcohol']]},
  {t:['카페·디저트파?','Café person?'],o:[['하루 1카페 필수','Daily café must'],['그때그때','Sometimes'],['관심 없어요','Not interested']]},
- {t:['식사 분위기는?','Dining mood?'],o:[['조용한 파인다이닝','Quiet fine dining'],['활기찬 로컬 맛집','Lively local spots'],['편한 캐주얼','Casual & easy']]}
+ {t:['식사 분위기는? (복수 선택)','Dining mood? (multi)'],multi:true,o:[['조용한 파인다이닝','Quiet fine dining'],['활기찬 로컬 맛집','Lively local spots'],['편한 캐주얼','Casual & easy']]}
 ]};
 
 var F_flow=[],F_answers={theme:null,date:null,mix:null,air:null};
