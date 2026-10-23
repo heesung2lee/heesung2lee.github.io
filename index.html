@@ -2499,7 +2499,7 @@ body {
 <button class="opt" onclick="F_airPick(this,'with')"><span class="ko">항공 포함으로 견적</span><span class="en">Include flights</span><small><span class="ko">별도 실비 · 발권 시점 운임 적용</span><span class="en">Billed separately · fare at time of ticketing</span></small></button>
 <button class="opt" onclick="F_airPick(this,'out')"><span class="ko">항공 제외 (지상비만)</span><span class="en">Ground only</span></button>
 </div>
-<div class="airdetail" id="airDetail" style="display:none">
+<div class="airdetail" id="airDetail" style="display:none"><details class="airdd"><summary style="cursor:pointer;font-weight:700;font-size:13.5px;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;background:#fff;list-style:none"><span class="ko">✈️ 항공 옵션 선택 (좌석 · 항공사)</span><span class="en">✈️ Flight options (cabin · airline)</span></summary><div style="padding-top:12px">
 <div><label class="lbl"><span class="ko">좌석 등급</span><span class="en">Cabin class</span></label>
 <div class="opts" id="cabinOpts">
 <button class="opt" onclick="F_singlePick(this,'cabin')"><span class="ko">이코노미</span><span class="en">Economy</span></button>
@@ -2511,24 +2511,19 @@ body {
 <div class="opts" id="airlineOpts">
 <button class="opt" onclick="F_singlePick(this,'airline')"><span class="ko">대한항공</span><span class="en">Korean Air</span></button>
 <button class="opt" onclick="F_singlePick(this,'airline')"><span class="ko">아시아나</span><span class="en">Asiana</span></button>
-<button class="opt" onclick="F_singlePick(this,'airline')"><span class="ko">델타 · 직항이면 어디든</span><span class="en">Delta · any direct</span></button>
+<button class="opt" onclick="F_singlePick(this,'airline')"><span class="ko">직항이면 어디든</span><span class="en">Any direct flight</span></button>
 <button class="opt" onclick="F_singlePick(this,'airline')"><span class="ko">상관없음 (최저가)</span><span class="en">No preference (cheapest)</span></button>
-</div></div>
-<div><label class="lbl"><span class="ko">항공권 결제 방식</span><span class="en">How to pay for flights</span></label>
-<div class="opts" id="payOpts">
-<button class="opt" onclick="F_singlePick(this,'pay')"><span class="ko">내 카드로 직접 결제</span><span class="en">I pay with my card</span><small><span class="ko">발권 링크 안내 → 본인 결제 (권장)</span><span class="en">Ticketing link → pay yourself (recommended)</span></small></button>
-<button class="opt" onclick="F_singlePick(this,'pay')"><span class="ko">상담 후 결정 (발권 링크 또는 대행 안내)</span><span class="en">Decide after consult (link or we book)</span></button>
 </div></div>
 <div class="disclaimer"><span class="ko">✈️ <b>항공 안내:</b> 운임은 실시간 변동이라 견적가와 발권가가 다를 수 있습니다. 확정 운임은 발권 시점 기준이며, 발권 전 재확인 후 진행합니다. 항공료는 별도 실비이고, 결제는 고객님 본인 카드로 항공사·발권처에 직접 하시게 안내합니다. <b>카드번호를 이 페이지에 입력하지 마세요.</b></span><span class="en">✈️ Fares change in real time. Final fare applies at ticketing; we reconfirm before issuing. Flights are billed separately — you pay the airline directly with your own card. <b>Never enter card numbers here.</b></span></div>
 </div></div>
-<div id="ageBlock"><label class="lbl"><span class="ko">동반자 (복수 선택 가능)</span><span class="en">Companions (multi-select)</span></label>
+</div></details></div><div id="ageBlock"><label class="lbl"><span class="ko">동반자 (복수 선택 가능)</span><span class="en">Companions (multi-select)</span></label>
 <div class="opts" id="ageOpts">
 <button class="opt" onclick="F_multiPick(this,'age')"><span class="ko">어르신 동반</span><span class="en">Senior companion</span></button>
 <button class="opt" onclick="F_multiPick(this,'age')"><span class="ko">아이 동반</span><span class="en">Child companion</span></button>
 <button class="opt" onclick="F_multiPick(this,'age')"><span class="ko">해당 없음 (성인만)</span><span class="en">Adults only</span></button>
 </div></div>
 <div id="partyBlock"><label class="lbl"><span class="ko">인원수 (직접 입력)</span><span class="en">Party size (enter directly)</span></label>
-<div id="partyOpts" style="display:block"><input type="text" id="partyNum" min="1" max="99" inputmode="numeric" pattern="[0-9]*" placeholder="2" oninput="F_partyInput(this)" style="display:block;width:100%;padding:13px 14px;font-size:15px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;box-sizing:border-box;background:#fff;color:var(--ink)"></div></div>
+<div id="partyOpts" style="display:block"><input type="text" id="partyNum" min="1" max="99" inputmode="numeric" pattern="[0-9]*" placeholder="" oninput="F_partyInput(this)" style="display:block;width:100%;padding:13px 14px;font-size:15px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;box-sizing:border-box;background:#fff;color:var(--ink)"></div></div>
 <div id="assistWrap" style="display:none"><label class="lbl"><span class="ko">이동 지원 필요</span><span class="en">Mobility assistance</span></label>
 <div class="opts" id="assistOpts">
 <button class="opt" onclick="F_multiPick(this,'assist')"><span class="ko">휠체어 이동 지원</span><span class="en">Wheelchair assistance</span></button>
@@ -2537,14 +2532,12 @@ body {
 </div></div>
 <div><label class="lbl"><span class="ko">이름 / 연락처</span><span class="en">Name / Contact</span></label>
 <input type="text" id="qName" name="qname" autocomplete="name" placeholder="홍길동 / 010-0000-0000 · 카톡ID"></div>
-<div class="freebox"><label class="lbl"><span class="ko">추가 요청 (자유롭게 — 알레르기, 기념일, 꼭 가고 싶은 곳 등)</span><span class="en">Anything else (allergies, anniversaries, must-sees…)</span></label>
+<div class="freebox"><label class="lbl"><span class="ko">음식 알레르기</span><span class="en">Food allergies</span></label>
 <textarea id="qMsg" rows="3"></textarea></div>
 </div>
 <div class="sendrow" style="display:grid;gap:10px;margin-top:18px">
 <a class="cta kakao" id="kakaoBtn2" href="https://pf.kakao.com/_xkpxjmX/chat" target="_blank" rel="noopener" style="display:block;text-align:center;border-radius:10px;padding:15px;font-size:15px;font-weight:700;text-decoration:none;background:#fee500;color:#3c1e1e"><span class="ko">카톡으로 견적 요청 보내기</span><span class="en">Send quote request via KakaoTalk</span></a>
-<button class="cta ghost" onclick="F_backToStart()" style="background:#fff;border:1.5px solid var(--line);color:var(--navy);border-radius:100px;padding:13px;font-family:inherit;cursor:pointer">↺ <span class="ko">처음부터 다시</span><span class="en">Start over</span></button>
 </div>
-<p class="note" style="font-size:12px;color:var(--mut);line-height:1.7;margin-top:18px"><span class="ko">※ 테스트 페이지입니다. 금액은 표시하지 않습니다. 결과 + 일정이 카톡 메시지로 정리되어 전달됩니다.</span><span class="en">※ Test page. No prices shown. Results + dates are composed into a KakaoTalk message.</span></p>
 </div><!-- /actionZone -->
 </div>
 
@@ -2677,7 +2670,7 @@ function F_el(id){var m=document.getElementById('finderModal');var e=m?m.querySe
 var F_QBANK={
 golf:[
  {t:['이번 여행, 골프 비중은?','How much golf?'],o:[['골프만 집중','Golf only'],['골프 70 + 관광 30','Golf 70 / Tour 30'],['골프 + 관광 반반','Half golf, half sights'],['골프 30 + 관광 70','Golf 30 / Tour 70'],['관광 중심 (골프 없이)','Sights only (no golf)']]},
- {t:['스코어 감각은?','Your scoring range?'],o:[['120대 — 즐기는 게 최고','120s — fun first'],['100대 — 무난하게','100s — steady'],['90대 — 코스 공략 재미','90s — strategy fun'],['80대 — 제대로 도전','80s — championship test']]},
+ {t:['스코어 감각은?','Your scoring range?'],o:[['120대','120s'],['100대','100s'],['90대','90s'],['80대','80s'],['70대 이하','70s or better']],personaLabel:['플레이 성향 (복수 선택)','Play style (multi-select)'],persona:[['즐기는 게 최고','Fun first'],['스코어는 상관없어요','Don’t care about score'],['무난하게','Steady'],['코스 공략이 재미','Course strategy'],['제대로 도전','Championship test'],['동반자와의 시간이 중요','Time with companions']]},
  {t:['꼭 쳐보고 싶은 그림은?','Must-play backdrop?'],o:[['🌊 바다 옆 링크스','🌊 Ocean links'],['🏜️ 사막 리조트','🏜️ Desert resort'],['🔑 프라이빗 클럽 (섭외 지원)','🔑 Private club (sourcing help)'],['🤷 잘 모르겠어요 — 추천받기','🤷 Surprise me']]},
  {t:['일정 감각은?','Trip length?'],o:[['5박 — 핵심만','5 nights — essentials'],['7박 — 여유 있게','7 nights — relaxed'],['10박 — 제대로','10 nights — full']]},
  {t:['마지막으로, 골프에서 꼭 챙기고 싶은 게 있다면?','Any must-haves for golf?'],o:[['PGA 레슨 받고 싶어요','Want a PGA lesson'],['특정 코스 지정 (아래에 적어주세요)','Specific course (write below)'],['없어요 — 결과 보기','Nothing — see results']],free:true}],
@@ -2820,7 +2813,7 @@ function F_composeMsg(){
  if(F_answers.air)lines.push((L?'항공: ':'Flights: ')+F_answers.air);
  if(F_answers.cabin)lines.push((L?'등급: ':'Cabin: ')+F_answers.cabin);
  if(F_answers.airline)lines.push((L?'항공사: ':'Airline: ')+F_answers.airline);
- if(F_answers.pay)lines.push((L?'항공결제: ':'Flight pay: ')+F_answers.pay);
+ var gs=F_answers['golf_1'];(function(){if(!gs)return;var a=F_answers['golf_1'];lines.push((L?'스코어: ':'Score: ')+a.ko);if(a.persona&&a.persona.length)lines.push((L?'성향: ':'Style: ')+a.persona.join(', '));})();
  if(F_answers.party)lines.push((L?'인원: ':'Party: ')+F_answers.party);
  if(F_answers.age)lines.push((L?'동반자: ':'Companions: ')+F_answers.age);
  if(F_answers.assist)lines.push((L?'이동지원: ':'Mobility: ')+F_answers.assist);
