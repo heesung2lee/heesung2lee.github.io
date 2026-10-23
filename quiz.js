@@ -43,6 +43,23 @@ function F_renderQ(){
   b.onclick=function(){box.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');qsel=o;F_el('qnext').disabled=false;};box.appendChild(b);
  });
  host.appendChild(box);
+ /* 성향 등 복수선택 보조 항목 */
+ if(q.persona){
+  var pw=document.createElement('div');pw.className='qfree';
+  var pl=document.createElement('label');
+  var plb=q.personaLabel||['추가 선택 (복수 가능)','Also pick (multi)'];
+  F_koEn(plb[0],plb[1]).forEach(function(s){pl.appendChild(s);});
+  pw.appendChild(pl);
+  var pb=document.createElement('div');pb.className='opts';pb.id='personaOpts';
+  q.persona.forEach(function(pp){
+   var b=document.createElement('button');b.className='opt';b.type='button';
+   F_koEn(pp[0],pp[1]).forEach(function(s){b.appendChild(s);});
+   if(prevAns&&prevAns.persona&&prevAns.persona.indexOf(pp[0])>=0)b.classList.add('sel');
+   b.onclick=function(){b.classList.toggle('sel');};
+   pb.appendChild(b);
+  });
+  pw.appendChild(pb);host.appendChild(pw);
+ }
  var _isLastQ=(F_qi===bank.length-1&&F_fi===F_flow.length-1);
  /* 옵션 문구에 '(아래에 적어주세요)'가 있거나 free:true 인 문항은 입력란을 반드시 노출 */
  var _needFree=!!q.free||_isLastQ;
@@ -68,7 +85,9 @@ function F_freeExample(){
 function F_ansKey(){return F_flow[F_fi]+'_'+F_qi;}
 function F_qpick(o){
  var fr=F_el('qfree');
- F_answers[F_ansKey()]={ko:o[0],en:o[1],free:fr?fr.value.trim():''};
+ var pel=F_el('personaOpts');
+ var persona=pel?[].slice.call(pel.querySelectorAll('.opt.sel')).map(function(x){var k=x.querySelector('.ko');return (k?k.textContent:x.textContent).trim();}):[];
+ F_answers[F_ansKey()]={ko:o[0],en:o[1],free:fr?fr.value.trim():'',persona:persona};
  var bank=F_QBANK[F_flow[F_fi]];
  if(F_qi<bank.length-1){F_qi++;F_renderQ();}
  else if(F_fi<F_flow.length-1){F_fi++;F_qi=0;F_renderQ();}
