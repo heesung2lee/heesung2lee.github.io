@@ -40,7 +40,17 @@ function F_renderQ(){
   var b=document.createElement('button');b.className='opt';
   F_koEn(o[0].split('|')[0], o[1].split('|')[0]).forEach(function(s){ b.appendChild(s); });
   if(prevAns && prevAns.ko===o[0]){b.classList.add('sel');qsel=o;}
-  b.onclick=function(){box.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');qsel=o;F_el('qnext').disabled=false;};box.appendChild(b);
+  if(prevAns && prevAns.multi && prevAns.multi.indexOf(o[0])>=0){b.classList.add('sel');}
+  b.onclick=function(){
+   if(q.multi){
+    b.classList.toggle('sel');
+    var picked=[].slice.call(box.querySelectorAll('.opt.sel'));
+    qsel=picked.map(function(x){var k=x.querySelector('.ko');return [k?k.textContent.trim():x.textContent.trim(), x.textContent.trim()];});
+    F_el('qnext').disabled=picked.length===0;
+   } else {
+    box.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');qsel=o;F_el('qnext').disabled=false;
+   }
+  };box.appendChild(b);
  });
  host.appendChild(box);
  /* 성향 등 복수선택 보조 항목 */
@@ -87,7 +97,12 @@ function F_qpick(o){
  var fr=F_el('qfree');
  var pel=F_el('personaOpts');
  var persona=pel?[].slice.call(pel.querySelectorAll('.opt.sel')).map(function(x){var k=x.querySelector('.ko');return (k?k.textContent:x.textContent).trim();}):[];
- F_answers[F_ansKey()]={ko:o[0],en:o[1],free:fr?fr.value.trim():'',persona:persona};
+ if(Array.isArray(o)){
+  var kos=o.map(function(x){return x[0];});
+  F_answers[F_ansKey()]={ko:kos.join(', '),en:kos.join(', '),multi:kos,free:fr?fr.value.trim():'',persona:persona};
+ } else {
+  F_answers[F_ansKey()]={ko:o[0],en:o[1],free:fr?fr.value.trim():'',persona:persona};
+ }
  var bank=F_QBANK[F_flow[F_fi]];
  if(F_qi<bank.length-1){F_qi++;F_renderQ();}
  else if(F_fi<F_flow.length-1){F_fi++;F_qi=0;F_renderQ();}
