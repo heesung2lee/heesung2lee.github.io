@@ -2950,11 +2950,13 @@ function F_canvasToPdf(canvas){
   },'image/jpeg',0.92);
  });
 }
+var F_lastRef=null, F_lastFp=null;
+function F_fp(p){
+ try{return JSON.stringify([p.raw,p.details,p.message,(p.lines||[]).join('|')]);}catch(e){return '';}
+}
 function F_makeRef(){
- var d=new Date();
- function p(n){return (n<10?'0':'')+n;}
  var rnd=Math.random().toString(36).slice(2,6).toUpperCase();
- return 'QT-'+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+'-'+rnd;
+ return 'QT-'+rnd;
 }
 function F_quoteResult(payload,blob,pdfName,serverId){
  var sendrow=document.querySelector('#finderModal .sendrow');
@@ -2969,11 +2971,11 @@ function F_quoteResult(payload,blob,pdfName,serverId){
  card.style.cssText='border:1.5px solid #16213e;border-radius:14px;padding:20px;background:#f7f8fb;margin-top:16px';
  var h=document.createElement('div');
  h.style.cssText='font-size:16px;font-weight:800;color:#16213e;margin-bottom:6px';
- h.textContent=L?'✅ 접수 완료 — 아래에서 저장·공유하세요':'✅ Request received — save or share below';
+ h.textContent=L?'✅ 접수 완료':'✅ Request received';
  card.appendChild(h);
  var meta=document.createElement('div');
- meta.style.cssText='font-size:13px;color:#5c5e62;line-height:1.8;margin-bottom:14px';
- meta.textContent=(L?'접수번호 ':'Ref. ')+payload.ref+(serverId?(L?' · 서버 접수 ':' · Server ')+serverId:'');
+ meta.style.cssText='font-size:13.5px;color:#5c5e62;margin-bottom:14px';
+ meta.textContent=(L?'접수번호 ':'Ref. ')+payload.ref;
  card.appendChild(meta);
  var row=document.createElement('div');
  row.style.cssText='display:grid;gap:9px';
@@ -2990,28 +2992,41 @@ function F_quoteResult(payload,blob,pdfName,serverId){
   setTimeout(function(){URL.revokeObjectURL(u);},4000);
   showToast(L?'PDF가 저장됐어요':'PDF saved');
  };
- var shareBtn=mkBtn(L?'공유 (카톡·문자·메일)':'Share (Kakao · SMS · Mail)','#fff','#16213e','1.5px solid #16213e');
- shareBtn.onclick=function(){
-  var file;
-  try{file=new File([blob],pdfName,{type:'application/pdf'});}catch(e){file=null;}
-  if(navigator.canShare&&file&&navigator.canShare({files:[file]})){
-   navigator.share({files:[file],title:L?'견적 요청서':'Quote request'}).catch(function(){});
-  }else if(navigator.share){
-   navigator.share({title:L?'견적 요청서':'Quote request',text:payload.ref,url:'https://resonatetour.com'}).catch(function(){});
-  }else{
-   saveBtn.click();
-  }
- };
+ row.appendChild(saveBtn);
+
+ /* 파일 공유는 지원되는 기기에서만 노출 (데스크톱에서 가짜 공유 금지) */
+ var canFileShare=false, shareFile=null;
+ try{
+  shareFile=new File([blob],pdfName,{type:'application/pdf'});
+  canFileShare=!!(navigator.canShare&&navigator.canShare({files:[shareFile]}));
+ }catch(e){canFileShare=false;}
+ if(canFileShare){
+  var shareBtn=mkBtn(L?'공유 (카톡·문자·메일)':'Share (Kakao · SMS · Mail)','#fff','#16213e','1.5px solid #16213e');
+  shareBtn.onclick=function(){
+   navigator.share({files:[shareFile],title:L?'견적 요청서':'Quote request'})
+    .catch(function(){showToast(L?'공유가 취소됐어요 — PDF 저장을 이용해 주세요':'Share cancelled — use Save PDF');});
+  };
+  row.appendChild(shareBtn);
+ }else{
+  var mailBtn=mkBtn(L?'이메일로 보내기':'Send by email','#fff','#16213e','1.5px solid #16213e');
+  mailBtn.onclick=function(){
+   var subj=L?'[견적요청] '+payload.ref:'[Quote] '+payload.ref;
+   var body=(payload.lines||[]).join('\n')+'\n\n'+payload.ref;
+   window.location.href='mailto:resonatetourclub@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+  };
+  row.appendChild(mailBtn);
+ }
  var againBtn=mkBtn(L?'새 요청 작성':'New request','#eef1f6','#16213e','1px solid #d5dbe6');
  againBtn.onclick=function(){
+  if(!confirm(L?'새로 작성할까요? 저장한 PDF는 그대로 남습니다.':'Start a new request? Saved PDFs stay.'))return;
+  F_lastRef=null;F_lastFp=null;
   host.style.display='none';host.innerHTML='';
   sendrow.style.display='';
   var qb=document.getElementById('quoteBtn');
   if(qb){qb.disabled=false;qb.style.opacity='1';qb.style.display='';qb.textContent=(curLang==='ko'?'견적 요청 접수 (PDF 발급)':'Submit quote request (PDF)');}
   F_show('sresult');
-  var m=document.getElementById('finderModal');if(m)m.scrollTop=0;
  };
- row.appendChild(saveBtn);row.appendChild(shareBtn);row.appendChild(againBtn);
+ row.appendChild(againBtn);
  card.appendChild(row);
  host.appendChild(card);
  F_scrollInView(host);
@@ -3035,12 +3050,15 @@ function F_submitQuote(){
  if(!contact){contact=raw;name=raw;}
  var payload={
   raw:raw,name:name,contact:contact,
-  ref:F_makeRef(),
+  ref:null,
   when:new Date().toLocaleString('ko-KR'),
   lines:(typeof F_composeMsg==='function'?F_composeMsg().split('\n'):[]),
   details:F_quoteDetails(),
   message:(F_el('qMsg')&&F_el('qMsg').value||'').trim()
  };
+ var fp=F_fp(payload);
+ if(F_lastFp===fp&&F_lastRef){payload.ref=F_lastRef;}
+ else{payload.ref=F_makeRef();F_lastRef=payload.ref;F_lastFp=fp;}
  if(btn){btn.disabled=true;btn.style.opacity='.6';btn.textContent=L?'PDF 생성 중…':'Generating PDF…';}
  var pdfBlob=null,pdfName='ResonateTour-Quote-'+payload.ref+'.pdf';
  F_canvasToPdf(F_pdfSheet(payload)).then(function(blob){
@@ -3054,14 +3072,7 @@ function F_submitQuote(){
    fetch(QUOTE_API+'/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({name:payload.name,contact:payload.contact,lines:payload.lines,details:payload.details,message:payload.message})})
    .then(function(r){return r.json();})
-   .then(function(j){
-    if(j&&j.ok&&j.id){
-     var meta=document.querySelector('#quoteResult div div');
-     var m2=document.getElementById('quoteResult');
-     var refLine=m2?m2.querySelector('div[style*="line-height"]'):null;
-     if(refLine)refLine.textContent=(curLang==='ko'?'접수번호 ':'Ref. ')+payload.ref+(curLang==='ko'?' · 서버 접수 ':' · Server ')+j.id;
-    }
-   }).catch(function(){});
+   .catch(function(){});
   }catch(e){}
  }).catch(function(){
   if(btn){btn.disabled=false;btn.style.opacity='1';btn.textContent=L?'견적 요청 접수 (PDF 발급)':'Submit quote request (PDF)';}
