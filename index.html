@@ -3013,14 +3013,14 @@ function F_quoteQA(){
  }catch(e){}
  return out;
 }
-var F_lastRef=null, F_lastFp=null;
+var F_lastRef=null, F_lastFp=null, F_lastTok=null;
 /* 번호는 서버가 원자적으로 발급한다(여러 기기 동시 제출에도 중복 없음).
    서버 미응답·오프라인이면 로컬 4자리로 폴백해 PDF 발급은 계속된다. */
 function F_reserveRef(payload,cb){
  var fp=F_fp(payload);
- if(F_lastFp===fp&&F_lastRef){cb(F_lastRef);return;}
+ if(F_lastFp===fp&&F_lastRef){cb(F_lastRef,F_lastTok);return;}
  var done=false;
- function finish(ref){ if(done)return; done=true; F_lastRef=String(ref); F_lastFp=fp; cb(String(ref)); }
+ function finish(ref,tok){ if(done)return; done=true; F_lastRef=String(ref); F_lastTok=tok||null; F_lastFp=fp; cb(String(ref),tok||null); }
  var ctl=null;
  try{ ctl=new AbortController(); }catch(e){ ctl=null; }
  var to=setTimeout(function(){ try{ if(ctl)ctl.abort(); }catch(e){} finish(F_makeRef()); },2500);
@@ -3031,7 +3031,7 @@ function F_reserveRef(payload,cb){
   .then(function(r){return r.json();})
   .then(function(j){
    clearTimeout(to);
-   if(j&&j.ok&&/^[1-9][0-9]{3}$/.test(String(j.ref||''))) finish(j.ref);
+   if(j&&j.ok&&/^[1-9][0-9]{3}$/.test(String(j.ref||''))) finish(j.ref,j.tok);
    else finish(F_makeRef());
   })
   .catch(function(){ clearTimeout(to); finish(F_makeRef()); });
@@ -3114,7 +3114,7 @@ function F_quoteResult(payload,blob,pdfName,serverId){
  var againBtn=mkBtn(L?'새 요청 작성':'New request','#eef1f6','#16213e','1px solid #d5dbe6');
  againBtn.onclick=function(){
   if(!confirm(L?'새로 작성할까요? 저장한 PDF는 그대로 남습니다.':'Start a new request? Saved PDFs stay.'))return;
-  F_lastRef=null;F_lastFp=null;
+  F_lastRef=null;F_lastFp=null;F_lastTok=null;
   host.style.display='none';host.innerHTML='';
   sendrow.style.display='';
   var qb=document.getElementById('quoteBtn');
@@ -3153,8 +3153,9 @@ function F_submitQuote(){
   message:(F_el('qMsg')&&F_el('qMsg').value||'').trim()
  };
  if(btn){btn.disabled=true;btn.style.opacity='.6';btn.textContent=L?'번호 발급 중…':'Reserving number…';}
- F_reserveRef(payload,function(ref){
+ F_reserveRef(payload,function(ref,tok){
   payload.ref=ref;
+  payload.refTok=tok;
   if(btn){btn.textContent=L?'PDF 생성 중…':'Generating PDF…';}
   var pdfName='ResonateTour-Quote-'+payload.ref+'.pdf';
   F_canvasToPdf(F_pdfPages(payload)).then(function(blob){
@@ -3166,7 +3167,7 @@ function F_submitQuote(){
    var isLive=/(^|\.)resonatetour\.com$/.test(location.hostname);
    if(!isLive) throw new Error('skip-offsite');
    fetch(QUOTE_API+'/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({ref:payload.ref,name:payload.name,contact:payload.contact,lines:payload.lines,details:payload.details,message:payload.message})})
+    body:JSON.stringify({ref:payload.ref,refTok:payload.refTok,name:payload.name,contact:payload.contact,lines:payload.lines,details:payload.details,message:payload.message})})
    .then(function(r){return r.json();})
    .catch(function(){});
   }catch(e){}
