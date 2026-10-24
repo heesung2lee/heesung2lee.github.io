@@ -2874,85 +2874,148 @@ function F_scrollInView(el){
   if(box.scrollTo){box.scrollTo({top:top,behavior:'smooth'});}else{box.scrollTop=top;}
  }catch(e){try{box.scrollTop=el.offsetTop-28;}catch(_e){}}
 }
-/* ---------- 로컬 PDF 생성 (서버/터널 무관) ---------- */
-function F_pdfSheet(payload){
- var W=1240,H=1754;
- var c=document.createElement('canvas');c.width=W;c.height=H;
- var x=c.getContext('2d');
- x.fillStyle='#ffffff';x.fillRect(0,0,W,H);
- x.fillStyle='#0d1b2a';x.fillRect(0,0,W,210);
- x.fillStyle='#d4af37';x.fillRect(0,210,W,6);
- x.fillStyle='#d4af37';x.font='700 46px -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif';
- x.fillText('견적 요청서', 70, 96);
- x.fillStyle='#9fb0c7';x.font='400 24px -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif';
- x.fillText('RESONATE TOUR · QUOTE REQUEST', 70, 140);
- x.fillStyle='#c9a96a';x.font='400 20px -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif';
- x.fillText('resonatetour.com', W-70-x.measureText('resonatetour.com').width, 96);
+/* ---------- 로컬 PDF 생성 (서버/터널 무관, 여러 장 지원) ---------- */
+function F_fmtDate(d){
+ var h=d.getHours(), ap=h<12?'오전':'오후', h12=h%12; if(h12===0)h12=12;
+ return d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일 '+ap+' '+h12+'시'+d.getMinutes()+'분';
+}
+function F_pdfPages(payload){
+ var W=1240,H=1754,FONT='-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif';
+ var pages=[],c,x,y,i;
+ function ctxOf(cv){return cv.getContext('2d');}
+ function newPage(first){
+  c=document.createElement('canvas');c.width=W;c.height=H;x=ctxOf(c);
+  x.fillStyle='#ffffff';x.fillRect(0,0,W,H);
+  x.fillStyle='#0d1b2a';x.fillRect(0,0,W,first?210:132);
+  x.fillStyle='#d4af37';x.fillRect(0,first?210:132,W,6);
+  if(first){
+   x.fillStyle='#d4af37';x.font='700 46px '+FONT;x.fillText('견적 요청서',70,96);
+   x.fillStyle='#9fb0c7';x.font='400 24px '+FONT;x.fillText('RESONATE TOUR · QUOTE REQUEST',70,140);
+   x.fillStyle='#c9a96a';x.font='400 20px '+FONT;
+   x.fillText('resonatetour.com',W-70-x.measureText('resonatetour.com').width,96);
+   y=280;
+  }else{
+   x.fillStyle='#d4af37';x.font='700 30px '+FONT;x.fillText('견적 요청서',70,72);
+   x.fillStyle='#9fb0c7';x.font='400 19px '+FONT;x.fillText((payload.ref||'')+' · resonatetour.com',70,104);
+   y=190;
+  }
+  pages.push(c);
+ }
+ function need(h){ if(y+h>H-150) newPage(false); }
+ function label(t){ need(52); x.fillStyle='#8a94a3';x.font='600 19px '+FONT;x.fillText(t,70,y);y+=30; }
+ function wrap(t,size,color,weight,lh){
+  x.fillStyle=color;x.font=weight+' '+size+'px '+FONT;
+  var maxw=W-140,line='',words=String(t==null?'':t).split(' ');
+  for(i=0;i<words.length;i++){
+   var test=line?line+' '+words[i]:words[i];
+   if(x.measureText(test).width>maxw&&line){need(lh+6);x.fillText(line,70,y);y+=lh;line=words[i];}
+   else{line=test;}
+  }
+  if(line){need(lh+6);x.fillText(line,70,y);y+=lh;}
+ }
+ function value(t){ wrap(t,25,'#171a20','400',34); y+=10; }
+ function rule(){ need(36); x.strokeStyle='#e3e6ec';x.lineWidth=2;x.beginPath();x.moveTo(70,y);x.lineTo(W-70,y);x.stroke();y+=32; }
 
- var y=290;
- function label(t){x.fillStyle='#8a94a3';x.font='600 19px -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif';x.fillText(t,70,y);y+=30;}
- function value(t){x.fillStyle='#171a20';x.font='400 25px -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif';
-  var maxw=W-140,line='',words=String(t).split(' ');
-  for(var i=0;i<words.length;i++){var test=line?line+' '+words[i]:words[i];
-   if(x.measureText(test).width>maxw&&line){x.fillText(line,70,y);y+=34;line=words[i];}else{line=test;}}
-  if(line){x.fillText(line,70,y);y+=34;}
-  y+=14;}
- function rule(){x.strokeStyle='#e3e6ec';x.lineWidth=2;x.beginPath();x.moveTo(70,y);x.lineTo(W-70,y);x.stroke();y+=34;}
+ newPage(true);
 
- label('접수번호 / Reference');value(payload.ref||'-');rule();
- label('이름 / 연락처 · Name / Contact');value(payload.raw||'-');rule();
- label('요청 일시 / Requested at');value(payload.when||'-');rule();
+ label('접수번호 / Reference'); value(payload.ref||'-'); rule();
+ label('이름 / 연락처 · Name / Contact'); value(payload.raw||'-'); rule();
+ label('요청 일시 / Requested at'); value(payload.when||'-'); rule();
+
  if(payload.details&&payload.details.length){
   label('요청 조건 / Details');
   payload.details.forEach(function(d){value(d[0]+' : '+d[1]);});
   rule();
  }
- if(payload.message){label('추가 요청 / Notes');value(payload.message);rule();}
- if(payload.lines&&payload.lines.length){
-  label('설문 요약 / Survey summary');
-  payload.lines.forEach(function(l){if(String(l).trim())value(l);});
+ if(payload.message){ label('추가 요청 / Notes'); value(payload.message); rule(); }
+
+ if(payload.qa&&payload.qa.length){
+  label('설문 문항 / Survey answers');
+  payload.qa.forEach(function(pr,i2){
+   need(96);
+   x.fillStyle='#8a94a3';x.font='600 19px '+FONT;
+   x.fillText('Q'+(i2+1)+'.',70,y);y+=28;
+   wrap(pr[0],21,'#5c5e62','600',30); y+=2;
+   wrap(pr[1],24,'#171a20','400',32); y+=18;
+  });
+  rule();
  }
 
- x.fillStyle='#8a94a3';x.font='400 18px -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif';
+ x.fillStyle='#8a94a3';x.font='400 18px '+FONT;
  x.fillText('본 견적 요청서는 상담 접수용이며, 확정 견적은 별도 제안서로 발송됩니다.',70,H-96);
  x.fillText('레조네이트투어 · resonatetourclub@gmail.com · 0507-1457-9633',70,H-66);
- return c;
+ return pages;
 }
-function F_canvasToPdf(canvas){
+function F_canvasToPdf(canvases){
  return new Promise(function(resolve,reject){
-  canvas.toBlob(function(blob){
-   if(!blob){reject(new Error('canvas'));return;}
-   var fr=new FileReader();
-   fr.onload=function(){
-    var jpg=new Uint8Array(fr.result);
-    var bin='';var CH=0x8000;
-    for(var i=0;i<jpg.length;i+=CH){bin+=String.fromCharCode.apply(null,jpg.subarray(i,i+CH));}
-    var pw=595.28, ph=595.28*canvas.height/canvas.width;
-    var objs=[];
-    objs.push('<< /Type /Catalog /Pages 2 0 R >>');
-    objs.push('<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
-    objs.push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+pw.toFixed(2)+' '+ph.toFixed(2)+'] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>');
-    objs.push('<< /Type /XObject /Subtype /Image /Width '+canvas.width+' /Height '+canvas.height+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+jpg.length+' >>\nstream\n'+bin+'\nendstream');
-    var content='q '+pw.toFixed(2)+' 0 0 '+ph.toFixed(2)+' 0 0 cm /Im0 Do Q';
-    objs.push('<< /Length '+content.length+' >>\nstream\n'+content+'\nendstream');
-    var out='%PDF-1.4\n';var offs=[];
-    for(var k=0;k<objs.length;k++){offs.push(out.length);out+=(k+1)+' 0 obj\n'+objs[k]+'\nendobj\n';}
-    var xref=out.length;
-    out+='xref\n0 '+(objs.length+1)+'\n0000000000 65535 f \n';
-    for(var m=0;m<offs.length;m++){out+=('0000000000'+offs[m]).slice(-10)+' 00000 n \n';}
-    out+='trailer\n<< /Size '+(objs.length+1)+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF';
-    var bytes=new Uint8Array(out.length);
-    for(var n=0;n<out.length;n++)bytes[n]=out.charCodeAt(n)&0xFF;
-    resolve(new Blob([bytes],{type:'application/pdf'}));
-   };
-   fr.onerror=function(){reject(new Error('read'));};
-   fr.readAsArrayBuffer(blob);
-  },'image/jpeg',0.92);
+  var list=Array.isArray(canvases)?canvases:[canvases];
+  var jpegs=[],done=0;
+  if(!list.length){reject(new Error('empty'));return;}
+  list.forEach(function(cv,idx){
+   cv.toBlob(function(blob){
+    if(!blob){reject(new Error('canvas'));return;}
+    var fr=new FileReader();
+    fr.onload=function(){
+     jpegs[idx]=new Uint8Array(fr.result);
+     done++;
+     if(done===list.length){
+      try{ resolve(F_buildPdf(list,jpegs)); }catch(e){ reject(e); }
+     }
+    };
+    fr.onerror=function(){reject(new Error('read'));};
+    fr.readAsArrayBuffer(blob);
+   },'image/jpeg',0.92);
+  });
  });
+}
+function F_buildPdf(canvases,jpegs){
+ var pw=595.28, n=canvases.length, objs=[], kids=[];
+ /* obj1 catalog, obj2 pages, then per page: page, image, content */
+ for(var i=0;i<n;i++){
+  var pageObj=3+i*3, imgObj=4+i*3, cntObj=5+i*3;
+  kids.push(pageObj+' 0 R');
+  var ph=pw*canvases[i].height/canvases[i].width;
+  objs[pageObj-1]='<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+pw.toFixed(2)+' '+ph.toFixed(2)+'] /Resources << /XObject << /Im0 '+imgObj+' 0 R >> >> /Contents '+cntObj+' 0 R >>';
+  var jpg=jpegs[i], bin='', CH=0x8000;
+  for(var k=0;k<jpg.length;k+=CH){bin+=String.fromCharCode.apply(null,jpg.subarray(k,k+CH));}
+  objs[imgObj-1]='<< /Type /XObject /Subtype /Image /Width '+canvases[i].width+' /Height '+canvases[i].height+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+jpg.length+' >>\nstream\n'+bin+'\nendstream';
+  var content='q '+pw.toFixed(2)+' 0 0 '+ph.toFixed(2)+' 0 0 cm /Im0 Do Q';
+  objs[cntObj-1]='<< /Length '+content.length+' >>\nstream\n'+content+'\nendstream';
+ }
+ objs[0]='<< /Type /Catalog /Pages 2 0 R >>';
+ objs[1]='<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+n+' >>';
+ var out='%PDF-1.4\n', offs=[];
+ for(var m=0;m<objs.length;m++){offs.push(out.length);out+=(m+1)+' 0 obj\n'+objs[m]+'\nendobj\n';}
+ var xref=out.length;
+ out+='xref\n0 '+(objs.length+1)+'\n0000000000 65535 f \n';
+ for(var q=0;q<offs.length;q++){out+=('0000000000'+offs[q]).slice(-10)+' 00000 n \n';}
+ out+='trailer\n<< /Size '+(objs.length+1)+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF';
+ var bytes=new Uint8Array(out.length);
+ for(var b2=0;b2<out.length;b2++)bytes[b2]=out.charCodeAt(b2)&0xFF;
+ return new Blob([bytes],{type:'application/pdf'});
+}
+/* 설문 문항-답 목록 (PDF/메일에 사용) */
+function F_quoteQA(){
+ var out=[],L=curLang==='ko';
+ try{
+  F_flow.forEach(function(m){
+   var bank=F_QBANK[m]||[];
+   bank.forEach(function(q,i){
+    var a=F_answers[m+'_'+i];
+    if(!a)return;
+    var ans=((L?a.ko:a.en)||a.ko||'').trim();
+    ans=ans.split(', ').map(function(seg){return seg.replace(/\|[A-Za-z-]+\s*$/,'').trim();}).join(', ');
+    if(a.persona&&a.persona.length){ans+=(L?' · 성격: ':' · style: ')+a.persona.join(', ');}
+    if(a.free){ans+=(L?' · 기타: ':' · note: ')+a.free;}
+    out.push([(L?q.t[0]:q.t[1]), ans]);
+   });
+  });
+ }catch(e){}
+ return out;
 }
 var F_lastRef=null, F_lastFp=null;
 function F_fp(p){
- try{return JSON.stringify([p.raw,p.details,p.message,(p.lines||[]).join('|')]);}catch(e){return '';}
+ try{return JSON.stringify([p.raw,p.details,p.message,(p.lines||[]).join('|'),(p.qa||[]).map(function(q){return q.join('=');}).join('|')]);}catch(e){return '';}
 }
 function F_makeRef(){
  var rnd=Math.random().toString(36).slice(2,6).toUpperCase();
@@ -3051,8 +3114,9 @@ function F_submitQuote(){
  var payload={
   raw:raw,name:name,contact:contact,
   ref:null,
-  when:new Date().toLocaleString('ko-KR'),
+  when:F_fmtDate(new Date()),
   lines:(typeof F_composeMsg==='function'?F_composeMsg().split('\n'):[]),
+  qa:(typeof F_quoteQA==='function'?F_quoteQA():[]),
   details:F_quoteDetails(),
   message:(F_el('qMsg')&&F_el('qMsg').value||'').trim()
  };
@@ -3061,7 +3125,7 @@ function F_submitQuote(){
  else{payload.ref=F_makeRef();F_lastRef=payload.ref;F_lastFp=fp;}
  if(btn){btn.disabled=true;btn.style.opacity='.6';btn.textContent=L?'PDF 생성 중…':'Generating PDF…';}
  var pdfBlob=null,pdfName='ResonateTour-Quote-'+payload.ref+'.pdf';
- F_canvasToPdf(F_pdfSheet(payload)).then(function(blob){
+ F_canvasToPdf(F_pdfPages(payload)).then(function(blob){
   pdfBlob=blob;
   F_quoteResult(payload,blob,pdfName,null);
   showToast(L?'접수 완료 — PDF가 생성됐어요':'Received — PDF generated');
