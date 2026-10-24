@@ -3017,9 +3017,19 @@ var F_lastRef=null, F_lastFp=null;
 function F_fp(p){
  try{return JSON.stringify([p.raw,p.details,p.message,(p.lines||[]).join('|'),(p.qa||[]).map(function(q){return q.join('=');}).join('|')]);}catch(e){return '';}
 }
+/* 접수번호: 4자리 숫자.
+   기기별로 localStorage 카운터를 1씩 증가시켜 재사용(중복)을 막는다.
+   첫 값은 1000~8999 난수 시드라 기기 간 시작점이 겹치지 않는다. */
 function F_makeRef(){
- var rnd=Math.random().toString(36).slice(2,6).toUpperCase();
- return 'QT-'+rnd;
+ var KEY='rt_qseq';
+ var n=0;
+ try{ n=parseInt(localStorage.getItem(KEY)||'0',10)||0; }catch(e){ n=0; }
+ if(!n||n<1000||n>9999){ n=1000+Math.floor(Math.random()*8000); }
+ n+=1;
+ if(n>9999){ n=1000+Math.floor(Math.random()*8000); }
+ try{ localStorage.setItem(KEY,String(n)); }catch(e){}
+ if(!(n>=1000&&n<=9999)){ n=1000+(Date.now()%8000); }
+ return String(n);
 }
 function F_quoteResult(payload,blob,pdfName,serverId){
  var sendrow=document.querySelector('#finderModal .sendrow');
