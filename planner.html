@@ -66,10 +66,6 @@ button.primary:hover{background:var(--navy2)}
    <div id="seasons"></div>
   </div>
   <div class="grp">
-   <h2>골프 코스</h2>
-   <div id="courses"></div>
-  </div>
-  <div class="grp">
    <h2>숙박</h2>
    <div class="row"><span>박 수</span><span class="val"><span id="nightsV">6</span>박 <span id="daysV">8</span>일</span></div>
    <input class="slider" type="range" id="nights" min="2" max="23" value="6" step="1">
@@ -107,18 +103,18 @@ const ZONES = {
   PS:      {name:'팜스프링스', short:'PS', drive:{LA:120, IE:80, SD:150, TM:105}},
 };
 const COURSES = [
-  {id:'trump', name:'Trump National LA', zone:'LA', tag:'링크스·절벽'},
-  {id:'friendly', name:'Friendly Hills CC', zone:'LA', tag:'프라이빗'},
-  {id:'hacienda', name:'Hacienda GC', zone:'LA', tag:'100년 전통'},
-  {id:'ike', name:'Industry Hills — Ike', zone:'LA', tag:'챔피언십'},
-  {id:'babe', name:'Industry Hills — Babe', zone:'LA', tag:'정교함'},
-  {id:'hidden', name:'Hidden Valley GC', zone:'IE', tag:'사막 캐니언'},
-  {id:'crossings', name:'The Crossings at Carlsbad', zone:'SD', tag:'해안 생태'},
-  {id:'aviara', name:'Aviara GC', zone:'SD', tag:'Palmer·리조트'},
-  {id:'gcc', name:'The Golf Club of California', zone:'SD', tag:'퍼블릭 챔피언십'},
-  {id:'crosscreek', name:'Cross Creek GC', zone:'TM', tag:'와인 컨트리'},
-  {id:'journey', name:'Journey at Pechanga', zone:'TM', tag:'계곡 파노라마'},
-  {id:'pgawest', name:'PGA West Stadium', zone:'PS', tag:'Alcatraz'},
+  {id:'trump', name:'Trump National LA', zone:'LA', tag:'링크스·절벽', p:['scenic','active']},
+  {id:'friendly', name:'Friendly Hills CC', zone:'LA', tag:'프라이빗', p:['calm']},
+  {id:'hacienda', name:'Hacienda GC', zone:'LA', tag:'100년 전통', p:['calm','active']},
+  {id:'ike', name:'Industry Hills — Ike', zone:'LA', tag:'챔피언십', p:['active']},
+  {id:'babe', name:'Industry Hills — Babe', zone:'LA', tag:'정교함', p:['calm']},
+  {id:'hidden', name:'Hidden Valley GC', zone:'IE', tag:'사막 캐니언', p:['active','scenic']},
+  {id:'crossings', name:'The Crossings at Carlsbad', zone:'SD', tag:'해안 생태', p:['scenic','calm']},
+  {id:'aviara', name:'Aviara GC', zone:'SD', tag:'Palmer·리조트', p:['scenic','calm']},
+  {id:'gcc', name:'The Golf Club of California', zone:'SD', tag:'퍼블릭 챔피언십', p:['active']},
+  {id:'crosscreek', name:'Cross Creek GC', zone:'TM', tag:'와인 컨트리', p:['food','calm']},
+  {id:'journey', name:'Journey at Pechanga', zone:'TM', tag:'계곡 파노라마', p:['scenic','active']},
+  {id:'pgawest', name:'PGA West Stadium', zone:'PS', tag:'Alcatraz', p:['active']},
 ];
 const CATS = [
   {id:'dining', name:'다이닝·맛집'},
@@ -180,7 +176,6 @@ const state = {
   zones: new Set(Object.keys(ZONES)),
   cats: new Set(CATS.map(c=>c.id)),
   seasons: new Set(['spring','fall']),
-  courses: new Set(COURSES.map(c=>c.id)),
   nights: 6,
   rounds: 3,
   repeat: true,
@@ -205,8 +200,6 @@ function renderControls() {
   CATS.forEach(cat => c.appendChild(mkChk(cat.name, state.cats.has(cat.id), on => { on ? state.cats.add(cat.id) : state.cats.delete(cat.id); })));
   const s = $('#seasons'); s.innerHTML = '';
   SEASONS.forEach(se => s.appendChild(mkChk(se.name, state.seasons.has(se.id), on => { on ? state.seasons.add(se.id) : state.seasons.delete(se.id); })));
-  const co = $('#courses'); co.innerHTML = '';
-  COURSES.forEach(cs => co.appendChild(mkChk(cs.name, state.courses.has(cs.id), on => { on ? state.courses.add(cs.id) : state.courses.delete(cs.id); }, cs.tag)));
   $('#nights').value = state.nights; $('#rounds').value = state.rounds;
   $('#nightsV').textContent = state.nights; $('#daysV').textContent = state.nights + 2;
   $('#roundsV').textContent = state.rounds;
@@ -244,7 +237,8 @@ function build() {
   const sum = $('#summary'); sum.innerHTML = '';
   if (!zones.length) { out.innerHTML = '<div class="empty">지역을 하나 이상 선택해 주세요.</div>'; return; }
 
-  const availCourses = COURSES.filter(c => state.courses.has(c.id) && state.zones.has(c.zone));
+  const courseScore = c => (state.persona && c.p.includes(state.persona) ? 2 : 0) + (c.p.includes('scenic') && state.persona === '' ? 1 : 0);
+  const availCourses = COURSES.filter(c => state.zones.has(c.zone)).sort((a, b) => courseScore(b) - courseScore(a));
   if (!availCourses.length) { out.innerHTML = '<div class="empty">선택한 조건에 맞는 골프 코스가 없습니다.</div>'; return; }
 
   // 라운드 수 상한: 숙박일수보다 많을 수 없음
@@ -317,9 +311,7 @@ function build() {
       const b = document.createElement('b'); b.textContent = it.t; li.appendChild(b);
       if (it.tag) { const t = document.createElement('span'); t.className = 'badge'; t.textContent = it.tag; li.appendChild(t); }
       if (it.note) { const s = document.createElement('div'); s.className = 'meta'; s.textContent = it.note; li.appendChild(s); }
-      const extra = document.createElement('span'); extra.className = 'badge';
-      if (it.price) extra.textContent = it.price + (it.book ? ' · 예약' : '');
-      if (extra.textContent) li.appendChild(extra);
+      if (it.book) { const bk = document.createElement('span'); bk.className = 'badge'; bk.textContent = '예약 권장'; li.appendChild(bk); }
       ul.appendChild(li);
     });
     card.appendChild(ul);
