@@ -221,10 +221,17 @@ function scoreAct(a) {
   if (a.z === 'PS' && state.seasons.has('summer')) s -= 4;
   return s;
 }
-function pickActs(zone, used, n) {
-  return ACTS.filter(a => a.z === zone && !used.has(a.n))
-    .map(a => ({ a, s: scoreAct(a) + Math.random() * 0.4 }))
-    .sort((x, y) => y.s - x.s).slice(0, n).map(x => x.a);
+function pickActs(zone, used, n, fallbackZones) {
+  const order = [zone, ...(fallbackZones || []).filter(z => z !== zone)];
+  const out = [];
+  for (const z of order) {
+    const cand = ACTS.filter(a => a.z === z && !used.has(a.n))
+      .map(a => ({ a, s: scoreAct(a) + (z === zone ? 0 : -0.5) + Math.random() * 0.4 }))
+      .sort((x, y) => y.s - x.s);
+    for (const c of cand) { if (out.length >= n) break; out.push(c.a); used.add(c.a.n); }
+    if (out.length >= n) break;
+  }
+  return out;
 }
 function interZone(a, b) {
   if (a === b) return 0;
@@ -265,6 +272,8 @@ function build() {
   }
 
   const usedActs = new Set();
+  const usedCourses = new Set();
+  let golfUsed = 0;
   let prevZone = null;
   let driveTotal = 0;
   const rows = [];
@@ -281,10 +290,14 @@ function build() {
       items.push({ t: '숙소 체크아웃', k: 'rest' });
       items.push({ t: `출발 · 공항 이동`, k: 'move' });
     } else {
-      const c = chosen[d - 1];
-      if (c) items.push({ t: `${c.name} 라운드`, k: 'golf', tag: c.tag });
+      // 해당 존의 코스를 우선 배정
+      let c = chosen.find(x => x.zone === zone && !usedCourses.has(x.id));
+      if (!c && state.repeat) c = chosen.find(x => x.zone === zone);
+      if (c && golfUsed >= rounds) c = null;
+      if (c) { golfUsed++; usedCourses.add(c.id); items.push({ t: `${c.name} 라운드`, k: 'golf', tag: c.tag }); }
       const nAct = c ? 1 : 2;
-      pickActs(zone, usedActs, nAct).forEach(a => { usedActs.add(a.n); items.push({ t: `${a.n}`, k: a.c, note: a.note, price: a.price, book: a.book }); });
+      pickActs(zone, usedActs, nAct, planZones).forEach(a => { items.push({ t: `${a.n}`, k: a.c, note: a.note, price: a.price, book: a.book }); });
+      if (!items.length) items.push({ t: '자유 시간 · 휴식', k: 'rest' });
     }
     const dz = prevZone ? interZone(prevZone, zone) : 0;
     driveTotal += dz;
