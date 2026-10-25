@@ -369,7 +369,6 @@ function build(){
       ul.appendChild(li);
     });
     card.appendChild(ul);
-    if(r.dz>0){const m=document.createElement('div'); m.className='meta'; m.textContent=fmt(t('drive'),{n:Math.round(r.dz)}); card.appendChild(m);}
     out.appendChild(card);
   });
 }
