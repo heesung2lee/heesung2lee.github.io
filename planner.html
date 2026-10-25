@@ -39,6 +39,7 @@ button.primary:hover{background:var(--navy2)}
 .day ul{margin:0;padding-left:18px;font-size:13.5px}
 .day li{margin:3px 0}
 .day li b{color:var(--navy)}
+.day li .desc{font-size:12px;color:#6b7280;margin-top:2px;line-height:1.5}
 .meta{font-size:12px;color:var(--mut);margin-top:8px}
 .empty{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:28px;text-align:center;color:var(--mut);font-size:13px}
 .note{font-size:11.5px;color:var(--mut);margin-top:14px}
@@ -124,45 +125,44 @@ const CATS = [
   {id:'wine', name:'와인·미식'},
 ];
 const ACTS = [
-  {n:"Bestia",c:'dining',z:'LA',p:["food"],t:120,price:'$$$',book:true,note:"Arts District 이탈리안 · 예약 필수"},
-  {n:"Providence",c:'dining',z:'LA',p:["food"],t:150,price:'$$$$',book:true,note:"미쉐린 2스타 해산물"},
-  {n:"Holbox",c:'dining',z:'LA',p:["food"],t:90,price:'$$',book:false,note:"DTLA 멕시칸 해산물"},
-  {n:"Guelaguetza",c:'dining',z:'LA',p:["food"],t:90,price:'$$',book:false,note:"코리아타운 오악사카"},
-  {n:"Sushi Gen",c:'dining',z:'LA',p:["food"],t:90,price:'$$',book:false,note:"리틀도쿄 스시"},
-  {n:"Musso & Frank Grill",c:'dining',z:'LA',p:["calm"],t:120,price:'$$$',book:true,note:"할리우드 클래식"},
-  {n:"Grand Central Market",c:'dining',z:'LA',p:["food"],t:60,price:'$',book:false,note:"다운타운 푸드홀"},
-  {n:"Getty Center",c:'landmark',z:'LA',p:["calm", "scenic"],t:150,price:'$',book:false,note:"미술관·전망"},
-  {n:"Griffith Observatory",c:'landmark',z:'LA',p:["scenic"],t:120,price:'$',book:false,note:"일몰·시티뷰"},
-  {n:"Santa Monica Pier",c:'landmark',z:'LA',p:["scenic"],t:90,price:'$',book:false,note:"해변 산책"},
-  {n:"The Huntington",c:'nature',z:'LA',p:["calm"],t:120,price:'$$',book:false,note:"정원·도서관"},
-  {n:"The Huntington (San Marino)",c:'landmark',z:'IE',p:["calm"],t:120,price:'$$',book:false,note:"정원 산책"},
-  {n:"Norton Simon Museum",c:'landmark',z:'IE',p:["calm"],t:90,price:'$',book:false,note:"파사데나 미술관"},
-  {n:"Old Town Pasadena",c:'dining',z:'IE',p:["food"],t:120,price:'$$',book:false,note:"식당·카페 거리"},
-  {n:"Victoria Gardens",c:'exp',z:'IE',p:[],t:120,price:'$$',book:false,note:"랜초쿠카몽가 쇼핑"},
-  {n:"Glen Ivy Hot Springs",c:'nature',z:'IE',p:["calm"],t:240,price:'$$$',book:true,note:"코로나 온천"},
-  {n:"March Field Air Museum",c:'landmark',z:'IE',p:[],t:90,price:'$',book:false,note:"리버사이드 항공박물관"},
-  {n:"George’s at the Cove",c:'dining',z:'SD',p:["food", "scenic"],t:120,price:'$$$',book:true,note:"라호야 오션뷰"},
-  {n:"Juniper & Ivy",c:'dining',z:'SD',p:["food"],t:120,price:'$$$',book:true,note:"리틀 이탈리"},
-  {n:"Born & Raised",c:'dining',z:'SD',p:["food"],t:120,price:'$$$',book:true,note:"스테이크·루프탑"},
-  {n:"Las Cuatro Milpas",c:'dining',z:'SD',p:["food"],t:60,price:'$',book:false,note:"바리오 로건 타코"},
-  {n:"Hodad’s",c:'dining',z:'SD',p:["food"],t:60,price:'$',book:false,note:"오션비치 버거"},
-  {n:"Coronado Beach",c:'landmark',z:'SD',p:["scenic", "calm"],t:120,price:'$',book:false,note:"델 코로나도"},
-  {n:"Balboa Park",c:'landmark',z:'SD',p:["calm"],t:150,price:'$',book:false,note:"박물관·정원"},
-  {n:"Torrey Pines State Reserve",c:'nature',z:'SD',p:["scenic", "active"],t:120,price:'$',book:false,note:"해안 트레일"},
-  {n:"La Jolla Cove Kayak",c:'exp',z:'SD',p:["active"],t:150,price:'$$',book:true,note:"해양 체험"},
-  {n:"Wilson Creek Winery",c:'wine',z:'TM',p:["food"],t:120,price:'$$',book:false,note:"와이너리 테이스팅"},
-  {n:"Callaway Vineyard",c:'wine',z:'TM',p:["food"],t:120,price:'$$',book:true,note:"뷰 좋은 테라스"},
-  {n:"South Coast Winery",c:'wine',z:'TM',p:["food", "calm"],t:150,price:'$$$',book:true,note:"리조트·스파"},
-  {n:"Old Town Temecula",c:'landmark',z:'TM',p:["calm"],t:90,price:'$',book:false,note:"구시가지 산책"},
-  {n:"Pechanga Resort",c:'exp',z:'TM',p:["active"],t:150,price:'$$',book:false,note:"카지노·스파"},
-  {n:"Temecula Balloon Ride",c:'exp',z:'TM',p:["scenic", "active"],t:240,price:'$$$',book:true,note:"새벽 열기구"},
-  {n:"Melvyn’s",c:'dining',z:'PS',p:["calm", "food"],t:120,price:'$$$',book:true,note:"클래식 스테이크하우스"},
-  {n:"Workshop Kitchen + Bar",c:'dining',z:'PS',p:["food"],t:120,price:'$$$',book:true,note:"모던 아메리칸"},
-  {n:"El Paseo",c:'dining',z:'PS',p:["food"],t:120,price:'$$',book:false,note:"팜데저트 쇼핑·식당"},
-  {n:"Shield’s Date Garden",c:'dining',z:'PS',p:["food"],t:45,price:'$',book:false,note:"데이트 셰이크"},
-  {n:"Palm Springs Aerial Tramway",c:'landmark',z:'PS',p:["scenic"],t:150,price:'$$',book:false,note:"케이블카"},
-  {n:"Joshua Tree National Park",c:'nature',z:'PS',p:["scenic", "active"],t:240,price:'$',book:false,note:"사막 국립공원"},
-  {n:"Palm Canyon Drive",c:'landmark',z:'PS',p:["calm"],t:90,price:'$',book:false,note:"다운타운 산책"},
+  {n:"Bestia",c:'dining',z:'LA',p:["food"],t:120,price:'$$$',book:true,note:"Arts District 이탈리안",d:"수제 파스타와 오픈 키친으로 LA 다이닝 신을 연 곳. 저녁 예약은 몇 주 전에 마감되는 미슐랭급 인기."},
+  {n:"Providence",c:'dining',z:'LA',p:["food"],t:150,price:'$$$$',book:true,note:"미쉐린 2스타",d:"할리우드의 해산물 코스 요리. 신선한 해산물을 파인다이닝으로 풀어내는 LA 대표 스페셜 오케이션 레스토랑."},
+  {n:"Holbox",c:'dining',z:'LA',p:["food"],t:90,price:'$$',book:false,note:"DTLA 멕시칸 해산물",d:"머카도 안 작은 카운터지만 미쉐린 스타를 받은 유카탄식 해산물. 세비체와 토스타다가 시그니처."},
+  {n:"Guelaguetza",c:'dining',z:'LA',p:["food"],t:90,price:'$$',book:false,note:"코리아타운 오악사카",d:"1994년부터 이어진 오악사카 전통 음식점. 몰레와 타말레, 라이브 마리아치로 유명."},
+  {n:"Sushi Gen",c:'dining',z:'LA',p:["food"],t:90,price:'$$',book:false,note:"리틀도쿄 노포 스시",d:"현지인이 줄 서는 오래된 스시야. 런치 스시가 가성비로 유명하고 일본어 응대가 오가는 동네 분위기."},
+  {n:"Musso & Frank Grill",c:'dining',z:'LA',p:["calm"],t:120,price:'$$$',book:true,note:"1919년 할리우드 클래식",d:"할리우드에서 가장 오래된 그릴. 붉은 가죽 부스와 웨이터 복장 그대로인, 영화 같은 식사 경험."},
+  {n:"Grand Central Market",c:'dining',z:'LA',p:["food"],t:60,price:'$',book:false,note:"1917년 푸드홀",d:"다운타운의 100년 된 시장. 타코부터 커피까지 40여 개 스톨을 한 번에 둘러볼 수 있는 곳."},
+  {n:"Getty Center",c:'landmark',z:'LA',p:["calm", "scenic"],t:150,price:'$',book:false,note:"언덕 위 미술관",d:"리처드 마이어 설계의 흰 건물과 정원, LA 전경. 무료 입장이지만 주차 예약이 필요해."},
+  {n:"Griffith Observatory",c:'landmark',z:'LA',p:["scenic"],t:120,price:'$',book:false,note:"천문대·일몰 명소",d:"1935년 천문대에서 할리우드 사인과 시내가 한눈에. 해질 무렵 방문이 가장 좋아."},
+  {n:"Santa Monica Pier",c:'landmark',z:'LA',p:["scenic"],t:90,price:'$',book:false,note:"1909년 부두",d:"퍼시픽 파크 놀이공원과 태평양 일몰. LA 여행의 마무리 산책 코스로 적당."},
+  {n:"The Huntington",c:'nature',z:'LA',p:["calm"],t:120,price:'$$',book:false,note:"120에이커 정원",d:"사막·일본·중국 정원과 구텐베르크 성경이 있는 도서관. 반나절 산책에 좋아."},
+  {n:"Norton Simon Museum",c:'landmark',z:'IE',p:["calm"],t:90,price:'$',book:false,note:"파사데나 미술관",d:"인상파와 아시아·인도 조각 컬렉션이 알찬 작은 미술관. 조용하고 관람 동선이 짧아 부담 없어."},
+  {n:"Old Town Pasadena",c:'dining',z:'IE',p:["food"],t:120,price:'$$',book:false,note:"파사데나 구시가지",d:"붉은 벽돌 거리沿 브랜드숍과 레스토랑, 카페. 저녁에 산책하며 식사하기 좋아."},
+  {n:"Victoria Gardens",c:'exp',z:'IE',p:[""],t:120,price:'$$',book:false,note:"랜초쿠카몽가 야외몰",d:"야외형 쇼핑센터에 식당·영화관까지. 이동일 사이 가볍게 시간을 보내기 좋은 곳."},
+  {n:"Glen Ivy Hot Springs",c:'nature',z:'IE',p:["calm"],t:240,price:'$$$',book:true,note:"코로나 온천",d:"천연 온천과 진흙 목욕으로 유명한 데이 스파. 라운드 후 피로를 푸는 코스로 인기."},
+  {n:"March Field Air Museum",c:'landmark',z:'IE',p:[""],t:90,price:'$',book:false,note:"리버사이드 항공박물관",d:"군용 항공기 실물 전시. 골프 외 관심사가 항공·군사사라면 짧게 들를 만해."},
+  {n:"George’s at the Cove",c:'dining',z:'SD',p:["food", "scenic"],t:120,price:'$$$',book:true,note:"라호야 오션뷰",d:"1981년부터 이어진 라호야 해안 레스토랑. 루프탑 테라스에서 태평양을 보며 식사하는 곳."},
+  {n:"Juniper & Ivy",c:'dining',z:'SD',p:["food"],t:120,price:'$$$',book:true,note:"리틀 이탈리 파인다이닝",d:"Top Chef 출신 셰프의 모던 아메리칸. 샌디에이고 파인다이닝 씬을 대표하는 곳."},
+  {n:"Born & Raised",c:'dining',z:'SD',p:["food"],t:120,price:'$$$',book:true,note:"스테이크·루프탑",d:"리틀 이탈리아의 드라이에이징 스테이크하우스. 루프탑 바 분위기가 좋아 저녁에 인기."},
+  {n:"Las Cuatro Milpas",c:'dining',z:'SD',p:["food"],t:60,price:'$',book:false,note:"1933년 타코",d:"바리오 로건의 노포. 손으로 빚는 토르티야와 카르니타스로 현지인 줄이 끊이지 않아."},
+  {n:"Hodad’s",c:'dining',z:'SD',p:["food"],t:60,price:'$',book:false,note:"오션비치 버거",d:"1969년부터 이어진 버거 명물. 두툼한 패티와 서핑 분위기로 관광객도 많이 찾아."},
+  {n:"Coronado Beach",c:'landmark',z:'SD',p:["scenic", "calm"],t:120,price:'$',book:false,note:"코로나도 해변",d:"미국 최고 해변 목록에 자주 오르는 백사장. 1888년 호텔 델 코로나도가 상징."},
+  {n:"Balboa Park",c:'landmark',z:'SD',p:["calm"],t:150,price:'$',book:false,note:"박물관 공원",d:"17개 박물관과 정원, 샌디에이고 동물원이 모인 공원. 하루로도 부족한 규모."},
+  {n:"Torrey Pines State Reserve",c:'nature',z:'SD',p:["scenic", "active"],t:120,price:'$',book:false,note:"희귀 소나무 해안",d:"세계에서 희귀한 토리 소나무 군락과 절벽 트레일. 바다를 따라 걷는 코스가 압권."},
+  {n:"La Jolla Cove Kayak",c:'exp',z:'SD',p:["active"],t:150,price:'$$',book:true,note:"해양보호구역 카약",d:"바다사자와 동굴을 지나는 카약·스노클. 물놀이를 좋아하면 만족도가 높은 체험."},
+  {n:"Wilson Creek Winery",c:'wine',z:'TM',p:["food"],t:120,price:'$$',book:false,note:"테메큘라 대표 와이너리",d:"알몬드 샴페인으로 유명한 가족 와이너리. 잔디마당에서 피크닉하듯 와인을 즐길 수 있어."},
+  {n:"Callaway Vineyard",c:'wine',z:'TM',p:["food"],t:120,price:'$$',book:true,note:"테메큘라 첫 와이너리",d:"1969년 테메큘라 와인 역사를 연 곳. 언덕 위 테라스에서 계곡 뷰를 보며 시음."},
+  {n:"South Coast Winery",c:'wine',z:'TM',p:["food", "calm"],t:150,price:'$$$',book:true,note:"리조트형 와이너리",d:"와이너리·리조트·스파가 함께 있는 곳. 라운드 후 숙박까지 연결하기 좋아."},
+  {n:"Old Town Temecula",c:'landmark',z:'TM',p:["calm"],t:90,price:'$',book:false,note:"1880년대 서부 마을",d:"목조 건물 거리에 상점과 바, 주말 라이브 음악. 저녁 산책 겸 한 끼 하기 좋아."},
+  {n:"Pechanga Resort",c:'exp',z:'TM',p:["active"],t:150,price:'$$',book:false,note:"대형 리조트 카지노",d:"카지노·스파·공연장을 갖춘 리조트. 골프장(Journey)과 붙어 있어 동선이 편해."},
+  {n:"Temecula Balloon Ride",c:'exp',z:'TM',p:["scenic", "active"],t:240,price:'$$$',book:true,note:"새벽 열기구",d:"해 뜨기 전 와이너리 위를 나는 열기구. 테메큘라에서만 가능한 대표 체험."},
+  {n:"Melvyn’s",c:'dining',z:'PS',p:["calm", "food"],t:120,price:'$$$',book:true,note:"1975년 올드할리우드",d:"잉글사이드 인의 클래식 레스토랑. 프랭크 시나트라가 드나들던 분위기 그대로."},
+  {n:"Workshop Kitchen + Bar",c:'dining',z:'PS',p:["food"],t:120,price:'$$$',book:true,note:"모던 아메리칸",d:"미드센추리 건축 공간의 파인다이닝. 팜스프링스에서 가장 세련된 저녁 중 하나."},
+  {n:"El Paseo",c:'dining',z:'PS',p:["food"],t:120,price:'$$',book:false,note:"팜데저트의 로데오",d:"갤러리·부티크·레스토랑이 늘어선 거리. 쇼핑과 식사를 한 번에 해결."},
+  {n:"Shield’s Date Garden",c:'dining',z:'PS',p:["food"],t:45,price:'$',book:false,note:"1924년 데이트 농장",d:"데이트 셰이크의 원조격. 사막 여행 중 잠깐 들러 마시는 디저트로 유명."},
+  {n:"Palm Springs Aerial Tramway",c:'landmark',z:'PS',p:["scenic"],t:150,price:'$$',book:false,note:"회전 케이블카",d:"세계 최대 회전식 케이블카로 산정 2,600m까지. 사막과 계곡을 한 번에 내려다봐."},
+  {n:"Joshua Tree National Park",c:'nature',z:'PS',p:["scenic", "active"],t:240,price:'$',book:false,note:"사막 국립공원",d:"기암과 조슈아 트리, 밤하늘 별보기로 유명. 팜스프링스에서 차로 1시간."},
+  {n:"Palm Canyon Drive",c:'landmark',z:'PS',p:["calm"],t:90,price:'$',book:false,note:"다운타운 팜스프링스",d:"미드센추리 건축과 부티크가 이어지는 중심 거리. 저녁 산책과 사진 찍기 좋아."},
 ];
 const SEASONS = [
   {id:'spring', name:'봄 (3–5월)'},
@@ -276,6 +276,40 @@ function build() {
   let golfUsed = 0;
   let prevZone = null;
   let driveTotal = 0;
+  // 라운드 날짜 균등 배분 (연속 라운드 지양, 휴식일 확보)
+  const middles = [];
+  for (let d = 1; d < days - 1; d++) middles.push(d);
+  const golfDaySet = new Set();
+  if (rounds > 0 && middles.length) {
+    if (rounds >= middles.length) middles.forEach(d => golfDaySet.add(d));
+    else {
+      const step = middles.length / rounds;
+      const pick = [];
+      for (let i = 0; i < rounds; i++) {
+        let idx = Math.round(i * step + step / 2 - 0.5);
+        idx = Math.max(0, Math.min(middles.length - 1, idx));
+        const d = middles[idx];
+        if (!pick.includes(d)) pick.push(d);
+      }
+      // 중복으로 모자라면 남은 날짜로 채워 정확히 rounds개
+      for (const d of middles) { if (pick.length >= rounds) break; if (!pick.includes(d)) pick.push(d); }
+      pick.slice(0, rounds).forEach(d => golfDaySet.add(d));
+      // 연속 라운드 완화: 붙어 있는 날을 비연속 빈 날로 옮긴다
+      let arr = [...golfDaySet].sort((a, b) => a - b);
+      for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i + 1] - arr[i] === 1) {
+          const free = middles.filter(d => !golfDaySet.has(d) && !golfDaySet.has(d - 1) && !golfDaySet.has(d + 1));
+          if (free.length) {
+            free.sort((a, b) => Math.abs(a - arr[i + 1]) - Math.abs(b - arr[i + 1]));
+            golfDaySet.delete(arr[i + 1]);
+            golfDaySet.add(free[0]);
+            arr = [...golfDaySet].sort((a, b) => a - b);
+            i = -1;
+          }
+        }
+      }
+    }
+  }
   const rows = [];
   for (let d = 0; d < days; d++) {
     const isFirst = d === 0, isLast = d === days - 1;
@@ -290,13 +324,16 @@ function build() {
       items.push({ t: '숙소 체크아웃', k: 'rest' });
       items.push({ t: `출발 · 공항 이동`, k: 'move' });
     } else {
-      // 해당 존의 코스를 우선 배정
-      let c = chosen.find(x => x.zone === zone && !usedCourses.has(x.id));
-      if (!c && state.repeat) c = chosen.find(x => x.zone === zone);
-      if (c && golfUsed >= rounds) c = null;
-      if (c) { golfUsed++; usedCourses.add(c.id); items.push({ t: `${c.name} 라운드`, k: 'golf', tag: c.tag }); }
+      // 라운드 날: 해당 존 코스 우선, 없으면 인근 존 코스
+      let c = null;
+      if (golfDaySet.has(d)) {
+        c = availCourses.find(x => x.zone === zone && !usedCourses.has(x.id));
+        if (!c && state.repeat) c = availCourses.find(x => x.zone === zone);
+        if (!c) c = availCourses.find(x => !usedCourses.has(x.id));
+        if (c) { golfUsed++; usedCourses.add(c.id); items.push({ t: `${c.name} 라운드`, k: 'golf', tag: c.tag }); }
+      }
       const nAct = c ? 1 : 2;
-      pickActs(zone, usedActs, nAct, planZones).forEach(a => { items.push({ t: `${a.n}`, k: a.c, note: a.note, price: a.price, book: a.book }); });
+      pickActs(zone, usedActs, nAct, planZones).forEach(a => { items.push({ t: `${a.n}`, k: a.c, note: a.note, price: a.price, book: a.book, d: a.d }); });
       if (!items.length) items.push({ t: '자유 시간 · 휴식', k: 'rest' });
     }
     const dz = prevZone ? interZone(prevZone, zone) : 0;
@@ -324,6 +361,7 @@ function build() {
       const b = document.createElement('b'); b.textContent = it.t; li.appendChild(b);
       if (it.tag) { const t = document.createElement('span'); t.className = 'badge'; t.textContent = it.tag; li.appendChild(t); }
       if (it.note) { const s = document.createElement('div'); s.className = 'meta'; s.textContent = it.note; li.appendChild(s); }
+      if (it.d) { const ds = document.createElement('div'); ds.className = 'desc'; ds.textContent = it.d; li.appendChild(ds); }
       if (it.book) { const bk = document.createElement('span'); bk.className = 'badge'; bk.textContent = '예약 권장'; li.appendChild(bk); }
       ul.appendChild(li);
     });
