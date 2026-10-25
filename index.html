@@ -2441,7 +2441,7 @@ body {
  
  <div id="finderModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,18,30,.6);overflow-y:auto;padding:20px 12px" role="button" tabindex="0" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();this.click()}" onclick="if(event.target===this)finderClose()">
  <div style="max-width:720px;margin:0 auto;background:#f7f8fa;border-radius:18px;padding:20px 16px 90px;position:relative">
- <button onclick="finderClose()" style="position:absolute;top:12px;right:14px;background:#fff;border:1.5px solid #e3e6ec;border-radius:100px;width:36px;height:36px;font-size:16px;cursor:pointer;color:#1a3450" aria-label="close">✕</button>
+ <button onclick="finderClose()" ontouchend="event.preventDefault();finderClose()" style="position:fixed;top:12px;right:14px;z-index:10001;background:#fff;border:1.5px solid #e3e6ec;border-radius:100px;width:36px;height:36px;font-size:16px;cursor:pointer;color:#1a3450" aria-label="close">✕</button>
 
 <div class="topbar"><span class="badge">여행 취향 테스트</span></div>
 
@@ -3206,7 +3206,13 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
  <script>
  function finderOpen(){var m=document.getElementById('finderModal');if(m){m.style.display='block';document.body.style.overflow='hidden';}var k=document.getElementById('kakaoBtn2');if(k)k.href=F_KAKAO;}
  function finderClose(){var m=document.getElementById('finderModal');if(m){m.style.display='none';document.body.style.overflow='';}}
- document.addEventListener('touchend',function(e){var t=e.target.closest?e.target.closest('#finderModal .mod,#finderModal .opt,#finderModal .theme,#finderModal #startBtn,#finderModal .qnext,#finderModal .backbtn'):null;if(!t)return;e.preventDefault();t.click();},{passive:false});
+ document.addEventListener('touchend',function(e){
+  var el=e.target;
+  /* 버튼·링크·입력요소는 네이티브 클릭을 방해하지 않는다 (닫기 X 등) */
+  if(el&&el.closest&&el.closest('button,a,input,textarea,select,label,summary'))return;
+  var t=el&&el.closest?el.closest('#finderModal .theme,#finderModal #startBtn'):null;
+  if(!t)return;e.preventDefault();t.click();
+},{passive:false});
  </script> </div>
 
 

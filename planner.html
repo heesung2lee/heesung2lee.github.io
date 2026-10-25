@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>일정 빌더 — Resonate Tour (테스트)</title>
+<style>
+:root{--navy:#16213e;--navy2:#1f2f52;--gold:#b08d3f;--line:#e3e6ec;--mut:#6b7280;--bg:#f6f7f9;--card:#fff;--ink:#111}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+header{background:var(--navy);color:#fff;padding:18px 20px}
+header h1{margin:0;font-size:18px;letter-spacing:-.01em}
+header p{margin:4px 0 0;font-size:12px;color:#c9d2e3}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 16px 64px;display:grid;grid-template-columns:320px 1fr;gap:18px}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.panel h2{font-size:12px;letter-spacing:.08em;color:var(--mut);margin:0 0 10px;text-transform:uppercase}
+.grp{margin-bottom:16px}
+.grp:last-child{margin-bottom:0}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;padding:5px 0;cursor:pointer}
+.chk input{width:16px;height:16px;accent-color:var(--navy)}
+.chk small{color:var(--mut);font-size:11px}
+.slider{width:100%;accent-color:var(--navy)}
+.val{font-weight:700;color:var(--navy)}
+.row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.toggle{display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:6px 0}
+.switch{position:relative;width:42px;height:24px;background:#d7dbe3;border-radius:99px;transition:.2s;flex:none}
+.switch.on{background:var(--navy)}
+.switch i{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:.2s}
+.switch.on i{left:21px}
+button.primary{width:100%;border:none;background:var(--navy);color:#fff;font-weight:700;font-size:14px;padding:13px;border-radius:10px;cursor:pointer;font-family:inherit}
+button.primary:hover{background:var(--navy2)}
+.summary{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.pill{background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 11px;font-size:12px;color:var(--navy)}
+.day{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.day-h{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.day-n{background:var(--navy);color:#fff;font-size:12px;font-weight:700;border-radius:8px;padding:3px 9px}
+.zone{font-size:11px;border:1px solid var(--gold);color:#8a6d1f;border-radius:99px;padding:2px 8px}
+.day ul{margin:0;padding-left:18px;font-size:13.5px}
+.day li{margin:3px 0}
+.day li b{color:var(--navy)}
+.meta{font-size:12px;color:var(--mut);margin-top:8px}
+.empty{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:28px;text-align:center;color:var(--mut);font-size:13px}
+.note{font-size:11.5px;color:var(--mut);margin-top:14px}
+.badge{display:inline-block;font-size:10.5px;background:#eef1f7;color:var(--navy);border-radius:5px;padding:1px 6px;margin-left:4px}
+</style>
+</head>
+<body>
+<header>
+ <h1>일정 빌더 <span style="font-weight:400;opacity:.7">— 테스트</span></h1>
+ <p>골프 코스 기준 · 2박4일 ~ 23박25일 · 필터로 조건을 정하면 큰 그림 일정을 만들어 줍니다.</p>
+</header>
+
+<div class="wrap">
+ <aside class="panel" id="panel">
+  <div class="grp">
+   <h2>지역</h2>
+   <div id="zones"></div>
+  </div>
+  <div class="grp">
+   <h2>액티비티 유형</h2>
+   <div id="cats"></div>
+  </div>
+  <div class="grp">
+   <h2>계절</h2>
+   <div id="seasons"></div>
+  </div>
+  <div class="grp">
+   <h2>골프 코스</h2>
+   <div id="courses"></div>
+  </div>
+  <div class="grp">
+   <h2>숙박</h2>
+   <div class="row"><span>박 수</span><span class="val"><span id="nightsV">6</span>박 <span id="daysV">8</span>일</span></div>
+   <input class="slider" type="range" id="nights" min="2" max="23" value="6" step="1">
+   <div class="row" style="margin-top:10px"><span>골프 라운드</span><span class="val"><span id="roundsV">3</span>회</span></div>
+   <input class="slider" type="range" id="rounds" min="0" max="20" value="3" step="1">
+   <div class="toggle"><span>같은 코스 재방문 허용</span><span class="switch on" id="repeat"><i></i></span></div>
+  </div>
+  <div class="grp">
+   <h2>성향(선택)</h2>
+   <select id="persona" style="width:100%;padding:10px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:13px;background:#fff">
+    <option value="">선택 안 함</option>
+    <option value="scenic">경치·자연 중심</option>
+    <option value="food">미식·와인 중심</option>
+    <option value="active">액티브·도전</option>
+    <option value="calm">조용함·휴식</option>
+   </select>
+  </div>
+  <button class="primary" id="go" style="margin-top:6px">일정 만들기</button>
+ </aside>
+
+ <main>
+  <div class="summary" id="summary"></div>
+  <div id="out"></div>
+  <p class="note">※ 테스트용 빌더입니다. 실제 예약 가능 여부·그린피·티타임은 상담 후 확정됩니다. 이동 시간은 차량 기준 대략치입니다.</p>
+ </main>
+</div>
+
+<script>
+/* ---------- 데이터 ---------- */
+const ZONES = {
+  LA:      {name:'로스앤젤레스', short:'LA', drive:{LAX:35, SD:120, TM:90, PS:120}},
+  IE:      {name:'인랜드 엠파이어', short:'IE', drive:{LA:60, SD:90, TM:60, PS:80}},
+  SD:      {name:'샌디에이고', short:'SD', drive:{LA:120, IE:90, TM:60, PS:150}},
+  TM:      {name:'테메큘라', short:'TM', drive:{LA:90, IE:60, SD:60, PS:105}},
+  PS:      {name:'팜스프링스', short:'PS', drive:{LA:120, IE:80, SD:150, TM:105}},
+};
+const COURSES = [
+  {id:'trump', name:'Trump National LA', zone:'LA', tag:'링크스·절벽'},
+  {id:'friendly', name:'Friendly Hills CC', zone:'LA', tag:'프라이빗'},
+  {id:'hacienda', name:'Hacienda GC', zone:'LA', tag:'100년 전통'},
+  {id:'ike', name:'Industry Hills — Ike', zone:'LA', tag:'챔피언십'},
+  {id:'babe', name:'Industry Hills — Babe', zone:'LA', tag:'정교함'},
+  {id:'hidden', name:'Hidden Valley GC', zone:'IE', tag:'사막 캐니언'},
+  {id:'crossings', name:'The Crossings at Carlsbad', zone:'SD', tag:'해안 생태'},
+  {id:'aviara', name:'Aviara GC', zone:'SD', tag:'Palmer·리조트'},
+  {id:'gcc', name:'The Golf Club of California', zone:'SD', tag:'퍼블릭 챔피언십'},
+  {id:'crosscreek', name:'Cross Creek GC', zone:'TM', tag:'와인 컨트리'},
+  {id:'journey', name:'Journey at Pechanga', zone:'TM', tag:'계곡 파노라마'},
+  {id:'pgawest', name:'PGA West Stadium', zone:'PS', tag:'Alcatraz'},
+];
+const CATS = [
+  {id:'dining', name:'다이닝·맛집'},
+  {id:'landmark', name:'명소·랜드마크'},
+  {id:'nature', name:'자연·아웃도어'},
+  {id:'exp', name:'체험·엔터'},
+  {id:'wine', name:'와인·미식'},
+];
+const ACTS = [
+  /* LA */
+  {n:'Grand Central Market', c:'dining', z:'LA', seasons:'all', p:['food'], t:60, note:'다운타운 푸드홀'},
+  {n:'Bestia', c:'dining', z:'LA', seasons:'all', p:['food'], t:120, note:'예약 필수 이탈리안'},
+  {n:'Getty Center', c:'landmark', z:'LA', seasons:'all', p:['calm','scenic'], t:150, note:'미술관+전망'},
+  {n:'Griffith Observatory', c:'landmark', z:'LA', seasons:'all', p:['scenic'], t:120, note:'시티뷰·일몰'},
+  {n:'Santa Monica Pier', c:'landmark', z:'LA', seasons:'all', p:['scenic'], t:90, note:'해변 산책'},
+  {n:'The Huntington', c:'nature', z:'LA', seasons:'all', p:['calm'], t:120, note:'정원·도서관'},
+  /* IE */
+  {n:'The Huntington (San Marino)', c:'landmark', z:'IE', seasons:'all', p:['calm'], t:120, note:'정원 산책'},
+  {n:'Norton Simon Museum', c:'landmark', z:'IE', seasons:'all', p:['calm'], t:90, note:'파사데나 미술관'},
+  {n:'In-N-Out / 로컬 버거', c:'dining', z:'IE', seasons:'all', p:[], t:45, note:'가벼운 한 끼'},
+  /* SD */
+  {n:'George’s at the Cove', c:'dining', z:'SD', seasons:'all', p:['food','scenic'], t:120, note:'라호야 오션뷰'},
+  {n:'Juniper & Ivy', c:'dining', z:'SD', seasons:'all', p:['food'], t:120, note:'리틀 이탈리'},
+  {n:'Coronado Beach', c:'landmark', z:'SD', seasons:'all', p:['scenic','calm'], t:120, note:'호텔 델 코로나도'},
+  {n:'Balboa Park', c:'landmark', z:'SD', seasons:'all', p:['calm'], t:150, note:'박물관·정원'},
+  {n:'Torrey Pines State Reserve', c:'nature', z:'SD', seasons:'all', p:['scenic','active'], t:120, note:'해안 트레일'},
+  {n:'La Jolla Kayak / 스노클', c:'exp', z:'SD', seasons:'summer', p:['active'], t:150, note:'해양 체험'},
+  /* TM */
+  {n:'Wilson Creek Winery', c:'wine', z:'TM', seasons:'all', p:['food'], t:120, note:'와이너리 테이스팅'},
+  {n:'Old Town Temecula', c:'landmark', z:'TM', seasons:'all', p:['calm'], t:90, note:'구시가지 산책'},
+  {n:'Pechanga Resort', c:'exp', z:'TM', seasons:'all', p:['active'], t:150, note:'카지노·스파'},
+  /* PS */
+  {n:'Joshua Tree National Park', c:'nature', z:'PS', seasons:'winter', p:['scenic','active'], t:240, note:'사막 국립공원'},
+  {n:'Palm Springs Aerial Tramway', c:'landmark', z:'PS', seasons:'all', p:['scenic'], t:150, note:'케이블카'},
+  {n:'El Paseo (Palm Desert)', c:'dining', z:'PS', seasons:'all', p:['food'], t:120, note:'쇼핑·레스토랑'},
+  {n:'Shield’s Date Garden', c:'dining', z:'PS', seasons:'all', p:['food'], t:45, note:'데이트 셰이크'},
+];
+const SEASONS = [
+  {id:'spring', name:'봄 (3–5월)'},
+  {id:'summer', name:'여름 (6–8월)'},
+  {id:'fall', name:'가을 (9–11월)'},
+  {id:'winter', name:'겨울 (12–2월)'},
+];
+
+/* ---------- 상태 ---------- */
+const state = {
+  zones: new Set(Object.keys(ZONES)),
+  cats: new Set(CATS.map(c=>c.id)),
+  seasons: new Set(['spring','fall']),
+  courses: new Set(COURSES.map(c=>c.id)),
+  nights: 6,
+  rounds: 3,
+  repeat: true,
+  persona: '',
+};
+
+/* ---------- UI ---------- */
+const $ = s => document.querySelector(s);
+const mkChk = (label, checked, onChange, sub) => {
+  const l = document.createElement('label'); l.className = 'chk';
+  const i = document.createElement('input'); i.type = 'checkbox'; i.checked = checked;
+  i.onchange = () => onChange(i.checked);
+  const s = document.createElement('span'); s.textContent = label;
+  l.appendChild(i); l.appendChild(s);
+  if (sub) { const sm = document.createElement('small'); sm.textContent = sub; l.appendChild(sm); }
+  return l;
+};
+function renderControls() {
+  const z = $('#zones'); z.innerHTML = '';
+  Object.entries(ZONES).forEach(([k,v]) => z.appendChild(mkChk(`${v.name} (${v.short})`, state.zones.has(k), on => { on ? state.zones.add(k) : state.zones.delete(k); })));
+  const c = $('#cats'); c.innerHTML = '';
+  CATS.forEach(cat => c.appendChild(mkChk(cat.name, state.cats.has(cat.id), on => { on ? state.cats.add(cat.id) : state.cats.delete(cat.id); })));
+  const s = $('#seasons'); s.innerHTML = '';
+  SEASONS.forEach(se => s.appendChild(mkChk(se.name, state.seasons.has(se.id), on => { on ? state.seasons.add(se.id) : state.seasons.delete(se.id); })));
+  const co = $('#courses'); co.innerHTML = '';
+  COURSES.forEach(cs => co.appendChild(mkChk(cs.name, state.courses.has(cs.id), on => { on ? state.courses.add(cs.id) : state.courses.delete(cs.id); }, cs.tag)));
+  $('#nights').value = state.nights; $('#rounds').value = state.rounds;
+  $('#nightsV').textContent = state.nights; $('#daysV').textContent = state.nights + 2;
+  $('#roundsV').textContent = state.rounds;
+  $('#repeat').classList.toggle('on', state.repeat);
+}
+$('#nights').oninput = e => { state.nights = +e.target.value; $('#nightsV').textContent = state.nights; $('#daysV').textContent = state.nights + 2; };
+$('#rounds').oninput = e => { state.rounds = +e.target.value; $('#roundsV').textContent = state.rounds; };
+$('#repeat').onclick = () => { state.repeat = !state.repeat; $('#repeat').classList.toggle('on', state.repeat); };
+$('#persona').onchange = e => { state.persona = e.target.value; };
+$('#go').onclick = build;
+
+/* ---------- 추천 ---------- */
+function scoreAct(a) {
+  let s = 0;
+  if (state.cats.has(a.c)) s += 2;
+  if (state.persona && a.p.includes(state.persona)) s += 3;
+  if (a.seasons === 'all' || [...state.seasons].some(x => a.seasons.includes(x) || a.seasons === 'winter' && x === 'winter')) s += 1;
+  if (a.z === 'PS' && state.seasons.has('summer')) s -= 4;
+  return s;
+}
+function pickActs(zone, used, n) {
+  return ACTS.filter(a => a.z === zone && !used.has(a.n))
+    .map(a => ({ a, s: scoreAct(a) + Math.random() * 0.4 }))
+    .sort((x, y) => y.s - x.s).slice(0, n).map(x => x.a);
+}
+function interZone(a, b) {
+  if (a === b) return 0;
+  return (ZONES[a].drive[b] || 90);
+}
+function build() {
+  const days = state.nights + 2;
+  const zones = [...state.zones];
+  const out = $('#out'); out.innerHTML = '';
+  const sum = $('#summary'); sum.innerHTML = '';
+  if (!zones.length) { out.innerHTML = '<div class="empty">지역을 하나 이상 선택해 주세요.</div>'; return; }
+
+  const availCourses = COURSES.filter(c => state.courses.has(c.id) && state.zones.has(c.zone));
+  if (!availCourses.length) { out.innerHTML = '<div class="empty">선택한 조건에 맞는 골프 코스가 없습니다.</div>'; return; }
+
+  // 라운드 수 상한: 숙박일수보다 많을 수 없음
+  const rounds = Math.min(state.rounds, Math.max(0, days - 2), 20);
+  // 존 배분: 라운드 코스 존 우선
+  // 코스가 있는 존 우선, 여행 길이에 맞춰 최대 3~5개 존으로 제한
+  const courseZones = [...new Set(availCourses.map(c => c.zone))];
+  const maxZones = Math.max(1, Math.min(5, Math.ceil(days / 3)));
+  let planZones = (courseZones.length ? courseZones : zones).filter(z => state.zones.has(z));
+  if (!planZones.length) planZones = zones.slice();
+  // 선택 코스 수 많은 존부터, 나머지는 원래 순서로
+  const cnt = {}; availCourses.forEach(c => cnt[c.zone] = (cnt[c.zone] || 0) + 1);
+  planZones.sort((a, b) => (cnt[b] || 0) - (cnt[a] || 0));
+  planZones = planZones.slice(0, maxZones);
+
+  // 코스 순환
+  const pool = [...availCourses];
+  const chosen = [];
+  for (let i = 0; i < rounds; i++) {
+    if (!pool.length) { if (state.repeat) pool.push(...availCourses); else break; }
+    const idx = i % pool.length;
+    chosen.push(pool[idx]);
+    if (!state.repeat) pool.splice(idx, 1);
+  }
+
+  const usedActs = new Set();
+  let prevZone = null;
+  let driveTotal = 0;
+  const rows = [];
+  for (let d = 0; d < days; d++) {
+    const isFirst = d === 0, isLast = d === days - 1;
+    const blockLen = Math.max(1, Math.floor((days - 2) / Math.max(1, planZones.length)));
+    let zi = (isFirst || isLast) ? 0 : Math.min(planZones.length - 1, Math.floor((d - 1) / blockLen));
+    const zone = planZones[zi] || planZones[0];
+    const items = [];
+    if (isFirst) {
+      items.push({ t: `도착 · ${ZONES[zone].name} 이동`, k: 'move' });
+      items.push({ t: '숙소 체크인 · 휴식', k: 'rest' });
+    } else if (isLast) {
+      items.push({ t: '숙소 체크아웃', k: 'rest' });
+      items.push({ t: `출발 · 공항 이동`, k: 'move' });
+    } else {
+      const c = chosen[d - 1];
+      if (c) items.push({ t: `${c.name} 라운드`, k: 'golf', tag: c.tag });
+      const nAct = c ? 1 : 2;
+      pickActs(zone, usedActs, nAct).forEach(a => { usedActs.add(a.n); items.push({ t: `${a.n}`, k: a.c, note: a.note }); });
+    }
+    const dz = prevZone ? interZone(prevZone, zone) : 0;
+    driveTotal += dz;
+    prevZone = zone;
+    rows.push({ d, zone, items, dz });
+  }
+
+  // 요약
+  const nightsTxt = `${state.nights}박 ${days}일`;
+  [nightsTxt, `라운드 ${chosen.length}회`, `지역 ${planZones.length}곳`, `이동 약 ${Math.round(driveTotal / 60 * 10) / 10}시간`].forEach(t => {
+    const p = document.createElement('span'); p.className = 'pill'; p.textContent = t; sum.appendChild(p);
+  });
+
+  // 카드
+  rows.forEach(r => {
+    const card = document.createElement('div'); card.className = 'day';
+    const h = document.createElement('div'); h.className = 'day-h';
+    const n = document.createElement('span'); n.className = 'day-n'; n.textContent = `Day ${r.d + 1}`;
+    const z = document.createElement('span'); z.className = 'zone'; z.textContent = ZONES[r.zone].name;
+    h.appendChild(n); h.appendChild(z); card.appendChild(h);
+    const ul = document.createElement('ul');
+    r.items.forEach(it => {
+      const li = document.createElement('li');
+      const b = document.createElement('b'); b.textContent = it.t; li.appendChild(b);
+      if (it.tag) { const t = document.createElement('span'); t.className = 'badge'; t.textContent = it.tag; li.appendChild(t); }
+      if (it.note) { const s = document.createElement('div'); s.className = 'meta'; s.textContent = it.note; li.appendChild(s); }
+      ul.appendChild(li);
+    });
+    card.appendChild(ul);
+    if (r.dz > 0) { const m = document.createElement('div'); m.className = 'meta'; m.textContent = `이동 약 ${Math.round(r.dz)}분 (차량)`; card.appendChild(m); }
+    out.appendChild(card);
+  });
+}
+
+renderControls();
+build();
+</script>
+</body>
+</html>
