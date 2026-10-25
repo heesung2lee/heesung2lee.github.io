@@ -3551,7 +3551,7 @@ const PLAN_DATA = [
  
 const DAYS = [];
  
-let curLang = 'ko';
+let curLang = (function(){try{var v=localStorage.getItem('resonate_lang');return (v==='en'||v==='ko')?v:'ko';}catch(e){return 'ko';}})();
 let curPage = 'home';
 let schedBuilt = false;
 let curDay = 0;
@@ -3807,6 +3807,7 @@ function toggleLangCurrency(e) {
  if (dd) dd.classList.toggle('show');
 }
 function setLang(lang, btn) {
+ try{ localStorage.setItem('resonate_lang', lang); }catch(e){}
  if (curLang !== lang) _applyLang(lang);
  var dd = document.getElementById('lcDropdown');
  if (dd) {
