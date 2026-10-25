@@ -128,33 +128,45 @@ const CATS = [
   {id:'wine', name:'와인·미식'},
 ];
 const ACTS = [
-  /* LA */
-  {n:'Grand Central Market', c:'dining', z:'LA', seasons:'all', p:['food'], t:60, note:'다운타운 푸드홀'},
-  {n:'Bestia', c:'dining', z:'LA', seasons:'all', p:['food'], t:120, note:'예약 필수 이탈리안'},
-  {n:'Getty Center', c:'landmark', z:'LA', seasons:'all', p:['calm','scenic'], t:150, note:'미술관+전망'},
-  {n:'Griffith Observatory', c:'landmark', z:'LA', seasons:'all', p:['scenic'], t:120, note:'시티뷰·일몰'},
-  {n:'Santa Monica Pier', c:'landmark', z:'LA', seasons:'all', p:['scenic'], t:90, note:'해변 산책'},
-  {n:'The Huntington', c:'nature', z:'LA', seasons:'all', p:['calm'], t:120, note:'정원·도서관'},
-  /* IE */
-  {n:'The Huntington (San Marino)', c:'landmark', z:'IE', seasons:'all', p:['calm'], t:120, note:'정원 산책'},
-  {n:'Norton Simon Museum', c:'landmark', z:'IE', seasons:'all', p:['calm'], t:90, note:'파사데나 미술관'},
-  {n:'In-N-Out / 로컬 버거', c:'dining', z:'IE', seasons:'all', p:[], t:45, note:'가벼운 한 끼'},
-  /* SD */
-  {n:'George’s at the Cove', c:'dining', z:'SD', seasons:'all', p:['food','scenic'], t:120, note:'라호야 오션뷰'},
-  {n:'Juniper & Ivy', c:'dining', z:'SD', seasons:'all', p:['food'], t:120, note:'리틀 이탈리'},
-  {n:'Coronado Beach', c:'landmark', z:'SD', seasons:'all', p:['scenic','calm'], t:120, note:'호텔 델 코로나도'},
-  {n:'Balboa Park', c:'landmark', z:'SD', seasons:'all', p:['calm'], t:150, note:'박물관·정원'},
-  {n:'Torrey Pines State Reserve', c:'nature', z:'SD', seasons:'all', p:['scenic','active'], t:120, note:'해안 트레일'},
-  {n:'La Jolla Kayak / 스노클', c:'exp', z:'SD', seasons:'summer', p:['active'], t:150, note:'해양 체험'},
-  /* TM */
-  {n:'Wilson Creek Winery', c:'wine', z:'TM', seasons:'all', p:['food'], t:120, note:'와이너리 테이스팅'},
-  {n:'Old Town Temecula', c:'landmark', z:'TM', seasons:'all', p:['calm'], t:90, note:'구시가지 산책'},
-  {n:'Pechanga Resort', c:'exp', z:'TM', seasons:'all', p:['active'], t:150, note:'카지노·스파'},
-  /* PS */
-  {n:'Joshua Tree National Park', c:'nature', z:'PS', seasons:'winter', p:['scenic','active'], t:240, note:'사막 국립공원'},
-  {n:'Palm Springs Aerial Tramway', c:'landmark', z:'PS', seasons:'all', p:['scenic'], t:150, note:'케이블카'},
-  {n:'El Paseo (Palm Desert)', c:'dining', z:'PS', seasons:'all', p:['food'], t:120, note:'쇼핑·레스토랑'},
-  {n:'Shield’s Date Garden', c:'dining', z:'PS', seasons:'all', p:['food'], t:45, note:'데이트 셰이크'},
+  {n:"Bestia",c:'dining',z:'LA',p:["food"],t:120,price:'$$$',book:true,note:"Arts District 이탈리안 · 예약 필수"},
+  {n:"Providence",c:'dining',z:'LA',p:["food"],t:150,price:'$$$$',book:true,note:"미쉐린 2스타 해산물"},
+  {n:"Holbox",c:'dining',z:'LA',p:["food"],t:90,price:'$$',book:false,note:"DTLA 멕시칸 해산물"},
+  {n:"Guelaguetza",c:'dining',z:'LA',p:["food"],t:90,price:'$$',book:false,note:"코리아타운 오악사카"},
+  {n:"Sushi Gen",c:'dining',z:'LA',p:["food"],t:90,price:'$$',book:false,note:"리틀도쿄 스시"},
+  {n:"Musso & Frank Grill",c:'dining',z:'LA',p:["calm"],t:120,price:'$$$',book:true,note:"할리우드 클래식"},
+  {n:"Grand Central Market",c:'dining',z:'LA',p:["food"],t:60,price:'$',book:false,note:"다운타운 푸드홀"},
+  {n:"Getty Center",c:'landmark',z:'LA',p:["calm", "scenic"],t:150,price:'$',book:false,note:"미술관·전망"},
+  {n:"Griffith Observatory",c:'landmark',z:'LA',p:["scenic"],t:120,price:'$',book:false,note:"일몰·시티뷰"},
+  {n:"Santa Monica Pier",c:'landmark',z:'LA',p:["scenic"],t:90,price:'$',book:false,note:"해변 산책"},
+  {n:"The Huntington",c:'nature',z:'LA',p:["calm"],t:120,price:'$$',book:false,note:"정원·도서관"},
+  {n:"The Huntington (San Marino)",c:'landmark',z:'IE',p:["calm"],t:120,price:'$$',book:false,note:"정원 산책"},
+  {n:"Norton Simon Museum",c:'landmark',z:'IE',p:["calm"],t:90,price:'$',book:false,note:"파사데나 미술관"},
+  {n:"Old Town Pasadena",c:'dining',z:'IE',p:["food"],t:120,price:'$$',book:false,note:"식당·카페 거리"},
+  {n:"Victoria Gardens",c:'exp',z:'IE',p:[],t:120,price:'$$',book:false,note:"랜초쿠카몽가 쇼핑"},
+  {n:"Glen Ivy Hot Springs",c:'nature',z:'IE',p:["calm"],t:240,price:'$$$',book:true,note:"코로나 온천"},
+  {n:"March Field Air Museum",c:'landmark',z:'IE',p:[],t:90,price:'$',book:false,note:"리버사이드 항공박물관"},
+  {n:"George’s at the Cove",c:'dining',z:'SD',p:["food", "scenic"],t:120,price:'$$$',book:true,note:"라호야 오션뷰"},
+  {n:"Juniper & Ivy",c:'dining',z:'SD',p:["food"],t:120,price:'$$$',book:true,note:"리틀 이탈리"},
+  {n:"Born & Raised",c:'dining',z:'SD',p:["food"],t:120,price:'$$$',book:true,note:"스테이크·루프탑"},
+  {n:"Las Cuatro Milpas",c:'dining',z:'SD',p:["food"],t:60,price:'$',book:false,note:"바리오 로건 타코"},
+  {n:"Hodad’s",c:'dining',z:'SD',p:["food"],t:60,price:'$',book:false,note:"오션비치 버거"},
+  {n:"Coronado Beach",c:'landmark',z:'SD',p:["scenic", "calm"],t:120,price:'$',book:false,note:"델 코로나도"},
+  {n:"Balboa Park",c:'landmark',z:'SD',p:["calm"],t:150,price:'$',book:false,note:"박물관·정원"},
+  {n:"Torrey Pines State Reserve",c:'nature',z:'SD',p:["scenic", "active"],t:120,price:'$',book:false,note:"해안 트레일"},
+  {n:"La Jolla Cove Kayak",c:'exp',z:'SD',p:["active"],t:150,price:'$$',book:true,note:"해양 체험"},
+  {n:"Wilson Creek Winery",c:'wine',z:'TM',p:["food"],t:120,price:'$$',book:false,note:"와이너리 테이스팅"},
+  {n:"Callaway Vineyard",c:'wine',z:'TM',p:["food"],t:120,price:'$$',book:true,note:"뷰 좋은 테라스"},
+  {n:"South Coast Winery",c:'wine',z:'TM',p:["food", "calm"],t:150,price:'$$$',book:true,note:"리조트·스파"},
+  {n:"Old Town Temecula",c:'landmark',z:'TM',p:["calm"],t:90,price:'$',book:false,note:"구시가지 산책"},
+  {n:"Pechanga Resort",c:'exp',z:'TM',p:["active"],t:150,price:'$$',book:false,note:"카지노·스파"},
+  {n:"Temecula Balloon Ride",c:'exp',z:'TM',p:["scenic", "active"],t:240,price:'$$$',book:true,note:"새벽 열기구"},
+  {n:"Melvyn’s",c:'dining',z:'PS',p:["calm", "food"],t:120,price:'$$$',book:true,note:"클래식 스테이크하우스"},
+  {n:"Workshop Kitchen + Bar",c:'dining',z:'PS',p:["food"],t:120,price:'$$$',book:true,note:"모던 아메리칸"},
+  {n:"El Paseo",c:'dining',z:'PS',p:["food"],t:120,price:'$$',book:false,note:"팜데저트 쇼핑·식당"},
+  {n:"Shield’s Date Garden",c:'dining',z:'PS',p:["food"],t:45,price:'$',book:false,note:"데이트 셰이크"},
+  {n:"Palm Springs Aerial Tramway",c:'landmark',z:'PS',p:["scenic"],t:150,price:'$$',book:false,note:"케이블카"},
+  {n:"Joshua Tree National Park",c:'nature',z:'PS',p:["scenic", "active"],t:240,price:'$',book:false,note:"사막 국립공원"},
+  {n:"Palm Canyon Drive",c:'landmark',z:'PS',p:["calm"],t:90,price:'$',book:false,note:"다운타운 산책"},
 ];
 const SEASONS = [
   {id:'spring', name:'봄 (3–5월)'},
@@ -211,7 +223,8 @@ function scoreAct(a) {
   let s = 0;
   if (state.cats.has(a.c)) s += 2;
   if (state.persona && a.p.includes(state.persona)) s += 3;
-  if (a.seasons === 'all' || [...state.seasons].some(x => a.seasons.includes(x) || a.seasons === 'winter' && x === 'winter')) s += 1;
+  var seas = a.seasons || 'all';
+  if (seas === 'all' || [...state.seasons].some(x => seas.indexOf(x) >= 0)) s += 1;
   if (a.z === 'PS' && state.seasons.has('summer')) s -= 4;
   return s;
 }
@@ -277,7 +290,7 @@ function build() {
       const c = chosen[d - 1];
       if (c) items.push({ t: `${c.name} 라운드`, k: 'golf', tag: c.tag });
       const nAct = c ? 1 : 2;
-      pickActs(zone, usedActs, nAct).forEach(a => { usedActs.add(a.n); items.push({ t: `${a.n}`, k: a.c, note: a.note }); });
+      pickActs(zone, usedActs, nAct).forEach(a => { usedActs.add(a.n); items.push({ t: `${a.n}`, k: a.c, note: a.note, price: a.price, book: a.book }); });
     }
     const dz = prevZone ? interZone(prevZone, zone) : 0;
     driveTotal += dz;
@@ -304,6 +317,9 @@ function build() {
       const b = document.createElement('b'); b.textContent = it.t; li.appendChild(b);
       if (it.tag) { const t = document.createElement('span'); t.className = 'badge'; t.textContent = it.tag; li.appendChild(t); }
       if (it.note) { const s = document.createElement('div'); s.className = 'meta'; s.textContent = it.note; li.appendChild(s); }
+      const extra = document.createElement('span'); extra.className = 'badge';
+      if (it.price) extra.textContent = it.price + (it.book ? ' · 예약' : '');
+      if (extra.textContent) li.appendChild(extra);
       ul.appendChild(li);
     });
     card.appendChild(ul);
