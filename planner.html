@@ -11,8 +11,6 @@ body{margin:0;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",san
 header{background:var(--navy);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 header h1{margin:0;font-size:18px;letter-spacing:-.01em}
 header p{margin:4px 0 0;font-size:12px;color:#c9d2e3;max-width:640px}
-.langbtn{flex:none;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
-.langbtn:hover{background:rgba(255,255,255,.22)}
 .wrap{max-width:1180px;margin:0 auto;padding:18px 16px 64px;display:grid;grid-template-columns:320px 1fr;gap:18px}
 @media(max-width:900px){.wrap{grid-template-columns:1fr}}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
@@ -53,7 +51,6 @@ button.primary:hover{background:var(--navy2)}
   <h1 id="hTitle">일정 빌더 <span style="font-weight:400;opacity:.7">— 테스트</span></h1>
   <p id="hSub">예시·참고용 일정입니다. 골프 코스 기준 2박4일 ~ 23박25일 범위에서 필터 조건에 따라 큰 그림만 보여줍니다.</p>
  </div>
- <button class="langbtn" id="langBtn" onclick="toggleLang()">EN</button>
 </header>
 
 <div class="wrap">
@@ -210,7 +207,6 @@ function applyStatic() {
   $('#lRepeat').textContent = t('repeat'); $('#lPersona').textContent = t('persona'); $('#go').textContent = t('go');
   $('#footNote').textContent = t('notes');
   $('#nUnit').textContent = t('unitN'); $('#dUnit').textContent = t('unitD'); $('#rUnit').textContent = t('unitR');
-  $('#langBtn').textContent = lang === 'ko' ? 'EN' : '한국어';
   const sel = $('#persona');
   sel.replaceChildren();
   [['','p0'],['scenic','pScenic'],['food','pFood'],['active','pActive'],['calm','pCalm']].forEach(([v,k])=>{
