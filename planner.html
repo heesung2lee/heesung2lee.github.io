@@ -342,13 +342,10 @@ function build(){
     driveTotal+=dz; prevZone=zone;
     rows.push({d,zone,items,dz});
   }
-
-  [[t('sumNights'),0],[t('sumRounds'),0],[t('sumZones'),0],[t('sumDrive'),0]];
   const pills=[
     fmt(t('sumNights'),{n:state.nights,d:days}),
     fmt(t('sumRounds'),{n:golfUsed}),
-    fmt(t('sumZones'),{n:planZones.length}),
-    fmt(t('sumDrive'),{h:Math.round(driveTotal/60*10)/10})
+    fmt(t('sumZones'),{n:planZones.length})
   ];
   pills.forEach(x=>{const p=document.createElement('span'); p.className='pill'; p.textContent=x; sum.appendChild(p);});
 
