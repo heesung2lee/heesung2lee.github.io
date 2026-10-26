@@ -188,8 +188,12 @@ const ACTS = [
 ];
 
 /* ---------- state ---------- */
+const _qp = new URLSearchParams(location.search);
+const _pParam = _qp.get('p');
+const _PERSONAS = ['scenic','food','active','calm'];
 const state = { zones:new Set(Object.keys(ZONES)), cats:new Set(CATS.map(c=>c.id)),
-  seasons:new Set(['spring','fall']), nights:6, rounds:3, repeat:true, persona:'' };
+  seasons:new Set(['spring','fall']), nights:6, rounds:3, repeat:true,
+  persona: (_PERSONAS.includes(_pParam) ? _pParam : '') };
 
 /* ---------- UI ---------- */
 const $ = s => document.querySelector(s);
