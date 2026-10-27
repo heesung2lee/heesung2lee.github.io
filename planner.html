@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>일정 빌더 — Resonate Tour (테스트)</title>
+<title>일정 빌더 — Resonate Tour</title>
 <style>
 :root{--navy:#16213e;--navy2:#1f2f52;--gold:#b08d3f;--line:#e3e6ec;--mut:#6b7280;--bg:#f6f7f9;--card:#fff;--ink:#111}
 *{box-sizing:border-box}
@@ -48,8 +48,8 @@ button.primary:hover{background:var(--navy2)}
 <body>
 <header>
  <div>
-  <h1 id="hTitle">일정 빌더 <span style="font-weight:400;opacity:.7">— 테스트</span></h1>
-  <p id="hSub">예시·참고용 일정입니다. 골프 코스 기준 2박4일 ~ 23박25일 범위에서 필터 조건에 따라 큰 그림만 보여줍니다.</p>
+  <h1 id="hTitle">일정 빌더</h1>
+  <p id="hSub">선택하신 조건에 맞춰 여정의 큰 그림을 제안합니다. 실제 예약 가능 여부와 요금은 상담 후 확정됩니다.</p>
  </div>
 </header>
 
@@ -60,7 +60,7 @@ button.primary:hover{background:var(--navy2)}
   <div class="grp"><h2 id="lSeasons">계절</h2><div id="seasons"></div></div>
   <div class="grp">
    <h2 id="lStay">숙박</h2>
-   <div class="row"><span id="lNights">박 수</span><span class="val"><span id="nightsV">6</span><span id="nUnit">박</span> <span id="daysV">8</span><span id="dUnit">일</span></span></div>
+   <div class="row"><span id="lNights" style="display:none">숙박</span><span class="val"><span id="nightsV">6</span><span id="nUnit">박</span> <span id="daysV">8</span><span id="dUnit">일</span></span></div>
    <input class="slider" type="range" id="nights" min="2" max="23" value="6" step="1">
    <div class="row" style="margin-top:10px"><span id="lRounds">골프 라운드</span><span class="val"><span id="roundsV">3</span><span id="rUnit">회</span></span></div>
    <input class="slider" type="range" id="rounds" min="0" max="20" value="3" step="1">
@@ -76,7 +76,7 @@ button.primary:hover{background:var(--navy2)}
  <main>
   <div class="summary" id="summary"></div>
   <div id="out"></div>
-  <p class="note" id="footNote">※ 테스트용 빌더입니다. 실제 예약 가능 여부·그린피·티타임은 상담 후 확정됩니다. 이동 시간은 차량 기준 대략치입니다.</p>
+  <p class="note" id="footNote">※ 실제 예약 가능 여부·그린피·티타임은 상담 후 확정됩니다.</p>
  </main>
 </div>
 
@@ -86,11 +86,11 @@ const LANG_KEY = 'resonate_lang';
 let lang = (function(){ try { return localStorage.getItem(LANG_KEY) || 'ko'; } catch(e){ return 'ko'; } })();
 const T = {
   ko: {
-    title:'일정 빌더 — 테스트',
-    sub:'예시·참고용 일정입니다. 골프 코스 기준 2박4일 ~ 23박25일 범위에서 필터 조건에 따라 큰 그림만 보여줍니다.',
-    zones:'지역', cats:'액티비티 유형', seasons:'계절', stay:'숙박', nights:'박 수', rounds:'골프 라운드',
+    title:'일정 빌더',
+    sub:'선택하신 조건에 맞춰 여정의 큰 그림을 제안합니다.',
+    zones:'지역', cats:'액티비티 유형', seasons:'계절', stay:'숙박', nights:'숙박', rounds:'골프 라운드',
     repeat:'같은 골프코스 재방문 허용', persona:'성향(선택)', go:'일정 만들기',
-    notes:'※ 테스트용 빌더입니다. 실제 예약 가능 여부·그린피·티타임은 상담 후 확정됩니다. 이동 시간은 차량 기준 대략치입니다.',
+    notes:'※ 실제 예약 가능 여부·그린피·티타임은 상담 후 확정됩니다.',
     p0:'선택 안 함', pScenic:'경치·자연 중심', pFood:'미식·와인 중심', pActive:'액티브·도전', pCalm:'조용함·휴식',
     unitN:'박', unitD:'일', unitR:'회', day:'Day', arrival:'도착 · {z} 이동', checkin:'숙소 체크인 · 휴식',
     checkout:'숙소 체크아웃', depart:'출발 · 공항 이동', golf:'{c} 라운드', free:'자유 시간 · 휴식',
@@ -101,11 +101,11 @@ const T = {
     s_spring:'봄 (3–5월)', s_summer:'여름 (6–8월)', s_fall:'가을 (9–11월)', s_winter:'겨울 (12–2월)'
   },
   en: {
-    title:'Schedule Builder — Test',
-    sub:'Sample / reference schedule only. For 2–23 nights, it shows the big picture based on your filters around our golf courses.',
+    title:'Schedule Builder',
+    sub:'We sketch the big picture of your trip from your filters.',
     zones:'Regions', cats:'Activity type', seasons:'Season', stay:'Stay', nights:'Nights', rounds:'Golf rounds',
     repeat:'Allow repeat visits to the same course', persona:'Style (optional)', go:'Build schedule',
-    notes:'Test builder. Availability, green fees and tee times are confirmed after consultation. Drive times are approximate.',
+    notes:'Availability, green fees and tee times are confirmed after consultation.',
     p0:'No preference', pScenic:'Scenery & nature', pFood:'Food & wine', pActive:'Active & challenge', pCalm:'Quiet & rest',
     unitN:'nights', unitD:'days', unitR:'rounds', day:'Day', arrival:'Arrive · transfer to {z}', checkin:'Hotel check-in · rest',
     checkout:'Hotel check-out', depart:'Depart · airport transfer', golf:'{c} round', free:'Free time · rest',
@@ -139,7 +139,8 @@ const COURSES = [
   {id:'gcc',name:'The Golf Club of California',zone:'SD',tag:{ko:'퍼블릭 챔피언십',en:'Public championship'},p:['active']},
   {id:'crosscreek',name:'Cross Creek GC',zone:'TM',tag:{ko:'와인 컨트리',en:'Wine country'},p:['food','calm']},
   {id:'journey',name:'Journey at Pechanga',zone:'TM',tag:{ko:'계곡 파노라마',en:'Valley panorama'},p:['scenic','active']},
-  {id:'pgawest',name:'PGA West Stadium',zone:'PS',tag:{ko:'Alcatraz',en:'Alcatraz'},p:['active']}
+  {id:'pgawest',name:'PGA West Stadium',zone:'PS',tag:{ko:'투어 챔피언십',en:'Tour Championship'},p:['active']},
+  {id:'pgawestmtn',name:'PGA West Mountain',zone:'PS',tag:{ko:'마운틴',en:'Mountain'},p:['scenic','active']}
 ];
 const CATS = [
   {id:'dining',key:'cat_dining'},{id:'landmark',key:'cat_landmark'},{id:'nature',key:'cat_nature'},
@@ -313,7 +314,7 @@ function build(){
     }
   }
 
-  const usedActs=new Set(), usedCourses=new Set();
+  const usedActs=new Set(), usedCourses=new Set(), courseCount={};
   let prevZone=null, driveTotal=0, golfUsed=0;
   const rows=[];
   for(let d=0;d<days;d++){
@@ -331,12 +332,21 @@ function build(){
     } else {
       let c=null;
       if(golfDaySet.has(d)){
+        // 1) 같은 지역의 미사용 코스 → 2) 다른 지역 미사용 코스
         c=availCourses.find(x=>x.zone===zone && !usedCourses.has(x.id));
-        if(!c && state.repeat) c=availCourses.find(x=>x.zone===zone);
         if(!c) c=availCourses.find(x=>!usedCourses.has(x.id));
-        if(c){ golfUsed++; usedCourses.add(c.id); items.push({txt:fmt(t('golf'),{c:c.name}),k:'golf',tag:c.tag[lang],note:null}); }
+        // 3) 재방문: 토글 + 10박 이상일 때만, 코스당 최대 2회
+        if(!c && state.repeat && state.nights>=10){
+          c=availCourses.filter(x=>(courseCount[x.id]||0)<2)
+                        .sort((a,b)=>(courseCount[a.id]||0)-(courseCount[b.id]||0))[0]||null;
+        }
+        if(c){
+          golfUsed++; usedCourses.add(c.id); courseCount[c.id]=(courseCount[c.id]||0)+1;
+          items.push({txt:fmt(t('golf'),{c:c.name}),k:'golf',tag:c.tag[lang],note:null});
+        }
       }
-      const nAct=c?1:2;
+      // 골프만 하고 끝나지 않도록: 골프일에도 액티비티 2개를 채운다
+      const nAct=2;
       pickActs(zone, usedActs, nAct, planZones).forEach(a=>{
         items.push({txt:a.n,k:a.c,note:a.note[lang],d:a.d[lang],book:a.book});
       });
