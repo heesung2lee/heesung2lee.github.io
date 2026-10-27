@@ -87,6 +87,16 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 .nav-tab{font-size:13px;font-weight:400;color:#5c6a7a;background:none;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-family:inherit;transition:border-color .2s,background-color .2s,color .2s,box-shadow .2s;white-space:nowrap}@media(max-width:860px){.nav-tab,.nav-r.btn-book{display:none !important}}
 .nav-tab:hover{background:#f5eed6;color:#1a3450}
 .nav-tab.act{color:#1a3450;font-weight:700;background:transparent;border:2px solid #d4af37}
+.nav-mid::-webkit-scrollbar{display:none}
+.sec-chip{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;padding:6px 11px;min-height:30px;border-radius:100px;border:1px solid #e6eaf0;background:#fff;font:600 11.5px/1 -apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;color:#5c6a7a;cursor:pointer;white-space:nowrap;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s,border-color .15s}
+.sec-chip:hover{border-color:#c9d3e0}
+.sec-chip:active{transform:scale(.96)}
+.sec-chip.act{background:#1a3450;color:#d4af37;border-color:#1a3450}
+@media(max-width:430px){.sec-chip{padding:6px 9px;font-size:11px}.nav-mid{gap:3px}}
+@media(max-width:520px){.sec-chip[data-page="home"],.sec-chip[data-page="contact"]{display:none}}
+#mainNav.hero-mode .sec-chip{background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.4)}
+#mainNav.hero-mode .sec-chip.act{background:#fff;color:#1a3450;border-color:#fff}
+body.secnav-offset .page{padding-top:52px}
 #mainNav.hero-mode .nav-tab{color:rgba(255,255,255,.8)}
 #mainNav.hero-mode .nav-tab:hover{background:rgba(255,255,255,.12);color:#fff}
 #mainNav.hero-mode .nav-tab.act{background:transparent;color:#fff;border:2px solid rgba(212,175,55,.7)}
@@ -2279,7 +2289,7 @@ body {
  </button>
  <button class="ham-item" onclick="nav('pricing');closeHam()">
  <span class="ham-item-ico ico-money"></span>
- <span class="ham-item-label"><span class="ko">구성 · 일정</span><span class="en">Plan &amp; Schedule</span></span>
+ <span class="ham-item-label"><span class="ko">일정</span><span class="en">Itinerary</span></span>
  <span class="ham-item-arrow">›</span>
  </button>
  <button class="ham-item" onclick="nav('gallery');closeHam()">
@@ -2309,7 +2319,7 @@ body {
 </div>
  
 <!-- NAV -->
-<nav id="mainNav" style="display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0">
+<nav id="mainNav" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:0">
  
  <!-- LEFT: Logo -->
  <div style="flex-shrink:0;display:flex;align-items:center">
@@ -2319,12 +2329,13 @@ body {
  </div>
  
  <!-- CENTER: Nav tabs — shrinks gracefully -->
- <div class="nav-mid" style="display:flex;justify-content:center;align-items:center;gap:2px;overflow:hidden;min-width:0">
- <button class="nav-tab" data-page="about" onclick="nav('about')"><span class="ko">소개</span><span class="en">About</span></button>
- <button class="nav-tab" data-page="courses" onclick="nav('courses')"><span class="ko">골프코스</span><span class="en">Golf Courses</span></button>
- <button class="nav-tab" data-page="gallery" onclick="nav('gallery')"><span class="ko">갤러리</span><span class="en">Gallery</span></button>
- <button class="nav-tab" data-page="pricing" onclick="nav('pricing')"><span class="ko">구성</span><span class="en">Plan &amp; Schedule</span></button>
- <button class="nav-tab" data-page="contact" onclick="nav('contact')"><span class="ko">문의</span><span class="en">Contact</span></button>
+ <div class="nav-mid" style="display:flex;justify-content:center;align-items:center;gap:4px;overflow-x:auto;overflow-y:hidden;min-width:0;scrollbar-width:none">
+ <button class="sec-chip" data-page="home" onclick="secJump('home')"><span class="ko">홈</span><span class="en">Home</span></button>
+ <button class="sec-chip" data-page="about" onclick="secJump('about')"><span class="ko">소개</span><span class="en">About</span></button>
+ <button class="sec-chip" data-page="courses" onclick="secJump('courses')"><span class="ko">골프코스</span><span class="en">Courses</span></button>
+ <button class="sec-chip" data-page="gallery" onclick="secJump('gallery')"><span class="ko">갤러리</span><span class="en">Gallery</span></button>
+ <button class="sec-chip" data-page="planner" onclick="goPlanner()"><span class="ko">일정</span><span class="en">Itinerary</span></button>
+ <button class="sec-chip" data-page="contact" onclick="secJump('contact')"><span class="ko">문의</span><span class="en">Contact</span></button>
  </div>
  
  <!-- RIGHT: Lang + Hamburger — NEVER clips -->
@@ -2342,7 +2353,7 @@ body {
  <button class="mob-btn" onclick="togglePcDrop()" aria-label="메뉴"><span></span><span></span><span></span></button>
  <div id="pc-dropdown" onmouseenter="showPcDrop()" onmouseleave="hidePcDrop()">
  <button class="pd-item" onclick="nav('about')"><span class="pd-ico">✦</span><span class="ko">소개</span><span class="en">About</span></button>
- <button class="pd-item" onclick="nav('pricing')"><span class="pd-ico ico-money"></span><span class="ko">구성</span><span class="en">Plan &amp; Schedule</span></button>
+ <button class="pd-item" onclick="goPlanner()"><span class="pd-ico ico-money"></span><span class="ko">일정</span><span class="en">Plan &amp; Schedule</span></button>
  <button class="pd-item" onclick="nav('gallery')"><span class="pd-ico ico-gallery"></span><span class="ko"> 갤러리</span><span class="en"> Gallery</span></button>
  <button class="pd-item" onclick="nav('courses')"><span class="pd-ico ico-golf"></span><span class="ko">골프코스</span><span class="en">Courses</span></button>
  <button class="pd-item" onclick="nav('contact')"><span class="pd-ico">❓</span><span class="ko">FAQ</span><span class="en">FAQ</span></button>
@@ -2354,106 +2365,63 @@ body {
  
 </nav>
 
-<!-- SECTION NAV (얇은 이동 바 · 스크롤 시 나타남) -->
-<div id="secNav" role="navigation" aria-label="섹션 이동">
- <button class="sec-chip" data-page="home" onclick="secJump('home')"><span class="ko">홈</span><span class="en">Home</span></button>
- <button class="sec-chip" data-page="about" onclick="secJump('about')"><span class="ko">소개</span><span class="en">About</span></button>
- <button class="sec-chip" data-page="courses" onclick="secJump('courses')"><span class="ko">골프코스</span><span class="en">Courses</span></button>
- <button class="sec-chip" data-page="gallery" onclick="secJump('gallery')"><span class="ko">갤러리</span><span class="en">Gallery</span></button>
- <button class="sec-chip" data-page="pricing" onclick="secJump('pricing')"><span class="ko">구성</span><span class="en">Plan</span></button>
- <button class="sec-chip" data-page="contact" onclick="secJump('contact')"><span class="ko">문의</span><span class="en">Contact</span></button>
-</div>
-<style>
-#secNav{position:fixed;top:52px;left:0;right:0;z-index:290;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;overflow-y:hidden;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid #eef0f4;transform:translateY(-120%);transition:transform .24s ease;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-#secNav::-webkit-scrollbar{display:none}
-#secNav.show{transform:translateY(0)}
-#secNav.over-hero{background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
-#secNav.over-hero .sec-chip{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.42)}
-#secNav.over-hero .sec-chip.act{background:#fff;color:#1a3450;border-color:#fff}
-.sec-chip{flex:0 0 auto;padding:7px 14px;border-radius:100px;border:1px solid #e3e6ec;background:#fff;font:600 12.5px/1 -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:#5c6a7a;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
-.sec-chip:hover{border-color:#c9d3e0}
-.sec-chip{min-height:44px;display:inline-flex;align-items:center;justify-content:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.sec-chip:active{transform:scale(.96)}
-#secNav{pointer-events:auto}
-.sec-chip.act{background:#1a3450;color:#d4af37;border-color:#1a3450}
-body.secnav-offset .page{padding-top:calc(52px + var(--secnav-h, 46px))}
-</style>
 <script>
 (function(){
- var bar=document.getElementById('secNav'); if(!bar) return;
+ var bar=document.querySelector('#mainNav .nav-mid'); if(!bar) return;
  function sync(page){ var cs=bar.querySelectorAll('.sec-chip'); for(var i=0;i<cs.length;i++){ cs[i].classList.toggle('act', cs[i].dataset.page===page); } }
  window.__secNavSync=sync;
 
- /* 칩 = 섹션 점프. 홈 안에 있는 섹션은 스크롤, 없는 화면은 이동 후 스크롤 */
  function jump(key){
   var now=Date.now();
-  if(window.__lastSecJump && now-window.__lastSecJump < 400) return;  // 터치+클릭 중복 방지
+  if(window.__lastSecJump && now-window.__lastSecJump < 400) return;
   window.__lastSecJump=now;
   var map={about:'home-about',courses:'home-crs-preview',gallery:'gallery-showcase'};
   var go=function(){
    if(key==='home'){ window.scrollTo({top:0,behavior:'smooth'}); return; }
    var el=document.getElementById(map[key]);
    if(!el) return;
-   var barH=(bar?bar.offsetHeight:0)+56;
-   var y=el.getBoundingClientRect().top+window.scrollY-barH;
-   window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+   var off=56;
+   window.scrollTo({top:Math.max(0, el.getBoundingClientRect().top+window.scrollY-off), behavior:'smooth'});
   };
-  if(key==='pricing'||key==='contact'){ nav(key); return; }
+  if(key==='contact'){ nav(key); return; }
   if(typeof curPage!=='undefined' && curPage!=='home'){ nav('home'); setTimeout(go,120); }
   else { go(); }
   sync(key);
  }
  window.secJump=jump;
+ window.goPlanner=function(){ window.location.href='/planner.html'; };
 
- /* 터치 환경에서는 합성 click 이 안 올 수 있어 touchend 로도 처리 */
  bar.addEventListener('touchend', function(e){
-  var t=e.target;
-  var chip=t && t.closest ? t.closest('.sec-chip') : null;
+  var t=e.target, chip=t && t.closest ? t.closest('.sec-chip') : null;
   if(!chip) return;
   e.preventDefault();
+  if(chip.dataset.page==='planner'){ window.goPlanner(); return; }
   jump(chip.dataset.page);
  }, {passive:false});
  bar.addEventListener('touchstart', function(){ window.__lastSecJump=0; }, {passive:true});
- function updateVis(){
-  var other = (typeof curPage!=='undefined' && curPage!=='home');
-  var atHero = !other && window.scrollY < 80;
-  bar.classList.add('show');
-  bar.classList.toggle('over-hero', atHero);
-  document.body.classList.toggle('secnav-offset', other);
- }
- window.__secNavVis=updateVis;
 
- /* 실제 바 높이를 CSS 변수로 (콘텐츠가 바에 가리지 않게) */
- function measure(){
-  var h=bar.offsetHeight||46;
-  document.documentElement.style.setProperty('--secnav-h', h+'px');
- }
- measure();
- window.addEventListener('resize', measure);
- setTimeout(measure, 300);
-
- // 홈 섹션 스크롤 스파이 — 히어로/소개/골프코스/갤러리
  var SPY=[['home','pg-home'],['about','home-about'],['courses','home-crs-preview'],['gallery','gallery-showcase']];
- var spyTick=false;
- function spy(){
-  spyTick=false;
-  if(typeof curPage!=='undefined' && curPage!=='home') return;
-  var mid=window.innerHeight*0.35, cur='home';
-  for(var i=0;i<SPY.length;i++){
-   var el=document.getElementById(SPY[i][1]);
-   if(!el) continue;
-   if(el.getBoundingClientRect().top<=mid) cur=SPY[i][0];
-  }
-  sync(cur);
- }
+ var tick=false;
  window.addEventListener('scroll', function(){
-  if(!spyTick){ spyTick=true; requestAnimationFrame(spy); }
+  if(tick) return; tick=true;
+  requestAnimationFrame(function(){
+   tick=false;
+   if(typeof curPage!=='undefined' && curPage!=='home'){ return; }
+   if(typeof curPage!=='undefined' && curPage!=='home') return;
+   var mid=window.innerHeight*0.35, cur='home';
+   for(var i=0;i<SPY.length;i++){
+    var el=document.getElementById(SPY[i][1]);
+    if(!el) continue;
+    if(el.getBoundingClientRect().top<=mid) cur=SPY[i][0];
+   }
+   sync(cur);
+  });
  }, {passive:true});
- window.addEventListener('scroll', updateVis, {passive:true});
  sync(typeof curPage!=='undefined'?curPage:'home');
- updateVis();
 })();
 </script>
+
+
 
  
  
@@ -2482,7 +2450,7 @@ body.secnav-offset .page{padding-top:calc(52px + var(--secnav-h, 46px))}
  
  <!-- GALLERY SHOWCASE v2 -->
  <!-- HOME: 소개 -->
-<section id="home-about" style="padding:56px 0 56px;background:#fff">
+<section id="home-about" style="padding:20px 0 48px;background:#fff">
 <div class="about-wrap">
  <div class="about-hero-txt">
  <h2><span class="ko">경험이 공명하면, 여행은 전율이 된다</span><span class="en">When Experience Resonates, Journey Comes Alive</span></h2>
