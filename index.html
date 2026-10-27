@@ -4222,12 +4222,34 @@ if (_sh) _sh.classList.remove('visible');
 
   document.addEventListener('touchend', function(e) {
   const t = e.changedTouches[0];
+  // 링크는 getElAt 대상이 아니므로 여기서 직접 처리 (터치에서 링크가 죽는 문제)
+  var _tgt = e.target, _link = (_tgt && _tgt.closest) ? _tgt.closest('a[href]') : null;
+  if (_link && !_moved) {
+   var _href = _link.getAttribute('href');
+   e.preventDefault();
+   _moved = false;
+   deactivate();
+   setTimeout(function(){
+    if (_link.target === '_blank') window.open(_link.href, '_blank', 'noopener');
+    else if (_href) window.location.href = _href;
+   }, 60);
+   return;
+  }
   const el = getElAt(t.clientX, t.clientY);
   deactivate();
   // 스와이프/드래그(이동량 > 12px)였다면 클릭을 발화하지 않음 — 버거메뉴 열린 채 오른쪽 스와이프해도 메뉴 동작이 일어나지 않도록
   if (!_moved && el) {
-  // Small delay so the press-release animation is visible
-  setTimeout(() => fireClick(el), 60);
+  var a = el.closest ? el.closest('a[href]') : null;
+  if (a) {
+   // 터치에서 링크가 안 열리는 환경 대비: 직접 이동
+   setTimeout(function(){
+    var href = a.getAttribute('href');
+    if (a.target === '_blank') { window.open(a.href, '_blank', 'noopener'); }
+    else if (href) { window.location.href = href; }
+   }, 60);
+  } else {
+   setTimeout(() => fireClick(el), 60);
+  }
   }
   // Prevent the ghost mouse click that follows touch
   e.preventDefault();
