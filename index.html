@@ -2367,6 +2367,9 @@ body {
 #secNav{position:fixed;top:52px;left:0;right:0;z-index:290;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;overflow-y:hidden;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid #eef0f4;transform:translateY(-120%);transition:transform .24s ease;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #secNav::-webkit-scrollbar{display:none}
 #secNav.show{transform:translateY(0)}
+#secNav.over-hero{background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+#secNav.over-hero .sec-chip{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.42)}
+#secNav.over-hero .sec-chip.act{background:#fff;color:#1a3450;border-color:#fff}
 .sec-chip{flex:0 0 auto;padding:7px 14px;border-radius:100px;border:1px solid #e3e6ec;background:#fff;font:600 12.5px/1 -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:#5c6a7a;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
 .sec-chip:hover{border-color:#c9d3e0}
 .sec-chip.act{background:#1a3450;color:#d4af37;border-color:#1a3450}
@@ -2379,7 +2382,9 @@ body.secnav-offset .page{padding-top:98px}
  window.__secNavSync=sync;
  function updateVis(){
   var other = (typeof curPage!=='undefined' && curPage!=='home');
-  bar.classList.toggle('show', other || window.scrollY>80);
+  var atHero = !other && window.scrollY < 80;
+  bar.classList.add('show');
+  bar.classList.toggle('over-hero', atHero);
   document.body.classList.toggle('secnav-offset', other);
  }
  window.__secNavVis=updateVis;
