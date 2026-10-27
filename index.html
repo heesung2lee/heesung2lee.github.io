@@ -2681,7 +2681,7 @@ body {
 <div class="sendrow" style="display:grid;gap:10px;margin-top:18px">
 <button class="cta" id="quoteBtn" onclick="F_submitQuote()" style="display:block;width:100%;border:none;border-radius:10px;padding:15px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;background:#16213e;color:#fff"><span class="ko">견적 요청 접수 (PDF 발급)</span><span class="en">Submit quote request (PDF)</span></button>
 <div id="quoteDone" style="display:none;border:1.5px solid #16213e;border-radius:12px;padding:16px;background:#f7f8fb;font-size:13.5px;line-height:1.7"></div>
-<a class="cta kakao" id="kakaoBtn2" href="https://pf.kakao.com/_xkpxjmX/chat" target="_blank" rel="noopener" onclick="F_kakaoSend(event)" style="display:block;text-align:center;border-radius:10px;padding:15px;font-size:15px;font-weight:700;text-decoration:none;background:#fee500;color:#3c1e1e"><span class="ko">카톡으로 견적 요청 보내기</span><span class="en">Send quote request via KakaoTalk</span></a>
+<a class="cta kakao" id="kakaoBtn2" href="https://pf.kakao.com/_xkpxjmX" target="_blank" rel="noopener" onclick="F_kakaoSend(event)" style="display:block;text-align:center;border-radius:10px;padding:15px;font-size:15px;font-weight:700;text-decoration:none;background:#fee500;color:#3c1e1e"><span class="ko">카톡으로 견적 요청 보내기</span><span class="en">Send quote request via KakaoTalk</span></a>
 </div>
 </div><!-- /actionZone -->
 </div>
@@ -2788,7 +2788,7 @@ body {
 <script src="quiz.js"></script>
 <script>
 
-var F_KAKAO='https://pf.kakao.com/_xkpxjmX/chat';
+var F_KAKAO='https://pf.kakao.com/_xkpxjmX';
 var F_ITEMS=[{"cat": "golf", "ko": "오션뷰 코스", "en": "Ocean-View Course"}, {"cat": "golf", "ko": "산악 코스", "en": "Mountain Course"}, {"cat": "golf", "ko": "링크스 코스", "en": "Links Course"}, {"cat": "golf", "ko": "사막 코스", "en": "Desert Course"}, {"cat": "golf", "ko": "해안 절벽", "en": "Coastal Cliffs"}, {"cat": "golf", "ko": "산맥 파노라마", "en": "Mountain Panorama"}, {"cat": "golf", "ko": "도심 스카이라인", "en": "City Skyline"}, {"cat": "golf", "ko": "계곡 & 숲", "en": "Valley & Forest"}, {"cat": "golf", "ko": "부담 없는 초보", "en": "Beginner Friendly"}, {"cat": "golf", "ko": "균형 잡힌 중급", "en": "Balanced Intermediate"}, {"cat": "golf", "ko": "도전적인 상급", "en": "Challenging Advanced"}, {"cat": "golf", "ko": "챔피언십 난코스", "en": "Championship Test"}, {"cat": "dining", "ko": "나파 밸리 와이너리 투어", "en": "Napa Valley Winery Tour"}, {"cat": "dining", "ko": "파인다이닝 셰프 테이블", "en": "Fine Dining Chef Table"}, {"cat": "dining", "ko": "캘리포니아 해산물 레스토랑", "en": "California Seafood Dining"}, {"cat": "dining", "ko": "정통 BBQ 스모크하우스", "en": "Authentic BBQ Smokehouse"}, {"cat": "dining", "ko": "한인타운 & 퓨전 다이닝", "en": "Koreatown & Fusion Dining"}, {"cat": "landmark", "ko": "골든게이트 브릿지", "en": "Golden Gate Bridge"}, {"cat": "landmark", "ko": "요세미티 국립공원", "en": "Yosemite National Park"}, {"cat": "landmark", "ko": "PCH 해안 드라이브", "en": "Pacific Coast Highway Drive"}, {"cat": "landmark", "ko": "할리우드 · 비버리힐스", "en": "Hollywood & Beverly Hills"}, {"cat": "landmark", "ko": "그랜드 캐니언 (헬기 옵션)", "en": "Grand Canyon (helicopter option)"}, {"cat": "exp", "ko": "MLB · NBA 직관", "en": "MLB · NBA Live Game"}, {"cat": "exp", "ko": "MLS 직관 (LAFC · LA갤럭시)", "en": "MLS Live (LAFC · LA Galaxy)"}, {"cat": "exp", "ko": "라스베이거스 쇼", "en": "Las Vegas Show"}, {"cat": "exp", "ko": "프리미엄 아울렛 쇼핑", "en": "Premium Outlet Shopping"}, {"cat": "exp", "ko": "스파 & 웰니스", "en": "Spa & Wellness"}, {"cat": "exp", "ko": "PGA 프로 레슨 클리닉", "en": "PGA Pro Lesson Clinic"}, {"cat": "local", "ko": "현지인 추천 로컬 맛집", "en": "Locals Only Food Spots"}, {"cat": "local", "ko": "파머스 마켓 & 아침 산책", "en": "Farmers Market & Morning Walk"}, {"cat": "local", "ko": "헬리콥터 투어", "en": "Helicopter Tour"}, {"cat": "local", "ko": "선셋 비치 피크닉", "en": "Sunset Beach Picnic"}, {"cat": "local", "ko": "로컬 브루어리 & 와인바 투어", "en": "Local Brewery & Wine Bar Tour"}, {"cat": "local", "ko": "서핑 레슨", "en": "Surf Lesson"}, {"cat": "local", "ko": "산타모니카 비치 바이크", "en": "Santa Monica Beach Bike"}, {"cat": "local", "ko": "라이브 재즈 & 디너", "en": "Live Jazz & Dinner"}];
 var F_PERSONA_EN={'E-S-J-S':'☀️ Sun Conqueror','E-S-J-R':'🛋️ Easy Socialite','E-S-P-S':'🎉 Spontaneous Adventurer','E-S-P-R':'🍷 Easy Pleasure Seeker','E-N-J-S':'🗺️ Trailblazer','E-N-J-R':'📸 Memory Collector','E-N-P-S':'🌈 Free Spirit','E-N-P-R':'☁️ Daydreamer','I-S-J-S':'🏃 Routine Traveler','I-S-J-R':'📚 Quiet Perfectionist','I-S-P-S':'🚶 Small Discoverer','I-S-P-R':'🐢 Restful Traveler','I-N-J-S':'🔭 Meaning Seeker','I-N-J-R':'🌙 Night Thinker','I-N-P-S':'🍃 Wanderer','I-N-P-R':'🛋️ Cozy Dreamer'};
 var F_PERSONA={
@@ -3382,7 +3382,7 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
  <h2><span class="ko">당신의 여정을 지금 시작하세요</span><span class="en">Let's Make It Resonate</span></h2>
  <p><span class="ko">인원·날짜·예산 — 알려주시면 맞춤 제안서를 보내드립니다</span><span class="en">Share group size, dates & budget — a custom proposal will follow</span></p>
  <div class="c-info-block">
- <a href="https://pf.kakao.com/_xkpxjmX/chat" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico ico-chat"></div><div><div class="c-info-lbl">KakaoTalk</div><div class="c-info-val">레조네이트투어 ResonateTour</div></div></a>
+ <a href="https://pf.kakao.com/_xkpxjmX" target="_blank" rel="noopener" class="c-info-row"><div class="c-info-ico ico-chat"></div><div><div class="c-info-lbl">KakaoTalk</div><div class="c-info-val">레조네이트투어 ResonateTour</div></div></a>
  
  <a class="c-info-row" data-site-email><div class="c-info-ico">✉️</div><div><div class="c-info-lbl">Email</div><div class="c-info-val" data-site-email-val>resonatetourclub@gmail.com</div></div></a>
  </div>
@@ -3629,7 +3629,7 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
 <footer style="scroll-margin-top:0;content-visibility:auto;contain-intrinsic-size:auto 600px">
  <div class="footer-logo"><span class="ko">레조네이트투어</span><span class="en">Resonate Tour</span></div>
  <div style="margin:12px 0 2px;display:flex;justify-content:center">
-  <a href="https://pf.kakao.com/_xkpxjmX/chat" target="_blank" rel="noopener" aria-label="카카오톡 채널 상담" style="display:inline-flex;align-items:center;gap:8px;background:#FEE500;color:#3C1E1E;text-decoration:none;border-radius:100px;padding:9px 16px;font-size:12.5px;font-weight:700;line-height:1">
+  <a href="https://pf.kakao.com/_xkpxjmX" target="_blank" rel="noopener" aria-label="카카오톡 채널 상담" style="display:inline-flex;align-items:center;gap:8px;background:#FEE500;color:#3C1E1E;text-decoration:none;border-radius:100px;padding:9px 16px;font-size:12.5px;font-weight:700;line-height:1">
    <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true" style="display:block"><path fill="#3C1E1E" d="M10 2.2c-4.3 0-7.8 2.8-7.8 6.3 0 2.2 1.5 4.2 3.8 5.4l-.9 3.2c-.1.3.2.5.5.3l3.7-2.5c.2 0 .5.1.7.1 4.3 0 7.8-2.8 7.8-6.3S14.3 2.2 10 2.2z"/></svg>
    <span class="ko">카톡 상담</span><span class="en">KakaoTalk</span>
   </a>
