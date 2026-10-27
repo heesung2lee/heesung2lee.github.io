@@ -926,7 +926,8 @@ footer{background:#f4f4f4!important}
  transform:translateY(1px) scale(.98) !important;
 }
  
-/* Mob hamburger btn */
+/* Mob hamburger btn — 섹션 바로 대체 */
+@media(max-width:860px){.mob-btn{display:none!important}}
 .mob-btn:hover span{background:rgba(23,26,32,.6) !important}
 #mainNav.hero-mode .mob-btn:hover span{background:rgba(255,255,255,.7) !important}
  
@@ -2349,6 +2350,42 @@ body {
  </div>
  
 </nav>
+
+<!-- SECTION NAV (얇은 이동 바 · 스크롤 시 나타남) -->
+<div id="secNav" role="navigation" aria-label="섹션 이동">
+ <button class="sec-chip" data-page="home" onclick="nav('home')"><span class="ko">홈</span><span class="en">Home</span></button>
+ <button class="sec-chip" data-page="pricing" onclick="nav('pricing')"><span class="ko">구성</span><span class="en">Plan</span></button>
+ <button class="sec-chip" data-page="gallery" onclick="nav('gallery')"><span class="ko">갤러리</span><span class="en">Gallery</span></button>
+ <button class="sec-chip" data-page="courses" onclick="nav('courses')"><span class="ko">골프코스</span><span class="en">Courses</span></button>
+ <button class="sec-chip" data-page="about" onclick="nav('about')"><span class="ko">소개</span><span class="en">About</span></button>
+ <button class="sec-chip" data-page="contact" onclick="nav('contact')"><span class="ko">문의</span><span class="en">Contact</span></button>
+</div>
+<style>
+#secNav{position:fixed;top:52px;left:0;right:0;z-index:290;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;overflow-y:hidden;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid #eef0f4;transform:translateY(-120%);transition:transform .24s ease;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#secNav::-webkit-scrollbar{display:none}
+#secNav.show{transform:translateY(0)}
+.sec-chip{flex:0 0 auto;padding:7px 14px;border-radius:100px;border:1px solid #e3e6ec;background:#fff;font:600 12.5px/1 -apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:#5c6a7a;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
+.sec-chip:hover{border-color:#c9d3e0}
+.sec-chip.act{background:#1a3450;color:#d4af37;border-color:#1a3450}
+body.secnav-offset .page{padding-top:98px}
+</style>
+<script>
+(function(){
+ var bar=document.getElementById('secNav'); if(!bar) return;
+ function sync(page){ var cs=bar.querySelectorAll('.sec-chip'); for(var i=0;i<cs.length;i++){ cs[i].classList.toggle('act', cs[i].dataset.page===page); } }
+ window.__secNavSync=sync;
+ function updateVis(){
+  var other = (typeof curPage!=='undefined' && curPage!=='home');
+  bar.classList.toggle('show', other || window.scrollY>80);
+  document.body.classList.toggle('secnav-offset', other);
+ }
+ window.__secNavVis=updateVis;
+ window.addEventListener('scroll', updateVis, {passive:true});
+ sync(typeof curPage!=='undefined'?curPage:'home');
+ updateVis();
+})();
+</script>
+
  
  
 <!-- ══════ PAGE: HOME ══════ -->
@@ -3701,6 +3738,7 @@ function nav(page, dayIdx) {
  if (!el) return;
  el.classList.add('act');
  curPage = page;
+ try{ if(window.__secNavSync) window.__secNavSync(page); if(window.__secNavVis) window.__secNavVis(); }catch(e){}
  document.querySelectorAll('.nav-tab').forEach(function(t){
  t.classList.toggle('act', t.dataset.page === page);
  });
@@ -4839,12 +4877,13 @@ document.addEventListener('keydown', e => {
  if (tmpPage && !tmpPage.dataset.prebuilt) {
  // Temporarily make it exist in layout without showing
  var prevDisplay = tmpPage.style.display;
+ var hadAct = tmpPage.classList.contains('act');   // 사용자가 이미 이 페이지에 있으면 유지
  tmpPage.style.visibility = 'hidden';
  tmpPage.style.position = 'absolute';
  tmpPage.style.pointerEvents = 'none';
  tmpPage.classList.add('act');
  buildGallery();
- tmpPage.classList.remove('act');
+ if (!hadAct) tmpPage.classList.remove('act');
  tmpPage.style.visibility = '';
  tmpPage.style.position = '';
  tmpPage.style.pointerEvents = '';
