@@ -20,9 +20,9 @@
  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="theme-color" content="#16213e">
  <meta name="apple-mobile-web-app-capable" content="yes">
  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
- <meta name="description" content="레조네이트투어 · Resonate Tour — Korea → USA Premium Golf & Culture. resonatetour.com">
+ <meta name="description" content="레조네이트투어 · Resonate Tour — Korea → North America Premium Golf & Culture. resonatetour.com">
  <meta property="og:title" content="레조네이트투어 · Resonate Tour">
- <meta property="og:description" content="Korea → USA · Premium Golf & Culture · Your Life's Texture, Our Signature Touch">
+ <meta property="og:description" content="Korea → North America · Premium Golf & Culture · Your Life's Texture, Our Signature Touch">
  <meta property="og:url" content="https://resonatetour.com">
  <meta property="og:image" content="https://resonatetour.com/golfpic2.jpg">
  <meta property="og:type" content="website">
@@ -88,7 +88,7 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 .nav-tab:hover{background:#f5eed6;color:#1a3450}
 .nav-tab.act{color:#1a3450;font-weight:700;background:transparent;border:2px solid #d4af37}
 .nav-mid::-webkit-scrollbar{display:none}
-.sec-chip{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;padding:6px 11px;min-height:30px;border-radius:100px;border:1px solid #e6eaf0;background:#fff;font:600 11.5px/1 -apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;color:#5c6a7a;cursor:pointer;white-space:nowrap;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s,border-color .15s}
+.sec-chip{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;padding:6px 11px;min-height:30px;border-radius:8px;border:1px solid #e6eaf0;background:#fff;font:600 11.5px/1 -apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;color:#5c6a7a;cursor:pointer;white-space:nowrap;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:background .15s,color .15s,border-color .15s}
 .sec-chip:hover{border-color:#c9d3e0}
 .sec-chip:active{transform:scale(.96)}
 .sec-chip.act{background:#1a3450;color:#d4af37;border-color:#1a3450}
@@ -160,7 +160,7 @@ body.secnav-offset .page{padding-top:52px}
 .split-eye{font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#c8c8c8;text-shadow:0 1px 3px rgba(0,0,0,.8);margin-bottom:14px}
 .split-h{font-size:clamp(24px,3.5vw,38px);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:#1a3450;margin-bottom:12px}
 .split-p{font-size:14px;font-weight:300;color:#5c5e62;line-height:1.8;margin-bottom:24px;max-width:380px}
-.btn-sm{font-size:14px;font-weight:500;background:rgba(26,52,80,.88);color:#d4af37;border:2px solid rgba(212,175,55,.4);padding:12px 28px;border-radius:100px;cursor:pointer;font-family:inherit;transition:border-color .2s,background-color .2s,color .2s,box-shadow .2s;width:fit-content;backdrop-filter:blur(4px)}
+.btn-sm{font-size:14px;font-weight:500;background:rgba(26,52,80,.88);color:#d4af37;border:2px solid rgba(212,175,55,.4);padding:12px 28px;border-radius:8px;cursor:pointer;font-family:inherit;transition:border-color .2s,background-color .2s,color .2s,box-shadow .2s;width:fit-content;backdrop-filter:blur(4px)}
 .btn-sm:hover{background:#264460;border-color:rgba(212,175,55,.6);transform:translateY(-1px)}
  
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #e8e8e8;border-left:1px solid #e8e8e8}
@@ -321,11 +321,12 @@ body.secnav-offset .page{padding-top:52px}
 .all-in-note{padding:16px 20px;background:#fafafa;border:1px solid #e8e8e8;border-radius:8px;border-left:3px solid #d4af37;font-size:13px;color:#5c5e62;line-height:1.8}
  
 /* ── ABOUT ── */
-.about-wrap{max-width:760px;margin:0 auto;padding:56px 40px 64px}
+.about-wrap{max-width:760px;margin:0 auto;padding:16px 40px 56px}
 .about-hero-txt{margin-bottom:32px;text-align:left}
 .about-hero-txt h1{font-size:clamp(27px,4.6vw,46px);font-weight:700;letter-spacing:-.03em;line-height:1.18;margin:0 0 20px;color:#1a3450}
 .about-hero-txt h1 .gold{color:#d4af37}
 .about-hero-txt h1::before{content:'';display:block;width:44px;height:2px;background:#d4af37;margin:0 0 20px}
+.about-hero-txt h2{margin-bottom:16px}
 .about-hero-txt p{font-size:15px;font-weight:300;color:#5c5e62;line-height:2;max-width:560px;margin:0}
 .phil-blk{
  background:#1a3450;
@@ -1837,8 +1838,8 @@ body {
 #pg-courses .crs-hero h1{font-size:clamp(24px,4vw,34px);font-weight:700;color:#171a20;margin:0 0 8px}
 #pg-courses .crs-hero-sub{font-size:13.5px;color:var(--crsdim);max-width:560px;margin:0 auto}
 #pg-courses .filter-bar{position:sticky;top:60px;z-index:20;background:var(--crscard);border:1px solid var(--crsline);border-radius:12px;box-shadow:0 2px 12px rgba(23,26,32,.07);max-width:860px;margin:0 auto 16px;padding:8px 10px}
-#pg-courses .filter-bar .country-tabs{display:flex;flex-wrap:wrap;gap:4px;justify-content:stretch;margin:0;border:none;border-radius:0;overflow:visible;width:100%}
-#pg-courses .filter-bar .country-tab{flex:1;padding:8px 6px;font-size:12.5px;font-weight:600;cursor:pointer;background:transparent;border:none;border-radius:8px;color:var(--crsdim);font-family:inherit;transition:border-color .2s,background-color .2s,color .2s,box-shadow .2s;white-space:nowrap;text-align:center}
+#pg-courses .filter-bar .country-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:4px;justify-content:stretch;margin:0;border:none;border-radius:0;overflow:visible;width:100%}
+#pg-courses .filter-bar .country-tab{flex:0 0 auto;padding:8px 6px;font-size:12.5px;font-weight:600;cursor:pointer;background:transparent;border:none;border-radius:8px;color:var(--crsdim);font-family:inherit;transition:border-color .2s,background-color .2s,color .2s,box-shadow .2s;white-space:nowrap;text-align:center}
 #pg-courses .filter-bar .country-tab.act{background:var(--crsgold);color:#1a3450}
 #pg-courses .filter-bar .country-tab:hover:not(.act){color:var(--crstxt)}#pg-courses .filter-bar .region-tabs{position:static;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin:8px 0 0;padding:10px 2px 2px;border-top:1px solid var(--crsline)}#pg-courses .filter-bar .region-tabs::-webkit-scrollbar{display:none}#pg-courses .region-tab{flex-shrink:0;padding:6px 12px;border:1px solid var(--crsline);border-radius:16px;background:var(--crsbg);color:var(--crsdim);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}#pg-courses .region-tab.act{background:var(--crsgold);color:#1a3450;border-color:var(--crsgold)}
 #pg-courses .country-tab{padding:9px 22px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;border:none;color:var(--crsdim);font-family:inherit;transition:border-color .2s,background-color .2s,color .2s,box-shadow .2s;white-space:nowrap}
@@ -2340,7 +2341,7 @@ body {
  
  <!-- RIGHT: Lang + Hamburger — NEVER clips -->
  <div class="nav-r" style="display:flex;align-items:center;gap:8px;flex-shrink:0;padding-left:8px">
-<button class="btn-lang" onclick="toggleLangCurrency(event)" id="lcBtn"><span id="lcFlag"></span><span id="lcLabel">KO</span><span class="lc-caret"> ▾</span></button>
+<button class="btn-lang" onclick="toggleLangCurrency(event)" id="lcBtn"><span id="lcFlag"></span><span id="lcLabel">KO</span></button>
  <div class="lc-dropdown" id="lcDropdown">
  <div class="lc-section">
  <div class="lc-section-title">Language / 언어</div>
@@ -2434,7 +2435,7 @@ body {
  <div class="hero-bg" id="h1-bg" style="background-image:url('images/hero-img-1.jpg');background-size:cover;background-position:center;background-attachment:fixed"><img id="h1" src="" alt="" style="display:none" decoding="async" fetchpriority="high"></div>
  <div class="hero-grad"></div>
  <div class="hero-cnt">
- <div class="hero-eye"><span class="ko">레조네이트투어 · Korea → USA · 2026</span><span class="en">Resonate Tour · Korea → USA · 2026</span></div>
+ <div class="hero-eye"><span class="ko">레조네이트투어 · Korea → North America · 2026</span><span class="en">Resonate Tour · Korea → North America · 2026</span></div>
  <h1 class="hero-h1"><span class="ko"><span class="fly fly-l" style="display:block">캘리포니아 골프</span><span class="fly fly-r" style="display:block">& 문화 투어</span></span><span class="en"><span class="fly fly-l" style="display:block">California Golf</span><span class="fly fly-r" style="display:block">& Culture Tour</span></span></h1>
  <p class="hero-p"><span class="ko">처음 가는 분도, 다시 가는 분도 — 각자의 속도로</span><span class="en">First-timers and returners — each at your own pace</span></p> <div class="hero-btns"> <button class="btn-w" onclick="nav('pricing');setTimeout(finderOpen,400)"><span class="ko">취향 테스트로 맞춤 일정 받기</span><span class="en">Get My Custom Itinerary</span></button> <button class="btn-w" onclick="nav('contact')"><span class="ko">카톡 문의하기</span><span class="en">KakaoTalk</span></button> </div>
  </div>
@@ -2450,7 +2451,7 @@ body {
  
  <!-- GALLERY SHOWCASE v2 -->
  <!-- HOME: 소개 -->
-<section id="home-about" style="padding:20px 0 48px;background:#fff">
+<section id="home-about" style="padding:12px 0 52px;background:#fff">
 <div class="about-wrap">
  <div class="about-hero-txt">
  <h2><span class="ko">경험이 공명하면, 여행은 전율이 된다</span><span class="en">When Experience Resonates, Journey Comes Alive</span></h2>
@@ -2459,13 +2460,13 @@ body {
  <div class="phil-blk">
  <div class="phil-q">“</div>
  <blockquote><span class="ko">삶의 결을 따라, 당신만의 여정으로</span><span class="en">Your Life's Texture, Our Signature Touch<br>Let it resonate</span></blockquote>
- <cite>레조네이트투어 · Korea → USA</cite>
+ <cite>레조네이트투어 · Korea → North America</cite>
  </div>
  <div class="pillars">
  <div class="pillar"><div class="pillar-t"><span class="ko">한 번에 정리되는 여행</span><span class="en">One Seamless Plan</span></div><div class="pillar-d"><span class="ko">지상 일정은 견적서 하나로. 항공·보험 제외, 포함·불포함 처음부터 투명하게</span><span class="en">Every ground arrangement in a single quote. Flights and insurance aside — full clarity from day one</span></div></div>
  <div class="pillar"><div class="pillar-t"><span class="ko">5★ 프리미엄 케어</span><span class="en">5★ Concierge Care</span></div><div class="pillar-d"><span class="ko">낯선 땅에서 헤매지 않게. 출발 전부터 귀국까지 책임집니다</span><span class="en">Guided at every step, from first briefing to safe return</span></div></div>
- <div class="pillar"><div class="pillar-t"><span class="ko">공명하는 루트</span><span class="en">Unique Quests</span></div><div class="pillar-d"><span class="ko">현지 골퍼들이 즐겨 찾는 인기 코스, 예약이 어려운 코스까지 — 현지 네트워크로 안내합니다. 관광객 루트가 아닌, 현지인의 눈으로 고른 진짜 미국 골프</span><span class="en">In-demand courses locals love — including hard-to-book clubs — arranged through our local network. Not a tourist route, but real American golf, chosen with a local's eye</span></div></div>
- <div class="pillar"><div class="pillar-t"><span class="ko">귀국 후에도 울립니다</span><span class="en">The Journey Stays With You</span></div><div class="pillar-d"><span class="ko">여정은 끝나도 케어는 이어집니다. 현지의 새로운 코스와 티타임 소식을 전하고, 다음 시즌의 당신만의 여정을 함께 설계해드립니다</span><span class="en">After you return, we keep sharing new courses and tee times — and shape your next season together</span></div></div>
+ <div class="pillar"><div class="pillar-t"><span class="ko">현지에서 고른 선택</span><span class="en">Curated on the Ground</span></div><div class="pillar-d"><span class="ko">관광객 코스가 아니라 현지에서 실제로 찾는 곳을 기준으로 일정을 조립합니다. 골프에 한정하지 않고 식음·자연·문화를 함께 봅니다</span><span class="en">We build the trip around places locals actually go, not tourist routes — food, nature and culture alongside golf.</span></div></div>
+ <div class="pillar"><div class="pillar-t"><span class="ko">여행 후에도 이어지는 관리</span><span class="en">We Stay With You</span></div><div class="pillar-d"><span class="ko">여행이 끝난 뒤에도 정산·증빙 안내와 다음 여행 상담까지 이어서 도와드립니다. 끝이 아니라 다음을 준비하는 관계입니다</span><span class="en">Settlement, paperwork and the next trip — we keep helping after you return, because the relationship outlasts the journey.</span></div></div>
  </div>
 
  </div>
@@ -2481,7 +2482,7 @@ body {
   </div>
   <div id="homeCrsMap" style="height:340px;border-radius:16px;overflow:hidden;border:1px solid #e3e6ec;background:#e9edf2"></div>
   <div style="text-align:center;margin-top:18px">
-   <button onclick="nav('courses')" style="display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:100px;border:1.5px solid #1a3450;background:#1a3450;color:#d4af37;font:700 13.5px/1 -apple-system,'Noto Sans KR',sans-serif;cursor:pointer">
+   <button onclick="nav('courses')" style="display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:8px;border:1.5px solid #1a3450;background:#1a3450;color:#d4af37;font:700 13.5px/1 -apple-system,'Noto Sans KR',sans-serif;cursor:pointer">
     <span class="ko">코스 전체 보기</span><span class="en">See all courses</span><span style="font-size:11px">→</span>
    </button>
   </div>
@@ -2510,7 +2511,7 @@ body {
  </div>
  </div>
 <div style="text-align:center;margin-top:18px">
- <button onclick="nav('gallery')" style="display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:100px;border:1.5px solid #1a3450;background:#fff;color:#1a3450;font:700 13.5px/1 -apple-system,'Noto Sans KR',sans-serif;cursor:pointer;white-space:nowrap">
+ <button onclick="nav('gallery')" style="display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:8px;border:1.5px solid #1a3450;background:#fff;color:#1a3450;font:700 13.5px/1 -apple-system,'Noto Sans KR',sans-serif;cursor:pointer;white-space:nowrap">
  <span class="ko">사진 더 보기</span><span class="en">See more photos</span><span style="font-size:11px">→</span>
  </button>
  </div>
@@ -2526,19 +2527,7 @@ body {
  </div>
   
  
- <div style="padding:48px 0 0;background:#fff">
- <div style="text-align:center;padding:0 40px 28px;background:#fff">
- <h2 style="font-size:clamp(24px,4vw,38px);font-weight:700;letter-spacing:-.02em;margin-bottom:8px;color:#171a20"><span class="ko">왜 레조네이트투어인가요</span><span class="en">Why Resonate Tour</span></h2>
- <p style="font-size:15px;color:#9e9e9e;font-weight:300"><span class="ko">한국에서 예약하고, 캘리포니아에서 전율합니다</span><span class="en">Book from Korea. Feel California</span></p>
- </div>
- <div class="why-grid" style="background:#fff">
- <div class="why-c"><div class="why-ico ico-usa"></div><div class="why-t"><span class="ko">북미 현지 네트워크</span><span class="en">On-the-Ground Network</span></div><div class="why-d"><span class="ko">캘리포니아부터 캐나다 로키까지, 현지 파트너가 직접 발로 뛰며 고른 코스</span><span class="en">From California to the Canadian Rockies — courses vetted by local partners</span></div></div>
- <div class="why-c"><div class="why-ico ico-target"></div><div class="why-t"><span class="ko">당신의 여정, 그대로 설계</span><span class="en">Built Around You</span></div><div class="why-d"><span class="ko">틀에 박힌 일정 없이, 일정·코스·숙소 모두 당신의 취향대로 조립합니다</span><span class="en">No fixed packages — itinerary, courses and stays assembled to your taste</span></div></div>
- <div class="why-c"><div class="why-ico ico-phone"></div><div class="why-t"><span class="ko">떠나기 전, 미리 그려봅니다</span><span class="en">Mapped Before You Fly</span></div><div class="why-d"><span class="ko">출발 전 상담으로 일정·코스의 큰 그림을 함께 그립니다. 첫 날부터 여유롭게</span><span class="en">We sketch the big picture together before departure — relaxed from day one</span></div></div>
- <div class="why-c"><div class="why-ico ico-star"></div><div class="why-t"><span class="ko">좋은 티타임, 먼저 잡습니다</span><span class="en">First Pick of Tee Times</span></div><div class="why-d"><span class="ko">인기 코스의 좋은 시간대를 현지 네트워크로 최대한 확보해드립니다</span><span class="en">We secure the best available times at sought-after courses</span></div></div>
- </div>
- </div>
- 
+  
  
  <div class="home-cta-strip">
  <button class="btn-book" style="font-size:14px;padding:14px 40px;border-radius:4px" onclick="nav('contact')"><span class="ko">지금 상담 신청하기</span><span class="en">Request a Quote</span></button>
@@ -3431,7 +3420,7 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
 <div class="country-tabs" id="countryTabs">
 <button class="country-tab act" onclick="crsSwitch('usa')" id="crs-tab-usa"><svg viewBox="0 0 18 12" width="16" height="11" style="vertical-align:-1px;border-radius:2px"><rect width="18" height="12" fill="#fff"/><g fill="#b22234"><rect width="18" height="1"/><rect y="2" width="18" height="1"/><rect y="4" width="18" height="1"/><rect y="6" width="18" height="1"/><rect y="8" width="18" height="1"/><rect y="10" width="18" height="1"/></g><rect width="8" height="6.5" fill="#3c3b6e"/></svg> <span class="ko">캘리포니아 & 네바다</span><span class="en">California & Nevada</span></button>
 <button class="country-tab" onclick="crsSwitch('canada')" id="crs-tab-canada"><svg viewBox="0 0 18 12" width="16" height="11" style="vertical-align:-1px;border-radius:2px"><rect width="18" height="12" fill="#fff"/><rect width="4.5" height="12" fill="#d52b1e"/><rect x="13.5" width="4.5" height="12" fill="#d52b1e"/><path d="M9 2.6l.6 1.5 1.6-.2-.8 1.4 1.4.9-1.5.6 1.1 1.6-1.6-.7-.6 1.6-.6-1.6-1.6.7 1.1-1.6-1.5-.6 1.4-.9-.8-1.4 1.6.2z" fill="#d52b1e"/><path d="M8.4 9.3h1.2v1.5H8.4z" fill="#d52b1e"/></svg> <span class="ko">캐나디안 로키</span><span class="en">Canadian Rockies</span></button>
-<button class="country-tab" onclick="crsSwitch('kr')" id="crs-tab-kr"><svg viewBox="0 0 18 12" width="16" height="11" style="vertical-align:-1px;border-radius:2px"><rect width="18" height="12" fill="#fff"/><circle cx="9" cy="6" r="3" fill="#cd2e3a"/><path d="M9 3a3 3 0 0 1 0 6z" fill="#0047a0"/><g fill="#0b0b0b"><rect x="3.1" y="1.4" width="2.6" height=".42"/><rect x="3.1" y="2.24" width="2.6" height=".42"/><rect x="3.1" y="3.08" width="2.6" height=".42"/><rect x="12.3" y="1.4" width=".85" height=".42"/><rect x="14.05" y="1.4" width=".85" height=".42"/><rect x="12.3" y="2.24" width="2.6" height=".42"/><rect x="12.3" y="3.08" width=".85" height=".42"/><rect x="14.05" y="3.08" width=".85" height=".42"/><rect x="3.1" y="8.5" width="2.6" height=".42"/><rect x="3.1" y="9.34" width=".85" height=".42"/><rect x="4.85" y="9.34" width=".85" height=".42"/><rect x="3.1" y="10.18" width="2.6" height=".42"/><rect x="12.3" y="8.5" width=".85" height=".42"/><rect x="14.05" y="8.5" width=".85" height=".42"/><rect x="12.3" y="9.34" width=".85" height=".42"/><rect x="14.05" y="9.34" width=".85" height=".42"/><rect x="12.3" y="10.18" width=".85" height=".42"/><rect x="14.05" y="10.18" width=".85" height=".42"/></g></svg> <span class="ko">한국</span><span class="en">Korea</span></button>
+<button class="country-tab" onclick="crsSwitch('kr')" id="crs-tab-kr"><svg viewBox="0 0 18 12" width="16" height="11" style="vertical-align:-1px;border-radius:2px"><rect width="18" height="12" fill="#fff"/><circle cx="9" cy="6" r="3" fill="#cd2e3a"/><path d="M9 3a3 3 0 0 1 0 6z" fill="#0047a0"/><g fill="#0b0b0b"><rect x="3.1" y="1.4" width="2.6" height=".42"/><rect x="3.1" y="2.24" width="2.6" height=".42"/><rect x="3.1" y="3.08" width="2.6" height=".42"/><rect x="12.3" y="1.4" width=".85" height=".42"/><rect x="14.05" y="1.4" width=".85" height=".42"/><rect x="12.3" y="2.24" width="2.6" height=".42"/><rect x="12.3" y="3.08" width=".85" height=".42"/><rect x="14.05" y="3.08" width=".85" height=".42"/><rect x="3.1" y="8.5" width="2.6" height=".42"/><rect x="3.1" y="9.34" width=".85" height=".42"/><rect x="4.85" y="9.34" width=".85" height=".42"/><rect x="3.1" y="10.18" width="2.6" height=".42"/><rect x="12.3" y="8.5" width=".85" height=".42"/><rect x="14.05" y="8.5" width=".85" height=".42"/><rect x="12.3" y="9.34" width=".85" height=".42"/><rect x="14.05" y="9.34" width=".85" height=".42"/><rect x="12.3" y="10.18" width=".85" height=".42"/><rect x="14.05" y="10.18" width=".85" height=".42"/></g></svg> <span class="ko">한국 (참고)</span><span class="en">Korea</span></button>
 </div>
 <div class="region-tabs" id="regionTabs">
 <button class="region-tab act" data-region="usa1" data-country="usa" onclick="crsRegion('usa1')"><span class="ko">LA 카운티</span><span class="en">LA County</span></button>
@@ -3769,8 +3758,8 @@ let curDay = 0;
  applyBg(B, POOL[rndPool()]);
  startKB(A, KB[0], 8000);
 
- // Swap every 8s — 랜덤 갤러리 사진 (동일 duration/setting)
- setInterval(function() {
+ // 배경 자동 전환 중지 (요청): 고정 배경 유지
+ if (false) setInterval(function() {
  cur = 1 - cur; // toggle 0/1
  var top = cur===0 ? A : B;
  var bot = cur===0 ? B : A;
@@ -4205,11 +4194,9 @@ if (_sh) _sh.classList.remove('visible');
  
  function fireClick(el) {
  if (!el) return;
- // el.click() is the most reliable cross-browser method
- // It fires the onclick attribute, event listeners, AND handles links
- if (typeof el.click === 'function') {
- el.click();
- }
+ var a = el.closest ? el.closest('a[href]') : null;   // 링크 내부 요소를 눌러도 이동
+ var t = a || el;
+ if (typeof t.click === 'function') t.click();
  }
  
  /* ── TOUCH EVENTS ── */
@@ -4458,7 +4445,7 @@ function ytPoster(v) { return 'https://i.ytimg.com/vi/' + v.id + (v.type === 'sh
  
  // 영상 항목은 {key, type:'video', url:'<YouTube URL>', poster:'<이미지파일>'} 형식으로 추가하면
  // 카드에 재생 버튼이 뜨고 클릭 시 새 탭에서 영상이 열립니다. (poster 생략 시 imgs[key] 사용)
- var lastIdx0 = -1, lastIdx1 = -1;
+ var lastIdx0 = -1, lastIdx1 = -1, lastIdx2 = -1;
 
  function openShowcaseCard(slot) {
  var slotEl = document.getElementById('gal-slot-'+slot);
@@ -4505,15 +4492,22 @@ function ytPoster(v) { return 'https://i.ytimg.com/vi/' + v.id + (v.type === 'sh
   var pool = [];
   for (var i=0;i<GALLERY_ITEMS.length;i++) if (GALLERY_ITEMS[i].type === 'img') pool.push(i);
   if (pool.length === 0) { for (var k=0;k<GALLERY_ITEMS.length;k++) pool.push(k); }
-  if (pool.length === 1) { lastIdx0 = pool[0]; updateCard(0, GALLERY_ITEMS[pool[0]]); updateCard(1, GALLERY_ITEMS[pool[0]]); return; }
-  var a = pool.filter(function(i){ return i!==lastIdx0 && i!==lastIdx1; });
-  var idx0 = a[Math.floor(Math.random()*a.length)];
-  var b = pool.filter(function(i){ return i!==idx0 && i!==lastIdx0 && i!==lastIdx1; });
-  var idx1 = b[Math.floor(Math.random()*b.length)];
-  lastIdx0 = idx0;
-  lastIdx1 = idx1;
+  if (pool.length === 1) {
+   lastIdx0 = pool[0]; updateCard(0, GALLERY_ITEMS[pool[0]]); updateCard(1, GALLERY_ITEMS[pool[0]]); updateCard(2, GALLERY_ITEMS[pool[0]]); return;
+  }
+  function pick(exclude){
+   var avail = pool.filter(function(i){ return exclude.indexOf(i) === -1; });
+   if (!avail.length) avail = pool.filter(function(i){ return i !== exclude[0]; });
+   if (!avail.length) avail = pool;
+   return avail[Math.floor(Math.random()*avail.length)];
+  }
+  var idx0 = pick([lastIdx0, lastIdx1, lastIdx2]);
+  var idx1 = pick([idx0, lastIdx0, lastIdx1, lastIdx2]);
+  var idx2 = pick([idx0, idx1, lastIdx0, lastIdx1, lastIdx2]);
+  lastIdx0 = idx0; lastIdx1 = idx1; lastIdx2 = idx2;
   updateCard(0, GALLERY_ITEMS[idx0]);
   updateCard(1, GALLERY_ITEMS[idx1]);
+  updateCard(2, GALLERY_ITEMS[idx2]);
   }
 
   function initGallery() {
