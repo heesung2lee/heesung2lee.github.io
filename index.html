@@ -2386,6 +2386,9 @@ body.secnav-offset .page{padding-top:calc(52px + var(--secnav-h, 46px))}
 
  /* 칩 = 섹션 점프. 홈 안에 있는 섹션은 스크롤, 없는 화면은 이동 후 스크롤 */
  function jump(key){
+  var now=Date.now();
+  if(window.__lastSecJump && now-window.__lastSecJump < 400) return;  // 터치+클릭 중복 방지
+  window.__lastSecJump=now;
   var map={about:'home-about',courses:'home-crs-preview',gallery:'gallery-showcase'};
   var go=function(){
    if(key==='home'){ window.scrollTo({top:0,behavior:'smooth'}); return; }
@@ -2401,6 +2404,16 @@ body.secnav-offset .page{padding-top:calc(52px + var(--secnav-h, 46px))}
   sync(key);
  }
  window.secJump=jump;
+
+ /* 터치 환경에서는 합성 click 이 안 올 수 있어 touchend 로도 처리 */
+ bar.addEventListener('touchend', function(e){
+  var t=e.target;
+  var chip=t && t.closest ? t.closest('.sec-chip') : null;
+  if(!chip) return;
+  e.preventDefault();
+  jump(chip.dataset.page);
+ }, {passive:false});
+ bar.addEventListener('touchstart', function(){ window.__lastSecJump=0; }, {passive:true});
  function updateVis(){
   var other = (typeof curPage!=='undefined' && curPage!=='home');
   var atHero = !other && window.scrollY < 80;
