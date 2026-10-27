@@ -60,7 +60,7 @@ button.primary:hover{background:var(--navy2)}
   <div class="grp"><h2 id="lSeasons">계절</h2><div id="seasons"></div></div>
   <div class="grp">
    <h2 id="lStay">숙박</h2>
-   <div class="row"><span id="lNights" style="display:none">숙박</span><span class="val"><span id="nightsV">6</span><span id="nUnit">박</span> <span id="daysV">8</span><span id="dUnit">일</span></span></div>
+   <div class="row"><span id="lNights" style="display:none"></span><span class="val"><span id="nightsV">6</span><span id="nUnit">박</span> <span id="daysV">8</span><span id="dUnit">일</span></span></div>
    <input class="slider" type="range" id="nights" min="2" max="23" value="6" step="1">
    <div class="row" style="margin-top:10px"><span id="lRounds">골프 라운드</span><span class="val"><span id="roundsV">3</span><span id="rUnit">회</span></span></div>
    <input class="slider" type="range" id="rounds" min="0" max="20" value="3" step="1">
@@ -208,7 +208,7 @@ function applyStatic() {
   if(m[1]){ var sub=document.createElement('span'); sub.style.cssText='font-weight:400;opacity:.7'; sub.textContent=' — '+m[1]; hEl.appendChild(sub); }
   $('#hSub').textContent = t('sub');
   $('#lZones').textContent = t('zones'); $('#lCats').textContent = t('cats'); $('#lSeasons').textContent = t('seasons');
-  $('#lStay').textContent = t('stay'); $('#lNights').textContent = t('nights'); $('#lRounds').textContent = t('rounds');
+  $('#lStay').textContent = t('stay'); var _ln=$('#lNights'); if(_ln) _ln.textContent = t('nights'); $('#lRounds').textContent = t('rounds');
   $('#lRepeat').textContent = t('repeat'); $('#lPersona').textContent = t('persona'); $('#go').textContent = t('go');
   $('#footNote').textContent = t('notes');
   $('#nUnit').textContent = t('unitN'); $('#dUnit').textContent = t('unitD'); $('#rUnit').textContent = t('unitR');
