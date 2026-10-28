@@ -61,14 +61,14 @@ button.primary:hover{background:var(--navy2)}
   <div class="grp">
    <h2 id="lStay">숙박</h2>
    <div class="row"><span id="lNights" style="display:none"></span><span class="val"><span id="nightsV">6</span><span id="nUnit">박</span> <span id="daysV">8</span><span id="dUnit">일</span></span></div>
-   <input class="slider" type="range" id="nights" min="2" max="23" value="6" step="1">
+   <input class="slider" type="range" id="nights" aria-label="숙박 박 수" min="2" max="23" value="6" step="1">
    <div class="row" style="margin-top:10px"><span id="lRounds">골프 라운드</span><span class="val"><span id="roundsV">3</span><span id="rUnit">회</span></span></div>
-   <input class="slider" type="range" id="rounds" min="0" max="20" value="3" step="1">
+   <input class="slider" type="range" id="rounds" aria-label="골프 라운드 수" min="0" max="20" value="3" step="1">
    <div class="toggle"><span id="lRepeat">같은 골프코스 재방문 허용</span><span class="switch on" id="repeat"><i></i></span></div>
   </div>
   <div class="grp">
    <h2 id="lPersona">성향(선택)</h2>
-   <select id="persona" style="width:100%;padding:10px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:13px;background:#fff"></select>
+   <select id="persona" aria-label="여행 성향" style="width:100%;padding:10px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:13px;background:#fff"></select>
   </div>
   <button class="primary" id="go">일정 만들기</button>
  </aside>
