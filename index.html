@@ -2430,6 +2430,22 @@ body {
 <div id="pg-home" class="page act">
  
  <div class="hero-slide">
+<style>
+.hero-slide{background:#000!important}
+.hero-bg,.hero-bg-a,.hero-bg-b{display:none!important}
+.hero-ripple{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;pointer-events:none;z-index:0}
+.hero-ripple .word{position:relative;z-index:2;font-size:clamp(34px,7.4vw,104px);letter-spacing:.34em;font-weight:700;color:rgba(212,175,55,.055);white-space:nowrap;text-indent:.34em}
+.hero-ripple .ring{position:absolute;width:200px;height:200px;border:1px solid rgba(212,175,55,.40);border-radius:50%;opacity:0;animation:resRipple 7s cubic-bezier(.2,.6,.25,1) infinite}
+.hero-ripple .ring:nth-child(2){animation-delay:1.75s}
+.hero-ripple .ring:nth-child(3){animation-delay:3.5s}
+.hero-ripple .ring:nth-child(4){animation-delay:5.25s}
+@keyframes resRipple{0%{transform:scale(.15);opacity:0}8%{opacity:.55}55%{opacity:.18}100%{transform:scale(4.2);opacity:0}}
+@media(prefers-reduced-motion:reduce){.hero-ripple .ring{animation:none;opacity:.18}}
+</style>
+<div class="hero-ripple" aria-hidden="true">
+ <span class="word">RESONATE</span>
+ <span class="ring"></span><span class="ring"></span><span class="ring"></span><span class="ring"></span>
+</div>
  <div class="hero-bg-a" id="hero-layer-a"></div>
  <div class="hero-bg-b" id="hero-layer-b"></div>
  <div class="hero-bg" id="h1-bg" style="background-image:url('images/hero-img-1.jpg');background-size:cover;background-position:center;background-attachment:fixed"><img id="h1" src="" alt="" style="display:none" decoding="async" fetchpriority="high"></div>
@@ -2478,18 +2494,18 @@ body {
     <small>Resonate Tour · Korea → North America</small>
   </div>
   <div class="mf-grid">
-    <div class="mf-item"><h4><span class="ko">취향대로 설계</span><span class="en">Built Around You</span></h4>
-      <p><span class="ko">정해진 코스 없이 조립합니다.</span><span class="en">Assembled, not templated.</span></p></div>
-    <div class="mf-item"><h4><span class="ko">견적은 한 장</span><span class="en">One Page</span></h4>
-      <p><span class="ko">실비와 수수료를 한 장에.</span><span class="en">Costs and fee, together.</span></p></div>
-    <div class="mf-item"><h4><span class="ko">티타임은 먼저</span><span class="en">Tee Times First</span></h4>
-      <p><span class="ko">좋은 시간대부터 요청합니다.</span><span class="en">We ask for the best slots first.</span></p></div>
-    <div class="mf-item"><h4><span class="ko">관광 + 현지</span><span class="en">Highlights + Local</span></h4>
-      <p><span class="ko">관광은 기본, 현지가 더해집니다.</span><span class="en">The must-sees, plus where locals go.</span></p></div>
+    <div class="mf-item"><h4><span class="ko">취향과 리듬</span><span class="en">Built to Your Taste</span></h4>
+      <p><span class="ko">당신의 취향과 리듬에 맞춰 설계합니다.</span><span class="en">To your taste and rhythm.</span></p></div>
+    <div class="mf-item"><h4><span class="ko">단순한 견적</span><span class="en">Quotes, Kept Simple</span></h4>
+      <p><span class="ko">무엇이 실비이고 무엇이 수수료인지 한눈에.</span><span class="en">What is cost, what is fee — at a glance.</span></p></div>
+    <div class="mf-item"><h4><span class="ko">티타임이 하루를 정합니다</span><span class="en">The Tee Time Sets the Day</span></h4>
+      <p><span class="ko">티타임에 맞춰 나머지 일정이 조율됩니다.</span><span class="en">Everything else harmonises around it.</span></p></div>
+    <div class="mf-item"><h4><span class="ko">관광 + 현지</span><span class="en">The Visitor's Route</span></h4>
+      <p><span class="ko">관광 코스를 따라, 현지인의 발자국으로 이어집니다.</span><span class="en">Following the local's footsteps.</span></p></div>
     <div class="mf-item"><h4><span class="ko">닫힌 현지 네트워크</span><span class="en">A Closed Local Network</span></h4>
       <p><span class="ko">하나의 인맥으로 이어진 팀.</span><span class="en">One thread, one team.</span></p></div>
-    <div class="mf-item"><h4><span class="ko">돌아온 뒤의 대화</span><span class="en">The Conversation After</span></h4>
-      <p><span class="ko">다음 시즌으로 이어집니다.</span><span class="en">Onto the next season.</span></p></div>
+    <div class="mf-item"><h4><span class="ko">끝나고 시작</span><span class="en">Where It Continues</span></h4>
+      <p><span class="ko">돌아온 뒤에 다음 이야기가 시작됩니다.</span><span class="en">The next story starts after you return.</span></p></div>
   </div>
 </div>
 </section>
@@ -4058,7 +4074,7 @@ const MODAL_TEXTS = {
  en: '<h2>Privacy Policy (Summary)</h2><p>Full text: <a href="privacy.html" style="text-decoration:underline">Privacy Policy</a>.</p><h3>1. Data</h3><p>Name, contact (phone, KakaoTalk ID), email, preferences, companions/requests (optional), legal name/DOB/gender at booking, payment confirmation.</p><h3>2. Purpose</h3><p>Consultation, quotes, proposals, fulfillment, payments, safety contact.</p><h3>3. Retention</h3><p>Transactions 5 years, disputes 3 years, consultations 3 years.</p><h3>4. Third-Party & Cross-Border</h3><p>Local partners (USA, Canada) — separate consent at booking.</p><h3>5. Processors</h3><p>PortOne (PG). KakaoTalk subject to Kakao terms.</p><h3>6. Rights</h3><p>Access, correction, deletion, suspension, withdrawal: ' + SITE.email + ' · 0507-1457-9633</p><h3>7. Officer</h3><p>Hee Sung Lee · ' + SITE.email + ' · 0507-1457-9633</p>'
  },
  travelterms: {
- ko: '<h2>여행표준약관(국내·국외여행) 안내</h2><h3>제1조 적용</h3><p>본 약관은 레조네이트투어의 국내·국외 맞춤여행(개별 알선)에 적용되며, 공정거래위원회 국내·국외여행표준약관을 준용합니다. 당사는 고정형 기획여행 상품을 취급하지 않습니다.</p><h3>제2조 여행자 취소와 위약금</h3><p>① 여행 개시 30일 전까지 취소: 계약금 200,000원 전액 환급<br>② 29~20일 전: 여행요금의 10%<br>③ 19~10일 전: 여행요금의 15%<br>④ 8일 전까지: 여행요금의 20%<br>⑤ 1일 전까지: 여행요금의 30%<br>⑥ 여행 당일 취소: 여행요금의 50%<br>예약금은 계약금으로서 위 표에 따라 정산되며, 실제 발생 손해(발권·호텔 위약금 등) 증빙 시 해당 실비를 공제하고 정산합니다. 잔금은 출발 7일 전까지 납부합니다 (계좌이체 또는 카드 — 카드 시 수수료 별도 안내). 출발이 7일 이내로 임박한 경우 잔금은 계약과 동시에 전액 납부합니다. 요금이 확정 후 변동되면 잔금에 반영합니다. 미납 시 계약이 해제될 수 있습니다.</p><h3>제2조의2 국내여행 취소와 위약금 (숙박)</h3><p>① 20~10일 전: 여행요금의 10%<br>② 9~8일 전: 20%<br>③ 7~6일 전: 30%<br>④ 5~4일 전: 40%<br>⑤ 3~2일 전: 50%<br>⑥ 1일 전: 70%<br>⑦ 여행 당일 취소·불참: 100%</p><h3>제2조의3 국내 당일여행 취소</h3><p>1일 전까지 취소: 위약금 없음. 여행 당일 개시 전 취소: 10%. 개시 후: 100%.</p><h3>제3조 영업보증</h3><p>관광진흥법에 따라 영업보증보험 3,000만원에 가입되어 있습니다.</p><h3>제4조 개인정보보호책임자</h3><p>성명: 이희성 (대표) · 연락처: ' + SITE.email + ' · 전화: 0507-1457-9633</p><h3>제5조 여행자보험 안내</h3><p>여행자보험은 포함되어 있지 않습니다. 미국 의료비가 매우 높으므로 충분한 보장 범위의 해외여행자보험 가입을 권해드립니다. 보유 신용카드의 해외여행자보험(카드 부대보험)은 항공권 카드결제 등 개시조건 충족 시 자동 적용될 수 있으니 카드사에 확인해 주세요.</p><h3>제6조 결제안전 안내</h3><p>카드 결제는 포트원 결제링크(PG)를 통해 안전하게 처리되며, 카드번호를 직접 수집·저장하지 않습니다. 5만원 이상 현금(계좌이체) 결제 시 원하시면 에스크로(결제대금예치)를 안내해 드립니다.</p>',
+ ko: '<h2>여행표준약관(국내·국외여행) 안내</h2><h3>제1조 적용</h3><p>본 약관은 레조네이트투어의 국내·국외 맞춤여행(개별 알선)에 적용되며, 공정거래위원회 국내·국외여행표준약관을 준용합니다. 당사는 고정형 기획여행 상품을 취급하지 않습니다.</p><h3>제2조 여행자 취소와 위약금</h3><p>① 여행 개시 30일 전까지 취소: 계약금 200,000원 전액 환급<br>② 29~20일 전: 여행요금의 10%<br>③ 19~10일 전: 여행요금의 15%<br>④ 8일 전까지: 여행요금의 20%<br>⑤ 1일 전까지: 여행요금의 30%<br>⑥ 여행 당일 취소: 여행요금의 50%<br>예약금은 계약금으로서 위 표에 따라 정산되며, 실제 발생 손해(발권·호텔 위약금 등) 증빙 시 해당 실비를 공제하고 정산합니다. 잔금은 출발 7일 전까지 납부합니다 (계좌이체 또는 카드 — 카드 시 수수료 별도 안내). 출발이 7일 이내로 임박한 경우 잔금은 계약과 동시에 전액 납부합니다. 요금이 확정 후 변동되면 잔금에 반영합니다. 미납 시 계약이 해제될 수 있습니다.</p><h3>제2조의2 국내여행 취소와 위약금 (숙박)</h3><p>① 20~10일 전: 여행요금의 10%<br>② 9~8일 전: 20%<br>③ 7~6일 전: 30%<br>④ 5~4일 전: 40%<br>⑤ 3~2일 전: 50%<br>⑥ 1일 전: 70%<br>⑦ 여행 당일 취소·불참: 100%</p><h3>제2조의3 국내 당일여행 취소</h3><p>1일 전까지 취소: 위약금 없음. 여행 당일 개시 전 취소: 10%. 개시 후: 100%.</p><h3>제3조 영업보증</h3><p>관광진흥법에 따라 영업보증보험 3,000만원에 가입되어 있습니다.</p><h3>제4조 개인정보보호책임자</h3><p>성명: 이희성 (대표) · 연락처: ' + SITE.email + ' · 전화: 0507-1457-9633</p><h3>제5조 여행자보험 안내</h3><p>여행자보험은 포함되어 있지 않습니다. 미국 의료비가 매우 높으므로 충분한 보장 범위의 해외여행자보험 가입을 권해드립니다. 보유 신용카드의 해외여행자보험(카드 부대보험)은 항공권 카드결제 등 개시조건 충족 시 자동 적용될 수 있으니 카드사에 확인해 주세요.</p><h3>제6조 결제안전 안내</h3><p>카드 결제는 포트원 결제링크(PG)를 통해 안전하게 처리되며, 카드번호를 직접 수집·저장하지 않습니다. 계좌이체 등 현금성 선지급 결제는 금액 제한 없이 구매안전서비스(에스크로) 대상이며, 이용 방법은 결제 전에 안내드립니다.</p>',
  en: '<h2>Standard Terms (Domestic & Outbound Travel)</h2><h3>Article 1 Application</h3><p>These terms apply to Resonate Tour domestic & outbound custom travel services, following the Korea Fair Trade Commission standard terms for domestic & outbound travel. We do not operate fixed package tours.</p><h3>Article 2 Cancellation by Traveler</h3><p>① Prepaid golf tee times & activities: full refund until 3 days before use, non-refundable within 3 days (local direct charges follow vendor rules)<br>② Lodging & flights: each vendor\'s own cancellation policy applies<br>③ Other costs: already-spent costs and prepaid penalties are deducted on settlement<br>The deposit is KRW 200,000. Balance is due 1 day before departure (transfer or card — you enter card details on the payment screen). For bookings within 7 days of departure, full payment is due at signing. Non-payment may void the contract.</p><h3>Article 2-2 Domestic Cancellation</h3><p>Same basis as Article 2 (vendor rules first + actual-cost deduction). See the Cancellation & Refund Policy for details.</p><h3>Article 3 Surety</h3><p>Covered by KRW 30M business guarantee insurance under the Tourism Promotion Act.</p><h3>Article 4 Privacy Officer</h3><p>Name: Hee Sung Lee (Representative) · Contact: ' + SITE.email + ' · Tel: 0507-1457-9633</p><h3>Article 5 Travel Insurance</h3><p>Travel insurance is not included. US medical costs are very high — comprehensive overseas travel insurance is strongly advised. Your credit card\'s travel insurance may apply automatically if its conditions (e.g. full airfare payment by card) are met — please check with your card issuer.</p><h3>Article 6 Payment Safety</h3><p>Card payments are processed securely via PortOne payment links (PG). We never collect or store card numbers directly. For cash (transfer) payments of KRW 50,000 or more, escrow is available on request.</p>'
  },
 };
