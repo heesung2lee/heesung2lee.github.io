@@ -299,7 +299,7 @@ function build(){
   const sum=$('#summary'); sum.replaceChildren();
   if(!zones.length){ out.appendChild(emptyBox(t('noZone'))); return; }
 
-  const courseScore=c=>(state.persona && c.p.includes(state.persona)?2:0)+(c.p.includes('scenic')&&!state.persona?1:0);
+  const courseScore=c=>(state.persona && c.p.includes(state.persona)?4:0)+(c.p.includes('scenic')&&!state.persona?1:0);
   const availCourses=COURSES.filter(c=>state.zones.has(c.zone)).sort((a,b)=>courseScore(b)-courseScore(a));
   if(!availCourses.length){ out.appendChild(emptyBox(t('noCourse'))); return; }
 
@@ -360,8 +360,11 @@ function build(){
       let c=null;
       if(golfDaySet.has(d)){
         // 1) 같은 지역의 미사용 코스 → 2) 다른 지역 미사용 코스
-        c=availCourses.find(x=>x.zone===zone && !usedCourses.has(x.id));
-        if(!c) c=availCourses.find(x=>!usedCourses.has(x.id));
+        const P=state.persona;
+        c=availCourses.find(x=>x.zone===zone && !usedCourses.has(x.id) && (!P || x.p.includes(P)))
+          || availCourses.find(x=>!usedCourses.has(x.id) && (!P || x.p.includes(P)))
+          || availCourses.find(x=>x.zone===zone && !usedCourses.has(x.id))
+          || availCourses.find(x=>!usedCourses.has(x.id));
         // 3) 재방문: 토글 + 10박 이상일 때만, 코스당 최대 2회
         if(!c && state.repeat && state.nights>=10){
           c=availCourses.filter(x=>(courseCount[x.id]||0)<2)
