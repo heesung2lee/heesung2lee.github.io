@@ -92,7 +92,15 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
 .sec-chip:hover{border-color:#c9d3e0}
 .sec-chip:active{transform:scale(.96)}
 .sec-chip.act{background:#1a3450;color:#d4af37;border-color:#1a3450}
-@media(max-width:430px){.sec-chip{padding:6px 9px;font-size:11px}.nav-mid{gap:3px}}
+@media(max-width:400px){
+ .nav-mid{gap:3px;justify-content:flex-start;padding:0 4px}
+ .sec-chip{padding:5px 7px;font-size:10.2px;min-height:27px;border-radius:6px}
+ /* 초소형 화면: 소개·갤러리는 햄버거 메뉴로 이동, 나머지 4개만 노출 */
+ .sec-chip[data-page="about"],.sec-chip[data-page="gallery"]{display:none}
+ .btn-lang{padding:4px 7px;font-size:10px;min-height:28px}
+ .nav-logo-btn img{height:34px!important;width:34px!important}
+}
+@media(max-width:430px){.sec-chip{padding:5px 8px;font-size:10.5px;min-height:28px;border-radius:7px}.nav-mid{gap:2px;padding-right:6px}.btn-lang{position:relative;z-index:3;background:rgba(255,255,255,.94);border-radius:6px;padding:5px 8px;font-size:11px;min-height:30px;gap:4px}#lcFlag{width:14px;height:10px;margin-right:2px}}
 .nav-mid{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .nav-mid::-webkit-scrollbar{display:none}
 #mainNav.hero-mode .sec-chip{background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.4)}
@@ -2488,7 +2496,13 @@ body {
 .mf-quote small{display:block;margin-top:10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#a2957a}
 .mf-grid{margin:52px auto 0;max-width:880px;display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left;counter-reset:mf}
 @media(max-width:640px){.mf-grid{grid-template-columns:1fr;gap:12px}.mf{padding:52px 22px 60px}}
-.mf-item{position:relative;background:#fff;border:1px solid #eceef3;border-radius:14px;padding:20px 22px 20px 60px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.mf-item{position:relative;background:#fff;border:1px solid #eceef3;border-radius:14px;padding:20px 22px 20px 60px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;overflow:hidden}
+.mf-grid .mf-item:nth-child(even){transform:translateY(16px)}
+.mf-item::before{pointer-events:none}
+.mf-item::marker{content:none}
+.mf-item .mf-spot{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%),rgba(212,175,55,.16),transparent 62%)}
+.mf-item:hover .mf-spot{opacity:1}
+@media(max-width:640px){.mf-grid .mf-item:nth-child(even){transform:none}}
 .mf-item::before{counter-increment:mf;content:counter(mf,decimal-leading-zero);position:absolute;left:20px;top:20px;font-size:12px;font-weight:800;letter-spacing:.06em;color:#b8912b}
 .mf-item::after{content:'';position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:linear-gradient(180deg,#d9b45f,#1a3450);opacity:.55}
 .mf-item:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(22,33,62,.09);border-color:#dfe3ec}
@@ -3383,7 +3397,7 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
  </script>
  <script>
  function finderOpen(){var m=document.getElementById('finderModal');if(m){m.style.display='block';document.body.style.overflow='hidden';}var k=document.getElementById('kakaoBtn2');if(k)k.href=F_KAKAO;}
- function finderClose(){var m=document.getElementById('finderModal');if(m){m.style.display='none';document.body.style.overflow='';}}
+ function finderClose(){var m=document.getElementById('finderModal');if(m){m.style.display='none';}document.body.style.overflow='';try{window.scrollTo({top:0,behavior:'instant'});void document.body.offsetHeight;requestAnimationFrame(function(){(document.querySelectorAll('.page.act')||[]).forEach(function(pg){pg.style.transform='translateZ(0)';requestAnimationFrame(function(){pg.style.transform='';});});});}catch(e){}}
  document.addEventListener('touchend',function(e){
   var el=e.target;
   /* 버튼·링크·입력요소는 네이티브 클릭을 방해하지 않는다 (닫기 X 등) */
@@ -3650,7 +3664,7 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
  </div>
 </div>
  
-<footer style="scroll-margin-top:0;content-visibility:auto;contain-intrinsic-size:auto 600px">
+<footer style="scroll-margin-top:0;content-visibility:visible">
  <div class="footer-logo"><span class="ko">레조네이트투어</span><span class="en">Resonate Tour</span></div>
  <div style="margin:12px 0 2px;display:flex;justify-content:center">
   <a href="https://pf.kakao.com/_xkpxjmX" target="_blank" rel="noopener" aria-label="카카오톡 채널 상담" style="display:inline-flex;align-items:center;gap:8px;background:#FEE500;color:#3C1E1E;text-decoration:none;border-radius:100px;padding:9px 16px;font-size:12.5px;font-weight:700;line-height:1">
@@ -5607,5 +5621,24 @@ body *{animation-duration:.001s!important;animation-delay:0s!important;animation
  });
 })();
 </script>
+
+<script>
+(function(){
+ function initSpot(){
+  document.querySelectorAll('.mf-item').forEach(function(el){
+   if(el.querySelector('.mf-spot')) return;
+   var sp=document.createElement('span'); sp.className='mf-spot'; el.appendChild(sp);
+   el.addEventListener('pointermove',function(e){
+    var r=el.getBoundingClientRect();
+    el.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    el.style.setProperty('--my',(e.clientY-r.top)+'px');
+   });
+   el.addEventListener('pointerleave',function(){ el.style.setProperty('--mx','50%'); el.style.setProperty('--my','50%'); });
+  });
+ }
+ if(document.readyState!=='loading') initSpot(); else document.addEventListener('DOMContentLoaded',initSpot);
+})();
+</script>
+
 </body>
 </html>
