@@ -677,7 +677,7 @@ var mapInitialized = false;
 function createMap(containerId, courses, center, zoom) {
   var map = L.map(containerId, {
     center: center, zoom: zoom,
-    zoomControl: false,
+    zoomControl: true,
     scrollWheelZoom: false,
     touchZoom: true,
     doubleClickZoom: true,
