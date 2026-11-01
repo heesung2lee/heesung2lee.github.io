@@ -147,6 +147,7 @@ const t = k => (T[lang] && T[lang][k]) || T.ko[k] || k;
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k] != null ? o[k] : '');
 
 /* ---------- data ---------- */
+const ICO={golf:'⛳',dining:'🍽️',landmark:'🏛️',nature:'🌲',exp:'🎟️',wine:'🍷',move:'✈️',rest:'🛌'};
 const ZONES = {
   LA:{ko:'로스앤젤레스',en:'Los Angeles',short:'LA',drive:{SD:120,TM:90,PS:120,IE:60}},
   IE:{ko:'인랜드 엠파이어',en:'Inland Empire',short:'IE',drive:{LA:60,SD:90,TM:60,PS:80}},
@@ -402,7 +403,7 @@ function build(){
     const ul=document.createElement('ul');
     r.items.forEach(it=>{
       const li=document.createElement('li');
-      const b=document.createElement('b'); b.textContent=it.txt; li.appendChild(b);
+      const b=document.createElement('b'); b.textContent=(ICO[it.k]?ICO[it.k]+' ':'')+it.txt; li.appendChild(b);
       if(it.tag){const t2=document.createElement('span'); t2.className='badge'; t2.textContent=it.tag; li.appendChild(t2);}
       if(it.note){const s2=document.createElement('div'); s2.className='meta'; s2.textContent=it.note; li.appendChild(s2);}
       if(it.d){const ds=document.createElement('div'); ds.className='desc'; ds.textContent=it.d; li.appendChild(ds);}
