@@ -1,3 +1,11 @@
+function attachMarkerTap(mk){
+ mk.on('add', function(){
+  var ic=mk._icon; if(!ic) return;
+  ic.style.pointerEvents='auto';
+  ic.addEventListener('touchend', function(e){ e.preventDefault(); e.stopPropagation(); mk.openPopup(); }, {passive:false});
+ });
+ return mk;
+}
 function setHTML(el, html){
  if(!el) return;
  var d=new DOMParser().parseFromString(String(html), 'text/html');
@@ -360,7 +368,7 @@ var map = L.map(containerId, {zoomControl:true, scrollWheelZoom:false, touchZoom
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom:19}).addTo(map);
 courses.forEach(function(c) {
 var icon = L.divIcon({className:'course-marker-icon', html:'<div class="course-marker">'+c.num+'</div>', iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-16]});
-L.marker([c.lat, c.lng], {icon:icon}).addTo(map)
+attachMarkerTap(L.marker([c.lat, c.lng], {icon:icon}).addTo(map))
 .bindPopup('<b>'+c.name+'</b><br>'+c.loc+'<br><a href="javascript:void(0)" onclick="crsScrollToCourse(\''+c.country+'\','+c.num+')" style="color:#d4af37;font-size:11px;text-decoration:underline">'+((curLang==='ko')?'코스 상세 보기 →':'View course →')+'</a>');
 });
 var bounds = L.latLngBounds(courses.map(function(c){ return [c.lat, c.lng]; }));
@@ -425,7 +433,7 @@ var bounds = [];
 KR_MARKERS.forEach(function(c) {
 bounds.push([c.lat, c.lng]);
 var icon = L.divIcon({className:'course-marker-icon', html:'<div class="course-marker">'+c.num+'</div>', iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-16]});
-L.marker([c.lat, c.lng], {icon:icon}).addTo(map).bindPopup('<b>'+c.name+'</b><br>'+c.loc+'<br><a href="javascript:void(0)" onclick="crsScrollToCourse(\'kr\','+c.num+')" style="color:#d4af37;font-size:11px;text-decoration:underline">'+((curLang==='ko')?'코스 상세 보기 →':'View course →')+'</a>');
+attachMarkerTap(L.marker([c.lat, c.lng], {icon:icon}).addTo(map)).bindPopup('<b>'+c.name+'</b><br>'+c.loc+'<br><a href="javascript:void(0)" onclick="crsScrollToCourse(\'kr\','+c.num+')" style="color:#d4af37;font-size:11px;text-decoration:underline">'+((curLang==='ko')?'코스 상세 보기 →':'View course →')+'</a>');
 });
 map.fitBounds(L.latLngBounds(bounds), {padding:[30,30]});
 crsMapKr = map; crsKrBounds = L.latLngBounds(bounds);
