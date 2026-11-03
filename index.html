@@ -2329,6 +2329,8 @@ body {
 #home-crs-preview .leaflet-control-zoom{display:none!important}
 .custom-zoom{z-index:1200!important;pointer-events:auto}
 .custom-zoom button{touch-action:manipulation;pointer-events:auto}
+#pg-contact.as-cont{padding-top:0;min-height:0;border-top:1px solid #eef0f4}
+#pg-contact.as-cont .back-btn,#pg-contact.as-cont [onclick*="nav('gallery')"]{display:none}
 </style>
  <noscript><style>body{font-family:sans-serif;padding:40px;text-align:center}.ko{display:block}</style></noscript>
 </head>
@@ -3462,7 +3464,6 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
 
 <!-- ══════ PAGE: CONTACT ══════ -->
 
-<div class="gallery-to-contact" style="text-align:center;padding:34px 20px 10px"><button onclick="nav('contact')" style="min-height:42px;background:#16213e;color:#fff;border:none;border-radius:100px;padding:13px 24px;font-weight:700;font-family:inherit;cursor:pointer;font-size:13.5px">문의로 이어서 보기 →</button></div>
 <div id="pg-contact" class="page">
  <div class="contact-page">
  <div class="contact-left">
@@ -3927,10 +3928,11 @@ function nav(page, dayIdx) {
    if (window.__secNavSync) window.__secNavSync('about');
   }, 90);
  }
- document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('act'); });
+ document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('act','as-cont'); });
  var el = document.getElementById('pg-' + page);
  if (!el) return;
  el.classList.add('act');
+ if(page==='gallery'){ var _c=document.getElementById('pg-contact'), _g=document.getElementById('pg-gallery'); if(_c&&_g){ _g.parentNode.insertBefore(_c,_g.nextSibling); _c.classList.add('act','as-cont'); } }
  curPage = page;
  try{ if(window.__secNavSync) window.__secNavSync(page); if(window.__secNavVis) window.__secNavVis(); }catch(e){}
  document.querySelectorAll('.nav-tab').forEach(function(t){
