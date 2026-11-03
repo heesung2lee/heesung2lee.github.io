@@ -365,6 +365,7 @@ function initScheduleSearch() {
 var _dropTimer = null;
 function crsCreateMap(containerId, courses) {
 var map = L.map(containerId, {zoomControl:true, scrollWheelZoom:false, touchZoom:true, doubleClickZoom:true, dragging:true, attributionControl:true});
+if(containerId==='homeCrsMap') window.__homeMap = map;
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom:19}).addTo(map);
 courses.forEach(function(c) {
 var icon = L.divIcon({className:'course-marker-icon', html:'<div class="course-marker">'+c.num+'</div>', iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-16]});
@@ -509,6 +510,7 @@ if (g) { var y = g.getBoundingClientRect().top + window.scrollY - 150; window.sc
 }
 }
 function crsScrollToCourse(country, num) {
+try{ if(typeof nav==='function') nav('courses'); }catch(e){}
 var cards = document.querySelectorAll('#pg-courses .course-card');
 for (var i = 0; i < cards.length; i++) {
 if (cards[i].getAttribute('data-course') === String(num) && cards[i].getAttribute('data-country') === country) {

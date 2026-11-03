@@ -101,7 +101,6 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#fff;color:#
  .sec-chip{padding:7px 10px;font-size:11.5px;min-height:34px;border-radius:8px}
  /* 초소형 화면: 소개·갤러리는 햄버거 메뉴로 이동, 나머지 4개만 노출 */
  .btn-lang{padding:4px 7px;font-size:10px;min-height:28px}
- .nav-logo-btn img{height:34px!important;width:34px!important}
 }
 @media(max-width:430px){.sec-chip{padding:7px 10px;font-size:11.5px;min-height:34px;border-radius:8px}.nav-mid{gap:4px;padding-right:8px}.btn-lang{position:relative;z-index:3;background:rgba(255,255,255,.94);border-radius:6px;padding:5px 8px;font-size:11px;min-height:30px;gap:4px}#lcFlag{width:14px;height:10px;margin-right:2px}}
 .nav-mid{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 6px 0 2px;mask-image:linear-gradient(90deg,#000 94%,transparent 100%)}
@@ -2307,22 +2306,29 @@ body {
 #lcBtn{position:relative;z-index:10051}
 #lcDropdown .lc-option{min-height:36px;touch-action:manipulation}
 
-/* ── EN/모바일 레이아웃 정리 ── */
+/* ── 모바일 한 줄 네비 ── */
 @media(max-width:600px){
- #mainNav{grid-template-columns:auto 1fr auto!important;grid-template-areas:"logo gap right" "chips chips chips"!important;height:auto!important;padding:6px 10px 2px!important;row-gap:2px}
- #mainNav>div:nth-child(1){grid-area:logo}
- #mainNav>.nav-mid{grid-area:chips;justify-content:flex-start!important;padding:2px 0 6px}
- #mainNav>div:nth-child(3){grid-area:right;justify-self:end}
- .sec-chip{font-size:11px;padding:7px 9px;min-height:32px}
+ .nav-mid{justify-content:flex-start!important;padding:0 4px}
+ .sec-chip{font-size:10.5px;padding:7px 8px;min-height:33px}
+ .sec-chip[data-page="home"]{display:none}
+ .btn-lang{padding:5px 8px;min-height:33px;font-size:0}
+ .btn-lang #lcFlag{margin:0}
+ .btn-lang .lc-caret{display:none}
  .hero-eye{font-size:11px!important;letter-spacing:.12em!important;line-height:1.7;padding:0 18px;white-space:normal!important}
  .hero-h1{padding:0 16px}
  .hero-p{padding:0 18px}
  .hero-mark{opacity:.10!important;transform:translateY(-30px) scale(1.05)}
 }
 @media(max-width:430px){
- .sec-chip{font-size:10.5px;padding:6px 8px;min-height:31px}
+ .sec-chip{font-size:9.8px;padding:6px 7px;min-height:31px}
  .hero-eye{font-size:10px!important}
 }
+ .hero-eye{font-size:10px!important}
+}
+/* custom-zoom */
+#home-crs-preview .leaflet-control-zoom{display:none!important}
+.custom-zoom{z-index:1200!important;pointer-events:auto}
+.custom-zoom button{touch-action:manipulation;pointer-events:auto}
 </style>
  <noscript><style>body{font-family:sans-serif;padding:40px;text-align:center}.ko{display:block}</style></noscript>
 </head>
@@ -2379,8 +2385,8 @@ body {
  
  <!-- LEFT: Logo -->
  <div style="flex-shrink:0;display:flex;align-items:center">
- <button class="nav-logo-btn nav-logo-svg" onclick="nav('home')" aria-label="메인으로" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;height:42px;-webkit-tap-highlight-color:transparent">
- <img src="images/logo-nav.png?v=20261021f" width="42" height="42" alt="Resonate Tour" style="display:block;border-radius:5px">
+ <button class="nav-logo-btn nav-logo-svg" onclick="nav('home')" aria-label="메인으로" style="background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;height:40px;padding:0;-webkit-tap-highlight-color:transparent">
+ <img src="images/logo-nav.png?v=20261021f" width="40" height="40" alt="Resonate Tour" style="display:block;border-radius:5px;margin:0">
 </button>
  </div>
  
@@ -2531,14 +2537,14 @@ body {
 .mf-quote small{display:block;margin-top:10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#a2957a}
 .mf-grid{margin:52px auto 0;max-width:880px;display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left;counter-reset:mf}
 @media(max-width:640px){.mf-grid{grid-template-columns:1fr;gap:12px}.mf{padding:52px 22px 60px}}
-.mf-item{position:relative;background:#fff;border:1px solid #eceef3;border-radius:14px;padding:20px 22px 20px 60px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;overflow:hidden}
+.mf-item{position:relative;background:#fff;border:1px solid #eceef3;border-radius:14px;padding:20px 22px 20px 40px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;overflow:hidden}
 .mf-grid .mf-item:nth-child(even){transform:translateY(16px)}
 .mf-item::before{pointer-events:none}
 .mf-item::marker{content:none}
 .mf-item .mf-spot{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%),rgba(212,175,55,.16),transparent 62%)}
 .mf-item:hover .mf-spot{opacity:1}
 @media(max-width:640px){.mf-grid .mf-item:nth-child(even){transform:none}}
-.mf-item::before{counter-increment:mf;content:counter(mf,decimal-leading-zero);position:absolute;left:20px;top:20px;font-size:12px;font-weight:800;letter-spacing:.06em;color:#b8912b}
+.mf-item::before{content:"";position:absolute;left:18px;top:22px;width:6px;height:6px;border-radius:50%;background:#c9a227;box-shadow:0 0 0 3px rgba(201,162,39,.15)}
 .mf-item::after{content:'';position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:linear-gradient(180deg,#d9b45f,#1a3450);opacity:.55}
 .mf-item:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(22,33,62,.09);border-color:#dfe3ec}
 .mf-item h4{margin:0 0 6px;font-size:15px;color:#1a3450;letter-spacing:-.01em}
@@ -2579,7 +2585,13 @@ body {
    <h2 style="font-size:clamp(22px,4vw,32px);font-weight:700;margin:8px 0 6px;color:#171a20"><span class="ko">어디서 라운드하시겠어요?</span><span class="en">Where will you play?</span></h2>
    <p style="font-size:14px;color:#5c5e62;margin:0"><span class="ko">지도를 움직여 코스를 살펴보세요</span><span class="en">Drag the map to explore</span></p>
   </div>
-  <div id="homeCrsMap" style="height:340px;border-radius:16px;overflow:hidden;border:1px solid #e3e6ec;background:#e9edf2"></div>
+  <div style="position:relative">
+   <div id="homeCrsMap" style="height:340px;border-radius:16px;overflow:hidden;border:1px solid #e3e6ec;background:#e9edf2"></div>
+   <div class="custom-zoom" style="position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:6px;z-index:1200">
+    <button type="button" aria-label="확대" onclick="try{__homeMap.zoomIn()}catch(e){}" ontouchend="event.preventDefault();try{__homeMap.zoomIn()}catch(e){}" style="width:44px;height:44px;border-radius:10px;border:none;background:#16213e;color:#f0d78c;font-size:22px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.28)">+</button>
+    <button type="button" aria-label="축소" onclick="try{__homeMap.zoomOut()}catch(e){}" ontouchend="event.preventDefault();try{__homeMap.zoomOut()}catch(e){}" style="width:44px;height:44px;border-radius:10px;border:none;background:#16213e;color:#f0d78c;font-size:22px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.28)">−</button>
+   </div>
+  </div>
   <div style="text-align:center;margin-top:18px">
    <button onclick="nav('courses')" style="min-height:34px;display:inline-flex;align-items:center;background:none;border:none;color:#1a3450;font:700 13.5px/1 -apple-system,'Noto Sans KR',sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:8px 4px"><span class="ko">코스 전체 보기</span><span class="en">See all courses</span> <span style="font-size:11px">→</span></button>
   </div>
@@ -3449,6 +3461,8 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
 <div id="pg-about" class="page" style="display:none"></div>
 
 <!-- ══════ PAGE: CONTACT ══════ -->
+
+<div class="gallery-to-contact" style="text-align:center;padding:34px 20px 10px"><button onclick="nav('contact')" style="min-height:42px;background:#16213e;color:#fff;border:none;border-radius:100px;padding:13px 24px;font-weight:700;font-family:inherit;cursor:pointer;font-size:13.5px">문의로 이어서 보기 →</button></div>
 <div id="pg-contact" class="page">
  <div class="contact-page">
  <div class="contact-left">
@@ -5691,6 +5705,45 @@ body *{animation-duration:.001s!important;animation-delay:0s!important;animation
   });
  }
  if(document.readyState!=='loading') bind(); else document.addEventListener('DOMContentLoaded', bind);
+})();
+</script>
+<style>/* map-nojump */ .leaflet-control-zoom a{touch-action:manipulation}</style>
+<script>
+(function(){
+ document.addEventListener('touchstart', function(e){
+  if(e.target.closest && e.target.closest('.leaflet-control-zoom')) e.preventDefault();
+ }, {passive:false});
+ document.addEventListener('click', function(e){
+  var a=e.target.closest && e.target.closest('.leaflet-popup-content a');
+  if(!a) return;
+  e.preventDefault(); e.stopPropagation();
+  var m=(a.getAttribute('onclick')||'').match(/crsScrollToCourse\('(\w+)',(\d+)\)/);
+  if(m){ try{ crsScrollToCourse(m[1], parseInt(m[2],10)); }catch(_){} try{ a.closest('.leaflet-popup').querySelector('.leaflet-popup-close-button').click(); }catch(_){} }
+ }, true);
+})();
+</script>
+<style>/* zoom-nojump */ .leaflet-control-zoom a{text-decoration:none}</style>
+<script>
+(function(){
+ document.addEventListener('click', function(e){
+  var a=e.target.closest && e.target.closest('.leaflet-control-zoom a');
+  if(a){ e.preventDefault(); }
+ }, true);
+ document.addEventListener('mousedown', function(e){
+  var a=e.target.closest && e.target.closest('.leaflet-control-zoom a');
+  if(a) e.preventDefault();
+ }, true);
+})();
+</script>
+<script>/* zoom-scroll-restore */
+(function(){
+ document.addEventListener('click', function(e){
+  var a=e.target.closest && e.target.closest('.leaflet-control-zoom a');
+  if(!a) return;
+  var y=window.scrollY;
+  setTimeout(function(){ window.scrollTo({top:y, behavior:'instant'}); }, 0);
+  setTimeout(function(){ window.scrollTo({top:y, behavior:'instant'}); }, 120);
+ }, true);
 })();
 </script>
 </body>

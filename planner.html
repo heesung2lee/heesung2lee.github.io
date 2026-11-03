@@ -73,7 +73,16 @@ body{padding-top:52px}
  </div>
 </nav>
 
+<style>
+.pl-nav{display:flex;gap:4px;overflow-x:auto;padding:10px 16px 0;background:#0f1a30}
+.pl-nav a{color:rgba(255,255,255,.75);text-decoration:none;font-size:11.5px;font-weight:600;padding:8px 10px;position:relative;white-space:nowrap}
+.pl-nav a.act{color:#fff}
+.pl-nav a.act::after{content:'';position:absolute;left:10px;right:10px;bottom:4px;height:2px;background:linear-gradient(90deg,#c9a227,#f2d98a)}
+</style>
 <header>
+ <nav class="pl-nav" aria-label="사이트 메뉴">
+  <a href="/">홈</a><a href="/#about">소개</a><a href="/#courses">골프코스</a><a href="/#gallery">갤러리</a><a class="act" href="/planner.html">일정</a><a href="/#contact">문의</a>
+ </nav>
  <div>
   <h1 id="hTitle">일정 빌더</h1>
   <p id="hSub">선택하신 조건에 맞춰 여정의 큰 그림을 제안합니다. 실제 예약 가능 여부와 요금은 상담 후 확정됩니다.</p>
