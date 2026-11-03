@@ -2308,10 +2308,10 @@ body {
 
 /* ── 모바일 한 줄 네비 ── */
 @media(max-width:600px){
- .nav-mid{justify-content:flex-start!important;padding:0 4px}
+ .nav-mid{justify-content:space-between!important;padding:0 6px;gap:2px}
  .sec-chip{font-size:10.5px;padding:7px 8px;min-height:33px}
  .sec-chip[data-page="home"]{display:none}
- .btn-lang{padding:5px 8px;min-height:33px;font-size:0}
+ .btn-lang{padding:5px 9px;min-height:33px;font-size:10.5px;gap:4px}
  .btn-lang #lcFlag{margin:0}
  .btn-lang .lc-caret{display:none}
  .hero-eye{font-size:11px!important;letter-spacing:.12em!important;line-height:1.7;padding:0 18px;white-space:normal!important}
@@ -2517,7 +2517,7 @@ body {
  <div class="hero-cnt">
  <div class="hero-eye"><span class="ko">레조네이트투어 · Korea → North America · 2026</span><span class="en">Resonate Tour · Korea → North America · 2026</span></div>
  <h1 class="hero-h1"><span class="ko"><span class="fly fly-l" style="display:block">캘리포니아 골프</span><span class="fly fly-r" style="display:block">& 문화 투어</span></span><span class="en"><span class="fly fly-l" style="display:block">California Golf</span><span class="fly fly-r" style="display:block">& Culture Tour</span></span></h1>
- <p class="hero-p"><span class="ko">처음 가는 분도, 다시 가는 분도 — 각자의 속도로</span><span class="en">First-timers and returners — each at your own pace</span></p> <div class="hero-btns"> <button class="btn-w" onclick="nav('pricing');setTimeout(finderOpen,400)"><span class="ko">취향 테스트로 맞춤 일정 받기</span><span class="en">Get My Custom Itinerary</span></button> <a class="kakao-pill" href="https://pf.kakao.com/_xkpxjmX" target="_blank" rel="noopener" aria-label="카카오톡 채널 상담"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path fill="#3C1E1E" d="M10 2.2c-4.3 0-7.8 2.8-7.8 6.3 0 2.2 1.5 4.2 3.8 5.4l-.9 3.2c-.1.3.2.5.5.3l3.7-2.5c.2 0 .5.1.7.1 4.3 0 7.8-2.8 7.8-6.3S14.3 2.2 10 2.2z"/></svg><span class="ko">카톡 문의</span><span class="en">KakaoTalk</span></a> </div>
+ <p class="hero-p"><span class="ko">처음 가는 분도, 다시 가는 분도 — 각자의 속도로</span><span class="en">First time or returning — travel at your own pace</span></p> <div class="hero-btns"> <button class="btn-w" onclick="nav('pricing');setTimeout(finderOpen,400)"><span class="ko">취향 테스트로 맞춤 일정 받기</span><span class="en">Get a custom itinerary</span></button> <a class="kakao-pill" href="https://pf.kakao.com/_xkpxjmX" target="_blank" rel="noopener" aria-label="카카오톡 채널 상담"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path fill="#3C1E1E" d="M10 2.2c-4.3 0-7.8 2.8-7.8 6.3 0 2.2 1.5 4.2 3.8 5.4l-.9 3.2c-.1.3.2.5.5.3l3.7-2.5c.2 0 .5.1.7.1 4.3 0 7.8-2.8 7.8-6.3S14.3 2.2 10 2.2z"/></svg><span class="ko">카톡 문의</span><span class="en">KakaoTalk</span></a> </div>
  </div>
  </div>
  
@@ -2585,7 +2585,7 @@ body {
   <div style="text-align:center;margin-bottom:18px">
    <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#1a3450"><span class="ko">골프코스</span><span class="en">Golf Courses</span></div>
    <h2 style="font-size:clamp(22px,4vw,32px);font-weight:700;margin:8px 0 6px;color:#171a20"><span class="ko">어디서 라운드하시겠어요?</span><span class="en">Where will you play?</span></h2>
-   <p style="font-size:14px;color:#5c5e62;margin:0"><span class="ko">지도를 움직여 코스를 살펴보세요</span><span class="en">Drag the map to explore</span></p>
+   <p style="font-size:14px;color:#5c5e62;margin:0"><span class="ko">지도를 움직여 코스를 살펴보세요</span><span class="en">Drag to explore the map</span></p>
   </div>
   <div style="position:relative">
    <div id="homeCrsMap" style="height:340px;border-radius:16px;overflow:hidden;border:1px solid #e3e6ec;background:#e9edf2"></div>
@@ -2595,7 +2595,7 @@ body {
    </div>
   </div>
   <div style="text-align:center;margin-top:18px">
-   <button onclick="nav('courses')" style="min-height:34px;display:inline-flex;align-items:center;background:none;border:none;color:#1a3450;font:700 13.5px/1 -apple-system,'Noto Sans KR',sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:8px 4px"><span class="ko">코스 전체 보기</span><span class="en">See all courses</span> <span style="font-size:11px">→</span></button>
+   <button onclick="nav('courses')" style="min-height:34px;display:inline-flex;align-items:center;background:none;border:none;color:#1a3450;font:700 13.5px/1 -apple-system,'Noto Sans KR',sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:8px 4px"><span class="ko">코스 전체 보기</span><span class="en">View all courses</span> <span style="font-size:11px">→</span></button>
   </div>
  </div>
 </section>
@@ -5746,6 +5746,53 @@ body *{animation-duration:.001s!important;animation-delay:0s!important;animation
   setTimeout(function(){ window.scrollTo({top:y, behavior:'instant'}); }, 0);
   setTimeout(function(){ window.scrollTo({top:y, behavior:'instant'}); }, 120);
  }, true);
+})();
+</script>
+<script>/* vc-touch-delegate */
+(function(){
+ function go(a){
+  var m=(a.getAttribute('onclick')||'').match(/crsScrollToCourse\('(\w+)',(\d+)\)/);
+  if(!m) return false;
+  try{ crsScrollToCourse(m[1], parseInt(m[2],10)); }catch(e){}
+  try{ var p=a.closest('.leaflet-popup'); var x=p&&p.querySelector('.leaflet-popup-close-button'); if(x) x.click(); }catch(e){}
+  return true;
+ }
+ document.addEventListener('touchend', function(e){
+  var a=e.target.closest && e.target.closest('.leaflet-popup-content a');
+  if(a && go(a)){ e.preventDefault(); e.stopPropagation(); }
+ }, {passive:false, capture:true});
+})();
+</script>
+<script>/* __mapLangRebuild */
+window.__mapLangRebuild = function(){
+ try{
+  if(window.__homeMap){ try{ window.__homeMap.remove(); }catch(e){} window.__homeMap=null; var h=document.getElementById('homeCrsMap'); if(h) h.replaceChildren(); if(typeof initHomeMap==='function') setTimeout(initHomeMap,80); }
+  if(typeof crsMapUsa!=='undefined' && crsMapUsa){ try{ crsMapUsa.remove(); }catch(e){} crsMapUsa=null; }
+  if(typeof crsMapCan!=='undefined' && crsMapCan){ try{ crsMapCan.remove(); }catch(e){} crsMapCan=null; }
+  if(typeof crsMapKr!=='undefined' && crsMapKr){ try{ crsMapKr.remove(); }catch(e){} crsMapKr=null; }
+  try{ if(typeof crsMapsInit!=='undefined') crsMapsInit=false; }catch(e){}
+  if(typeof crsInitMaps==='function') setTimeout(crsInitMaps,80);
+  if(typeof crsInitKrMap==='function') setTimeout(crsInitKrMap,120);
+ }catch(e){}
+};
+</script>
+<script>/* go-param */
+(function(){
+ try{
+  var g=new URLSearchParams(location.search).get('go');
+  if(!g) return;
+  var allow={about:1,courses:1,gallery:1,contact:1,pricing:1};
+  if(!allow[g]) return;
+  window.addEventListener('load', function(){
+   setTimeout(function(){
+    try{
+     if(g==='contact'||g==='pricing'){ nav(g); }
+     else { nav('home'); setTimeout(function(){ try{ secJump(g); }catch(e){} }, 150); }
+     history.replaceState(null,'',location.pathname);
+    }catch(e){}
+   }, 250);
+  });
+ }catch(e){}
 })();
 </script>
 </body>

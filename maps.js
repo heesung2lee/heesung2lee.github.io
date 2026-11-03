@@ -1,4 +1,10 @@
 function attachMarkerTap(mk){
+ mk.on('popupopen', function(e){
+  try{
+   var el=e.popup.getElement().querySelector('.leaflet-popup-content a');
+   if(el) el.textContent = (curLang==='ko') ? '코스 상세 보기 →' : 'View course →';
+  }catch(_e){}
+ });
  mk.on('add', function(){
   var ic=mk._icon; if(!ic) return;
   ic.style.pointerEvents='auto';
