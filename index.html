@@ -2302,6 +2302,10 @@ body {
 .hero-ripple .ring{border-left-color:transparent!important;border-bottom-color:transparent!important;transform:rotate(38deg)}
 @keyframes resRipple{0%{transform:rotate(38deg) scale(.2);opacity:0}10%{opacity:.5}60%{opacity:.16}100%{transform:rotate(38deg) scale(4);opacity:0}}
 @media(prefers-reduced-motion:reduce){.hero-mark{animation:none;opacity:.14}}
+/* lang dropdown robust */
+#lcDropdown{z-index:10050}
+#lcBtn{position:relative;z-index:10051}
+#lcDropdown .lc-option{min-height:36px;touch-action:manipulation}
 </style>
  <noscript><style>body{font-family:sans-serif;padding:40px;text-align:center}.ko{display:block}</style></noscript>
 </head>
@@ -5655,5 +5659,22 @@ body *{animation-duration:.001s!important;animation-delay:0s!important;animation
 })();
 </script>
 
+<script>
+(function(){
+ if(window.lcTouchBound) return; window.lcTouchBound=true;
+ function bind(){
+  var btn=document.getElementById('lcBtn');
+  if(btn && !btn.dataset.touchBound){
+   btn.dataset.touchBound='1';
+   btn.addEventListener('touchend', function(e){ e.preventDefault(); e.stopPropagation(); try{ toggleLangCurrency(e); }catch(_){} }, {passive:false});
+  }
+  document.querySelectorAll('#lcDropdown .lc-option').forEach(function(o){
+   if(o.dataset.touchBound) return; o.dataset.touchBound='1';
+   o.addEventListener('touchend', function(e){ e.preventDefault(); e.stopPropagation(); o.click(); }, {passive:false});
+  });
+ }
+ if(document.readyState!=='loading') bind(); else document.addEventListener('DOMContentLoaded', bind);
+})();
+</script>
 </body>
 </html>
