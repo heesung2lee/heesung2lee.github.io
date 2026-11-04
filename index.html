@@ -4354,8 +4354,8 @@ if (_sh) _sh.classList.remove('visible');
    setTimeout(() => fireClick(el), 60);
   }
   }
-  // Prevent the ghost mouse click that follows touch
-  e.preventDefault();
+  // 처리한 경우에만 고스트 클릭 차단 (처리 못 한 요소는 네이티브 클릭 허용)
+  if (el || _link) e.preventDefault();
   _moved = false;
   }, { passive: false });
  
