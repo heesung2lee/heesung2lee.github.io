@@ -600,13 +600,7 @@
 </div><p class="why">계곡 깊숙이 — 빙하 시내, 120+ 흰 벙커, 페어웨이 위 엘크. 북미 최고 평가에 가격 가장 착함. 2013년 홍수→2018년 재건.</p><div class="sig"><b>추천</b> — 오전 Mt Kidd(장타자) + 오후 Lorette(강변). 36홀 정복.</div><p class="tip"><b>팁:</b> 진짜 산악 골프. 체력 안배 필수.</p></div>
 </div>
 
-<!-- ═══════════ QUIZ ═══════════ -->
-<div id="quiz-section">
-  <h2>🎯 나에게 맞는 코스 찾기</h2>
-  <div class="quiz-progress" id="quizProgress"></div>
-  <div class="quiz-q" id="quizQ"></div>
-  <div class="quiz-opts" id="quizOpts"></div>
-  <div class="quiz-result" id="quizResult"></div>
+
 </div>
 
 <div class="cta-bar">
@@ -875,53 +869,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Escape') closeLightbox();
   });
 });
-
-// ── Quiz Engine ──
-var QUIZ=[
-  {q:"라운딩에서 가장 중요하게 생각하는 것은?",opts:["⛰️ 경치","🏆 스코어","😄 분위기","💪 도전"]},
-  {q:"자신의 실력 수준은?",opts:["초보","중급 80~90대","상급 70대","프로급"]},
-  {q:"선호하는 코스 스타일?",opts:["🌊 오션뷰","🏔️ 산악","🌿 자연·숲","🏛️ 클래식"]},
-  {q:"라운딩 중 가장 싫은 것은?",opts:["🐢 느린 플레이","💨 강풍","🏠 주택가 뷰","👥 붐비는 코스"]},
-  {q:"동반자 구성은?",opts:["혼자·2인","4인 비슷한 실력","실력 편차 큼","가족·비골퍼"]},
-  {q:"라운드 후 원하는 것?",opts:["🍷 와인·미식","🌅 경치 감상","📊 스코어 복기","😴 휴식"]},
-  {q:"여행 스타일은?",opts:["🏃 액티브 36홀","⚖️ 밸런스","🛌 릴랙스 여유"]}
-];
-var qi=0, qs={views:0,skill:0,vibe:0,challenge:0,comfort:0};
-var OM=[['views','skill','vibe','challenge'],['comfort','skill','skill','skill'],['views','challenge','comfort','comfort'],['comfort','views','views','comfort'],['comfort','skill','comfort','comfort'],['vibe','views','skill','comfort'],['challenge','skill','comfort',null]];
-
-function initQuiz(){qi=0;qs={views:0,skill:0,vibe:0,challenge:0,comfort:0};showQuiz();}
-function rp(){var h='';for(var i=0;i<QUIZ.length;i++)h+='<div class="quiz-dot '+(i<qi?'done':(i===qi?'cur':''))+'"></div>';document.getElementById('quizProgress').innerHTML=h;}
-function showQuiz(){
-  if(qi>=QUIZ.length){showResult();return;}
-  rp();var q=QUIZ[qi];
-  document.getElementById('quizQ').textContent='Q'+(qi+1)+'. '+q.q;
-  var h='';q.opts.forEach(function(o,i){h+='<button class="quiz-opt" onclick="pickAnswer('+i+')">'+o+'</button>';});
-  document.getElementById('quizOpts').innerHTML=h;
-  document.getElementById('quizOpts').style.display='flex';
-  document.getElementById('quizResult').classList.remove('show');
-}
-function pickAnswer(idx){
-  var m=OM[qi];if(m&&m[idx])qs[m[idx]]+=2;
-  if(qi===1&&(idx===2||idx===3))qs.challenge++;
-  qi++;showQuiz();
-}
-function showResult(){
-  rp();
-  document.getElementById('quizOpts').style.display='none';
-  document.getElementById('quizQ').textContent='';
-  var res=document.getElementById('quizResult');res.classList.add('show');
-  var top=Object.entries(qs).sort(function(a,b){return b[1]-a[1];});
-  var p=top[0][0],desc='',recs=[];
-  if(p==='views'){desc='<b>경치형 골퍼</b> — 스코어보다 풍경! 티샷보다 배경부터 찾는 타입.';recs=['Sandpiper','Trump National','Silvertip','Banff Springs'];}
-  else if(p==='challenge'){desc='<b>도전형 골퍼</b> — 쉬우면 심심, 어려울수록 🔥.';recs=['La Purisima','Trump National','Hacienda','Silvertip','Kananaskis'];}
-  else if(p==='skill'){desc='<b>실력파 골퍼</b> — 한 타 한 타 진지하게.';recs=['La Purisima','Friendly Hills','Golf Club of CA','Cross Creek','Kananaskis'];}
-  else if(p==='vibe'){desc='<b>분위기형 골퍼</b> — 웃고 떠들고 와인 한 잔!';recs=['Alisal Ranch','Cross Creek','Stewart Creek','Canmore G&CC'];}
-  else if(p==='comfort'){desc='<b>힐링형 골퍼</b> — 골프는 휴식. 여유롭게 자연을.';recs=['Alisal Ranch','The Crossings','Stewart Creek','Canmore G&CC'];}
-  else{desc='<b>밸런스형 골퍼</b> — 경치·도전·분위기 두루!';recs=['Sandpiper','Hacienda','Golf Club of CA','The Crossings','Stewart Creek'];}
-  res.innerHTML='<h3>🎯 당신의 골퍼 유형</h3><p>'+desc+'</p><div class="rec-courses"><b>추천 코스:</b> '+recs.map(function(r){return '<span>'+r+'</span>';}).join('')+'</div><button class="quiz-opt" style="margin-top:16px;text-align:center;width:100%" onclick="initQuiz()">🔄 다시 테스트하기</button>';
-}
-initQuiz();
-
 
 // ── Map marker click → scroll to course ──
 function scrollToCourse(country, num) {
