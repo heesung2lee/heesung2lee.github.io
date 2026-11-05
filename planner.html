@@ -43,9 +43,15 @@ button.primary:hover{background:var(--navy2)}
 .empty{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:28px;text-align:center;color:var(--mut);font-size:13px}
 .note{font-size:11.5px;color:var(--mut);margin-top:14px}
 .badge{display:inline-block;font-size:10.5px;background:#eef1f7;color:var(--navy);border-radius:5px;padding:1px 6px;margin-left:4px}
+.embed #pnav,.embed header{display:none!important}
+.embed body{padding-top:0!important}
 </style>
 </head>
 <body>
+<script>
+var EMBED_MODE = new URLSearchParams(location.search).get('embed')==='1';
+if(EMBED_MODE){ document.documentElement.classList.add('embed'); }
+</script>
 <style>
 #pnav{position:fixed;top:0;left:0;right:0;height:52px;z-index:300;display:flex;align-items:center;gap:10px;
  padding:0 12px;background:rgba(255,255,255,.97);border-bottom:1px solid #eef0f4;
@@ -122,7 +128,13 @@ body{padding-top:52px}
 <script>
 /* ---------- i18n ---------- */
 const LANG_KEY = 'resonate_lang';
-let lang = (function(){ try { return localStorage.getItem(LANG_KEY) || 'ko'; } catch(e){ return 'ko'; } })();
+let lang = (function(){
+ try{
+  var q=new URLSearchParams(location.search).get('lang');
+  if(q==='ko'||q==='en') return q;
+  return localStorage.getItem(LANG_KEY) || 'ko';
+ }catch(e){ return 'ko'; }
+})();
 const T = {
   ko: {
     title:'일정 빌더',
@@ -163,11 +175,11 @@ const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k] != null ? o[k] : ''
 /* ---------- data ---------- */
 const ICO={golf:'⛳',dining:'🍽️',landmark:'🏛️',nature:'🌲',exp:'🎟️',wine:'🍷',move:'✈️',rest:'🛌'};
 const ZONES = {
-  LA:{ko:'로스앤젤레스',en:'Los Angeles',short:'LA',drive:{SD:120,TM:90,PS:120,IE:60}},
-  IE:{ko:'인랜드 엠파이어',en:'Inland Empire',short:'IE',drive:{LA:60,SD:90,TM:60,PS:80}},
-  SD:{ko:'샌디에이고',en:'San Diego',short:'SD',drive:{LA:120,IE:90,TM:60,PS:150}},
-  TM:{ko:'테메큘라',en:'Temecula',short:'TM',drive:{LA:90,IE:60,SD:60,PS:105}},
-  PS:{ko:'팜스프링스',en:'Palm Springs',short:'PS',drive:{LA:120,IE:80,SD:150,TM:105}}
+  LA:{ko:'로스앤젤레스 카운티',en:'Los Angeles County',short:'LA',drive:{SD:120,TM:90,PS:120,IE:60}},
+  IE:{ko:'리버사이드 카운티 · 노르코',en:'Riverside County · Norco',short:'IE',drive:{LA:60,SD:90,TM:60,PS:80}},
+  SD:{ko:'샌디에이고 카운티 · 노스',en:'San Diego County · North',short:'SD',drive:{LA:120,IE:90,TM:60,PS:150}},
+  TM:{ko:'리버사이드 카운티 · 테메큘라',en:'Riverside County · Temecula',short:'TM',drive:{LA:90,IE:60,SD:60,PS:105}},
+  PS:{ko:'리버사이드 카운티 · 코첼라',en:'Riverside County · Coachella',short:'PS',drive:{LA:120,IE:80,SD:150,TM:105}}
 };
 const COURSES = [
   {id:'trump',name:'Trump National LA',zone:'LA',tag:{ko:'링크스·절벽',en:'Links · cliffs'},p:['scenic','active']},
@@ -434,6 +446,24 @@ function build(){
 applyStatic();
 renderControls();
 build();
+</script>
+<script>/* planner-postmessage */
+(function(){
+ function sendHeight(){
+  try{ var h=Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+   parent.postMessage({type:'planner-height', height:h}, location.origin); }catch(e){}
+ }
+ window.addEventListener('message', function(e){
+  var d=e.data||{};
+  if(d.type==='planner-lang' && (d.lang==='ko'||d.lang==='en')){
+   try{ localStorage.setItem(LANG_KEY,d.lang); }catch(_){}
+   location.search = '?embed=1&lang='+d.lang;
+  }
+ });
+ window.addEventListener('load', function(){ setTimeout(sendHeight,300); });
+ window.addEventListener('resize', function(){ setTimeout(sendHeight,200); });
+ setInterval(sendHeight, 1200);
+})();
 </script>
 </body>
 </html>
