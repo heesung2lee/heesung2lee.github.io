@@ -5781,12 +5781,13 @@ window.__mapLangRebuild = function(){
  try{
   var g=new URLSearchParams(location.search).get('go');
   if(!g) return;
-  var allow={about:1,courses:1,gallery:1,contact:1,pricing:1};
+  var allow={about:1,courses:1,gallery:1,contact:1,pricing:1,planner:1};
   if(!allow[g]) return;
   window.addEventListener('load', function(){
    setTimeout(function(){
     try{
-     if(g==='contact'||g==='pricing'){ nav(g); }
+     if(g==='planner'){ nav('planner'); try{ window.ensurePlannerFrame&&window.ensurePlannerFrame(); }catch(e){} }
+     else if(g==='contact'||g==='pricing'){ nav(g); }
      else { nav('home'); setTimeout(function(){ try{ secJump(g); }catch(e){} }, 150); }
      history.replaceState(null,'',location.pathname);
     }catch(e){}
