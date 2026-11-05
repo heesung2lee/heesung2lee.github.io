@@ -48,6 +48,11 @@ button.primary:hover{background:var(--navy2)}
 </style>
 </head>
 <body>
+<script>/* redirect-to-frame */
+var _q=new URLSearchParams(location.search);
+var _embed=_q.get('embed')==='1', _standalone=_q.get('standalone')==='1';
+if(!_embed && !_standalone){ location.replace('/?go=planner'); }
+</script>
 <script>
 var EMBED_MODE = new URLSearchParams(location.search).get('embed')==='1';
 if(EMBED_MODE){ document.documentElement.classList.add('embed'); }
