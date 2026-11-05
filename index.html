@@ -2456,7 +2456,15 @@ body {
   sync(key);
  }
  window.secJump=jump;
- window.goPlanner=function(){ window.location.href='/planner.html'; };
+ window.ensurePlannerFrame=function(){
+ var f=document.getElementById('plannerFrame'); if(!f) return;
+ var want='/planner.html?embed=1&lang='+encodeURIComponent(typeof curLang!=='undefined'?curLang:'ko');
+ if(f.getAttribute('src')!==want) f.setAttribute('src', want);
+};
+window.goPlanner=function(){
+ try{ if(typeof nav==='function'){ nav('planner'); window.ensurePlannerFrame(); return; } }catch(e){}
+ window.location.href='/planner.html';
+};
 
  bar.addEventListener('touchend', function(e){
   var t=e.target, chip=t && t.closest ? t.closest('.sec-chip') : null;
@@ -3658,6 +3666,10 @@ document.addEventListener('input',function(){F_updateKakaoSafe();});
 </div>
 
  
+<div id="pg-planner" class="page" style="padding-top:52px">
+ <iframe id="plannerFrame" title="Itinerary builder" style="width:100%;border:0;display:block;min-height:calc(100vh - 52px);background:#f6f7f9"></iframe>
+</div>
+
 <!-- ══════ MODAL ══════ -->
 <div id="modal">
  <div id="modal-bg-tap"></div>
@@ -4080,6 +4092,9 @@ function _applyLang(lang) {
  const _sy = window.scrollY;
  curLang = lang;
  document.documentElement.setAttribute('data-lang', curLang);
+ try{ var _pf=document.getElementById('plannerFrame');
+  if(_pf){ if(_pf.contentWindow) _pf.contentWindow.postMessage({type:'planner-lang',lang:curLang}, location.origin);
+   _pf.setAttribute('src','/planner.html?embed=1&lang='+encodeURIComponent(curLang)); } }catch(e){}
  // Re-render dynamic text WITHOUT resetting the page
  if (curPage === 'schedule') {
  const scrollY = window.scrollY;
@@ -5811,6 +5826,16 @@ window.__mapLangRebuild = function(){
  }
  window.addEventListener('scroll', onScroll, {passive:true});
 })();
+</script>
+<script>/* planner-height */
+window.addEventListener('message', function(e){
+ var d=e.data||{};
+ if(d.type==='planner-height' && d.height){
+  var f=document.getElementById('plannerFrame');
+  if(f) f.style.height=Math.max(600, Math.min(20000, d.height))+'px';
+  var pg=document.getElementById('pg-planner'); if(pg) pg.style.paddingTop='52px';
+ }
+});
 </script>
 </body>
 </html>
