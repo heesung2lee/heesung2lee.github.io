@@ -8,7 +8,7 @@
 :root{--navy:#16213e;--navy2:#1f2f52;--gold:#b08d3f;--line:#e3e6ec;--mut:#6b7280;--bg:#f6f7f9;--card:#fff;--ink:#111}
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
-header{background:var(--navy);color:#fff;padding:16px 20px;margin-top:0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+header{background:var(--navy);color:#fff;padding:0 0 14px;margin-top:0;position:sticky;top:0;z-index:60;box-shadow:0 2px 12px rgba(0,0,0,.18)}
 header h1{margin:0;font-size:18px;letter-spacing:-.01em}
 header p{margin:4px 0 0;font-size:12px;color:#c9d2e3;max-width:640px}
 .wrap{max-width:1180px;margin:0 auto;padding:18px 16px 64px;display:grid;grid-template-columns:320px 1fr;gap:18px}
@@ -80,12 +80,15 @@ body{padding-top:52px}
 .pl-nav a.act::after{content:'';position:absolute;left:10px;right:10px;bottom:4px;height:2px;background:linear-gradient(90deg,#c9a227,#f2d98a)}
 </style>
 <header>
- <nav class="pl-nav" aria-label="사이트 메뉴">
-  <a href="/">홈</a><a href="/?go=about">소개</a><a href="/?go=courses">골프코스</a><a href="/?go=gallery">갤러리</a><a class="act" href="/planner.html">일정</a><a href="/?go=contact">문의</a>
- </nav>
- <div>
+ <div class="pl-bar">
+  <img src="/images/logo-nav.png" alt="Resonate Tour" width="34" height="34">
+  <nav class="pl-nav" aria-label="Site menu">
+   <a href="/" data-nav="home">홈</a><a href="/?go=about" data-nav="about">소개</a><a href="/?go=courses" data-nav="courses">골프코스</a><a href="/?go=gallery" data-nav="gallery">갤러리</a><a class="act" href="/planner.html" data-nav="planner">일정</a><a href="/?go=contact" data-nav="contact">문의</a>
+  </nav>
+ </div>
+ <div class="pl-head">
   <h1 id="hTitle">일정 빌더</h1>
-  <p id="hSub">선택하신 조건에 맞춰 여정의 큰 그림을 제안합니다. 실제 예약 가능 여부와 요금은 상담 후 확정됩니다.</p>
+  <p id="hSub">선택하신 조건에 맞춰 여정의 큰 그림을 제안합니다.</p>
  </div>
 </header>
 
@@ -127,6 +130,7 @@ const T = {
     zones:'지역', cats:'액티비티 유형', seasons:'계절', stay:'숙박', nights:'숙박', rounds:'골프 라운드',
     repeat:'같은 골프코스 재방문 허용', persona:'성향(선택)', go:'일정 만들기',
     notes:'※ 실제 예약 가능 여부·그린피·티타임은 상담 후 확정됩니다.',
+    navHome:'홈', navAbout:'소개', navCourses:'골프코스', navGallery:'갤러리', navPlanner:'일정', navContact:'문의',
     p0:'선택 안 함', pScenic:'경치·자연 중심', pFood:'미식·와인 중심', pActive:'액티브·도전', pCalm:'조용함·휴식',
     unitN:'박', unitD:'일', unitR:'회', day:'Day', arrival:'도착 · {z} 이동', checkin:'숙소 체크인 · 휴식',
     checkout:'숙소 체크아웃', depart:'출발 · 공항 이동', golf:'{c} 라운드', free:'자유 시간 · 휴식',
@@ -142,6 +146,7 @@ const T = {
     zones:'Regions', cats:'Activity type', seasons:'Season', stay:'Stay', nights:'Nights', rounds:'Golf rounds',
     repeat:'Allow repeat visits to the same course', persona:'Style (optional)', go:'Build schedule',
     notes:'Availability, green fees and tee times are confirmed after consultation.',
+    navHome:'Home', navAbout:'About', navCourses:'Courses', navGallery:'Gallery', navPlanner:'Planner', navContact:'Contact',
     p0:'No preference', pScenic:'Scenery & nature', pFood:'Food & wine', pActive:'Active & challenge', pCalm:'Quiet & rest',
     unitN:'nights', unitD:'days', unitR:'rounds', day:'Day', arrival:'Arrive · transfer to {z}', checkin:'Hotel check-in · rest',
     checkout:'Hotel check-out', depart:'Depart · airport transfer', golf:'{c} round', free:'Free time · rest',
@@ -248,6 +253,8 @@ function applyStatic() {
   $('#lStay').textContent = t('stay'); var _ln=$('#lNights'); if(_ln) _ln.textContent = t('nights'); $('#lRounds').textContent = t('rounds');
   $('#lRepeat').textContent = t('repeat'); $('#lPersona').textContent = t('persona'); $('#go').textContent = t('go');
   $('#footNote').textContent = t('notes');
+  var navMap={home:'navHome',about:'navAbout',courses:'navCourses',gallery:'navGallery',planner:'navPlanner',contact:'navContact'};
+  document.querySelectorAll('.pl-nav a').forEach(function(a){ var k=navMap[a.dataset.nav]; if(k) a.textContent=t(k); });
   $('#nUnit').textContent = t('unitN'); $('#dUnit').textContent = t('unitD'); $('#rUnit').textContent = t('unitR');
   const sel = $('#persona');
   sel.replaceChildren();
