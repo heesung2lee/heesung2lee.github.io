@@ -3142,7 +3142,7 @@ function F_pdfPages(payload){
   }
   pages.push(c);
  }
- function need(h){ if(y+h>H-150) newPage(false); }
+ function need(h){ if(y+h>H-124) newPage(false); }
  function label(t){ need(52); x.fillStyle='#8a94a3';x.font='600 19px '+FONT;x.fillText(t,70,y);y+=30; }
  function wrap(t,size,color,weight,lh){
   x.fillStyle=color;x.font=weight+' '+size+'px '+FONT;
@@ -3173,10 +3173,8 @@ function F_pdfPages(payload){
  if(payload.qa&&payload.qa.length){
   label('설문 문항 / Survey answers');
   payload.qa.forEach(function(pr,i2){
-   need(96);
-   x.fillStyle='#8a94a3';x.font='600 19px '+FONT;
-   x.fillText('Q'+(i2+1)+'.',70,y);y+=28;
-   wrap(pr[0],21,'#5c5e62','600',30); y+=2;
+   need(84);
+   wrap('Q'+(i2+1)+'. '+pr[0],21,'#5c5e62','600',30); y+=2;
    wrap(pr[1],24,'#171a20','400',32); y+=18;
   });
   rule();
@@ -3236,6 +3234,13 @@ function F_buildPdf(canvases,jpegs){
  return new Blob([bytes],{type:'application/pdf'});
 }
 /* 설문 문항-답 목록 (PDF/메일에 사용) */
+function F_cleanAns(t){
+ return String(t||'')
+  .replace(/\s*\((?:아래에?|아래|write below|enter below)[^)]*\)/gi,'')
+  .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{1F1E6}-\u{1F1FF}]/gu,'')
+  .replace(/\s{2,}/g,' ')
+  .trim();
+}
 function F_quoteQA(){
  var out=[],L=curLang==='ko';
  try{
@@ -3246,9 +3251,14 @@ function F_quoteQA(){
     if(!a)return;
     var ans=((L?a.ko:a.en)||a.ko||'').trim();
     ans=ans.split(', ').map(function(seg){return seg.replace(/\|[A-Za-z-]+\s*$/,'').trim();}).join(', ');
-    if(a.persona&&a.persona.length){ans+=(L?' · 성격: ':' · style: ')+a.persona.join(', ');}
-    if(a.free){ans+=(L?' · 기타: ':' · note: ')+a.free;}
-    out.push([(L?q.t[0]:q.t[1]), ans]);
+    ans=F_cleanAns(ans);
+    if(a.persona&&a.persona.length){
+     var _pm={'즐기는 게 최고':'Fun first','스코어는 상관없어요':'Don’t care about score','무난하게':'Steady','코스 공략이 재미':'Course strategy','제대로 도전':'Championship test','동반자와의 시간이 중요':'Time with companions'};
+     var _pv=a.persona.map(function(x){ return L?x:(_pm[x]||x); });
+     ans+=(L?' · 성향: ':' · style: ')+_pv.join(', ');
+    }
+    if(a.free){ans+=(L?' · 메모: ':' · note: ')+F_cleanAns(a.free);}
+    out.push([F_cleanAns(L?q.t[0]:q.t[1]), ans]);
    });
   });
  }catch(e){}
